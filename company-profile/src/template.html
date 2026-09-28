@@ -151,6 +151,8 @@
   .lw .tile { height: 64px; background: var(--card); border: 1.5px solid var(--line); border-radius: 12px; display: grid; place-items: center; padding: 8px 14px; text-align: center; font-size: 21px; font-weight: 700; color: var(--navy); line-height: 1.2; }
   .lw .tile img { max-width: 100%; max-height: 52px; object-fit: contain; }
   .lw .tile.key { border-color: var(--navy); }
+  .lw .tile .mn { display: flex; align-items: center; gap: 10px; }
+  .lw .tile .mn img { height: 44px; width: auto; }
 
   /* Featured clients */
   .fc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -409,7 +411,7 @@
 
   /* Fujiva */
   .fj { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-  .fj .card { padding: 0; overflow: hidden; } .fj .pv { height: 220px; display: grid; place-items: center; background: linear-gradient(180deg, #F3F7FD, #E6EEF9); border-bottom: 1.5px solid var(--line); } .fj .pv svg { height: 196px; width: auto; } .fj .cb { padding: 30px 44px 34px; } .fj ul.dots li { font-size: 24px; }
+  .fj .card { padding: 0; overflow: hidden; } .fj .pv { height: 172px; display: grid; place-items: center; background: linear-gradient(180deg, #F3F7FD, #E6EEF9); border-bottom: 1.5px solid var(--line); } .fj .pv svg { height: 152px; width: auto; } .fj .cb { padding: 30px 44px 34px; } .fj ul.dots li { font-size: 24px; }
   .fj .sizes { display: flex; gap: 14px; margin-top: 20px; }
   .fj .sizes span { flex: 1; text-align: center; border: 1.5px solid var(--line); border-radius: 12px; padding: 16px 0; font-size: 30px; font-weight: 700; color: var(--navy); }
   .fj .sizes span small { display: block; font-size: 16px; color: var(--soft); font-weight: 600; letter-spacing: .1em; margin-top: 4px; }
@@ -492,7 +494,7 @@
   <h2>บริษัทบริการระบบปรับอากาศ ที่ดูแลตั้งแต่สำรวจจนถึงหลังการขาย</h2>
   <div class="body ov">
     <div>
-      <p class="lead">บริษัท สหบูรพากรุ๊ป จำกัด มี<b>ประสบการณ์กว่า 30 ปี</b>ในธุรกิจอะไหล่ น้ำยา และอุปกรณ์เครื่องปรับอากาศ ต่อยอดสู่งานบริการระบบปรับอากาศ <b>(HVAC)</b> ครบวงจรแก่<b>โรงงาน โรงพยาบาล อาคารสำนักงาน และธุรกิจหลายสาขา</b> ผ่านแบรนด์บริการ <b>Polar Air</b> โดยทีมช่างของบริษัทเอง</p>
+      <p class="lead">บริษัท สหบูรพากรุ๊ป จำกัด มี<b>ประสบการณ์กว่า 30 ปี</b>ในธุรกิจอะไหล่ น้ำยา และอุปกรณ์เครื่องปรับอากาศ ต่อยอดสู่งานบริการระบบปรับอากาศ <b>(HVAC)</b> <b>ทุกยี่ห้อ</b>ครบวงจรแก่<b>โรงงาน โรงพยาบาล อาคารสำนักงาน และธุรกิจหลายสาขา</b> ผ่านแบรนด์บริการ <b>Polar Air</b> โดยทีมช่างของบริษัทเอง</p>
       <p class="lead" style="margin-top:26px">ทุกงานเริ่มจากการสำรวจหน้างาน ออกใบเสนอราคาที่ระบุขอบเขตชัดเจน ทำงานตาม Job Card ตรวจคุณภาพก่อนส่งมอบ และส่งรายงานพร้อมภาพก่อน–หลัง เพื่อให้ลูกค้าตรวจสอบได้ทุกขั้นตอน</p>
     </div>
     <dl class="facts">
@@ -644,8 +646,8 @@
   <div class="eyebrow">Service Portfolio</div>
   <h2>บริการระบบปรับอากาศครบวงจรในที่เดียว</h2>
   <div class="body svc" style="margin-top:40px">
-    <div class="svc-row"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="8" rx="2"/><path d="M7 17v2M12 17v3M17 17v2"/></svg></div><div><h3>จำหน่ายเครื่อง</h3><div class="en">Equipment Supply</div></div><ul><li>Wall / Ceiling / Cassette</li><li>Floor Standing / Ducted</li><li>อะไหล่ วัสดุ และน้ำยา</li></ul><div class="for"><b>เหมาะกับ</b>โครงการใหม่ เปลี่ยนเครื่องเก่า</div></div>
-    <div class="svc-row"><div class="ico"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></div><div><h3>ติดตั้งระบบ</h3><div class="en">Installation</div></div><ul><li>ติดตั้งใหม่ / เปลี่ยน / ย้าย</li><li>เดินท่อน้ำยา ไฟฟ้า ท่อน้ำทิ้ง</li><li>ขาแขวน โครงเหล็ก งานยก</li></ul><div class="for"><b>เหมาะกับ</b>อาคาร โรงงาน บ้านพักอาศัย</div></div>
+    <div class="svc-row"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="8" rx="2"/><path d="M7 17v2M12 17v3M17 17v2"/></svg></div><div><h3>จำหน่ายเครื่อง</h3><div class="en">Equipment Supply</div></div><ul><li>ทุกยี่ห้อชั้นนำ และ Fujiva แบรนด์ของบริษัท</li><li>Wall / Ceiling / Cassette / Floor / Ducted</li><li>อะไหล่ วัสดุ และน้ำยา</li></ul><div class="for"><b>เหมาะกับ</b>โครงการใหม่ เปลี่ยนเครื่องเก่า</div></div>
+    <div class="svc-row"><div class="ico"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></div><div><h3>ติดตั้งระบบ</h3><div class="en">Installation</div></div><ul><li>ติดตั้งเครื่องปรับอากาศทุกยี่ห้อ</li><li>ติดตั้งใหม่ / เปลี่ยน / ย้าย</li><li>เดินท่อน้ำยา ไฟฟ้า ท่อน้ำทิ้ง</li><li>ขาแขวน โครงเหล็ก งานยก</li></ul><div class="for"><b>เหมาะกับ</b>อาคาร โรงงาน บ้านพักอาศัย</div></div>
     <div class="svc-row"><div class="ico o"><svg viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg></div><div><h3>ล้างและ PM/AMC</h3><div class="en">Cleaning &amp; Maintenance</div></div><ul><li>ล้างมาตรฐาน / ล้างใหญ่</li><li>สัญญาบำรุงรักษารายปี</li><li>Service Report ทุกรอบ</li></ul><div class="for"><b>เหมาะกับ</b>องค์กรที่มีเครื่องจำนวนมาก</div></div>
     <div class="svc-row"><div class="ico o"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v3l2 2"/></svg></div><div><h3>ตรวจเช็กและซ่อม</h3><div class="en">Diagnosis &amp; Repair</div></div><ul><li>วิเคราะห์ Error Code วัดค่าไฟฟ้า/แรงดัน</li><li>หารอยรั่ว เชื่อม แวคคั่ม เติมน้ำยา</li><li>เปลี่ยนบอร์ด มอเตอร์ คอยล์</li></ul><div class="for"><b>เหมาะกับ</b>เครื่องเสีย ไม่เย็น น้ำหยด</div></div>
     <div class="svc-row"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 21V9l6-4v16M9 21V3l12 6v12M3 21h18M13 13h4M13 17h4"/></svg></div><div><h3>งานโครงการ</h3><div class="en">Project Works</div></div><ul><li>BOQ และ Method Statement</li><li>กลางคืน วันหยุด แบ่งโซน</li><li>ประสานผู้รับเหมาหลัก / MEP</li></ul><div class="for"><b>เหมาะกับ</b>โรงงาน โรงพยาบาล อาคารพาณิชย์</div></div>
@@ -673,14 +675,14 @@
 <!-- ============ INSTALLATION PHOTOS ============ -->
 <section class="slide content" data-sec="02 · Services">
   <div class="eyebrow">Installation Works</div>
-  <h2>งานติดตั้งจริง — เก็บงานเรียบร้อย ตรวจสอบได้ทุกจุด</h2>
+  <h2>งานติดตั้งจริง — ติดตั้งได้ทุกยี่ห้อ เก็บงานเรียบร้อยทุกจุด</h2>
   <div class="body inph" style="margin-top:34px">
     <figure class="big"><img src="assets/photos/install-cdu-trunking.jpg" alt="คอยล์ร้อน Fujiva พร้อมรางครอบท่อ" style="object-position:50% 45%"><figcaption><b>ติดตั้งคอยล์ร้อนพร้อมรางครอบท่อ</b><span>แนวท่อเดินตามผนัง เก็บงานด้วยรางครอบท่อทั้งแนว</span></figcaption></figure>
     <figure class="wide"><img src="assets/photos/install-cdu-bracket.jpg" alt="ขาแขวนและยางรองกันสะเทือนคอยล์ร้อน" style="object-position:50% 72%"><figcaption><b>ขาแขวนและยางรองกันสะเทือน</b><span>ยึดขาแขวนเข้ากับผนังแน่นหนา มียางรองลดเสียงและแรงสั่นสะเทือน</span></figcaption></figure>
     <figure><img src="assets/photos/install-unbox.jpg" alt="ทีมช่างตรวจรับเครื่อง Fujiva ก่อนติดตั้ง" style="object-position:50% 52%"><figcaption><b>ตรวจรับเครื่องก่อนติดตั้ง</b><span>ตรวจรุ่นและสภาพเครื่องก่อนเริ่มงาน</span></figcaption></figure>
     <figure><img src="assets/photos/install-cassette.jpg" alt="เครื่อง Cassette ติดตั้งในอาคารสำนักงาน" style="object-position:50% 40%"><figcaption><b>Cassette ในอาคารสำนักงาน</b><span>หน้ากากเรียบเสมอแนวฝ้า</span></figcaption></figure>
   </div>
-  <p class="src">ภาพจากหน้างานจริงของบริษัท</p>
+  <p class="src">ภาพจากหน้างานจริงของบริษัท · บริษัทติดตั้งและบริการเครื่องปรับอากาศทุกยี่ห้อ ภาพชุดนี้เป็นตัวอย่างงานติดตั้ง Fujiva และ Cassette ในอาคารสำนักงาน</p>
 </section>
 
 <!-- ============ 12 PM / AMC ============ -->
@@ -890,9 +892,9 @@
 <!-- ============ 24 BRANDS & MATERIALS ============ -->
 <section class="slide content" data-sec="04 · Clients">
   <div class="eyebrow">Brands &amp; Materials</div>
-  <h2>แบรนด์และวัสดุที่เราเลือกใช้</h2>
+  <h2>ติดตั้งและบริการเครื่องปรับอากาศทุกยี่ห้อ</h2>
   <div class="body" style="margin-top:30px">
-    <div class="subhd"><h4>เครื่องปรับอากาศที่จำหน่ายและติดตั้ง</h4><span>และยี่ห้ออื่นที่บริษัทอนุมัติ · ชื่อยี่ห้อเป็นเครื่องหมายการค้าของเจ้าของแต่ละราย</span></div>
+    <div class="subhd"><h4>ตัวอย่างยี่ห้อที่จำหน่าย ติดตั้ง และบริการ</h4><span>รวมถึงยี่ห้ออื่นทุกยี่ห้อ · ชื่อยี่ห้อเป็นเครื่องหมายการค้าของเจ้าของแต่ละราย</span></div>
     <div class="logos"><div><img src="assets/brands/fujiva.png" alt="Fujiva"></div><div><img src="assets/brands/daikin.png" alt="Daikin"></div><div><img src="assets/brands/mitsubishi.png" alt="Mitsubishi Electric"></div><div><img src="assets/brands/carrier.png" alt="Carrier"></div><div>Central Air</div><div><img src="assets/brands/haier.png" alt="Haier"></div><div>Hisense</div><div><img src="assets/brands/midea.png" alt="Midea"></div><div><img src="assets/brands/tcl.png" alt="TCL"></div><div>AUX</div></div>
     <div class="subhd"><h4>วัสดุติดตั้งมาตรฐาน</h4><span>Company Standard Specification</span></div>
     <div class="mats">
@@ -914,8 +916,9 @@
 <!-- ============ 25 FUJIVA ============ -->
 <section class="slide content" data-sec="04 · Clients">
   <div class="eyebrow">Fujiva · Our Product Brand</div>
-  <h2>ผลิตภัณฑ์ภายใต้แบรนด์ของบริษัท</h2>
-  <div class="body fj" style="margin-top:36px">
+  <h2>Fujiva — แบรนด์เครื่องปรับอากาศของบริษัท</h2>
+  <p class="dek">นอกจากติดตั้งและบริการเครื่องปรับอากาศทุกยี่ห้อ บริษัทมีแบรนด์ Fujiva ของตนเองเป็นทางเลือกเพิ่มเติมให้ลูกค้า</p>
+  <div class="body fj" style="margin-top:28px">
     <div class="card" style="border-top:8px solid var(--orange)">
       <div class="pv">{{AC}}</div><div class="cb">
       <span class="tag o">Air Conditioner</span>

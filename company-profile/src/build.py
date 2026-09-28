@@ -248,13 +248,19 @@ def featured():
     return f'<div class="body fc" style="margin-top:34px">{"".join(cards)}</div>'
 
 
+MARK_WITH_NAME = {"suksawat", "nuea-luan"}
+
+
 def client_wall():
     cols = []
     for title, icon, tone, items in CLIENTS:
         tiles = []
         for slug, name, key in items:
             src = asset("clients", slug)
-            inner = f'<img src="{src}" alt="{name}">' if src else name
+            if src and slug in MARK_WITH_NAME:
+                inner = f'<span class="mn"><img src="{src}" alt="">{name}</span>'
+            else:
+                inner = f'<img src="{src}" alt="{name}">' if src else name
             tiles.append(f'<div class="tile{" key" if key else ""}">{inner}</div>')
         cols.append(f'<div class="col"><h4><span class="ico{tone}"><svg viewBox="0 0 24 24"><path d="{icon}"/></svg></span>{title}</h4><div class="tiles">{"".join(tiles)}</div></div>')
     return f'<div class="body lw" style="margin-top:36px">{"".join(cols)}</div>'
