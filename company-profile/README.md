@@ -1,17 +1,41 @@
-# Company Profile: Sahaburapa Group (Rev08, DRAFT)
+# Company Profile: Sahaburapa Group (Rev09, DRAFT)
 
 Company Profile ของบริษัท สหบูรพากรุ๊ป จำกัด สำหรับลูกค้าองค์กร (Customer Version) มี 30 สไลด์ ขนาด 16:9
 
 | ไฟล์ | ใช้ทำอะไร |
 |---|---|
 | `index.html` | เปิดในเบราว์เซอร์เพื่อนำเสนอ ใช้ปุ่ม ← → / Space หรือปัดหน้าจอเพื่อเปลี่ยนสไลด์ ใช้งานออฟไลน์ได้ (ต้องเก็บไว้คู่กับโฟลเดอร์ `assets/` และ `fonts/`) |
-| `Sahaburapa_Company_Profile_Rev08_2026-09-28_DRAFT.pdf` | PDF 30 หน้า สำหรับส่งอีเมล แนบเอกสารขึ้นทะเบียนผู้ขาย หรือพิมพ์ |
+| `Sahaburapa_Company_Profile_Rev09_2026-09-28_DRAFT.pdf` | PDF 30 หน้า สำหรับส่งอีเมล แนบเอกสารขึ้นทะเบียนผู้ขาย หรือพิมพ์ |
 | `assets/photos/` | ภาพหน้างานจริงที่คัด ครอป และปรับแสงแล้ว |
 | `assets/clients/` | ใส่โลโก้ลูกค้าที่นี่ (ดูหัวข้อ "เพิ่มโลโก้ลูกค้า") |
 | `assets/brand/` | ใส่โลโก้บริษัท `sbp-logo.png` หรือ `.svg` ที่นี่ แล้วจะแทนสัญลักษณ์ชั่วคราวทุกหน้า |
 | `src/` | ต้นฉบับ (`template.html`) และสคริปต์สร้าง `index.html` (`build.py`, `art.py`) |
 | `fonts/` | IBM Plex Sans และ IBM Plex Sans Thai (SIL Open Font License) |
-| `archive/` | ฉบับก่อนหน้า (Rev01–Rev07) เก็บไว้เป็นประวัติ (OBSOLETE) |
+| `archive/` | ฉบับก่อนหน้า (Rev01–Rev08) เก็บไว้เป็นประวัติ (OBSOLETE) |
+
+## สิ่งที่เปลี่ยนใน Rev09: โลโก้ลูกค้า 20 ราย
+
+| ลูกค้า | ที่มาของโลโก้ |
+|---|---|
+| T.MAN, ศรีไทยฯ, BBGI, เปาโล, ที ที เทคโนพลาส | เว็บไซต์ทางการ (Rev06) |
+| เจริญไทยมอเตอร์ เซลส์ (Toyota CTM) | toyotactm.com |
+| รพ.สุขสวัสดิ์อินเตอร์ | suksawatinterhospital.com (สัญลักษณ์) |
+| เนื้อล้วนล้วน | หน้าร้านบน Wongnai |
+| อุตสาหกรรมมิตรมงคล (MMK) | Facebook: MMKGroups (ปรับเป็นพื้นขาว) |
+| มิตซูบิชิ ไลเกอร์ พระราม 2 | mitsu-liger.com (สัญลักษณ์ Mitsubishi) |
+| ธนกูล เวิร์คกรุ๊ป | Facebook: tanakulworkgroup.co.th |
+| Proflex | proflexoffice.com |
+| รพ.บางมด เอสเทติก | Facebook: Bangmodaesthetichospital |
+| หอพัก รพ.บางมด | Facebook: MKTBangmodhos (โลโก้โรงพยาบาลบางมด) |
+| Smile Plus Dental | Facebook: smileplusdc |
+| โรงเรียนบางมดวิทยา | Facebook: BangmodWittaya (ครอปตราโรงเรียนจากภาพฉลองครบรอบ 51 ปี ความละเอียดต่ำ) |
+| เป็นลาว (Penlaos) | Facebook: penlaosthailand |
+| เพชรยินดี อะคาเดมี | Facebook: petchyindeeacademy |
+
+- โลโก้ทรงสี่เหลี่ยมจัตุรัส (เป็นลาว, เพชรยินดี, ธนกูล, สุขสวัสดิ์ ฯลฯ) แสดงคู่กับชื่อ เพื่อให้อ่านออกในกรอบขนาดเล็ก
+- **ต้องยืนยันว่าเป็นบริษัทเดียวกับลูกค้าในทะเบียนงาน:** ไลเกอร์ = Mitsubishi Liger (605 ถ.พระราม 2), ธนกูล = ธนกูล เวิร์คกรุ๊ป, Proflex = Proflex Industrial (ในทะเบียนงานระบุว่า "ผู้บริหาร Proflex"), เพชรยินดี = Petchyindee Academy
+- **หาไม่พบหรือระบุตัวตนไม่ได้:** บี พี แล็ป, เอกยงวงศ์ (เว็บไซต์ปิดแล้ว และ Facebook ไม่มีรูปโปรไฟล์), บางกอกโกลบอล, พีวีที ซีวิล, อุตสาหกรรมแป้งสาลี, Dental Smile, อัลติเมท โก, สินทวี, เปรี้ยวสปา
+- **ที่อยู่อาศัยและคอนโด:** ยังแสดงเป็นชื่อ (เหตุผลอยู่ในหมายเหตุ Rev08)
 
 ## สิ่งที่เปลี่ยนใน Rev08
 
