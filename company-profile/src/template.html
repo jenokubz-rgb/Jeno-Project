@@ -166,6 +166,33 @@
   .fc .sv { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
   .fc .sv span { font-size: 16px; font-weight: 600; padding: 4px 10px; border-radius: 6px; background: var(--sky); color: var(--blue); }
 
+  /* Distribution slide */
+  .dist { display: grid; grid-template-columns: 1.15fr 1fr; gap: 36px; }
+  .dist .ph3 { display: grid; grid-template-columns: 1.3fr 1fr; grid-template-rows: 1fr 1fr; gap: 14px; height: 470px; }
+  .dist .ph3 figure { position: relative; border-radius: 14px; overflow: hidden; }
+  .dist .ph3 figure:first-child { grid-row: span 2; }
+  .dist .ph3 img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .dist .ph3 figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 18px 14px; background: linear-gradient(0deg, rgba(10,34,64,.9), rgba(10,34,64,0)); color: #fff; font-size: 19px; font-weight: 600; }
+  .cats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .cats .c { background: #fff; border: 1.5px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .cats .c img { width: 100%; height: 150px; object-fit: cover; display: block; background: #fff; }
+  .cats .c b { display: block; font-size: 21px; color: var(--navy); padding: 10px 16px 12px; line-height: 1.3; }
+  .hb { margin-top: 26px; display: grid; grid-template-columns: 250px repeat(8, 1fr); gap: 12px; align-items: center; background: #fff; border: 1.5px solid var(--line); border-radius: 16px; padding: 16px 24px; }
+  .hb h4 { font-size: 21px; color: var(--navy); line-height: 1.35; }
+  .hb img { max-width: 100%; max-height: 50px; object-fit: contain; justify-self: center; }
+
+  /* Installation photo slide */
+  .inph { display: grid; grid-template-columns: 1.25fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 16px; height: 620px; }
+  .inph figure { position: relative; border-radius: 14px; overflow: hidden; background: #DCE3EC; }
+  .inph figure.big { grid-row: span 2; }
+  .inph figure.wide { grid-column: span 2; }
+  .inph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .inph figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 60px 22px 16px; background: linear-gradient(0deg, rgba(10,34,64,.92), rgba(10,34,64,0)); color: #fff; }
+  .inph figcaption b { display: block; font-size: 24px; }
+  .inph figcaption span { display: block; font-size: 18px; color: rgba(255,255,255,.8); margin-top: 3px; }
+  .inph .il { position: absolute; top: 14px; right: 14px; font-size: 14px; font-weight: 700; letter-spacing: .08em; padding: 4px 10px; border-radius: 6px; background: rgba(255,255,255,.88); color: var(--navy); }
+  .logos div img { max-height: 58px; max-width: 78%; object-fit: contain; }
+
   /* Contents */
   .toc-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 80px; }
   .toc-item { display: grid; grid-template-columns: 110px 1fr auto; gap: 28px; align-items: baseline; padding: 30px 0; border-bottom: 1.5px solid var(--line); }
@@ -441,22 +468,22 @@
   <div class="eyebrow">Contents</div>
   <h2>สารบัญ</h2>
   <div class="body toc-list" style="margin-top:40px">
-    <div class="toc-item"><div class="n">01</div><div><h3>เกี่ยวกับเรา</h3><p>ภาพรวมบริษัท วิสัยทัศน์ ตัวเลขสำคัญ โครงสร้างแบรนด์และองค์กร</p></div><div class="p">03</div></div>
-    <div class="toc-item"><div class="n">03</div><div><h3>มาตรฐานการทำงาน</h3><p>ขั้นตอนงาน หน้างานจริง เอกสารส่งมอบ ความปลอดภัย และการรับประกัน</p></div><div class="p">14</div></div>
-    <div class="toc-item"><div class="n">02</div><div><h3>บริการของเรา</h3><p>บริการ 5 กลุ่ม มาตรฐานติดตั้ง สัญญาบำรุงรักษา และงานโครงการ</p></div><div class="p">09</div></div>
-    <div class="toc-item"><div class="n">04</div><div><h3>ลูกค้าและผลงาน</h3><p>ลูกค้าแยกตามอุตสาหกรรม กรณีศึกษา พื้นที่บริการ แบรนด์และวัสดุ</p></div><div class="p">20</div></div>
+    <div class="toc-item"><div class="n">01</div><div><h3>เกี่ยวกับเรา</h3><p>ภาพรวมบริษัท วิสัยทัศน์ ตัวเลขสำคัญ ธุรกิจจำหน่ายและนำเข้า โครงสร้างองค์กร</p></div><div class="p">03</div></div>
+    <div class="toc-item"><div class="n">03</div><div><h3>มาตรฐานการทำงาน</h3><p>ขั้นตอนงาน หน้างานจริง เอกสารส่งมอบ ความปลอดภัย และการรับประกัน</p></div><div class="p">16</div></div>
+    <div class="toc-item"><div class="n">02</div><div><h3>บริการของเรา</h3><p>บริการ 5 กลุ่ม มาตรฐานและงานติดตั้ง สัญญาบำรุงรักษา และงานโครงการ</p></div><div class="p">10</div></div>
+    <div class="toc-item"><div class="n">04</div><div><h3>ลูกค้าและผลงาน</h3><p>ลูกค้าแยกตามอุตสาหกรรม กรณีศึกษา พื้นที่บริการ แบรนด์และวัสดุ</p></div><div class="p">22</div></div>
   </div>
 </section>
 
 <!-- ============ 03 DIVIDER 01 ============ -->
 <section class="slide dark divider ph">
   {{FLOW}}
-  <div class="dphoto" style="background-image:url(assets/photos/cassette-service.jpg)"><span>ภาพจากหน้างานจริง · งานบริการ Cassette</span></div>
+  <div class="dphoto" style="background-image:url(assets/photos/hq-team.jpg);background-position:52% 60%"><span>สำนักงานใหญ่และทีมงาน · ถนนพระราม 2</span></div>
   <div class="wordmark">{{MARK_W}} SAHABURAPA GROUP</div>
   <div class="big">01</div>
   <div class="eyebrow">About Us</div>
   <h2>เกี่ยวกับเรา</h2>
-  <div class="toc"><span>ภาพรวมบริษัท</span><span>วิสัยทัศน์และพันธกิจ</span><span>ตัวเลขสำคัญ</span><span>โครงสร้างแบรนด์</span><span>โครงสร้างองค์กร</span></div>
+  <div class="toc"><span>ภาพรวมบริษัท</span><span>วิสัยทัศน์และพันธกิจ</span><span>ตัวเลขสำคัญ</span><span>โครงสร้างแบรนด์</span><span>ธุรกิจจำหน่ายและนำเข้า</span><span>โครงสร้างองค์กร</span></div>
 </section>
 
 <!-- ============ 04 OVERVIEW ============ -->
@@ -564,6 +591,27 @@
   </div>
 </section>
 
+<!-- ============ DISTRIBUTION ============ -->
+<section class="slide content" data-sec="01 · About Us">
+  <div class="eyebrow">Distribution &amp; Import</div>
+  <h2>ธุรกิจจำหน่ายและนำเข้า — รากฐานกว่า 30 ปีของบริษัท</h2>
+  <p class="dek">ตัวแทนจำหน่ายและผู้นำเข้าอะไหล่ อุปกรณ์ เครื่องมือช่าง น้ำยาแอร์ ตู้ทำน้ำเย็น-น้ำร้อน และเครื่องกรองน้ำ ทั้งปลีกและส่ง</p>
+  <div class="body dist" style="margin-top:30px">
+    <div class="ph3">
+      <figure><img src="assets/photos/import-container-1.jpg" alt="ขนถ่ายสินค้านำเข้าจากตู้คอนเทนเนอร์"><figcaption>นำเข้าสินค้าโดยตรงจากผู้ผลิต</figcaption></figure>
+      <figure><img src="assets/photos/import-container-2.jpg" alt="ขนถ่ายสินค้าด้วยรถโฟล์คลิฟต์"><figcaption>ขนถ่ายสินค้าเข้าคลัง</figcaption></figure>
+      <figure><img src="assets/photos/trade-fair.jpg" alt="บูธแสดงสินค้าของบริษัท" style="object-position:40% 50%"><figcaption>ร่วมงานแสดงสินค้า</figcaption></figure>
+    </div>
+    <div class="cats">
+      <div class="c"><img src="assets/photos/cat-parts.jpg" alt=""><b>อะไหล่แอร์บ้าน ตู้เย็น รถยนต์</b></div>
+      <div class="c"><img src="assets/photos/cat-refrigerant.jpg" alt=""><b>น้ำยาแอร์บ้าน ตู้เย็น รถยนต์</b></div>
+      <div class="c"><img src="assets/photos/cat-tools.jpg" alt=""><b>เครื่องมือช่างแอร์</b></div>
+      <div class="c"><img src="assets/photos/cat-water-cooler.jpg" alt=""><b>ตู้ทำน้ำเย็น-น้ำร้อน</b></div>
+    </div>
+  </div>
+  <div class="hb"><h4>แบรนด์ที่จัดจำหน่าย</h4><img src="assets/brands/sp.png" alt="SP"><img src="assets/brands/fujiva.png" alt="Fujiva"><img src="assets/brands/icool.png" alt="iCool"><img src="assets/brands/coolmax.png" alt="CoolMax"><img src="assets/brands/freon.png" alt="Freon"><img src="assets/brands/sacco.png" alt="Sacco"><img src="assets/brands/dongyue.png" alt="Dongyue"><img src="assets/brands/hongsen.png" alt="Hongsen"></div>
+</section>
+
 <!-- ============ 08 ORGANIZATION ============ -->
 <section class="slide content" data-sec="01 · About Us">
   <div class="eyebrow">Organization</div>
@@ -588,7 +636,7 @@
   <div class="big">02</div>
   <div class="eyebrow">Our Services</div>
   <h2>บริการของเรา</h2>
-  <div class="toc"><span>บริการ 5 กลุ่ม</span><span>มาตรฐานงานติดตั้ง</span><span>สัญญาบำรุงรักษา PM/AMC</span><span>งานโครงการ</span></div>
+  <div class="toc"><span>บริการ 5 กลุ่ม</span><span>มาตรฐานงานติดตั้ง</span><span>งานติดตั้งและทดสอบระบบ</span><span>สัญญาบำรุงรักษา PM/AMC</span><span>งานโครงการ</span></div>
 </section>
 
 <!-- ============ 10 SERVICES ============ -->
@@ -620,6 +668,19 @@
       <div class="r" style="background:var(--paper)"><div></div><div><span style="font-size:18px">ระยะท่อเกิน ความสูงเกิน 3 m งานไฟเมน นั่งร้าน หรือโรยตัว แจ้งในใบเสนอราคาก่อนเริ่มงาน</span></div></div>
     </div>
   </div>
+</section>
+
+<!-- ============ INSTALLATION PHOTOS ============ -->
+<section class="slide content" data-sec="02 · Services">
+  <div class="eyebrow">Installation &amp; Commissioning</div>
+  <h2>งานติดตั้งและทดสอบระบบ — ทุกขั้นตอนตรวจวัดได้</h2>
+  <div class="body inph" style="margin-top:34px">
+    <figure class="big"><img src="assets/stock/install-copper-roof.jpg" alt="เดินท่อทองแดงและจุดยึดท่อบนหลังคา" style="object-position:40% 50%"><span class="il">ภาพประกอบ</span><figcaption><b>เดินท่อทองแดงและจุดยึด</b><span>วางแนวท่อ ยึดด้วยรางและแคลมป์ตามระยะ พร้อมอุปกรณ์ความปลอดภัยครบ</span></figcaption></figure>
+    <figure class="wide"><img src="assets/stock/install-gauges.jpg" alt="ต่อเกจวัดแรงดันน้ำยา"><span class="il">ภาพประกอบ</span><figcaption><b>ทดสอบแรงดันและแวคคั่ม</b><span>ตรวจรอยรั่ว ทำสุญญากาศ และวัดแรงดันน้ำยาก่อนส่งมอบ</span></figcaption></figure>
+    <figure><img src="assets/stock/install-electrical.jpg" alt="ตรวจสอบระบบไฟฟ้าในตู้ควบคุม"><span class="il">ภาพประกอบ</span><figcaption><b>ตรวจระบบไฟฟ้า</b><span>ขั้วต่อ คอนแทคเตอร์ และสายควบคุม</span></figcaption></figure>
+    <figure><img src="assets/stock/install-condensing-units.jpg" alt="ชุดคอยล์ร้อนและท่อหุ้มฉนวนในงานโครงการ" style="object-position:30% 60%"><span class="il">ภาพประกอบ</span><figcaption><b>งานระบบขนาดใหญ่</b><span>คอยล์ร้อน ท่อหุ้มฉนวน และฐานรองเครื่อง</span></figcaption></figure>
+  </div>
+  <p class="src">ภาพประกอบจาก Wikimedia Commons: MTA Capital Construction (CC BY 2.0) และภาพสาธารณสมบัติ (Public Domain) · ภาพหน้างานจริงของบริษัทอยู่ในสไลด์ 18</p>
 </section>
 
 <!-- ============ 12 PM / AMC ============ -->
@@ -832,7 +893,7 @@
   <h2>แบรนด์และวัสดุที่เราเลือกใช้</h2>
   <div class="body" style="margin-top:30px">
     <div class="subhd"><h4>เครื่องปรับอากาศที่จำหน่ายและติดตั้ง</h4><span>และยี่ห้ออื่นที่บริษัทอนุมัติ · ชื่อยี่ห้อเป็นเครื่องหมายการค้าของเจ้าของแต่ละราย</span></div>
-    <div class="logos"><div class="own">Fujiva</div><div>Daikin</div><div>Mitsubishi</div><div>Carrier</div><div>Central Air</div><div>Haier</div><div>Hisense</div><div>Midea</div><div>TCL</div><div>AUX</div></div>
+    <div class="logos"><div><img src="assets/brands/fujiva.png" alt="Fujiva"></div><div><img src="assets/brands/daikin.png" alt="Daikin"></div><div><img src="assets/brands/mitsubishi.png" alt="Mitsubishi Electric"></div><div><img src="assets/brands/carrier.png" alt="Carrier"></div><div>Central Air</div><div><img src="assets/brands/haier.png" alt="Haier"></div><div>Hisense</div><div><img src="assets/brands/midea.png" alt="Midea"></div><div><img src="assets/brands/tcl.png" alt="TCL"></div><div>AUX</div></div>
     <div class="subhd"><h4>วัสดุติดตั้งมาตรฐาน</h4><span>Company Standard Specification</span></div>
     <div class="mats">
       <div class="card"><b>ท่อทองแดง</b><span>หนาประมาณ 0.7 mm สำหรับงานติดตั้งมาตรฐาน</span></div>
