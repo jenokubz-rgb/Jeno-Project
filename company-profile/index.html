@@ -147,6 +147,57 @@
   .gal figcaption span { font-size: 22px; font-weight: 600; line-height: 1.35; }
   .gal figcaption small { display: block; font-size: 17px; font-weight: 400; color: rgba(255,255,255,.78); margin-top: 3px; }
 
+
+  /* ================= Why us ================= */
+  .why { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .why .card { padding: 30px 34px; display: grid; grid-template-columns: auto 1fr; column-gap: 22px; align-items: start; }
+  .why .card .ico { grid-row: span 3; }
+  .why .k { font-size: 44px; font-weight: 700; color: var(--navy); line-height: 1.05; letter-spacing: -.01em; }
+  .why .k small { font-size: 22px; color: var(--orange-ink); margin-left: 8px; font-weight: 700; letter-spacing: .02em; }
+  .why h4 { font-size: 25px; color: var(--navy); margin-top: 10px; line-height: 1.35; }
+  .why p { font-size: 20px !important; line-height: 1.55 !important; margin-top: 8px !important; }
+  .promise { margin-top: 26px; display: flex; align-items: center; gap: 28px; background: var(--navy); color: #fff; border-radius: 16px; padding: 22px 34px; font-size: 24px; }
+  .promise b { color: var(--orange); font-size: 19px; letter-spacing: .14em; text-transform: uppercase; flex: none; }
+
+  /* ================= Challenges -> solutions ================= */
+  .cs { display: grid; gap: 14px; }
+  .cs .hd, .cs .row { display: grid; grid-template-columns: 560px 60px 1fr 210px; align-items: center; }
+  .cs .hd { font-size: 18px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--soft); padding: 0 28px; }
+  .cs .row { background: var(--card); border: 1.5px solid var(--line); border-radius: 16px; padding: 18px 28px; min-height: 104px; }
+  .cs .q { display: flex; gap: 18px; align-items: center; font-size: 23px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+  .cs .q .ico { width: 52px; height: 52px; border-radius: 14px; background: #FCE9E7; color: #C8372D; }
+  .cs .q .ico svg { width: 28px; height: 28px; }
+  .cs .ar { font-size: 34px; color: var(--orange); text-align: center; font-weight: 700; }
+  .cs .a { font-size: 22px; line-height: 1.5; color: var(--muted); padding-right: 24px; }
+  .cs .a b { color: var(--navy); display: block; font-size: 23px; }
+  .cs .t { justify-self: end; }
+
+  /* ================= Industries ================= */
+  .ind-top { display: grid; grid-template-columns: 360px 1fr; gap: 40px; align-items: center; }
+  .ind-top .big { font-size: 120px; font-weight: 700; color: var(--navy); line-height: 1; letter-spacing: -.03em; }
+  .ind-top .big small { font-size: 56px; color: var(--orange); }
+  .ind-top p { font-size: 22px; color: var(--muted); line-height: 1.5; margin-top: 10px; }
+  .ind-bar { display: flex; height: 58px; border-radius: 12px; overflow: hidden; }
+  .ind-bar div { display: flex; align-items: center; padding-left: 16px; color: #fff; font-size: 20px; font-weight: 700; white-space: nowrap; }
+  .ind-lg { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 14px; font-size: 19px; color: var(--muted); }
+  .ind-lg i { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 8px; vertical-align: -1px; }
+  .ind { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; margin-top: 36px; }
+  .ind .card { padding: 24px 24px 26px; border-top: 6px solid var(--c); }
+  .ind .n { font-size: 46px; font-weight: 700; color: var(--navy); line-height: 1; }
+  .ind .n small { font-size: 20px; color: var(--soft); margin-left: 6px; font-weight: 600; }
+  .ind h4 { font-size: 22px; color: var(--navy); margin-top: 10px; line-height: 1.35; min-height: 60px; }
+  .ind dt { font-size: 15px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--soft); margin-top: 14px; }
+  .ind dd { font-size: 19px; line-height: 1.5; color: var(--muted); margin-top: 4px; }
+
+  /* ================= Contact: how to start ================= */
+  .start { display: grid; grid-template-columns: repeat(3, 1fr) 250px; gap: 18px; margin-top: 38px; align-items: stretch; }
+  .start .st { background: rgba(255,255,255,.07); border: 1.5px solid rgba(255,255,255,.16); border-radius: 16px; padding: 20px 24px; }
+  .start .st b { font-size: 18px; color: var(--orange); letter-spacing: .12em; }
+  .start .st h4 { font-size: 25px; color: #fff; margin-top: 6px; }
+  .start .st p { font-size: 18px; color: rgba(255,255,255,.7); line-height: 1.5; margin-top: 6px; }
+  .start .qr { background: #fff; border-radius: 16px; padding: 14px; display: grid; grid-template-columns: 110px 1fr; gap: 12px; align-items: center; }
+  .start .qr img { width: 110px; height: 110px; }
+  .start .qr span { font-size: 16px; color: var(--navy); line-height: 1.4; font-weight: 600; }
   /* Client logo wall */
   .lw { margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 16px 18px; }
   .lw .tile { width: 265px; height: 140px; background: var(--card); border: 1.5px solid var(--line); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 14px 20px 12px; }
@@ -419,9 +470,10 @@
 
   /* Contact / back cover */
   .back { padding: 0; }
-  .back .inner { position: relative; z-index: 3; padding: 120px 140px; height: 100%; display: flex; flex-direction: column; }
-  .back h2 { font-size: 76px; }
-  .ci { display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px 56px; margin-top: 70px; }
+  .back .inner { position: relative; z-index: 3; padding: 96px 140px 104px; height: 100%; display: flex; flex-direction: column; }
+  .back h2 { font-size: 62px; }
+  .back .eyebrow { margin-top: 56px !important; }
+  .ci { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px 56px; margin-top: 46px; }
   .ci div { border-left: 4px solid var(--orange); padding-left: 24px; }
   .ci dt { font-size: 18px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.55); }
   .ci dd { font-size: 28px; font-weight: 500; margin-top: 8px; line-height: 1.4; }
@@ -470,10 +522,10 @@
   <div class="eyebrow">Contents</div>
   <h2>สารบัญ</h2>
   <div class="body toc-list" style="margin-top:40px">
-    <div class="toc-item"><div class="n">01</div><div><h3>เกี่ยวกับเรา</h3><p>ภาพรวมบริษัท วิสัยทัศน์ ตัวเลขสำคัญ ธุรกิจจำหน่ายและนำเข้า โครงสร้างองค์กร</p></div><div class="p">03</div></div>
-    <div class="toc-item"><div class="n">03</div><div><h3>มาตรฐานการทำงาน</h3><p>ขั้นตอนงาน หน้างานจริง เอกสารส่งมอบ ความปลอดภัย และการรับประกัน</p></div><div class="p">16</div></div>
-    <div class="toc-item"><div class="n">02</div><div><h3>บริการของเรา</h3><p>บริการ 5 กลุ่ม มาตรฐานและงานติดตั้ง สัญญาบำรุงรักษา และงานโครงการ</p></div><div class="p">10</div></div>
-    <div class="toc-item"><div class="n">04</div><div><h3>ลูกค้าและผลงาน</h3><p>ลูกค้าแยกตามอุตสาหกรรม กรณีศึกษา พื้นที่บริการ แบรนด์และวัสดุ</p></div><div class="p">22</div></div>
+    <div class="toc-item"><div class="n">01</div><div><h3>เกี่ยวกับเรา</h3><p>ภาพรวมบริษัท วิสัยทัศน์ ตัวเลขสำคัญ จุดเด่น ธุรกิจจำหน่ายและนำเข้า โครงสร้างองค์กร</p></div><div class="p">03</div></div>
+    <div class="toc-item"><div class="n">03</div><div><h3>มาตรฐานการทำงาน</h3><p>ขั้นตอนงาน หน้างานจริง เอกสารส่งมอบ ความปลอดภัย และการรับประกัน</p></div><div class="p">18</div></div>
+    <div class="toc-item"><div class="n">02</div><div><h3>บริการของเรา</h3><p>โจทย์ลูกค้าองค์กร บริการ 5 กลุ่ม มาตรฐานและงานติดตั้ง สัญญาบำรุงรักษา และงานโครงการ</p></div><div class="p">11</div></div>
+    <div class="toc-item"><div class="n">04</div><div><h3>ลูกค้าและผลงาน</h3><p>กลุ่มลูกค้า ลูกค้าองค์กร กรณีศึกษา พื้นที่บริการ แบรนด์และวัสดุ</p></div><div class="p">24</div></div>
   </div>
 </section>
 
@@ -485,7 +537,7 @@
   <div class="big">01</div>
   <div class="eyebrow">About Us</div>
   <h2>เกี่ยวกับเรา</h2>
-  <div class="toc"><span>ภาพรวมบริษัท</span><span>วิสัยทัศน์และพันธกิจ</span><span>ตัวเลขสำคัญ</span><span>โครงสร้างแบรนด์</span><span>ธุรกิจจำหน่ายและนำเข้า</span><span>โครงสร้างองค์กร</span></div>
+  <div class="toc"><span>ภาพรวมบริษัท</span><span>วิสัยทัศน์และพันธกิจ</span><span>ตัวเลขสำคัญ</span><span>จุดเด่นของเรา</span><span>โครงสร้างแบรนด์</span><span>ธุรกิจจำหน่ายและนำเข้า</span><span>โครงสร้างองค์กร</span></div>
 </section>
 
 <!-- ============ 04 OVERVIEW ============ -->
@@ -566,6 +618,23 @@
   </div>
 </section>
 
+<!-- ============ WHY US ============ -->
+<section class="slide content" data-sec="01 · About Us">
+  <div class="eyebrow">Why Sahaburapa</div>
+  <h2>ทำไมองค์กรเลือกสหบูรพา</h2>
+  <div class="body" style="margin-top:36px">
+    <div class="why">
+      <div class="card"><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2"/></svg></span><div class="k">30+<small>ปี</small></div><h4>อยู่ในธุรกิจเครื่องปรับอากาศ</h4><p>เริ่มจากจำหน่ายและนำเข้าอะไหล่ น้ำยาแอร์ และอุปกรณ์ แล้วต่อยอดสู่งานบริการ</p></div>
+      <div class="card"><span class="ico o"><svg viewBox="0 0 24 24"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/></svg></span><div class="k">ครบวงจร</div><h4>ขาย ติดตั้ง ล้าง/PM ซ่อม และงานโครงการ</h4><p>ดูแลโดยนิติบุคคลเดียว มีแบรนด์สินค้าและเครื่องมือของบริษัทเอง</p></div>
+      <div class="card"><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 2v20M4.9 6l14.2 12M19.1 6 4.9 18M9 4l3 2 3-2M9 20l3-2 3 2"/></svg></span><div class="k">ทุกยี่ห้อ</div><h4>ติดตั้งและดูแลได้ทุกรูปแบบ</h4><p>Wall · Ceiling · Cassette · Floor Standing · Ducted และประสานงานระบบ VRV/VRF/Chiller</p></div>
+      <div class="card"><span class="ico o"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 12h7M9 16h7"/></svg></span><div class="k">4<small>เอกสาร</small></div><h4>ส่งมอบงานที่ตรวจสอบได้</h4><p>ใบเสนอราคา · Job Card · Service Report ภาพก่อน–หลัง · ใบรับประกัน</p></div>
+      <div class="card"><span class="ico"><svg viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8zM7.5 8.5h.01"/></svg></span><div class="k">ราคาชัดเจน</div><h4>สำรวจหน้างานก่อนเสนอราคา</h4><p>ระบุขอบเขต ราคา และเงื่อนไขในใบเสนอราคาก่อนเริ่มงานทุกครั้ง</p></div>
+      <div class="card"><span class="ico o"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3L20 9M20 4v5h-5M20 12a8 8 0 0 1-14 5.3L4 15M4 20v-5h5"/></svg></span><div class="k">14<small>จาก 33 ราย</small></div><h4>ลูกค้าที่ใช้บริการต่อเนื่อง</h4><p>ใช้บริการตั้งแต่ 3 งานขึ้นไปในไตรมาส รวมบริษัทจดทะเบียนในตลาดหลักทรัพย์ฯ</p></div>
+    </div>
+    <div class="promise"><b>Our Promise</b>มาตรฐานเดียวกันทุกงาน ตั้งแต่แอร์เครื่องเดียวในบ้าน จนถึงโรงงานและโรงพยาบาลหลายร้อยเครื่อง</div>
+  </div>
+</section>
+
 <!-- ============ 07 BRAND ARCHITECTURE ============ -->
 <section class="slide content" data-sec="01 · About Us">
   <div class="eyebrow">Brand Architecture</div>
@@ -638,7 +707,21 @@
   <div class="big">02</div>
   <div class="eyebrow">Our Services</div>
   <h2>บริการของเรา</h2>
-  <div class="toc"><span>บริการ 5 กลุ่ม</span><span>มาตรฐานงานติดตั้ง</span><span>งานติดตั้งจริง</span><span>สัญญาบำรุงรักษา PM/AMC</span><span>งานโครงการ</span></div>
+  <div class="toc"><span>โจทย์ลูกค้าองค์กร</span><span>บริการ 5 กลุ่ม</span><span>มาตรฐานงานติดตั้ง</span><span>งานติดตั้งจริง</span><span>สัญญาบำรุงรักษา PM/AMC</span><span>งานโครงการ</span></div>
+</section>
+
+<!-- ============ CHALLENGES ============ -->
+<section class="slide content" data-sec="02 · Services">
+  <div class="eyebrow">Business Challenges</div>
+  <h2>โจทย์ของลูกค้าองค์กร และวิธีที่เราแก้</h2>
+  <div class="body cs" style="margin-top:34px">
+    <div class="hd"><span>ปัญหาที่พบบ่อย</span><span></span><span>สิ่งที่สหบูรพาทำ</span><span style="text-align:right">บริการ</span></div>
+    <div class="row"><div class="q"><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 3 2 20h20zM12 10v4M12 17h.01"/></svg></span>เครื่องเสียกะทันหัน กระทบการผลิตและการให้บริการ</div><div class="ar">›</div><div class="a"><b>บำรุงรักษาตามรอบก่อนเครื่องเสีย</b>PM 2–3 ครั้งต่อปี พร้อมจัดลำดับ ซ่อมทันที · วางแผนซ่อม · เฝ้าระวัง · แนะนำเปลี่ยน</div><span class="tag t">PM / AMC</span></div>
+    <div class="row"><div class="q"><span class="ico"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3L20 9M20 4v5h-5M20 12a8 8 0 0 1-14 5.3L4 15M4 20v-5h5"/></svg></span>เสียซ้ำจุดเดิม แก้แล้วไม่หายขาด</div><div class="ar">›</div><div class="a"><b>หาสาเหตุก่อนซ่อม</b>วิเคราะห์ Error Code วัดค่าไฟฟ้าและแรงดัน หารอยรั่ว แล้วจึงเปลี่ยนอะไหล่</div><span class="tag o t">ตรวจเช็กและซ่อม</span></div>
+    <div class="row"><div class="q"><span class="ico"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 12h7M9 16h7"/></svg></span>ฝ่ายจัดซื้อและฝ่ายอาคารต้องมีหลักฐานการทำงาน</div><div class="ar">›</div><div class="a"><b>เอกสารครบทุกงาน</b>Job Card · Service Report ภาพก่อน–หลัง · ทะเบียนเครื่อง · ใบรับประกัน</div><span class="tag n t">เอกสารส่งมอบ</span></div>
+    <div class="row"><div class="q"><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 3 2 8l10 5 10-5zM2 13l10 5 10-5"/></svg></span>เครื่องหลายยี่ห้อ ผู้รับเหมาหลายราย มาตรฐานไม่เท่ากัน</div><div class="ar">›</div><div class="a"><b>ผู้ให้บริการรายเดียว ทุกยี่ห้อ ทุกรูปแบบ</b>ใช้มาตรฐานงานติดตั้งและรายงานชุดเดียวกันทุกสาขา</div><span class="tag t">ติดตั้งและ PM</span></div>
+    <div class="row"><div class="q"><span class="ico"><svg viewBox="0 0 24 24"><path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3zM9 3v15M15 6v15"/></svg></span>พื้นที่ต้องใช้งานต่อเนื่อง ปิดทั้งอาคารไม่ได้</div><div class="ar">›</div><div class="a"><b>วางแผนเป็นโซน ทำงานนอกเวลาได้</b>Method Statement แบ่งโซน กลางคืน วันหยุด และป้องกันพื้นที่ทุกจุดที่ทำงาน</div><span class="tag o t">งานโครงการ</span></div>
+  </div>
 </section>
 
 <!-- ============ 10 SERVICES ============ -->
@@ -833,7 +916,21 @@
   <div class="big">04</div>
   <div class="eyebrow">Clients &amp; Projects</div>
   <h2>ลูกค้าและผลงาน</h2>
-  <div class="toc"><span>ลูกค้าองค์กรชั้นนำ</span><span>ลูกค้าแยกตามอุตสาหกรรม</span><span>กรณีศึกษา</span><span>พื้นที่บริการ</span><span>แบรนด์และวัสดุ</span><span>Fujiva</span></div>
+  <div class="toc"><span>กลุ่มลูกค้า</span><span>ลูกค้าองค์กรชั้นนำ</span><span>ลูกค้าที่ไว้วางใจเรา</span><span>กรณีศึกษา</span><span>พื้นที่บริการ</span><span>แบรนด์และวัสดุ</span><span>Fujiva</span></div>
+</section>
+
+<!-- ============ INDUSTRIES ============ -->
+<section class="slide content" data-sec="04 · Clients">
+  <div class="eyebrow">Industries We Serve</div>
+  <h2>กลุ่มลูกค้าที่เราดูแล</h2>
+  <div class="body" style="margin-top:38px">
+    <div class="ind-top">
+      <div><div class="big">71<small>%</small></div><p>ของงานบริการมาจากโรงงาน<br>และลูกค้าองค์กร</p></div>
+      <div><div class="ind-bar"><div style="width:43.1%;background:var(--navy)">43%</div><div style="width:27.8%;background:var(--blue)">28%</div><div style="width:11.1%;background:#2F9E8F">11%</div><div style="width:9.7%;background:var(--orange)">10%</div><div style="width:8.3%;background:#9AA7BA">8%</div></div><div class="ind-lg"><span><i style="background:var(--navy)"></i>อุตสาหกรรมและโรงงาน 62 งาน</span><span><i style="background:var(--blue)"></i>ยานยนต์ องค์กร และธุรกิจ 40 งาน</span><span><i style="background:#2F9E8F"></i>การแพทย์และการศึกษา 16 งาน</span><span><i style="background:var(--orange)"></i>ที่อยู่อาศัยและอาคารชุด 14 งาน</span><span><i style="background:#9AA7BA"></i>ร้านอาหาร ค้าปลีก และบริการ 12 งาน</span></div></div>
+    </div>
+    <div class="ind"><div class="card" style="--c:var(--navy)"><div class="n">62<small>งาน</small></div><h4>อุตสาหกรรมและโรงงาน</h4><dl><dt>สิ่งที่ลูกค้าต้องการ</dt><dd>สายการผลิตต้องไม่หยุด</dd><dt>สิ่งที่เราทำ</dt><dd>PM ตามรอบ ติดตั้งและซ่อมโดยไม่กระทบกะการผลิต</dd></dl></div><div class="card" style="--c:var(--blue)"><div class="n">40<small>งาน</small></div><h4>ยานยนต์ องค์กร และธุรกิจ</h4><dl><dt>สิ่งที่ลูกค้าต้องการ</dt><dd>โชว์รูมและสำนักงานต้องเย็นสม่ำเสมอ</dd><dt>สิ่งที่เราทำ</dt><dd>ล้างตามรอบ ซ่อม และติดตั้งเพิ่มเมื่อขยายพื้นที่</dd></dl></div><div class="card" style="--c:#2F9E8F"><div class="n">16<small>งาน</small></div><h4>การแพทย์และการศึกษา</h4><dl><dt>สิ่งที่ลูกค้าต้องการ</dt><dd>อากาศสะอาด ไม่รบกวนผู้ป่วยและผู้เรียน</dd><dt>สิ่งที่เราทำ</dt><dd>ป้องกันพื้นที่ ถุงรองน้ำ และแบ่งโซนทำงาน</dd></dl></div><div class="card" style="--c:var(--orange)"><div class="n">14<small>งาน</small></div><h4>ที่อยู่อาศัยและอาคารชุด</h4><dl><dt>สิ่งที่ลูกค้าต้องการ</dt><dd>บ้านต้องสะอาดเรียบร้อยหลังจบงาน</dd><dt>สิ่งที่เราทำ</dt><dd>ปูพลาสติก เก็บงาน และทำความสะอาดก่อนส่งมอบ</dd></dl></div><div class="card" style="--c:#9AA7BA"><div class="n">12<small>งาน</small></div><h4>ร้านอาหาร ค้าปลีก และบริการ</h4><dl><dt>สิ่งที่ลูกค้าต้องการ</dt><dd>หน้าร้านต้องพร้อมรับลูกค้า</dd><dt>สิ่งที่เราทำ</dt><dd>ล้างตามรอบเพื่อลดน้ำหยดและกลิ่นอับ</dd></dl></div></div>
+    <p class="src">สัดส่วนจากงานบริการ 144 งานในทะเบียนงาน 29 มิ.ย. – 26 ก.ย. 2569 (ไม่รวมงานสำรวจ) · กลุ่มที่อยู่อาศัยรวมลูกค้าบุคคล</p>
+  </div>
 </section>
 
 <!-- ============ FEATURED CLIENTS ============ -->
@@ -953,6 +1050,12 @@
       <div><dt>โทรศัพท์</dt><dd>02-459-3291-9</dd></div>
       <div><dt>อีเมล</dt><dd style="font-size:25px">sahaburapagroupsp@gmail.com</dd></div>
     </dl>
+    <div class="start">
+      <div class="st"><b>01</b><h4>ติดต่อเรา</h4><p>แจ้งจำนวนเครื่อง ประเภทงาน และอาการผ่านโทรศัพท์หรืออีเมล</p></div>
+      <div class="st"><b>02</b><h4>สำรวจหน้างาน</h4><p>ทีมงานเข้าตรวจสอบหน้างาน วัดระยะ และประเมินขอบเขตงาน</p></div>
+      <div class="st"><b>03</b><h4>รับใบเสนอราคา</h4><p>ขอบเขต ราคา และเงื่อนไขชัดเจนก่อนเริ่มงาน</p></div>
+      <div class="qr"><img src="assets/brand/qr-website.svg" alt="QR www.sahaburapagroup.com"><span>สแกนเพื่อเข้าเว็บไซต์ของบริษัท</span></div>
+    </div>
     <div class="brands"><b>Polar Air</b><span>HVAC Service</span><b>Fujiva</b><span>Air Conditioners &amp; Care</span><b>Tyga Factory</b><span>Tools &amp; Welding</span></div>
   </div>
 </section>
