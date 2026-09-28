@@ -256,6 +256,50 @@ def client_wall():
     return f'<div class="body lw">{"".join(tiles)}</div>'
 
 
+# Project reference list: scope from the job register (types only, no counts)
+CH = {"i": "ติดตั้ง", "c": "ล้าง", "p": "PM", "r": "ซ่อม"}
+REF1 = [("อุตสาหกรรมและโรงงาน", [
+    ("srithai", "ศรีไทยซุปเปอร์แวร์", "โรงงานผลิตภาชนะเมลามีน", "icpr", "สัญญาล้างแอร์ทั้งโรงงาน ซ่อมบอร์ดคอยล์ร้อน ติดตั้งเพิ่ม"),
+    ("tman", "ที.แมน ฟาร์มาซูติคอล", "โรงงานยาและสำนักงาน", "cp", "ล้าง Cassette ตามใบสั่งงานรายเดือน"),
+    ("bbgi", "BBGI", "โรงงานเชื้อเพลิงชีวภาพ", "irp", "ติดตั้ง 3 ชั้น เดินท่อบนฝ้า ซ่อมระบบห้องควบคุม"),
+    ("tt-technoplas", "ที ที เทคโนพลาส", "โรงงานผลิตภัณฑ์พลาสติก", "ir", "แอร์แขวนและติดผนัง ตรวจเช็กหลังติดตั้ง"),
+    ("mitmongkol", "อุตสาหกรรมมิตรมงคล", "โรงงานอุตสาหกรรม", "ir", "แอร์แขวนขนาดใหญ่ ซ่อมรอยรั่วห้องควบคุม"),
+    ("ekyongwong", "เอกยงวงศ์", "โรงงานผลิตภัณฑ์การเกษตร", "cr", "ล้างรายปี แก้ไขน้ำหยดในโรงงาน")]),
+  ("ยานยนต์ องค์กร และธุรกิจ", [
+    ("charoenthai-motor", "เจริญไทยมอเตอร์ เซลส์", "โชว์รูมและศูนย์บริการ Toyota", "iprc", "Cassette ติดผนัง ตู้ตั้ง แขวน ตามสัญญา PM"),
+    ("liger", "มิตซูบิชิ ไลเกอร์", "โชว์รูมและศูนย์บริการ", "c", "ล้างแอร์ติดผนัง แขวน และตู้ตั้ง"),
+    ("bp-lab", "บี พี แล็ป", "โรงงานผลิตเครื่องสำอาง", "irc", "Fujiva 24,000 BTU แอร์แขวน เปลี่ยนมอเตอร์คอยล์เย็น"),
+    ("thanakul", "ธนกูล เวิร์คกรุ๊ป", "ออกแบบและผลิตงานตกแต่ง", "i", "ติดตั้ง Fujiva ติดผนัง")])]
+REF2 = [("การแพทย์และการศึกษา", [
+    ("paolo", "โรงพยาบาลเปาโล", "โรงพยาบาลในเครือ BDMS", "c", "ล้างตามแผน ทำงานนอกเวลา (กลางคืน)"),
+    ("suksawat", "รพ.สุขสวัสดิ์อินเตอร์", "โรงพยาบาลเอกชน", "i", "Carrier หลายขนาด BTU แยกขอบเขตเครื่อง ติดตั้ง และไฟฟ้า"),
+    ("bangmod-aesthetic", "รพ.บางมด เอสเทติก", "โรงพยาบาลความงาม", "c", "ล้างเครื่องปรับอากาศ"),
+    ("smile-plus", "Smile Plus Dental", "คลินิกทันตกรรม", "c", "ล้าง 4 ทิศทางและติดผนัง"),
+    ("bangmod-school", "โรงเรียนบางมดวิทยา", "โรงเรียน", "i", "แอร์แขวนห้องประชุม 36,000 BTU")]),
+  ("ร้านอาหาร และบริการ", [
+    ("nuea-luan", "เนื้อล้วนล้วน", "ร้านอาหาร", "ic", "4 ทิศทางและติดผนัง เดินท่อและเข้าระบบ"),
+    ("pen-lao", "เป็นลาว", "ร้านอาหาร", "rc", "ซ่อมมอเตอร์คอยล์เย็นและเซ็นเซอร์ 4 ทิศทาง"),
+    ("petchyindee", "เพชรยินดี อะคาเดมี", "ยิมมวยไทย", "cr", "ล้างรายปี แก้ไขท่อน้ำทิ้ง")]),
+  ("ที่อยู่อาศัยและอาคารชุด", [
+    ("the-excel", "The Excel ลาดพร้าว", "คอนโดมิเนียม", "c", "ล้างแอร์ 4 ทิศทาง"),
+    ("pleno", "หมู่บ้านพลีโน่", "หมู่บ้านจัดสรร", "ic", "ติดผนัง เปลี่ยนเครื่องใหม่"),
+    ("the-pavilla", "The Pavilla", "บ้านเดี่ยว", "ic", "4 ทิศทาง Inverter พร้อมแนวท่อน้ำทิ้งใหม่"),
+    ("bangmod-dorm", "หอพัก รพ.บางมด", "หอพัก", "i", "ติดตั้ง Fujiva ติดผนัง")])]
+
+
+def reflist(groups, cls=""):
+    rows = []
+    for g, items in groups:
+        rows.append(f'<tr class="grp"><td colspan="4">{g}</td></tr>')
+        for slug, name, place, scope, detail in items:
+            src = asset("clients", slug)
+            logo = f'<i><img src="{src}" alt=""></i>' if src else "<i></i>"
+            chips = "".join(f'<span class="chip {k}">{CH[k]}</span>' for k in scope)
+            rows.append(f'<tr><td><div class="cl">{logo}{name}</div></td><td>{place}</td><td>{chips}</td><td>{detail}</td></tr>')
+    head = '<tr><th style="width:470px">ลูกค้า</th><th style="width:330px">ประเภทสถานที่</th><th style="width:300px">ขอบเขตงาน</th><th>รายละเอียดงาน</th></tr>'
+    return f'<table class="rt{cls}">{head}{"".join(rows)}</table>'
+
+
 def fontface():
     src = open(os.path.join(HERE, "..", "archive", "Rev01", "index.html"), encoding="utf-8").read()
     lines = [l.replace("../../fonts/", "fonts/") for l in src.splitlines() if "@font-face" in l or "bundled locally" in l]
@@ -266,6 +310,7 @@ s = open(SP + "template.html", encoding="utf-8").read()
 s = s.replace("{{FONTFACE}}", fontface())
 s = s.replace("{{COVER}}", art.cover_art()).replace("{{FLOW}}", flow()).replace("{{INSTALL}}", install())
 s = s.replace("{{CLIENT_WALL}}", client_wall()).replace("{{FEATURED}}", featured())
+s = s.replace("{{REFLIST1}}", reflist(REF1, " roomy")).replace("{{REFLIST2}}", reflist(REF2))
 s = s.replace("{{AC}}", ac_unit()).replace("{{SPRAY}}", spray())
 s = s.replace("{{FLYWHEEL}}", flywheel()).replace("{{ZONE}}", zone()).replace("{{MAP}}", cmap())
 _logo = asset("brand", "sbp-logo")
