@@ -248,7 +248,7 @@ def featured():
     return f'<div class="body fc" style="margin-top:34px">{"".join(cards)}</div>'
 
 
-MARK_WITH_NAME = {"nuea-luan", "bangmod-school", "proflex", "liger", "bangmod-dorm", "petchyindee", "pen-lao", "thanakul", "suksawat", "bangmod-aesthetic"}
+MARK_WITH_NAME = {"tman", "ekyongwong", "the-excel", "nuea-luan", "bangmod-school", "proflex", "liger", "bangmod-dorm", "petchyindee", "pen-lao", "thanakul", "suksawat", "bangmod-aesthetic"}
 
 
 def client_wall():
