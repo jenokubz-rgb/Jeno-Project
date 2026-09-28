@@ -193,14 +193,11 @@
   .ind dd { font-size: 19px; line-height: 1.5; color: var(--muted); margin-top: 4px; }
 
   /* ================= Contact: how to start ================= */
-  .start { display: grid; grid-template-columns: repeat(3, 1fr) 320px; gap: 18px; margin-top: 38px; align-items: stretch; }
+  .start { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 38px; align-items: stretch; }
   .start .st { background: rgba(255,255,255,.07); border: 1.5px solid rgba(255,255,255,.16); border-radius: 16px; padding: 20px 24px; }
   .start .st b { font-size: 18px; color: var(--orange); letter-spacing: .12em; }
   .start .st h4 { font-size: 25px; color: #fff; margin-top: 6px; }
   .start .st p { font-size: 18px; color: rgba(255,255,255,.7); line-height: 1.5; margin-top: 6px; }
-  .start .qr { background: #fff; border-radius: 16px; padding: 14px; display: grid; grid-template-columns: 110px 1fr; gap: 12px; align-items: center; }
-  .start .qr img { width: 110px; height: 110px; }
-  .start .qr span { font-size: 16px; color: var(--navy); line-height: 1.4; font-weight: 600; }
 
   /* ================= Premium materials ================= */
   .pm2 { display: grid; grid-template-columns: 600px 1fr; gap: 36px; }
@@ -223,6 +220,20 @@
   .kfp img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .kfp figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 50px 22px 16px; background: linear-gradient(0deg, rgba(10,34,64,.9), rgba(10,34,64,0)); color: #fff; font-size: 22px; font-weight: 600; }
   .kfp figcaption small { display: block; font-size: 17px; font-weight: 400; color: rgba(255,255,255,.8); margin-top: 2px; }
+
+  /* ================= Reference photo grids ================= */
+  .rg { display: grid; gap: 16px; }
+  .rg.c4 { grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 318px); }
+  .rg.c3 { grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 318px); }
+  .rg figure { position: relative; border-radius: 14px; overflow: hidden; background: #DCE3EC; }
+  .rg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .rg figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 56px 18px 14px; background: linear-gradient(0deg, rgba(10,34,64,.94), rgba(10,34,64,0)); color: #fff; display: grid; grid-template-columns: 40px 1fr; gap: 10px; align-items: end; }
+  .rg figcaption b { font-size: 28px; color: var(--orange); line-height: 1; }
+  .rg figcaption span { font-size: 20px; font-weight: 600; line-height: 1.35; }
+  .rg figcaption small { display: block; font-size: 16px; font-weight: 400; color: rgba(255,255,255,.8); margin-top: 2px; }
+  .rg.c3 figcaption { grid-template-columns: 1fr; }
+  .refnote { font-size: 15px; color: var(--soft); margin-top: 14px; }
+  .refnote b { color: var(--muted); font-weight: 600; }
   /* Client logo wall */
   .lw { margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 16px 18px; }
   .lw .tile { width: 265px; height: 140px; background: var(--card); border: 1.5px solid var(--line); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 14px 20px 12px; }
@@ -548,9 +559,9 @@
   <h2>สารบัญ</h2>
   <div class="body toc-list" style="margin-top:40px">
     <div class="toc-item"><div class="n">01</div><div><h3>เกี่ยวกับเรา</h3><p>ภาพรวมบริษัท วิสัยทัศน์ ผลงานที่ผ่านมา จุดเด่น ธุรกิจนำเข้าและจัดจำหน่าย โครงสร้างองค์กร</p></div><div class="p">03</div></div>
-    <div class="toc-item"><div class="n">03</div><div><h3>มาตรฐานการทำงาน</h3><p>ขั้นตอนงาน หน้างานจริง เอกสารส่งมอบ ความปลอดภัย และการรับประกัน</p></div><div class="p">19</div></div>
-    <div class="toc-item"><div class="n">02</div><div><h3>บริการของเรา</h3><p>โจทย์ลูกค้าองค์กร บริการ 5 กลุ่ม มาตรฐานงานติดตั้ง วัสดุพรีเมียม สัญญาบำรุงรักษา และงานโครงการ</p></div><div class="p">11</div></div>
-    <div class="toc-item"><div class="n">04</div><div><h3>ลูกค้าและผลงาน</h3><p>กลุ่มลูกค้า ลูกค้าองค์กร กรณีศึกษา พื้นที่บริการ แบรนด์และวัสดุ</p></div><div class="p">25</div></div>
+    <div class="toc-item"><div class="n">03</div><div><h3>มาตรฐานการทำงาน</h3><p>ขั้นตอนงาน หน้างานจริง เอกสารส่งมอบ ความปลอดภัย และการรับประกัน</p></div><div class="p">21</div></div>
+    <div class="toc-item"><div class="n">02</div><div><h3>บริการของเรา</h3><p>โจทย์ลูกค้าองค์กร บริการ 5 กลุ่ม มาตรฐานและขั้นตอนงานติดตั้ง วัสดุพรีเมียม สัญญาบำรุงรักษา งานโครงการ และไซต์งานมาตรฐาน</p></div><div class="p">11</div></div>
+    <div class="toc-item"><div class="n">04</div><div><h3>ลูกค้าและผลงาน</h3><p>กลุ่มลูกค้า ลูกค้าองค์กร กรณีศึกษา พื้นที่บริการ แบรนด์และวัสดุ</p></div><div class="p">27</div></div>
   </div>
 </section>
 
@@ -723,7 +734,7 @@
   <div class="big">02</div>
   <div class="eyebrow">Our Services</div>
   <h2>บริการของเรา</h2>
-  <div class="toc"><span>โจทย์ลูกค้าองค์กร</span><span>บริการ 5 กลุ่ม</span><span>มาตรฐานงานติดตั้ง</span><span>วัสดุพรีเมียม</span><span>งานติดตั้งจริง</span><span>สัญญาบำรุงรักษา PM/AMC</span><span>งานโครงการ</span></div>
+  <div class="toc"><span>โจทย์ลูกค้าองค์กร</span><span>บริการ 5 กลุ่ม</span><span>มาตรฐานงานติดตั้ง</span><span>วัสดุพรีเมียม</span><span>งานติดตั้งจริง</span><span>ขั้นตอนติดตั้ง</span><span>สัญญาบำรุงรักษา PM/AMC</span><span>งานโครงการ</span><span>ไซต์งานมาตรฐาน</span></div>
 </section>
 
 <!-- ============ CHALLENGES ============ -->
@@ -800,6 +811,16 @@
   <p class="src">ภาพจากหน้างานจริงของบริษัท · บริษัทติดตั้งและบริการเครื่องปรับอากาศทุกยี่ห้อ ภาพชุดนี้เป็นตัวอย่างงานติดตั้ง Fujiva และ Cassette ในอาคารสำนักงาน</p>
 </section>
 
+<!-- ============ INSTALLATION PROCESS (reference) ============ -->
+<section class="slide content" data-sec="02 · Services">
+  <div class="eyebrow">Installation Process</div>
+  <h2>ขั้นตอนงานติดตั้งมาตรฐาน — ทำครบทุกขั้น ไม่ข้ามขั้นตอน</h2>
+  <div class="body" style="margin-top:32px">
+    <div class="rg c4"><figure><img src="assets/ref/ins-level.jpg" alt="" style="object-position:50% 50%"><figcaption><b>01</b><span>วัดระดับและกำหนดแนว<small>ตั้งแนวแผ่นยึดให้ได้ระดับก่อนเจาะ</small></span></figcaption></figure><figure><img src="assets/ref/ins-indoor.jpg" alt="" style="object-position:50% 50%"><figcaption><b>02</b><span>ติดตั้งคอยล์เย็น<small>ยึดแน่น ได้ระดับ ระบายน้ำทิ้งได้ดี</small></span></figcaption></figure><figure><img src="assets/ref/ins-pipe.jpg" alt="" style="object-position:50% 50%"><figcaption><b>03</b><span>เตรียมท่อน้ำยาและฉนวน<small>ตัดท่อ บานแฟร์ หุ้มฉนวน Aeroflex</small></span></figcaption></figure><figure><img src="assets/ref/ins-flare.jpg" alt="" style="object-position:50% 50%"><figcaption><b>04</b><span>ขันข้อต่อแฟร์<small>ใช้ประแจสองตัว ไม่ให้ท่อบิดเสียรูป</small></span></figcaption></figure><figure><img src="assets/ref/ins-wire.jpg" alt="" style="object-position:50% 50%"><figcaption><b>05</b><span>เดินสายและต่อไฟ<small>สายไฟ Yazaki พร้อมเบรกเกอร์แยกวงจร</small></span></figcaption></figure><figure><img src="assets/ref/ins-leak.jpg" alt="" style="object-position:50% 50%"><figcaption><b>06</b><span>ทดสอบรอยรั่ว<small>ตรวจทุกจุดต่อก่อนปล่อยน้ำยา</small></span></figcaption></figure><figure><img src="assets/ref/ins-vacuum.jpg" alt="" style="object-position:50% 50%"><figcaption><b>07</b><span>แวคคั่มและวัดแรงดัน<small>ไล่ความชื้นในระบบ ตรวจแรงดันน้ำยา</small></span></figcaption></figure><figure><img src="assets/ref/ins-outdoor.jpg" alt="" style="object-position:50% 50%"><figcaption><b>08</b><span>ติดตั้งคอยล์ร้อน<small>ขาแขวนมั่นคง มียางรองกันสะเทือน</small></span></figcaption></figure></div>
+    <p class="refnote"><b>ภาพประกอบ (Reference)</b> · U.S. Air Force, Public Domain ผ่าน Wikimedia Commons</p>
+  </div>
+</section>
+
 <!-- ============ 12 PM / AMC ============ -->
 <section class="slide content" data-sec="02 · Services">
   <div class="eyebrow">PM / AMC Program</div>
@@ -837,6 +858,16 @@
       <div class="it"><div class="ico o"><svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></div><div><h4>ทำงานกลางคืนและวันหยุด</h4><p>สำหรับโรงงาน โรงพยาบาล และสำนักงานที่หยุดระบบกลางวันไม่ได้</p></div></div>
       <div class="it"><div class="ico o"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2 20c0-3 3-5 6-5s6 2 6 5M14 15c3 0 8 1 8 5"/></svg></div><div><h4>ประสานผู้รับเหมาหลักและ MEP</h4><p>ทำงานร่วมกับผู้รับเหมาหลัก ฝ่ายอาคาร และระบบใบอนุญาตทำงาน</p></div></div>
     </div>
+  </div>
+</section>
+
+<!-- ============ SITE STANDARD (reference) ============ -->
+<section class="slide content" data-sec="02 · Services">
+  <div class="eyebrow">Site Standard</div>
+  <h2>ไซต์งานที่มีมาตรฐาน — เป็นระเบียบ ปลอดภัย ตรวจสอบได้</h2>
+  <div class="body" style="margin-top:32px">
+    <div class="rg c3"><figure><img src="assets/ref/site-rooftop.jpg" alt="" style="object-position:50% 50%"><figcaption><span>คอยล์ร้อนจัดเรียงเป็นแนว<small>เว้นระยะระบายความร้อนและทางเดินซ่อมบำรุง</small></span></figcaption></figure><figure><img src="assets/ref/site-pipes.jpg" alt="" style="object-position:50% 50%"><figcaption><span>แนวท่อและรางแขวนเป็นระเบียบ<small>จุดยึดสม่ำเสมอ ตรวจสอบและซ่อมได้ง่าย</small></span></figcaption></figure><figure><img src="assets/ref/site-mech.jpg" alt="" style="object-position:50% 50%"><figcaption><span>ห้องเครื่องจัดวางเป็นระบบ<small>อุปกรณ์ แผงไฟ และท่อ ติดป้ายชัดเจน</small></span></figcaption></figure><figure><img src="assets/ref/site-gauge.jpg" alt="" style="object-position:50% 50%"><figcaption><span>ตรวจวัดด้วยเครื่องมือดิจิทัล<small>บันทึกค่าแรงดันและอุณหภูมิลง Service Report</small></span></figcaption></figure><figure><img src="assets/ref/site-ppe.jpg" alt="" style="object-position:50% 50%"><figcaption><span>อุปกรณ์ป้องกันครบทุกงาน<small>หมวกนิรภัย แว่นตา และถุงมือในงานหลังคาและงานสูง</small></span></figcaption></figure><figure><img src="assets/ref/site-plant.jpg" alt="" style="object-position:50% 50%"><figcaption><span>งานระบบขนาดใหญ่ตามแผน<small>ทีมสวมชุดป้องกัน ทำงานตามขั้นตอนที่กำหนด</small></span></figcaption></figure></div>
+    <p class="refnote"><b>ภาพประกอบ (Reference)</b> · chooyutshing (Public Domain Mark) · MTA C&amp;D East Side Access (CC BY 2.0) · Phyxter Home Services (CC BY 2.0) · U.S. Air Force (Public Domain)</p>
   </div>
 </section>
 
@@ -1075,15 +1106,14 @@
       <div><dt>บริษัท</dt><dd>บริษัท สหบูรพากรุ๊ป จำกัด<br><span style="font-size:20px;color:rgba(255,255,255,.65)">SAHA BURAPA GROUP CO., LTD.</span></dd></div>
       <div><dt>สำนักงาน</dt><dd>593 ถนนพระราม 2 แขวงบางมด<br>เขตจอมทอง กรุงเทพฯ 10150</dd></div>
       <div><dt>เลขทะเบียนนิติบุคคล</dt><dd>0105553009307</dd></div>
-      <div><dt>เว็บไซต์ · LINE Official</dt><dd style="font-size:25px">www.sahaburapagroup.com<br>LINE @sahaservices</dd></div>
+      <div><dt>เว็บไซต์</dt><dd>www.sahaburapagroup.com</dd></div>
       <div><dt>โทรศัพท์</dt><dd>02-459-3291-9</dd></div>
       <div><dt>อีเมล</dt><dd style="font-size:25px">sahaburapagroupsp@gmail.com</dd></div>
     </dl>
     <div class="start">
-      <div class="st"><b>01</b><h4>ติดต่อเรา</h4><p>แจ้งจำนวนเครื่อง ประเภทงาน และอาการ ทางโทรศัพท์ LINE หรืออีเมล</p></div>
+      <div class="st"><b>01</b><h4>ติดต่อเรา</h4><p>แจ้งจำนวนเครื่อง ประเภทงาน และอาการ ทางโทรศัพท์หรืออีเมล</p></div>
       <div class="st"><b>02</b><h4>สำรวจหน้างาน</h4><p>ทีมงานเข้าตรวจสอบหน้างาน วัดระยะ และประเมินขอบเขตงาน</p></div>
       <div class="st"><b>03</b><h4>รับใบเสนอราคา</h4><p>ขอบเขต ราคา และเงื่อนไขชัดเจนก่อนเริ่มงาน</p></div>
-      <div class="qr"><img src="assets/brand/qr-line.svg" alt="QR LINE @sahaservices"><span>สแกนเพิ่มเพื่อน LINE @sahaservices</span></div>
     </div>
     <div class="brands"><b>Sahaburapa Group</b><span>Import &amp; Distribution</span><b>Polar Air</b><span>HVAC Service</span><b>Fujiva</b><span>Air Conditioners &amp; Care</span></div>
   </div>

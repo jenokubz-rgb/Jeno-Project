@@ -1,17 +1,57 @@
-# Company Profile: Sahaburapa Group (Rev16, FINAL)
+# Company Profile: Sahaburapa Group (Rev17, FINAL)
 
 Company Profile ของบริษัท สหบูรพากรุ๊ป จำกัด สำหรับลูกค้าองค์กร (Customer Version) มี 30 สไลด์ ขนาด 16:9
 
 | ไฟล์ | ใช้ทำอะไร |
 |---|---|
 | `index.html` | เปิดในเบราว์เซอร์เพื่อนำเสนอ ใช้ปุ่ม ← → / Space หรือปัดหน้าจอเพื่อเปลี่ยนสไลด์ ใช้งานออฟไลน์ได้ (ต้องเก็บไว้คู่กับโฟลเดอร์ `assets/` และ `fonts/`) |
-| `Sahaburapa_Company_Profile_Rev16_2026-09-28_FINAL.pdf` | PDF 34 หน้า สำหรับส่งอีเมล แนบเอกสารขึ้นทะเบียนผู้ขาย หรือพิมพ์ |
+| `Sahaburapa_Company_Profile_Rev17_2026-09-28_FINAL.pdf` | PDF 36 หน้า สำหรับส่งอีเมล แนบเอกสารขึ้นทะเบียนผู้ขาย หรือพิมพ์ |
 | `assets/photos/` | ภาพหน้างานจริงที่คัด ครอป และปรับแสงแล้ว |
+| `assets/ref/` | ภาพประกอบ (Reference) ที่ใช้อ้างอิงมาตรฐานงาน สัญญาอนุญาตให้ใช้เชิงพาณิชย์ได้ รอเปลี่ยนเป็นภาพของบริษัท |
 | `assets/clients/` | ใส่โลโก้ลูกค้าที่นี่ (ดูหัวข้อ "เพิ่มโลโก้ลูกค้า") |
 | `assets/brand/` | ใส่โลโก้บริษัท `sbp-logo.png` หรือ `.svg` ที่นี่ แล้วจะแทนสัญลักษณ์ชั่วคราวทุกหน้า |
 | `src/` | ต้นฉบับ (`template.html`) และสคริปต์สร้าง `index.html` (`build.py`, `art.py`) |
 | `fonts/` | IBM Plex Sans และ IBM Plex Sans Thai (SIL Open Font License) |
-| `archive/` | ฉบับก่อนหน้า (Rev01–Rev15) เก็บไว้เป็นประวัติ (OBSOLETE) |
+| `archive/` | ฉบับก่อนหน้า (Rev01–Rev16) เก็บไว้เป็นประวัติ (OBSOLETE) |
+
+## สิ่งที่เปลี่ยนใน Rev17 (FINAL): ภาพอ้างอิงงานติดตั้งและไซต์งานมาตรฐาน
+
+ตามที่ผู้บริหารแจ้ง (28 ก.ย. 2569):
+- **เอา LINE Official และ QR code ออกจากสไลด์ 36** ติดต่อเรา กลับไปแสดงเฉพาะเว็บไซต์ โทรศัพท์ และอีเมล และลบไฟล์ `qr-line.svg` แล้ว
+- **สไลด์ใหม่ 17 ขั้นตอนงานติดตั้งมาตรฐาน:** ภาพ 8 ขั้นตอน ได้แก่
+  1. วัดระดับ
+  2. ติดตั้งคอยล์เย็น
+  3. เตรียมท่อและฉนวน
+  4. ขันข้อต่อแฟร์
+  5. เดินสายไฟ
+  6. ทดสอบรอยรั่ว
+  7. แวคคั่มและวัดแรงดัน
+  8. ติดตั้งคอยล์ร้อน
+- **สไลด์ใหม่ 20 ไซต์งานที่มีมาตรฐาน:** ภาพ 6 ภาพ ได้แก่ คอยล์ร้อนจัดเรียงเป็นแนว แนวท่อและรางแขวนเป็นระเบียบ ห้องเครื่อง การตรวจวัดด้วยเครื่องมือดิจิทัล อุปกรณ์ป้องกัน และงานระบบขนาดใหญ่
+- ปรับสารบัญ (หน้า 03 / 11 / 21 / 27) และหัวข้อบนหน้าคั่นหมวด 02 แล้ว
+
+### ภาพประกอบ (Reference) และสัญญาอนุญาต
+- ทุกภาพเป็น Public Domain หรือ CC BY 2.0 ใช้ในงานเชิงพาณิชย์ได้เมื่อระบุเครดิต เครดิตแสดงไว้ใต้ภาพบนสไลด์แล้ว
+- บนสไลด์ติดป้าย "ภาพประกอบ (Reference)" เพื่อไม่ให้ผู้ชมเข้าใจว่าเป็นผลงานของบริษัท
+- ก่อนใช้ ครอปคนในเครื่องแบบทหารออก และเบลอชื่อบริษัทหรือยี่ห้ออื่นที่ติดมาในภาพ ได้แก่ ABB บนตู้ควบคุม, KLEIN TOOLS บนหมวกนิรภัย และตัวอักษรบนหมวกแก๊ป
+- ถ้าได้ภาพงานจริงของบริษัท ให้วางไฟล์ชื่อเดิมทับใน `assets/ref/` แล้วลบบรรทัด "ภาพประกอบ (Reference)" ในสไลด์นั้น
+
+| ไฟล์ | เจ้าของภาพ | สัญญาอนุญาต | แหล่งที่มา |
+|---|---|---|---|
+| `ins-level.jpg` | U.S. Air Force photo by Andrea Jenkins | Public domain | https://commons.wikimedia.org/wiki/File:HVAC_Techs_Bring_Lasting_Impact_to_rural_Panamanian_Clinic_(9328743).jpg |
+| `ins-indoor.jpg` | U.S. Air Force photo by Andrea Jenkins | Public domain | https://commons.wikimedia.org/wiki/File:HVAC_Techs_Bring_Lasting_Impact_to_rural_Panamanian_Clinic_(9328736).jpg |
+| `ins-pipe.jpg` | U.S. Air Force photo by Andrea Jenkins | Public domain | https://commons.wikimedia.org/wiki/File:HVAC_Techs_Bring_Lasting_Impact_to_rural_Panamanian_Clinic_(9328741).jpg |
+| `ins-flare.jpg` | U.S. Air Force photo by Tech. Sgt. Justin Norton | Public domain | https://commons.wikimedia.org/wiki/File:379_ELRS_vehicle_maintenance_introduces_innovative_nitrogen_gas_testing_method_for_air_conditioning_systems_(9469862).jpg |
+| `ins-wire.jpg` | U.S. Air Force photo by Andrea Jenkins | Public domain | https://commons.wikimedia.org/wiki/File:HVAC_Techs_Bring_Lasting_Impact_to_rural_Panamanian_Clinic_(9328744).jpg |
+| `ins-leak.jpg` | U.S. Air Force photo by Tech. Sgt. Justin Norton | Public domain | https://commons.wikimedia.org/wiki/File:379_ELRS_vehicle_maintenance_introduces_innovative_nitrogen_gas_testing_method_for_air_conditioning_systems_(9469860).jpg |
+| `ins-vacuum.jpg` | U.S. Air Force AFCENT by Airman 1st Class Derrick Bole | Public domain | https://commons.wikimedia.org/wiki/File:379th_ECES_HVAC_technicians_combat_rising_temperatures_(8502255).jpg |
+| `ins-outdoor.jpg` | U.S. Air Force photo by Andrea Jenkins | Public domain | https://commons.wikimedia.org/wiki/File:HVAC_Techs_Bring_Lasting_Impact_to_rural_Panamanian_Clinic_(9328745).jpg |
+| `site-rooftop.jpg` | chooyutshing | Public Domain Mark | https://www.flickr.com/photos/25802865@N08/54752357237 |
+| `site-pipes.jpg` | MTA C&D - EAST SIDE ACCESS | CC BY 2.0 | https://www.flickr.com/photos/59595815@N03/51804648892 |
+| `site-mech.jpg` | MTA C&D - EAST SIDE ACCESS | CC BY 2.0 | https://www.flickr.com/photos/59595815@N03/51975164888 |
+| `site-gauge.jpg` | Airman 1st Class Megan Myhre | Public domain | https://commons.wikimedia.org/wiki/File:HVAC_Airmen_provide_more_than_summer_comfort_150805-F-HB285-031.jpg |
+| `site-ppe.jpg` | Phyxter Home Services | CC BY 2.0 | https://www.flickr.com/photos/193473686@N05/51396847200 |
+| `site-plant.jpg` | U.S. Air Force photo by Yasuo Osakabe | Public domain | https://commons.wikimedia.org/wiki/File:Emergency_Boiler_Repairs_restore_heat_to_Yokota%E2%80%99s_East_Side_(9520803).jpg |
 
 ## สิ่งที่เปลี่ยนใน Rev16 (FINAL): เอา Tyga ออก และตรวจข้อมูลทั้งเล่มใหม่
 
@@ -317,7 +357,7 @@ Network policy ของ environment บล็อกทั้ง `curl` แล�
 1. อัปโหลดไฟล์โลโก้มาในแชทหรือไว้ใน Google Drive
 2. เพิ่มโดเมนที่ต้องใช้ใน Network access ของ environment แล้วให้ Claude ดาวน์โหลดจากเว็บไซต์ทางการของลูกค้า
 
-## สถานะการตรวจสอบ (อัปเดต Rev16)
+## สถานะการตรวจสอบ (อัปเดต Rev17)
 
 | # | รายการ | สถานะ |
 |---|---|---|
@@ -328,7 +368,7 @@ Network policy ของ environment บล็อกทั้ง `curl` แล�
 | 5 | รพ.สุขสวัสดิ์ = โรงพยาบาลสุขสวัสดิ์อินเตอร์ | [VERIFIED] เป็นโรงพยาบาลเดียวที่ใช้ชื่อนี้ ตั้งอยู่ ถ.สุขสวัสดิ์ เขตราษฎร์บูรณะ |
 | 6 | เพชรยินดี = Petchyindee Academy | [VERIFIED] ทะเบียนงานระบุ "เพชรยินดีค่ายมวย" |
 | 7 | Proflex | [REMOVED] งานในทะเบียนคือ "ผู้บริหาร Proflex" ติดตั้งแอร์ 1 ชุด เป็นงานของบุคคล ไม่ใช่ของบริษัท จึงนำโลโก้ออกจากสไลด์ 27 และนับงานนี้ในกลุ่มที่อยู่อาศัย |
-| 8 | โทรศัพท์ 02-459-3291-9, อีเมล sahaburapagroupsp@gmail.com, LINE @sahaservices | [VERIFIED] ตรงกับเว็บไซต์ www.sahaburapagroup.com ณ 28 ก.ย. 2569 |
+| 8 | โทรศัพท์ 02-459-3291-9 และอีเมล sahaburapagroupsp@gmail.com | [VERIFIED] ตรงกับเว็บไซต์ ณ 28 ก.ย. 2569 · ผู้บริหารให้ไม่แสดง LINE และ QR code |
 | 9 | ประกันงานติดตั้ง 3 ปี, งานล้าง 30 วัน และวัสดุ Yazaki / Aeroflex / SCG ตราช้าง / Airpro | [APPROVED] ผู้บริหารยืนยัน 28 ก.ย. 2569 |
 | 10 | ตัวเลขการดำเนินงาน | [APPROVED] ไม่แสดง ใช้ตัวเลขอ้างอิงของบริษัทแทน คือ ล้างมากกว่า 10,000 เครื่อง และติดตั้งมากกว่า 1,000 เครื่อง |
 | 11 | เครือข่ายงานเฉพาะทาง (VRV/VRF/Chiller, เครน, โรยตัว, นั่งร้าน) | [SOURCE] จากข้อมูลต้นฉบับ นำเสนอเป็น "เครือข่ายผู้เชี่ยวชาญ" ไม่ได้อ้างว่าทำเอง |
