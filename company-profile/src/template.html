@@ -152,6 +152,20 @@
   .lw .tile img { max-width: 100%; max-height: 52px; object-fit: contain; }
   .lw .tile.key { border-color: var(--navy); }
 
+  /* Featured clients */
+  .fc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .fc .card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+  .fc .lg { height: 118px; display: grid; place-items: center; border-bottom: 1.5px solid var(--line); background: #fff; padding: 14px 24px; }
+  .fc .lg img { max-height: 84px; max-width: 80%; object-fit: contain; }
+  .fc .lg b { font-size: 30px; color: var(--navy); letter-spacing: .01em; text-align: center; line-height: 1.2; }
+  .fc .bd { padding: 18px 26px 22px; }
+  .fc .bd h3 { font-size: 25px; }
+  .fc .bd p { font-size: 19px; margin-top: 6px; line-height: 1.5; }
+  .fc .badge { display: inline-block; margin-top: 12px; font-size: 15px; font-weight: 700; letter-spacing: .08em; padding: 5px 12px; border-radius: 6px; background: var(--navy); color: #fff; }
+  .fc .badge.o { background: var(--orange-2); color: var(--orange-ink); }
+  .fc .sv { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .fc .sv span { font-size: 16px; font-weight: 600; padding: 4px 10px; border-radius: 6px; background: var(--sky); color: var(--blue); }
+
   /* Contents */
   .toc-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 80px; }
   .toc-item { display: grid; grid-template-columns: 110px 1fr auto; gap: 28px; align-items: baseline; padding: 30px 0; border-bottom: 1.5px solid var(--line); }
@@ -162,13 +176,13 @@
 
   /* Overview */
   .ov { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; }
-  .ov .lead { font-size: 32px; line-height: 1.75; color: var(--ink); }
+  .ov .lead { font-size: 30px; line-height: 1.75; color: var(--ink); }
   .ov .lead b { color: var(--blue); font-weight: 600; }
   .facts { background: var(--card); border: 1.5px solid var(--line); border-radius: 18px; overflow: hidden; }
-  .facts .r { display: grid; grid-template-columns: 230px 1fr; gap: 24px; padding: 24px 32px; border-bottom: 1.5px solid var(--line); }
+  .facts .r { display: grid; grid-template-columns: 200px 1fr; gap: 22px; padding: 18px 30px; border-bottom: 1.5px solid var(--line); }
   .facts .r:last-child { border-bottom: 0; }
   .facts dt { font-size: 19px; font-weight: 700; letter-spacing: .08em; color: var(--blue); text-transform: uppercase; padding-top: 4px; }
-  .facts dd { font-size: 24px; line-height: 1.5; color: var(--navy); font-weight: 500; }
+  .facts dd { font-size: 22px; line-height: 1.5; color: var(--navy); font-weight: 500; }
 
   /* Vision / mission */
   .vm { display: grid; grid-template-columns: 1fr 1.25fr; gap: 40px; }
@@ -414,6 +428,7 @@
     <div class="line"></div>
     <p class="sub">ผู้ให้บริการระบบปรับอากาศครบวงจรสำหรับองค์กร<br>จำหน่าย ติดตั้ง บำรุงรักษา ซ่อม และงานโครงการ<br>ด้วยมาตรฐานงานที่ตรวจสอบได้ทุกขั้นตอน</p>
     <div class="meta">
+      <div>Experience<b>กว่า 30 ปี</b></div>
       <div>Service Brand<b>Polar Air</b></div>
       <div>Product Brand<b>Fujiva</b></div>
       <div>Tools &amp; Welding<b>Tyga Factory</b></div>
@@ -450,15 +465,16 @@
   <h2>บริษัทบริการระบบปรับอากาศ ที่ดูแลตั้งแต่สำรวจจนถึงหลังการขาย</h2>
   <div class="body ov">
     <div>
-      <p class="lead">บริษัท สหบูรพากรุ๊ป จำกัด ให้บริการระบบปรับอากาศ <b>(HVAC)</b> ครบวงจรแก่<b>โรงงาน โรงพยาบาล อาคารสำนักงาน ธุรกิจหลายสาขา</b> และที่พักอาศัย ผ่านแบรนด์บริการ <b>Polar Air</b> โดยทีมช่างของบริษัทเอง</p>
+      <p class="lead">บริษัท สหบูรพากรุ๊ป จำกัด มี<b>ประสบการณ์กว่า 30 ปี</b>ในธุรกิจอะไหล่ น้ำยา และอุปกรณ์เครื่องปรับอากาศ ต่อยอดสู่งานบริการระบบปรับอากาศ <b>(HVAC)</b> ครบวงจรแก่<b>โรงงาน โรงพยาบาล อาคารสำนักงาน และธุรกิจหลายสาขา</b> ผ่านแบรนด์บริการ <b>Polar Air</b> โดยทีมช่างของบริษัทเอง</p>
       <p class="lead" style="margin-top:26px">ทุกงานเริ่มจากการสำรวจหน้างาน ออกใบเสนอราคาที่ระบุขอบเขตชัดเจน ทำงานตาม Job Card ตรวจคุณภาพก่อนส่งมอบ และส่งรายงานพร้อมภาพก่อน–หลัง เพื่อให้ลูกค้าตรวจสอบได้ทุกขั้นตอน</p>
     </div>
     <dl class="facts">
-      <div class="r"><dt>ชื่อนิติบุคคล</dt><dd>บริษัท สหบูรพากรุ๊ป จำกัด<br><span style="color:var(--muted);font-size:21px">Sahaburapa Group Co., Ltd.</span></dd></div>
-      <div class="r"><dt>ธุรกิจหลัก</dt><dd>จำหน่าย ติดตั้ง ล้าง PM/AMC ซ่อม เปลี่ยนเครื่อง อะไหล่ และงานโครงการระบบปรับอากาศ</dd></div>
-      <div class="r"><dt>ฐานปฏิบัติงาน</dt><dd>พระราม 2 กรุงเทพมหานคร</dd></div>
+      <div class="r"><dt>ชื่อนิติบุคคล</dt><dd>บริษัท สหบูรพากรุ๊ป จำกัด<br><span style="color:var(--muted);font-size:20px">SAHA BURAPA GROUP CO., LTD.</span></dd></div>
+      <div class="r"><dt>เลขทะเบียน</dt><dd>0105553009307</dd></div>
+      <div class="r"><dt>สำนักงาน</dt><dd>593 ถนนพระราม 2 แขวงบางมด เขตจอมทอง กรุงเทพฯ 10150</dd></div>
+      <div class="r"><dt>งานบริการ</dt><dd>จำหน่าย ติดตั้ง ล้าง PM/AMC ซ่อม และงานโครงการระบบปรับอากาศ</dd></div>
+      <div class="r"><dt>งานจำหน่าย</dt><dd>ตัวแทนจำหน่ายและนำเข้าอะไหล่ อุปกรณ์ เครื่องมือช่าง น้ำยาแอร์ ตู้ทำน้ำเย็น-น้ำร้อน และเครื่องกรองน้ำ ทั้งปลีกและส่ง</dd></div>
       <div class="r"><dt>พื้นที่บริการ</dt><dd>กรุงเทพฯ ปริมณฑล และงานโครงการต่างจังหวัด</dd></div>
-      <div class="r"><dt>เวลาทำการ</dt><dd>จันทร์–เสาร์ 08:30–17:30 น. · งานกลางคืนและวันหยุดตามนัดหมาย</dd></div>
     </dl>
   </div>
 </section>
@@ -526,7 +542,7 @@
   <div class="eyebrow">Brand Architecture</div>
   <h2>หนึ่งนิติบุคคล สามแบรนด์ ครอบคลุมบริการ สินค้า และเครื่องมือ</h2>
   <div class="body tree">
-    <div class="parent"><b>Sahaburapa Group Co., Ltd.</b><span>ใบเสนอราคา · สัญญา · ใบกำกับภาษี · ใบรับประกัน · ขึ้นทะเบียนผู้ขาย</span></div>
+    <div class="parent"><b>Sahaburapa Group Co., Ltd.</b><span>นิติบุคคลหลัก · ตัวแทนจำหน่ายและนำเข้าอะไหล่ อุปกรณ์ และน้ำยาแอร์ · ตู้ทำน้ำเย็น · เครื่องกรองน้ำ</span></div>
     <svg class="links" viewBox="0 0 1680 90" preserveAspectRatio="none"><path d="M840 0V45M280 45H1400M280 45V90M840 45V90M1400 45V90" stroke="#9FB0C8" stroke-width="2" fill="none"/></svg>
     <div class="kids">
       <div class="card brand">
@@ -754,7 +770,15 @@
   <div class="big">04</div>
   <div class="eyebrow">Clients &amp; Projects</div>
   <h2>ลูกค้าและผลงาน</h2>
-  <div class="toc"><span>ลูกค้าแยกตามอุตสาหกรรม</span><span>กรณีศึกษา</span><span>พื้นที่บริการ</span><span>แบรนด์และวัสดุ</span><span>Fujiva</span></div>
+  <div class="toc"><span>ลูกค้าองค์กรชั้นนำ</span><span>ลูกค้าแยกตามอุตสาหกรรม</span><span>กรณีศึกษา</span><span>พื้นที่บริการ</span><span>แบรนด์และวัสดุ</span><span>Fujiva</span></div>
+</section>
+
+<!-- ============ FEATURED CLIENTS ============ -->
+<section class="slide content" data-sec="04 · Clients">
+  <div class="eyebrow">Key Accounts</div>
+  <h2>ลูกค้าองค์กรชั้นนำ รวมบริษัทจดทะเบียนในตลาดหลักทรัพย์ฯ</h2>
+  {{FEATURED}}
+  <p class="src">ข้อมูลบริษัทลูกค้าจากเว็บไซต์ทางการและฐานข้อมูลสาธารณะ ณ กันยายน 2569 · งานที่ให้บริการจากทะเบียนงานของบริษัท</p>
 </section>
 
 <!-- ============ 20 CLIENTS ============ -->
@@ -770,8 +794,8 @@
   <h2>กรณีศึกษา — ลูกค้าองค์กรที่ใช้บริการต่อเนื่อง</h2>
   <div class="body cases" style="margin-top:36px">
     <div class="case"><div class="vis"><span class="tag">Manufacturing</span>{{ICON:factory}}</div><div class="bd"><h3>ศรีไทยซุปเปอร์แวร์</h3><div class="kpi"><div><b>28</b><span>งานบริการในไตรมาส</span></div><div><b>4</b><span>ประเภทงาน</span></div></div><ul class="dots"><li>ล้างและ PM ตามรอบ</li><li>ซ่อมและติดตั้งเพิ่มตามความต้องการ</li><li>จัดทีมเสริมสำหรับงานปริมาณมาก</li></ul></div></div>
-    <div class="case"><div class="vis"><span class="tag">Automotive</span>{{ICON:office}}</div><div class="bd"><h3>เจริญไทยมอเตอร์ เซลล์</h3><div class="kpi"><div><b>26</b><span>งานบริการในไตรมาส</span></div><div><b>4</b><span>ชนิดเครื่อง</span></div></div><ul class="dots"><li>สัญญา PM ซ่อม และติดตั้ง</li><li>Cassette, Wall, Floor Standing, Ceiling</li><li>เดินท่อบนฝ้าตามระยะจุดยึด</li></ul></div></div>
-    <div class="case"><div class="vis photo" style="background-image:url(assets/photos/cleaning-bag.jpg)"><span class="tag">Pharmaceutical</span></div><div class="bd"><h3>ทรี แมน ฟาร์มา (T.MAN)</h3><div class="kpi"><div><b>12</b><span>รอบงานล้าง</span></div><div><b>1</b><span>งาน PM ตามสัญญา</span></div></div><ul class="dots"><li>ล้างเครื่อง Cassette ในสำนักงานและโรงงาน</li><li>ปูพลาสติกและติดถุงรองน้ำทุกเครื่อง</li><li>รายงานผลทุกรอบบริการ</li></ul></div></div>
+    <div class="case"><div class="vis"><span class="tag">Automotive</span>{{ICON:office}}</div><div class="bd"><h3>เจริญไทยมอเตอร์ เซลส์</h3><div class="kpi"><div><b>26</b><span>งานบริการในไตรมาส</span></div><div><b>4</b><span>ชนิดเครื่อง</span></div></div><ul class="dots"><li>สัญญา PM ซ่อม และติดตั้ง</li><li>Cassette, Wall, Floor Standing, Ceiling</li><li>เดินท่อบนฝ้าตามระยะจุดยึด</li></ul></div></div>
+    <div class="case"><div class="vis photo" style="background-image:url(assets/photos/cleaning-bag.jpg)"><span class="tag">Pharmaceutical</span></div><div class="bd"><h3>ที.แมน ฟาร์มาซูติคอล</h3><div class="kpi"><div><b>12</b><span>รอบงานล้าง</span></div><div><b>1</b><span>งาน PM ตามสัญญา</span></div></div><ul class="dots"><li>ล้างเครื่อง Cassette ในสำนักงานและโรงงาน</li><li>ปูพลาสติกและติดถุงรองน้ำทุกเครื่อง</li><li>รายงานผลทุกรอบบริการ</li></ul></div></div>
   </div>
   <p class="src">ที่มา: ทะเบียนงานบริษัท 29 มิ.ย. – 26 ก.ย. 2569 (ไม่รวมงานสำรวจ)</p>
 </section>
@@ -857,12 +881,12 @@
     <div class="eyebrow" style="margin-top:auto">Contact Us</div>
     <h2>ให้เราสำรวจหน้างาน<br>และเสนอราคาตามขอบเขตที่ชัดเจน</h2>
     <dl class="ci">
-      <div><dt>บริษัท</dt><dd>บริษัท สหบูรพากรุ๊ป จำกัด</dd></div>
-      <div><dt>ฐานปฏิบัติงาน</dt><dd>พระราม 2 กรุงเทพฯ</dd></div>
-      <div><dt>พื้นที่บริการ</dt><dd>กรุงเทพฯ ปริมณฑล และงานโครงการ</dd></div>
+      <div><dt>บริษัท</dt><dd>บริษัท สหบูรพากรุ๊ป จำกัด<br><span style="font-size:20px;color:rgba(255,255,255,.65)">SAHA BURAPA GROUP CO., LTD.</span></dd></div>
+      <div><dt>สำนักงาน</dt><dd>593 ถนนพระราม 2 แขวงบางมด<br>เขตจอมทอง กรุงเทพฯ 10150</dd></div>
+      <div><dt>เลขทะเบียนนิติบุคคล</dt><dd>0105553009307</dd></div>
+      <div><dt>เว็บไซต์</dt><dd>www.sahaburapagroup.com</dd></div>
       <div><dt>โทรศัพท์</dt><dd><i class="ph">[เบอร์โทรศัพท์]</i></dd></div>
       <div><dt>LINE Official</dt><dd><i class="ph">[@LINE ID]</i></dd></div>
-      <div><dt>อีเมล / เว็บไซต์</dt><dd><i class="ph">[อีเมล / เว็บไซต์]</i></dd></div>
     </dl>
     <div class="brands"><b>Polar Air</b><span>HVAC Service</span><b>Fujiva</b><span>Air Conditioners &amp; Care</span><b>Tyga Factory</b><span>Tools &amp; Welding</span></div>
   </div>

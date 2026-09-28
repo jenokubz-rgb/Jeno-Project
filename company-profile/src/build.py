@@ -202,10 +202,10 @@ def spray():
 
 CLIENTS = [
     ("อุตสาหกรรมและโรงงาน", "M2 20V10l6 4V10l6 4V6h8v14z", "", [
-        ("srithai", "ศรีไทยซุปเปอร์แวร์", 1), ("bbgi", "BBGI", 1), ("tman", "ทรี แมน ฟาร์มา (T.MAN)", 1), ("tt-technoplas", "ที ที เทคโนพลาส", 0),
+        ("srithai", "ศรีไทยซุปเปอร์แวร์", 1), ("bbgi", "BBGI", 1), ("tman", "ที.แมน ฟาร์มาซูติคอล", 1), ("tt-technoplas", "ที ที เทคโนพลาส", 0),
         ("mitmongkol", "อุตสาหกรรมมิตรมงคล", 0), ("paengsalee", "อุตสาหกรรมแป้งสาลี", 0), ("pvt-civil", "พีวีที ซีวิล เอ็นจิเนียริ่ง", 0)]),
     ("ยานยนต์ องค์กร และธุรกิจ", "M4 21V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16M9 7h1M14 7h1M9 11h1M14 11h1M10 21v-4h4v4", "", [
-        ("charoenthai-motor", "เจริญไทยมอเตอร์ เซลล์", 1), ("bp-lab", "บี พี แล็ป", 0), ("ekyongwong", "เอกยงวงศ์", 0), ("liger", "ไลเกอร์", 0),
+        ("charoenthai-motor", "เจริญไทยมอเตอร์ เซลส์", 1), ("bp-lab", "บี พี แล็ป", 0), ("ekyongwong", "เอกยงวงศ์", 0), ("liger", "ไลเกอร์", 0),
         ("thanakul", "ธนกูล", 0), ("bangkok-global", "บางกอกโกลบอล", 0), ("proflex", "Proflex", 0)]),
     ("การแพทย์และการศึกษา", "M3 3h18v18H3zM12 8v8M8 12h8", " o", [
         ("paolo", "โรงพยาบาลเปาโล", 1), ("suksawat", "โรงพยาบาลสุขสวัสดิ์", 1), ("bangmod-aesthetic", "บางมด เอสเทติก", 0),
@@ -226,6 +226,26 @@ def asset(sub, slug):
         if os.path.exists(f"{ASSETS}{sub}/{slug}.{ext}"):
             return f"assets/{sub}/{slug}.{ext}"
     return None
+
+
+FEATURED = [
+    ("tman", "T.MAN", "ที.แมน ฟาร์มาซูติคอล", "ผู้ผลิตและจำหน่ายยาและผลิตภัณฑ์สุขภาพกว่า 50 ปี", "บริษัทจดทะเบียนใน SET", "", ["ล้าง", "PM"]),
+    ("srithai", "Srithai Superware", "ศรีไทยซุปเปอร์แวร์", "ผู้ผลิตภาชนะเมลามีนรายใหญ่ระดับโลก ส่งออกกว่า 100 ประเทศ", "บริษัทจดทะเบียนใน SET", "", ["ล้าง", "PM", "ซ่อม", "ติดตั้ง"]),
+    ("bbgi", "BBGI", "บีบีจีไอ", "ธุรกิจผลิตภัณฑ์ชีวภาพและเชื้อเพลิงชีวภาพ ในกลุ่มบางจาก", "บริษัทจดทะเบียนใน SET", "", ["ติดตั้ง", "ซ่อม", "PM"]),
+    ("charoenthai-motor", "Charoen Thai Motor Sales", "เจริญไทยมอเตอร์ เซลส์", "ผู้แทนจำหน่ายรถยนต์โตโยต้าอย่างเป็นทางการ ตั้งแต่ปี 2508", "Toyota Dealer", " o", ["PM", "ซ่อม", "ติดตั้ง"]),
+    ("paolo", "Paolo Hospital", "โรงพยาบาลเปาโล พระประแดง", "โรงพยาบาลในเครือกรุงเทพดุสิตเวชการ (BDMS)", "BDMS Network", " o", ["ล้างตามแผน"]),
+    ("tt-technoplas", "T.T. Technoplast", "ที ที เทคโนพลาส", "ผู้ผลิตของเล่น ผลิตภัณฑ์พลาสติก และเมลามีน", "Manufacturer", " o", ["ติดตั้ง", "ซ่อม"]),
+]
+
+
+def featured():
+    cards = []
+    for slug, en, th, desc, badge, tone, svc in FEATURED:
+        src = asset("clients", slug)
+        lg = f'<img src="{src}" alt="{th}">' if src else f"<b>{en}</b>"
+        chips = "".join(f"<span>{x}</span>" for x in svc)
+        cards.append(f'<div class="card"><div class="lg">{lg}</div><div class="bd"><h3>{th}</h3><p>{desc}</p><span class="badge{tone}">{badge}</span><div class="sv">{chips}</div></div></div>')
+    return f'<div class="body fc" style="margin-top:34px">{"".join(cards)}</div>'
 
 
 def client_wall():
@@ -249,7 +269,7 @@ def fontface():
 s = open(SP + "template.html", encoding="utf-8").read()
 s = s.replace("{{FONTFACE}}", fontface())
 s = s.replace("{{COVER}}", art.cover_art()).replace("{{FLOW}}", flow()).replace("{{INSTALL}}", install())
-s = s.replace("{{CLIENT_WALL}}", client_wall())
+s = s.replace("{{CLIENT_WALL}}", client_wall()).replace("{{FEATURED}}", featured())
 s = s.replace("{{AC}}", ac_unit()).replace("{{SPRAY}}", spray())
 s = s.replace("{{FLYWHEEL}}", flywheel()).replace("{{ZONE}}", zone()).replace("{{MAP}}", cmap())
 _logo = asset("brand", "sbp-logo")
