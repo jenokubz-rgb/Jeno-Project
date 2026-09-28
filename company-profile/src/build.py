@@ -203,19 +203,16 @@ def spray():
 CLIENTS = [
     ("อุตสาหกรรมและโรงงาน", "M2 20V10l6 4V10l6 4V6h8v14z", "", [
         ("srithai", "ศรีไทยซุปเปอร์แวร์", 1), ("bbgi", "BBGI", 1), ("tman", "ที.แมน ฟาร์มาซูติคอล", 1), ("tt-technoplas", "ที ที เทคโนพลาส", 0),
-        ("mitmongkol", "อุตสาหกรรมมิตรมงคล", 0), ("paengsalee", "อุตสาหกรรมแป้งสาลี", 0), ("pvt-civil", "พีวีที ซีวิล เอ็นจิเนียริ่ง", 0)]),
+        ("mitmongkol", "อุตสาหกรรมมิตรมงคล", 0),]),
     ("ยานยนต์ องค์กร และธุรกิจ", "M4 21V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16M9 7h1M14 7h1M9 11h1M14 11h1M10 21v-4h4v4", "", [
         ("charoenthai-motor", "เจริญไทยมอเตอร์ เซลส์", 1), ("bp-lab", "บี พี แล็ป", 0), ("ekyongwong", "เอกยงวงศ์", 0), ("liger", "มิตซูบิชิ ไลเกอร์", 0),
-        ("thanakul", "ธนกูล เวิร์คกรุ๊ป", 0), ("bangkok-global", "บางกอกโกลบอล", 0), ("proflex", "Proflex", 0)]),
+        ("thanakul", "ธนกูล เวิร์คกรุ๊ป", 0), ("proflex", "Proflex", 0)]),
     ("การแพทย์และการศึกษา", "M3 3h18v18H3zM12 8v8M8 12h8", " o", [
-        ("paolo", "โรงพยาบาลเปาโล", 1), ("suksawat", "รพ.สุขสวัสดิ์อินเตอร์", 1), ("bangmod-aesthetic", "รพ.บางมด เอสเทติก", 0),
-        ("dental-smile", "Dental Smile", 0), ("smile-plus", "Smile Plus Dental", 0), ("bangmod-school", "โรงเรียนบางมดวิทยา", 0)]),
+        ("paolo", "โรงพยาบาลเปาโล", 1), ("suksawat", "รพ.สุขสวัสดิ์อินเตอร์", 1), ("bangmod-aesthetic", "รพ.บางมด เอสเทติก", 0), ("smile-plus", "Smile Plus Dental", 0), ("bangmod-school", "โรงเรียนบางมดวิทยา", 0)]),
     ("ร้านอาหาร ค้าปลีก และบริการ", "M4 3v8a3 3 0 0 0 3 3v7M7 3v5M10 3v8a3 3 0 0 1-3 3M17 21V3c-2 0-3 3-3 7h3", " o", [
-        ("nuea-luan", "เนื้อล้วนล้วน", 0), ("pen-lao", "เป็นลาว", 0), ("petchyindee", "เพชรยินดี อะคาเดมี", 0), ("ultimate-go", "อัลติเมท โก", 0),
-        ("sinthawee", "ร้านนวดสินทวี", 0), ("priao-spa", "เปรี้ยวสปา", 0)]),
+        ("nuea-luan", "เนื้อล้วนล้วน", 0), ("pen-lao", "เป็นลาว", 0), ("petchyindee", "เพชรยินดี อะคาเดมี", 0),]),
     ("ที่อยู่อาศัยและอาคารชุด", "M3 21V8l9-5 9 5v13M9 21v-6h6v6", "", [
-        ("the-excel", "The Excel", 0), ("cadenza", "Cadenza", 0), ("pleno", "หมู่บ้านพลีโน่", 0), ("the-pavilla", "The Pavilla", 0),
-        ("wisit-nakorn", "หมู่บ้านวิสิทนคร", 0), ("bangmod-dorm", "หอพัก รพ.บางมด", 0)]),
+        ("the-excel", "The Excel", 0), ("pleno", "หมู่บ้านพลีโน่", 0), ("the-pavilla", "The Pavilla", 0), ("bangmod-dorm", "หอพัก รพ.บางมด", 0)]),
 ]
 ASSETS = os.path.join(HERE, "..", "assets") + "/"
 
@@ -248,31 +245,15 @@ def featured():
     return f'<div class="body fc" style="margin-top:34px">{"".join(cards)}</div>'
 
 
-MARK_WITH_NAME = {"tman", "ekyongwong", "the-excel", "nuea-luan", "bangmod-school", "proflex", "liger", "bangmod-dorm", "petchyindee", "pen-lao", "thanakul", "suksawat", "bangmod-aesthetic"}
-
-
-# House-style monograms for clients with no logo published online (not the clients' own marks).
-MONO = {"paengsalee": "ปส", "pvt-civil": "PVT", "bangkok-global": "BG", "dental-smile": "DS", "ultimate-go": "UG",
-        "sinthawee": "สท", "priao-spa": "ปร", "cadenza": "C", "wisit-nakorn": "วน"}
-
-
 def client_wall():
-    cols = []
-    for title, icon, tone, items in CLIENTS:
-        tiles = []
-        for slug, name, key in items:
+    tiles = []
+    for _title, _icon, _tone, items in CLIENTS:
+        for slug, name, _key in items:
             src = asset("clients", slug)
-            if src and slug in MARK_WITH_NAME:
-                inner = f'<span class="mn"><img src="{src}" alt="">{name}</span>'
-            elif src:
-                inner = f'<img src="{src}" alt="{name}">'
-            elif slug in MONO:
-                inner = f'<span class="mn"><span class="mono{tone}">{MONO[slug]}</span>{name}</span>'
-            else:
-                inner = name
-            tiles.append(f'<div class="tile{" key" if key else ""}">{inner}</div>')
-        cols.append(f'<div class="col"><h4><span class="ico{tone}"><svg viewBox="0 0 24 24"><path d="{icon}"/></svg></span>{title}</h4><div class="tiles">{"".join(tiles)}</div></div>')
-    return f'<div class="body lw" style="margin-top:36px">{"".join(cols)}</div>'
+            if not src:
+                continue  # only clients with a published logo appear on the wall
+            tiles.append(f'<div class="tile"><div class="lg"><img src="{src}" alt="{name}"></div><span class="nm">{name}</span></div>')
+    return f'<div class="body lw">{"".join(tiles)}</div>'
 
 
 def fontface():

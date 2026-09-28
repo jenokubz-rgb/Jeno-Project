@@ -143,19 +143,11 @@
   .gal figcaption small { display: block; font-size: 17px; font-weight: 400; color: rgba(255,255,255,.78); margin-top: 3px; }
 
   /* Client logo wall */
-  .lw { display: grid; grid-template-columns: repeat(5, 1fr); gap: 22px; }
-  .lw .col h4 { font-size: 20px; font-weight: 700; letter-spacing: .02em; color: var(--navy); padding-bottom: 12px; border-bottom: 2px solid var(--navy); display: flex; gap: 10px; align-items: center; min-height: 68px; }
-  .lw .col h4 .ico { width: 44px; height: 44px; border-radius: 12px; }
-  .lw .col h4 .ico svg { width: 24px; height: 24px; }
-  .lw .tiles { display: grid; gap: 10px; margin-top: 14px; }
-  .lw .tile { height: 68px; background: var(--card); border: 1.5px solid var(--line); border-radius: 12px; display: grid; place-items: center; padding: 8px 14px; text-align: center; font-size: 21px; font-weight: 700; color: var(--navy); line-height: 1.2; }
-  .lw .tile img { max-width: 100%; max-height: 56px; object-fit: contain; }
-  .lw .tile.key { border-color: var(--navy); }
-  .lw .tile .mn { display: flex; align-items: center; gap: 10px; }
-  .lw .tile .mn { font-size: 19px; text-align: left; line-height: 1.2; }
-  .lw .tile .mn img { height: 46px; width: auto; flex: none; }
-  .lw .tile .mono { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; flex: none; background: var(--sky); color: var(--blue); font-size: 16px; font-weight: 700; letter-spacing: .02em; }
-  .lw .tile .mono.o { background: var(--orange-2); color: var(--orange-ink); }
+  .lw { margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 16px 18px; }
+  .lw .tile { width: 265px; height: 140px; background: var(--card); border: 1.5px solid var(--line); border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 14px 20px 12px; }
+  .lw .tile .lg { height: 78px; width: 100%; display: grid; place-items: center; }
+  .lw .tile .lg img { max-width: 100%; max-height: 78px; object-fit: contain; }
+  .lw .tile .nm { font-size: 16px; font-weight: 600; color: var(--muted); line-height: 1.2; white-space: nowrap; }
 
   /* Featured clients */
   .fc { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -614,7 +606,7 @@
       <div class="c"><img src="assets/photos/cat-water-cooler.jpg" alt=""><b>ตู้ทำน้ำเย็น-น้ำร้อน</b></div>
     </div>
   </div>
-  <div class="hb"><h4>แบรนด์ที่จัดจำหน่าย</h4><img src="assets/brands/sp.png" alt="SP"><img src="assets/brands/fujiva.png" alt="Fujiva"><img src="assets/brands/icool.png" alt="iCool"><img src="assets/brands/coolmax.png" alt="CoolMax"><img src="assets/brands/freon.png" alt="Freon"><img src="assets/brands/sacco.png" alt="Sacco"><img src="assets/brands/dongyue.png" alt="Dongyue"><img src="assets/brands/hongsen.png" alt="Hongsen"></div>
+  <div class="hb"><h4>แบรนด์ที่จัดจำหน่าย</h4><img src="assets/brands/sp.svg" alt="SP"><img src="assets/brands/fujiva.svg" alt="Fujiva"><img src="assets/brands/icool.svg" alt="iCool"><img src="assets/brands/coolmax.svg" alt="CoolMax"><img src="assets/brands/freon.svg" alt="Freon"><img src="assets/brands/sacco.svg" alt="Sacco"><img src="assets/brands/dongyue.png" alt="Dongyue"><img src="assets/brands/hongsen.svg" alt="Hongsen"></div>
 </section>
 
 <!-- ============ 08 ORGANIZATION ============ -->
@@ -851,6 +843,7 @@
 <section class="slide content" data-sec="04 · Clients">
   <div class="eyebrow">Our Clients</div>
   <h2>ลูกค้าที่ไว้วางใจเรา</h2>
+  <p style="margin-top:14px;font-size:24px;color:var(--muted)">องค์กรจากภาคอุตสาหกรรม ยานยนต์ การแพทย์ การศึกษา ร้านอาหาร และที่อยู่อาศัย</p>
   {{CLIENT_WALL}}
 </section>
 
@@ -898,7 +891,7 @@
   <h2>ติดตั้งและบริการเครื่องปรับอากาศทุกยี่ห้อ</h2>
   <div class="body" style="margin-top:30px">
     <div class="subhd"><h4>ตัวอย่างยี่ห้อที่จำหน่าย ติดตั้ง และบริการ</h4><span>รวมถึงยี่ห้ออื่นทุกยี่ห้อ · ชื่อยี่ห้อเป็นเครื่องหมายการค้าของเจ้าของแต่ละราย</span></div>
-    <div class="logos"><div><img src="assets/brands/fujiva.png" alt="Fujiva"></div><div><img src="assets/brands/daikin.png" alt="Daikin"></div><div><img src="assets/brands/mitsubishi.png" alt="Mitsubishi Electric"></div><div><img src="assets/brands/carrier.png" alt="Carrier"></div><div>Central Air</div><div><img src="assets/brands/haier.png" alt="Haier"></div><div>Hisense</div><div><img src="assets/brands/midea.png" alt="Midea"></div><div><img src="assets/brands/tcl.png" alt="TCL"></div><div>AUX</div></div>
+    <div class="logos"><div><img src="assets/brands/fujiva.svg" alt="Fujiva"></div><div><img src="assets/brands/daikin.svg" alt="Daikin"></div><div><img src="assets/brands/mitsubishi.svg" alt="Mitsubishi Electric"></div><div><img src="assets/brands/carrier.svg" alt="Carrier"></div><div><img src="assets/brands/centralair.svg" alt="Central Air"></div><div><img src="assets/brands/haier.svg" alt="Haier"></div><div><img src="assets/brands/hisense.svg" alt="Hisense"></div><div><img src="assets/brands/midea.svg" alt="Midea"></div><div><img src="assets/brands/tcl.svg" alt="TCL"></div><div><img src="assets/brands/aux.svg" alt="AUX"></div></div>
     <div class="subhd"><h4>วัสดุติดตั้งมาตรฐาน</h4><span>Company Standard Specification</span></div>
     <div class="mats">
       <div class="card"><b>ท่อทองแดง</b><span>หนาประมาณ 0.7 mm สำหรับงานติดตั้งมาตรฐาน</span></div>
