@@ -211,7 +211,7 @@ CLIENTS = [
         ("paolo", "โรงพยาบาลเปาโล", 1), ("suksawat", "โรงพยาบาลสุขสวัสดิ์", 1), ("bangmod-aesthetic", "บางมด เอสเทติก", 0),
         ("dental-smile", "Dental Smile", 0), ("smile-plus", "Smile Plus", 0), ("bangmod-school", "โรงเรียนบางมดวิทยา", 0)]),
     ("ร้านอาหาร ค้าปลีก และบริการ", "M4 3v8a3 3 0 0 0 3 3v7M7 3v5M10 3v8a3 3 0 0 1-3 3M17 21V3c-2 0-3 3-3 7h3", " o", [
-        ("nuea-luan", "เนื้อล้วนๆ", 0), ("pen-lao", "เป็นลาว", 0), ("petchyindee", "เพชรยินดี", 0), ("ultimate-go", "อัลติเมท โก", 0),
+        ("nuea-luan", "เนื้อล้วนล้วน", 0), ("pen-lao", "เป็นลาว", 0), ("petchyindee", "เพชรยินดี", 0), ("ultimate-go", "อัลติเมท โก", 0),
         ("sinthawee", "สินทวี", 0), ("priao-spa", "เปรี้ยวสปา", 0)]),
     ("ที่อยู่อาศัยและอาคารชุด", "M3 21V8l9-5 9 5v13M9 21v-6h6v6", "", [
         ("the-excel", "The Excel", 0), ("cadenza", "Cadenza", 0), ("pleno", "หมู่บ้านพลีโน่", 0), ("the-pavilla", "The Pavilla", 0),
