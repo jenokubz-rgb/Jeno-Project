@@ -274,7 +274,8 @@ s = s.replace("{{AC}}", ac_unit()).replace("{{SPRAY}}", spray())
 s = s.replace("{{FLYWHEEL}}", flywheel()).replace("{{ZONE}}", zone()).replace("{{MAP}}", cmap())
 _logo = asset("brand", "sbp-logo")
 if _logo:
-    s = s.replace("{{MARK_W}}", f'<img class="mk" src="{_logo}" alt="" style="height:40px;width:auto;background:#fff;border-radius:8px;padding:3px 6px">').replace("{{MARK_N}}", f"<img class='mk' src='{_logo}' alt='' style='height:40px;width:auto'>")
+    _logo_w = asset("brand", "sbp-logo-white") or _logo
+    s = s.replace("{{MARK_W}}", f'<img class="mk" src="{_logo_w}" alt="SP" style="height:42px;width:auto">').replace("{{MARK_N}}", f"<img class='mk' src='{_logo}' alt='SP' style='height:42px;width:auto'>")
 else:
     s = s.replace("{{MARK_W}}", mark("#FFFFFF", NAVY)).replace("{{MARK_N}}", mark(NAVY, "#FFFFFF").replace('"', "'"))
 s = re.sub(r"\{\{ICON:(\w+)\}\}", lambda m: art.icon(m.group(1)), s)

@@ -1,43 +1,41 @@
-# Company Profile: Sahaburapa Group (Rev06, DRAFT)
+# Company Profile: Sahaburapa Group (Rev07, DRAFT)
 
 Company Profile ของบริษัท สหบูรพากรุ๊ป จำกัด สำหรับลูกค้าองค์กร (Customer Version) มี 30 สไลด์ ขนาด 16:9
 
 | ไฟล์ | ใช้ทำอะไร |
 |---|---|
 | `index.html` | เปิดในเบราว์เซอร์เพื่อนำเสนอ ใช้ปุ่ม ← → / Space หรือปัดหน้าจอเพื่อเปลี่ยนสไลด์ ใช้งานออฟไลน์ได้ (ต้องเก็บไว้คู่กับโฟลเดอร์ `assets/` และ `fonts/`) |
-| `Sahaburapa_Company_Profile_Rev06_2026-09-28_DRAFT.pdf` | PDF 30 หน้า สำหรับส่งอีเมล แนบเอกสารขึ้นทะเบียนผู้ขาย หรือพิมพ์ |
+| `Sahaburapa_Company_Profile_Rev07_2026-09-28_DRAFT.pdf` | PDF 30 หน้า สำหรับส่งอีเมล แนบเอกสารขึ้นทะเบียนผู้ขาย หรือพิมพ์ |
 | `assets/photos/` | ภาพหน้างานจริงที่คัด ครอป และปรับแสงแล้ว |
 | `assets/clients/` | ใส่โลโก้ลูกค้าที่นี่ (ดูหัวข้อ "เพิ่มโลโก้ลูกค้า") |
 | `assets/brand/` | ใส่โลโก้บริษัท `sbp-logo.png` หรือ `.svg` ที่นี่ แล้วจะแทนสัญลักษณ์ชั่วคราวทุกหน้า |
 | `src/` | ต้นฉบับ (`template.html`) และสคริปต์สร้าง `index.html` (`build.py`, `art.py`) |
 | `fonts/` | IBM Plex Sans และ IBM Plex Sans Thai (SIL Open Font License) |
-| `archive/` | ฉบับก่อนหน้า (Rev01–Rev05) เก็บไว้เป็นประวัติ (OBSOLETE) |
+| `archive/` | ฉบับก่อนหน้า (Rev01–Rev06) เก็บไว้เป็นประวัติ (OBSOLETE) |
+
+## สิ่งที่เปลี่ยนใน Rev07
+
+- **สไลด์ 13 ใช้ภาพงานติดตั้งจริงของบริษัท 4 ภาพ** แทนภาพประกอบจาก Wikimedia ที่ลบออกหมดแล้ว (ไม่มีภาพ stock เหลือในเอกสาร)
+  - คอยล์ร้อน Fujiva พร้อมรางครอบท่อ
+  - ขาแขวนและยางรองกันสะเทือน
+  - ตรวจรับเครื่องก่อนติดตั้ง
+  - Cassette ในอาคารสำนักงาน
+- **หน้าคั่นหมวด 02 (บริการ)** ใช้ภาพงานติดตั้งคอยล์ร้อนจริง
+- **ภาพตรวจรับเครื่อง** ครอปบุคคลที่ติดขอบภาพด้านซ้ายออก
+- **โลโก้ SP** สร้างใหม่ความละเอียดสูง (1151×829 px) จากไฟล์ 248×172 px ที่ได้รับ
+  - วิธีทำ: ขยายรูปร่างโลโก้ แล้วลงสีส้มเดิม (RGB 238, 79, 48) ให้ขอบคมทุกขนาด
+  - มีฉบับสีขาว `sbp-logo-white.png` สำหรับพื้นเข้ม
+  - ถ้ามีไฟล์ AI/SVG ต้นฉบับ ให้วางทับชื่อไฟล์เดิมได้เลย
 
 ## สิ่งที่เปลี่ยนใน Rev06 (หลังเปิด Network access)
 
 - **โลโก้บริษัท (SP):** ใช้ที่ header ทุกหน้า ไฟล์ `assets/brand/sbp-logo.png` มาจากเว็บไซต์บริษัท มีขนาดเพียง 165 px หากมีไฟล์ต้นฉบับหรือ SVG ให้วางทับชื่อเดิม
 - **หน้าคั่นหมวด 01:** ใช้ภาพสำนักงานใหญ่และทีมงานจากเว็บไซต์บริษัท ครอปป้ายบริษัทข้างเคียงด้านซ้ายออก
 - **สไลด์ใหม่ 8 "ธุรกิจจำหน่ายและนำเข้า":** ใช้ภาพจากเว็บไซต์บริษัท ได้แก่ ภาพนำเข้าสินค้า บูธแสดงสินค้า และหมวดสินค้า 4 หมวด พร้อมแถบโลโก้ 8 แบรนด์ที่จัดจำหน่าย (SP, Fujiva, iCool, CoolMax, Freon, Sacco, Dongyue, Hongsen)
-- **สไลด์ใหม่ 13 "งานติดตั้งและทดสอบระบบ":** ใช้ภาพประกอบจาก Wikimedia Commons 4 ภาพ ทุกภาพติดป้าย "ภาพประกอบ" และใส่เครดิตไว้ในสไลด์ ไม่ได้อ้างว่าเป็นผลงานของบริษัท
-  - ครอปเอาใบหน้า ชุดทหาร และโลโก้หมวกนิรภัยออก
-  - ครอปเหนือป้ายยี่ห้อบนเกจวัด (YELLOW JACKET) เพื่อไม่ให้ติดชื่อบริษัทอื่น
+- **สไลด์ใหม่ 13 "งานติดตั้ง":** ใน Rev06 ใช้ภาพประกอบจาก Wikimedia Commons ชั่วคราว ใน Rev07 แทนด้วยภาพจริงแล้ว
 - **โลโก้ลูกค้าจากเว็บไซต์ทางการ:** T.MAN (tmanpharmaceutical.com), ศรีไทยฯ (srithaisuperware.com), BBGI (bbgigroup.com, SVG), เปาโล (paolohospital.com, SVG), ที ที เทคโนพลาส (technoplast.co.th)
 - **โลโก้แบรนด์แอร์** (Mitsubishi, Daikin, Carrier, Haier, TCL, Midea) มาจากเว็บไซต์บริษัท ส่วน Central Air, Hisense และ AUX ยังเป็นตัวอักษร
 - **ยืนยันจากหน้าเว็บ sahaburapagroup.com โดยตรงแล้ว:** ที่อยู่ เบอร์โทร 02-459-3291-9 อีเมล sahaburapagroupsp@gmail.com และข้อความ "ประสบการณ์มากกว่า 30 ปี"
-
-### ภาพประกอบจากภายนอก (สไลด์ 13)
-
-| ไฟล์ | ชื่อภาพต้นฉบับ | ผู้สร้าง | สัญญาอนุญาต | ลิงก์ |
-|---|---|---|---|---|
-| `stock/install-copper-roof.jpg` | Installation of copper piping for the air handling units located on the roof of the 50th Street ventilation facility. (CM014B, 2-05-2018) (39274448155).jpg | MTA Capital Construction Mega Projects | CC BY 2.0 | https://commons.wikimedia.org/wiki/File:Installation_of_copper_piping_for_the_air_handling_units_located_on_the_roof_of_the_50th_Street_ventilation_facility._(CM014B,_2-05-2018)_(39274448155).jpg |
-| `stock/install-gauges.jpg` | 379th ECES HVAC technicians combat rising temperatures (8502255).jpg | U.S. Air Force AFCENT by Airman 1st Clas | Public domain | https://commons.wikimedia.org/wiki/File:379th_ECES_HVAC_technicians_combat_rising_temperatures_(8502255).jpg |
-| `stock/install-electrical.jpg` | 379th ECES HVAC technicians combat rising temperatures (8502258).jpg | U.S. Air Force AFCENT by Airman 1st Clas | Public domain | https://commons.wikimedia.org/wiki/File:379th_ECES_HVAC_technicians_combat_rising_temperatures_(8502258).jpg |
-| `stock/install-condensing-units.jpg` | Purdy Fitness Center Completes HVAC Renovation (9819534).jpg | U.S. Navy photo by James Kimber | Public domain | https://commons.wikimedia.org/wiki/File:Purdy_Fitness_Center_Completes_HVAC_Renovation_(9819534).jpg |
-
-- **ภาพ CC BY 2.0:** ต้องให้เครดิตผู้สร้าง ใส่ไว้ท้ายสไลด์ 13 แล้ว
-- **ภาพ Public Domain:** ใช้ได้โดยไม่ต้องให้เครดิต
-- **แหล่งที่ใช้ไม่ได้:** Unsplash, Pexels และ Pixabay ต้องมี API key หรือบล็อกการดาวน์โหลดอัตโนมัติ
-- **ภาพที่ตัดทิ้ง:** ชุดภาพติดตั้งแอร์ที่ฟิลิปปินส์ (CC0) เพราะมีป้ายร้านอื่นและภาพไม่เรียบร้อยพอสำหรับ Profile ระดับองค์กร
 
 ## สิ่งที่เปลี่ยนใน Rev05
 
@@ -197,8 +195,8 @@ Network policy ของ environment บล็อกทั้ง `curl` แล�
 | 2 | ตัวสะกดชื่อทางการของลูกค้า เช่น ทรี แมน ฟาร์มา, บี พี แล็ป, เนื้อล้วนๆ | [VERIFY CURRENT] |
 | 3 | จะแสดงตัวเลขการดำเนินงาน (สไลด์ 6, 21) ต่อลูกค้าหรือไม่ | [MANAGEMENT DECISION] |
 | 4 | โทรศัพท์และอีเมลบนสไลด์ 28 ได้มาจากเว็บไซต์บริษัท ต้องยืนยันว่ายังใช้งานอยู่ และจะเพิ่ม LINE OA หรือไม่ | [VERIFY CURRENT] |
-| 5 | โลโก้บริษัท SP ความละเอียดสูงหรือ SVG (ตอนนี้ใช้ไฟล์ 165 px จากเว็บไซต์) และโลโก้ลูกค้ารายอื่นนอกจาก 5 รายที่ดึงได้ | [PENDING] |
-| 6 | ภาพงานติดตั้งจริงของบริษัท (ตอนนี้สไลด์ 13 ใช้ภาพประกอบ) ควรแทนด้วยภาพจริงเมื่อมี | [PENDING] |
+| 5 | โลโก้ SP สร้างใหม่ความละเอียดสูงแล้ว ควรตรวจเทียบกับไฟล์ต้นฉบับ และยังขาดโลโก้ลูกค้ารายอื่นนอกจาก 5 รายที่ดึงได้ | [VERIFY CURRENT] |
+| 6 | ภาพงานติดตั้งจริง | [APPROVED] ใส่แล้วในสไลด์ 13 และหน้าคั่นหมวด 02 |
 | 7 | วิสัยทัศน์ พันธกิจ และค่านิยม (สไลด์ 5) | [APPROVED] ให้พัฒนาต่อได้ |
 | 8 | รพ.สุขสวัสดิ์ | [APPROVED] ใส่ได้ |
 | 8a | ทรี แมน ฟาร์มา ในทะเบียนงาน = ที.แมน ฟาร์มาซูติคอล (T.MAN) | [VERIFY CURRENT] ยืนยันจากโลโก้ในภาพและผลค้นหา |
