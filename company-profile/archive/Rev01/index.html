@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sahaburapa Group Company Profile</title>
+<style>
+  /* IBM Plex Sans (Latin, variable) + IBM Plex Sans Thai, bundled locally so the deck works offline */
+  @font-face { font-family: 'IBM Plex Sans'; font-style: normal; font-weight: 400 700; font-display: swap; src: url(../../fonts/IBMPlexSans-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family: 'IBM Plex Sans Thai'; font-style: normal; font-weight: 400; font-display: swap; src: url(../../fonts/IBMPlexSansThai-400-thai.woff2) format('woff2'); unicode-range: U+02D7, U+0303, U+0331, U+0E01-0E5B, U+200C-200D, U+25CC; }
+  @font-face { font-family: 'IBM Plex Sans Thai'; font-style: normal; font-weight: 500; font-display: swap; src: url(../../fonts/IBMPlexSansThai-500-thai.woff2) format('woff2'); unicode-range: U+02D7, U+0303, U+0331, U+0E01-0E5B, U+200C-200D, U+25CC; }
+  @font-face { font-family: 'IBM Plex Sans Thai'; font-style: normal; font-weight: 600; font-display: swap; src: url(../../fonts/IBMPlexSansThai-600-thai.woff2) format('woff2'); unicode-range: U+02D7, U+0303, U+0331, U+0E01-0E5B, U+200C-200D, U+25CC; }
+  @font-face { font-family: 'IBM Plex Sans Thai'; font-style: normal; font-weight: 700; font-display: swap; src: url(../../fonts/IBMPlexSansThai-700-thai.woff2) format('woff2'); unicode-range: U+02D7, U+0303, U+0331, U+0E01-0E5B, U+200C-200D, U+25CC; }
+  :root {
+    --navy: #0B2545;
+    --blue: #1363DF;
+    --blue-soft: #E8F0FC;
+    --orange: #F28C28;
+    --orange-soft: #FEF1E4;
+    --ink: #1B2533;
+    --muted: #5B6778;
+    --line: #DCE3EC;
+    --paper: #FFFFFF;
+    --canvas: #2A3442;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--canvas); }
+  body {
+    font-family: "IBM Plex Sans", "IBM Plex Sans Thai", "Noto Sans Thai", "Leelawadee UI", Tahoma, sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+
+  /* ---------- Stage: fixed 1920x1080 slides scaled to the viewport ---------- */
+  #deck { position: fixed; inset: 0; display: grid; place-items: center; }
+  .slide {
+    position: absolute;
+    width: 1920px; height: 1080px;
+    background: var(--paper);
+    padding: 96px 120px 110px;
+    display: none;
+    flex-direction: column;
+    transform-origin: center center;
+    overflow: hidden;
+  }
+  .slide.active { display: flex; }
+
+  /* ---------- Shared slide chrome ---------- */
+  .kicker {
+    font-size: 26px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--orange); margin-bottom: 18px;
+  }
+  h2 { font-size: 64px; line-height: 1.2; font-weight: 700; color: var(--navy); }
+  .lead { font-size: 30px; line-height: 1.6; color: var(--muted); margin-top: 20px; max-width: 1500px; }
+  .footer {
+    position: absolute; left: 120px; right: 120px; bottom: 44px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 20px; color: var(--muted); border-top: 2px solid var(--line); padding-top: 18px;
+  }
+  .footer b { color: var(--navy); font-weight: 600; }
+  .accent-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 16px; background: linear-gradient(var(--blue), var(--navy)); }
+  .accent-bar::after { content: ""; position: absolute; left: 0; bottom: 0; width: 16px; height: 180px; background: var(--orange); }
+  .body { flex: 1; margin-top: 56px; min-height: 0; }
+  .body.grid { align-content: start; }
+  .band { margin-top: 36px; display: grid; grid-template-columns: 300px 1fr; gap: 32px; align-items: center; padding: 30px 40px; background: var(--blue-soft); border-radius: 20px; }
+  .band h4 { font-size: 28px; font-weight: 700; color: var(--blue); line-height: 1.35; }
+  .band p { font-size: 24px; line-height: 1.6; color: var(--ink); }
+  .band .chips { display: flex; flex-wrap: wrap; gap: 12px; }
+  .band .chip { background: var(--paper); border-color: var(--paper); }
+  .flow { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; font-size: 24px; color: var(--navy); font-weight: 500; }
+  .flow i { font-style: normal; color: var(--orange); font-weight: 700; }
+
+  /* ---------- Service rows ---------- */
+  .svc { display: grid; gap: 16px; margin-top: 44px; }
+  .svc-row { display: grid; grid-template-columns: 72px 400px 1fr; gap: 32px; align-items: center; padding: 18px 32px; border: 2px solid var(--line); border-radius: 20px; }
+  .svc-row .icon { margin: 0; }
+  .svc-row h3 { font-size: 32px; font-weight: 700; color: var(--navy); line-height: 1.25; }
+  .svc-row .en { font-size: 22px; font-weight: 500; color: var(--blue); margin-top: 2px; }
+  .svc-row ul { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 36px; }
+  .svc-row li { font-size: 25px; color: var(--muted); padding-left: 24px; position: relative; line-height: 1.5; }
+  .svc-row li::before { content: ""; position: absolute; left: 0; top: 15px; width: 10px; height: 10px; border-radius: 50%; background: var(--orange); }
+
+  /* ---------- Cards / grids ---------- */
+  .grid { display: grid; gap: 32px; }
+  .g2 { grid-template-columns: repeat(2, 1fr); }
+  .g3 { grid-template-columns: repeat(3, 1fr); }
+  .g4 { grid-template-columns: repeat(4, 1fr); }
+  .g5 { grid-template-columns: repeat(5, 1fr); }
+  .card {
+    border: 2px solid var(--line); border-radius: 20px; padding: 36px 36px 34px;
+    background: var(--paper);
+  }
+  .card h3 { font-size: 32px; font-weight: 700; color: var(--navy); line-height: 1.3; }
+  .card .en { font-size: 22px; font-weight: 500; color: var(--blue); margin-top: 4px; }
+  .card p, .card li { font-size: 24px; line-height: 1.6; color: var(--muted); }
+  .card p { margin-top: 16px; }
+  .card ul { margin-top: 16px; padding-left: 0; list-style: none; }
+  .card li { padding-left: 26px; position: relative; }
+  .card li::before { content: ""; position: absolute; left: 0; top: 16px; width: 10px; height: 10px; border-radius: 50%; background: var(--orange); }
+  .icon {
+    width: 72px; height: 72px; border-radius: 18px; display: grid; place-items: center;
+    background: var(--blue-soft); color: var(--blue); margin-bottom: 24px;
+  }
+  .icon.o { background: var(--orange-soft); color: var(--orange); }
+  .icon svg { width: 40px; height: 40px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ---------- Cover ---------- */
+  .cover { background: var(--navy); color: #fff; padding: 0; }
+  .cover .inner { position: relative; z-index: 2; padding: 120px 140px; display: flex; flex-direction: column; height: 100%; }
+  .cover .brand-th { font-size: 34px; font-weight: 500; opacity: .85; }
+  .cover h1 { font-size: 112px; line-height: 1.05; font-weight: 700; margin-top: 18px; letter-spacing: -.01em; }
+  .cover h1 span { color: var(--orange); }
+  .cover .sub { font-size: 36px; line-height: 1.6; margin-top: 40px; max-width: 1100px; opacity: .9; }
+  .cover .tag { margin-top: auto; display: flex; gap: 20px; flex-wrap: wrap; }
+  .cover .tag span { font-size: 24px; font-weight: 500; border: 2px solid rgba(255,255,255,.35); border-radius: 999px; padding: 10px 28px; }
+  .cover .year { position: absolute; right: 140px; top: 120px; font-size: 26px; font-weight: 600; letter-spacing: .12em; color: var(--orange); }
+  .cover .art { position: absolute; right: -160px; bottom: -160px; width: 980px; height: 980px; z-index: 1; opacity: .95; }
+
+  /* ---------- About ---------- */
+  .about { display: grid; grid-template-columns: 1.15fr 1fr; gap: 72px; }
+  .about p.big { font-size: 34px; line-height: 1.7; color: var(--ink); }
+  .about p.big b { color: var(--blue); font-weight: 600; }
+  .facts { display: grid; gap: 22px; align-content: start; }
+  .fact { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 26px 32px; border-radius: 18px; background: var(--blue-soft); }
+  .fact dt { font-size: 22px; font-weight: 600; color: var(--blue); letter-spacing: .04em; }
+  .fact dd { font-size: 26px; line-height: 1.5; color: var(--navy); font-weight: 500; }
+
+  /* ---------- Brands ---------- */
+  .brand-card { border-top: 10px solid var(--blue); }
+  .brand-card.o { border-top-color: var(--orange); }
+  .brand-card.n { border-top-color: var(--navy); }
+  .brand-card .role { display: inline-block; margin-top: 18px; font-size: 20px; font-weight: 600; padding: 6px 16px; border-radius: 8px; background: var(--blue-soft); color: var(--blue); }
+  .brand-card.o .role { background: var(--orange-soft); color: #B85F0B; }
+  .brand-card.n .role { background: #E6EAF0; color: var(--navy); }
+
+  /* ---------- Value proposition ---------- */
+  .vp { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px 40px; }
+  .vp-item { display: grid; grid-template-columns: 64px 1fr; gap: 22px; align-items: start; padding: 26px 0; border-bottom: 2px solid var(--line); }
+  .vp-item .n { font-size: 40px; font-weight: 700; color: var(--orange); line-height: 1; }
+  .vp-item h4 { font-size: 28px; font-weight: 700; color: var(--navy); line-height: 1.35; }
+  .vp-item p { font-size: 22px; line-height: 1.55; color: var(--muted); margin-top: 8px; }
+
+  /* ---------- Process ---------- */
+  .process { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+  .step { position: relative; background: var(--blue-soft); border-radius: 20px; padding: 32px 32px 30px; }
+  .step:nth-child(n+5) { background: var(--orange-soft); }
+  .step .no { font-size: 22px; font-weight: 700; color: var(--blue); letter-spacing: .08em; }
+  .step:nth-child(n+5) .no { color: #B85F0B; }
+  .step h4 { font-size: 30px; font-weight: 700; color: var(--navy); margin-top: 8px; }
+  .step p { font-size: 22px; line-height: 1.55; color: var(--muted); margin-top: 10px; }
+  .deliver { margin-top: 36px; display: flex; gap: 18px; align-items: center; flex-wrap: wrap; font-size: 24px; color: var(--navy); }
+  .deliver b { font-weight: 700; margin-right: 8px; }
+  .chip { padding: 8px 20px; border-radius: 999px; border: 2px solid var(--line); font-size: 22px; font-weight: 500; color: var(--navy); }
+
+  /* ---------- Tables ---------- */
+  table { width: 100%; border-collapse: collapse; font-size: 24px; }
+  th, td { text-align: left; padding: 20px 24px; border-bottom: 2px solid var(--line); vertical-align: top; line-height: 1.5; }
+  th { font-size: 20px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--blue); background: var(--blue-soft); border-bottom: 0; }
+  td:first-child { font-weight: 600; color: var(--navy); }
+  td { color: var(--ink); }
+
+  /* ---------- Industries ---------- */
+  .ind { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
+  .ind .card { padding: 30px 26px; text-align: left; }
+  .ind .card h3 { font-size: 26px; }
+  .ind .card p { font-size: 20px; margin-top: 8px; }
+  .ind .icon { width: 60px; height: 60px; margin-bottom: 18px; }
+  .ind .icon svg { width: 32px; height: 32px; }
+  .b2c { margin-top: 32px; display: grid; grid-template-columns: 300px 1fr; gap: 32px; align-items: center; padding: 30px 40px; background: var(--orange-soft); border-radius: 20px; }
+  .b2c h4 { font-size: 30px; font-weight: 700; color: #B85F0B; }
+  .b2c p { font-size: 24px; line-height: 1.6; color: var(--ink); }
+
+  /* ---------- Projects ---------- */
+  .proj .card { display: flex; flex-direction: column; }
+  .proj .seg { font-size: 20px; font-weight: 600; color: var(--orange); letter-spacing: .06em; text-transform: uppercase; }
+  .proj h3 { margin-top: 8px; }
+  .proj .stat { margin-top: 22px; display: flex; gap: 14px; align-items: baseline; }
+  .proj .stat b { font-size: 56px; font-weight: 700; color: var(--blue); line-height: 1; }
+  .proj .stat span { font-size: 22px; color: var(--muted); }
+
+  /* ---------- Brands we work with ---------- */
+  .logos { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+  .logos div { height: 110px; display: grid; place-items: center; border: 2px solid var(--line); border-radius: 16px; font-size: 30px; font-weight: 700; color: var(--navy); letter-spacing: .02em; }
+  .logos div.own { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .note { font-size: 20px; color: var(--muted); margin-top: 22px; }
+
+  /* ---------- Contact ---------- */
+  .contact { background: var(--navy); color: #fff; }
+  .contact h2 { color: #fff; }
+  .contact .lead { color: rgba(255,255,255,.8); }
+  .contact .kicker { color: var(--orange); }
+  .contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px 48px; margin-top: 64px; max-width: 1400px; }
+  .contact-grid div { border-left: 6px solid var(--orange); padding: 6px 0 6px 28px; }
+  .contact-grid dt { font-size: 22px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.65); }
+  .contact-grid dd { font-size: 32px; font-weight: 500; margin-top: 6px; }
+  .ph { color: var(--orange); font-style: normal; }
+  .contact .footer { color: rgba(255,255,255,.6); border-top-color: rgba(255,255,255,.2); }
+  .contact .footer b { color: #fff; }
+
+  /* ---------- Controls (screen only) ---------- */
+  .controls {
+    position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 10;
+    display: flex; gap: 8px; align-items: center; padding: 4px; border-radius: 12px; background: rgba(11,37,69,.55);
+    font: 500 14px/1 "IBM Plex Sans", "IBM Plex Sans Thai", sans-serif; color: #fff;
+  }
+  .controls button {
+    width: 36px; height: 36px; border-radius: 10px; border: 1px solid rgba(255,255,255,.3);
+    background: rgba(0,0,0,.35); color: #fff; font-size: 18px; cursor: pointer;
+  }
+  .controls button:hover { background: rgba(0,0,0,.6); }
+  .controls span { min-width: 56px; text-align: center; }
+
+  /* ---------- Print / PDF: one slide per page ---------- */
+  @page { size: 1920px 1080px; margin: 0; }
+  @media print {
+    html, body { background: #fff; overflow: visible; }
+    #deck { position: static; display: block; }
+    .slide { display: flex !important; position: relative; transform: none !important; page-break-after: always; break-after: page; }
+    .controls { display: none; }
+  }
+</style>
+</head>
+<body>
+<main id="deck">
+
+  <!-- 1. Cover -->
+  <section class="slide cover">
+    <svg class="art" viewBox="0 0 980 980" aria-hidden="true">
+      <circle cx="490" cy="490" r="480" fill="#13335E"/>
+      <circle cx="490" cy="490" r="360" fill="#1363DF" opacity=".55"/>
+      <circle cx="490" cy="490" r="240" fill="#F28C28"/>
+      <g stroke="#fff" stroke-width="10" stroke-linecap="round" opacity=".9" fill="none">
+        <path d="M490 330v320M351 410l278 160M351 570l278-160"/>
+        <path d="M455 345l35 30 35-30M455 635l35-30 35 30"/>
+      </g>
+    </svg>
+    <div class="inner">
+      <div class="year">COMPANY PROFILE 2026</div>
+      <div class="brand-th">บริษัท สหบูรพากรุ๊ป จำกัด</div>
+      <h1>Sahaburapa<br>Group <span>Co., Ltd.</span></h1>
+      <p class="sub">ผู้ให้บริการระบบปรับอากาศครบวงจร ตั้งแต่จำหน่ายเครื่อง ติดตั้ง ล้าง บำรุงรักษา ซ่อม จนถึงงานโครงการ — ทำงานด้วยขอบเขตที่เขียนชัด วัสดุที่กำหนดมาตรฐาน และการรับผิดชอบหลังการขาย</p>
+      <div class="tag"><span>Polar Air</span><span>Fujiva</span><span>Tyga Factory</span></div>
+    </div>
+  </section>
+
+  <!-- 2. About -->
+  <section class="slide">
+    <div class="accent-bar"></div>
+    <div class="kicker">About Us · เกี่ยวกับเรา</div>
+    <h2>บริษัทบริการระบบปรับอากาศ<br>ที่ดูแลงานตั้งแต่สำรวจจนถึงหลังการขาย</h2>
+    <div class="body about">
+      <p class="big">
+        บริษัท สหบูรพากรุ๊ป จำกัด ให้บริการงานระบบปรับอากาศ <b>(HVAC)</b> สำหรับลูกค้า<b>องค์กร</b> และ<b>ที่พักอาศัย</b>
+        ผ่านแบรนด์บริการ <b>Polar Air</b> ด้วยทีมช่างของบริษัทเอง ทุกงานเริ่มจากการสำรวจหน้างาน
+        ทำใบเสนอราคาที่ระบุขอบเขตชัดเจน ควบคุมคุณภาพระหว่างทำงาน ส่งมอบพร้อมรายงานและภาพถ่ายก่อน–หลัง
+        และดูแลต่อเนื่องด้วยการรับประกันตามขอบเขตงานและสัญญาบำรุงรักษา
+      </p>
+      <dl class="facts">
+        <div class="fact"><dt>ธุรกิจหลัก</dt><dd>จำหน่าย ติดตั้ง ล้าง PM/AMC ซ่อม เปลี่ยนเครื่อง อะไหล่ และงานโครงการ HVAC</dd></div>
+        <div class="fact"><dt>ฐานปฏิบัติงาน</dt><dd>พระราม 2 กรุงเทพฯ</dd></div>
+        <div class="fact"><dt>พื้นที่บริการ</dt><dd>กรุงเทพฯ ปริมณฑล และงานโครงการต่างจังหวัดตามความเหมาะสม</dd></div>
+        <div class="fact"><dt>กลุ่มลูกค้า</dt><dd>โรงงาน โรงพยาบาล อาคารสำนักงาน ร้านค้าหลายสาขา และบ้านพักอาศัย</dd></div>
+      </dl>
+    </div>
+    <div class="footer"><span><b>Sahaburapa Group</b> · Company Profile</span><span>02</span></div>
+  </section>
+
+  <!-- 3. Brand architecture -->
+  <section class="slide">
+    <div class="accent-bar"></div>
+    <div class="kicker">Our Brands · โครงสร้างแบรนด์</div>
+    <h2>หนึ่งบริษัท สามแบรนด์ ครอบคลุมบริการ สินค้า และเครื่องมือ</h2>
+    <div class="body grid g4">
+      <div class="card brand-card n">
+        <h3>Sahaburapa Group</h3>
+        <div class="en">Corporate</div>
+        <span class="role">นิติบุคคลหลัก</span>
+        <p>ออกใบเสนอราคา สัญญา ใบรับประกัน เอกสารจัดซื้อ การขึ้นทะเบียนผู้ขาย และงานประมูล — ลูกค้าองค์กรทำสัญญากับบริษัทโดยตรง</p>
+      </div>
+      <div class="card brand-card">
+        <h3>Polar Air</h3>
+        <div class="en">HVAC Service</div>
+        <span class="role">แบรนด์บริการ</span>
+        <p>ขายพร้อมติดตั้ง ติดตั้งใหม่/เปลี่ยนเครื่อง ล้าง ล้างใหญ่ PM/AMC ตรวจเช็ก ซ่อม ปรับปรุงระบบ และบริการหลังการขาย</p>
+      </div>
+      <div class="card brand-card o">
+        <h3>Fujiva</h3>
+        <div class="en">Air Conditioners &amp; Care</div>
+        <span class="role">แบรนด์สินค้า</span>
+        <p>เครื่องปรับอากาศติดผนัง Inverter ผลิตภัณฑ์ดูแลแอร์ เช่น Fujiva Air Foam Spray และอุปกรณ์ฉีดพ่น จำหน่ายผ่านร้านค้า ตัวแทน และออนไลน์</p>
+      </div>
+      <div class="card brand-card o">
+        <h3>Tyga Factory</h3>
+        <div class="en">Tools &amp; Welding</div>
+        <span class="role">แบรนด์เครื่องมือ</span>
+        <p>ลวดเชื่อม เครื่องเชื่อม เครื่องตัด เครื่องเจียร เครื่องมือช่างมืออาชีพ และวัสดุสิ้นเปลืองสำหรับงานอุตสาหกรรม</p>
+      </div>
+    </div>
+    <div class="band"><h4>ผู้รับผิดชอบเดียว</h4><p>ทุกแบรนด์อยู่ภายใต้ บริษัท สหบูรพากรุ๊ป จำกัด — ใบเสนอราคา สัญญา ใบกำกับภาษี และใบรับประกันออกในนามนิติบุคคลเดียว ลูกค้ามีผู้รับผิดชอบที่ชัดเจนตั้งแต่ซื้อเครื่องจนถึงบริการหลังการขาย</p></div>
+    <div class="footer"><span><b>Sahaburapa Group</b> · Company Profile</span><span>03</span></div>
+  </section>
+
+  <!-- 4. Services -->
+  <section class="slide">
+    <div class="accent-bar"></div>
+    <div class="kicker">Services · บริการของเรา</div>
+    <h2>บริการระบบปรับอากาศครบวงจรในที่เดียว</h2>
+    <div class="body svc">
+      <div class="svc-row"><div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="8" rx="2"/><path d="M7 17v2M12 17v3M17 17v2"/></svg></div><div><h3>จำหน่ายเครื่อง</h3><div class="en">Equipment</div></div><ul><li>Wall / Ceiling / Cassette</li><li>Floor Standing / Ducted</li><li>อะไหล่ วัสดุติดตั้ง และน้ำยา</li></ul></div>
+      <div class="svc-row"><div class="icon"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></div><div><h3>ติดตั้ง</h3><div class="en">Installation</div></div><ul><li>ติดตั้งใหม่ / เปลี่ยน / ย้ายเครื่อง</li><li>เดินท่อน้ำยา ไฟฟ้า ท่อน้ำทิ้ง</li><li>ขาแขวน โครงเหล็ก และงานยกเครื่อง</li></ul></div>
+      <div class="svc-row"><div class="icon o"><svg viewBox="0 0 24 24"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg></div><div><h3>ล้างและ PM/AMC</h3><div class="en">Cleaning &amp; Maintenance</div></div><ul><li>ล้างมาตรฐาน / ล้างใหญ่</li><li>สัญญาบำรุงรักษารายปี</li><li>รายงานพร้อมภาพก่อน–หลัง</li></ul></div>
+      <div class="svc-row"><div class="icon o"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v3l2 2"/></svg></div><div><h3>ตรวจเช็กและซ่อม</h3><div class="en">Diagnosis &amp; Repair</div></div><ul><li>วิเคราะห์ Error Code และวัดค่า</li><li>หารอยรั่ว เชื่อม แวคคั่ม เติมน้ำยา</li><li>เปลี่ยนบอร์ด มอเตอร์ คอยล์</li></ul></div>
+      <div class="svc-row"><div class="icon"><svg viewBox="0 0 24 24"><path d="M3 21V9l6-4v16M9 21V3l12 6v12M3 21h18M13 13h4M13 17h4"/></svg></div><div><h3>งานโครงการ</h3><div class="en">Projects</div></div><ul><li>ทำงานตาม BOQ / Method Statement</li><li>กลางคืน วันหยุด และแบ่งโซน</li><li>ประสานผู้รับเหมาหลัก / MEP</li></ul></div>
+    </div>
+    <div class="footer"><span><b>Sahaburapa Group</b> · Company Profile</span><span>04</span></div>
+  </section>
+
+  <!-- 5. Why us -->
+  <section class="slide">
+    <div class="accent-bar"></div>
+    <div class="kicker">Why Sahaburapa · ทำไมต้องเรา</div>
+    <h2>เราไม่แข่งที่ราคาถูกที่สุด<br>เราแข่งที่งานที่ตรวจสอบได้และรับผิดชอบได้</h2>
+    <div class="body vp">
+      <div class="vp-item"><div class="n">01</div><div><h4>ทีมช่างของบริษัทเอง</h4><p>ทำงานภายใต้มาตรฐานและการกำกับของบริษัท ไม่ใช่ช่างอิสระ</p></div></div>
+      <div class="vp-item"><div class="n">02</div><div><h4>ขอบเขตงานเป็นลายลักษณ์อักษร</h4><p>ใบเสนอราคาระบุชัดว่ารวมอะไร ไม่รวมอะไร</p></div></div>
+      <div class="vp-item"><div class="n">03</div><div><h4>มาตรฐานวัสดุที่กำหนดชัด</h4><p>ระบุสเปกท่อ ฉนวน สายไฟ ท่อน้ำทิ้งในเอกสาร</p></div></div>
+      <div class="vp-item"><div class="n">04</div><div><h4>รายงานและภาพก่อน–หลัง</h4><p>Job Card และ Service Report ทุกงาน</p></div></div>
+      <div class="vp-item"><div class="n">05</div><div><h4>ตรวจคุณภาพก่อนส่งมอบ</h4><p>QC ตาม Checklist และให้ลูกค้าเซ็นรับงาน</p></div></div>
+      <div class="vp-item"><div class="n">06</div><div><h4>รับประกันตามขอบเขตงาน</h4><p>ระยะเวลาและเงื่อนไขชัดเจน มีทีมดูแลหลังขาย</p></div></div>
+      <div class="vp-item"><div class="n">07</div><div><h4>ทำงานนอกเวลาได้</h4><p>กลางคืน วันหยุด และแบ่งโซน เพื่อไม่กระทบการใช้งานของลูกค้า</p></div></div>
+      <div class="vp-item"><div class="n">08</div><div><h4>วางแผนซ่อม/เปลี่ยนจากข้อมูล</h4><p>ทะเบียนเครื่องและประวัติบริการ ช่วยจัดลำดับงบประมาณ</p></div></div>
+      <div class="vp-item"><div class="n">09</div><div><h4>รับผิดชอบในนามนิติบุคคล</h4><p>ออกเอกสารภาษี สัญญา และขึ้นทะเบียนผู้ขายกับองค์กรได้</p></div></div>
+    </div>
+    <div class="footer"><span><b>Sahaburapa Group</b> · Company Profile</span><span>05</span></div>
+  </section>
+
+  <!-- 6. Process -->
+  <section class="slide">
+    <div class="accent-bar"></div>
+    <div class="kicker">How We Work · ขั้นตอนการทำงาน</div>
+    <h2>ทุกงานเดินตามขั้นตอนเดียวกัน ตรวจสอบได้ทุกจุด</h2>
+    <div class="body">
+      <div class="process">
+        <div class="step"><div class="no">STEP 01</div><h4>รับเรื่อง</h4><p>รับข้อมูลความต้องการ จำนวนเครื่อง และสถานที่</p></div>
+        <div class="step"><div class="no">STEP 02</div><h4>สำรวจหน้างาน</h4><p>วัดระยะท่อ ตรวจไฟฟ้า จุดติดตั้ง การเข้าถึง และความปลอดภัย</p></div>
+        <div class="step"><div class="no">STEP 03</div><h4>เสนอราคา</h4><p>BOQ และใบเสนอราคาระบุขอบเขต สิ่งที่ไม่รวม และการรับประกัน</p></div>
+        <div class="step"><div class="no">STEP 04</div><h4>ยืนยันและวางแผน</h4><p>รับ PO/WO กำหนดทีม วัสดุ วันเวลา และผู้ประสานงานหน้างาน</p></div>
+        <div class="step"><div class="no">STEP 05</div><h4>ปฏิบัติงาน</h4><p>ทำตาม Job Card และมาตรฐานความปลอดภัย ถ่ายภาพระหว่างทำงาน</p></div>
+        <div class="step"><div class="no">STEP 06</div><h4>ตรวจคุณภาพ</h4><p>ทดสอบการทำงาน ตรวจตาม QC Checklist ก่อนส่งมอบ</p></div>
+        <div class="step"><div class="no">STEP 07</div><h4>ส่งมอบงาน</h4><p>Service Report ภาพก่อน–หลัง และลูกค้าเซ็นรับงาน</p></div>
+        <div class="step"><div class="no">STEP 08</div><h4>ดูแลต่อเนื่อง</h4><p>รับประกัน แจ้งเตือนรอบล้าง และวางแผนบำรุงรักษา</p></div>
+      </div>
+      <div class="deliver"><b>เอกสารที่ลูกค้าได้รับ</b>
+        <span class="chip">ใบเสนอราคา</span><span class="chip">Job Card</span><span class="chip">Service Report</span><span class="chip">ภาพก่อน–หลัง</span><span class="chip">ใบส่งมอบงาน</span><span class="chip">ใบรับประกัน</span>
+      </div>
+    </div>
+    <div class="footer"><span><b>Sahaburapa Group</b> · Company Profile</span><span>06</span></div>
+  </section>
+
+  <!-- 7. Installation standard -->
+  <section class="slide">
+    <div class="accent-bar"></div>
+    <div class="kicker">Installation Standard · มาตรฐานงานติดตั้ง</div>
+    <h2>วัสดุที่ระบุชัด ตรวจสอบได้จากใบเสนอราคา</h2>
+    <p class="lead">ตัวอย่างมาตรฐานงานติดตั้งแอร์ติดผนัง (Company Standard) รายละเอียดจริงของแต่ละงานระบุในใบเสนอราคา</p>
+    <div class="body" style="margin-top:40px">
+      <table>
+        <thead><tr><th style="width:26%">รายการ</th><th style="width:40%">มาตรฐานของบริษัท</th><th>เหตุผล</th></tr></thead>
+        <tbody>
+          <tr><td>ท่อน้ำยา</td><td>ท่อทองแดงหนาประมาณ 0.7 mm ระยะมาตรฐาน 4 m</td><td>ทนแรงดัน ลดความเสี่ยงรั่วซึมระยะยาว</td></tr>
+          <tr><td>ฉนวนหุ้มท่อ</td><td>Aeroflex หรือเทียบเท่าที่อนุมัติ</td><td>ลดการเกิดหยดน้ำและการสูญเสียความเย็น</td></tr>
+          <tr><td>สายไฟ / เบรกเกอร์</td><td>สาย THW พร้อมเบรกเกอร์เฉพาะเครื่อง</td><td>ความปลอดภัยทางไฟฟ้า แยกวงจรชัดเจน</td></tr>
+          <tr><td>ท่อน้ำทิ้ง</td><td>ท่อ SCG พร้อมวางแนวลาดเอียง</td><td>ระบายน้ำได้ดี ลดปัญหาน้ำหยด</td></tr>
+          <tr><td>งานเก็บ / ยึด</td><td>รางครอบท่อ ขาแขวนคอยล์ร้อน ยางรองกันสะเทือน</td><td>เรียบร้อย ลดเสียงและการสั่นสะเทือน</td></tr>
+        </tbody>
+      </table>
+      <p class="note">ระยะท่อ ความสูงเกินมาตรฐาน งานไฟเมน นั่งร้าน หรือโรยตัว คิดเพิ่มตามหน้างานและแจ้งในใบเสนอราคาก่อนเริ่มงาน</p>
+    </div>
+    <div class="footer"><span><b>Sahaburapa Group</b> · Company Profile</span><span>07</span></div>
+  </section>
+
+  <!-- 8. PM / AMC -->
+  <section class="slide">
+    <div class="accent-bar"></div>
+    <div class="kicker">PM / AMC Program · สัญญาบำรุงรักษา</div>
+    <h2>บำรุงรักษาตามแผน ไม่ต้องรอให้เครื่องเสีย</h2>
+    <div class="body grid g2" style="gap:48px">
+      <div>
+        <div class="grid" style="gap:24px">
+          <div class="card"><h3>1. ทำทะเบียนเครื่อง (Asset Register)</h3><p>บันทึกตำแหน่ง ยี่ห้อ รุ่น BTU และสภาพของทุกเครื่อง</p></div>
+          <div class="card"><h3>2. วางรอบบริการตามการใช้งาน</h3><p>ใช้งานปกติประมาณ 2 ครั้ง/ปี ใช้งานหนักประมาณ 3 ครั้ง/ปี</p></div>
+          <div class="card"><h3>3. ตรวจเช็กและรายงานทุกรอบ</h3><p>ตรวจอุณหภูมิ การระบายน้ำ เสียง ระบบไฟ และคอยล์ พร้อมภาพ</p></div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="background:var(--blue-soft);border-color:var(--blue-soft);height:100%">
+          <h3>จัดลำดับความเร่งด่วนให้ทุกเครื่อง</h3>
+          <p>ผลตรวจแต่ละรอบจัดเป็น 4 ระดับ ช่วยลูกค้าวางงบประมาณได้</p>
+          <table style="margin-top:28px;font-size:24px">
+            <tbody>
+              <tr><td style="color:#C0392B">ซ่อมทันที</td><td>กระทบการใช้งานหรือความปลอดภัย</td></tr>
+              <tr><td style="color:#B85F0B">วางแผนซ่อม</td><td>ควรแก้ไขภายในรอบถัดไป</td></tr>
+              <tr><td style="color:var(--blue)">เฝ้าระวัง</td><td>ติดตามผลในรอบบริการถัดไป</td></tr>
+              <tr><td style="color:var(--navy)">แนะนำเปลี่ยน</td><td>ซ่อมไม่คุ้มค่าเมื่อเทียบกับเครื่องใหม่</td></tr>
+            </tbody>
+          </table>
+          <p style="margin-top:28px">สัญญา 1–3 ปี รับส่วนลดค่าบริการ อะไหล่ และค่าแรง</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span><b>Sahaburapa Group</b> · Company Profile</span><span>08</span></div>
+  </section>
+
+  <!-- 9. Industries -->
+  <section class="slide">
+    <div class="accent-bar"></div>
+    <div class="kicker">Who We Serve · กลุ่มลูกค้า</div>
+    <h2>รองรับทั้งงานองค์กรและที่พักอาศัย</h2>
+    <div class="body">
+      <div class="ind">
+        <div class="card"><div class="icon"><svg viewBox="0 0 24 24"><path d="M2 20V10l6 4V10l6 4V6h8v14z"/></svg></div><h3>โรงงาน / คลังสินค้า</h3><p>แบ่งโซน ไม่กระทบการผลิต</p></div>
+        <div class="card"><div class="icon"><svg viewBox="0 0 24 24"><path d="M4 21V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16M9 7h1M14 7h1M9 11h1M14 11h1M10 21v-4h4v4"/></svg></div><h3>อาคารสำนักงาน</h3><p>งานนอกเวลาทำการ วันหยุด</p></div>
+        <div class="card"><div class="icon o"><svg viewBox="0 0 24 24"><path d="M12 7v6M9 10h6"/><rect x="3" y="3" width="18" height="18" rx="3"/></svg></div><h3>โรงพยาบาล / คลินิก</h3><p>ควบคุมฝุ่น เสียง ความสะอาด</p></div>
+        <div class="card"><div class="icon o"><svg viewBox="0 0 24 24"><path d="M4 3v8a3 3 0 0 0 3 3v7M7 3v5M10 3v8a3 3 0 0 1-3 3M17 21V3c-2 0-3 3-3 7h3"/></svg></div><h3>ร้านอาหาร / เชน</h3><p>สัญญา PM ครอบคลุมทุกสาขา</p></div>
+        <div class="card"><div class="icon"><svg viewBox="0 0 24 24"><path d="M3 21V8l9-5 9 5v13M9 21v-6h6v6"/></svg></div><h3>โรงแรม / อพาร์ตเมนต์</h3><p>ดูแลห้องจำนวนมากตามรอบ</p></div>
+        <div class="card"><div class="icon"><svg viewBox="0 0 24 24"><path d="M22 10L12 5 2 10l10 5 10-5zM6 12v5c3 2 9 2 12 0v-5"/></svg></div><h3>โรงเรียน / สถาบัน</h3><p>วางแผนงานช่วงปิดภาคเรียน</p></div>
+        <div class="card"><div class="icon"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V10h14v11M3 10l9-6 9 6M9 14h6"/></svg></div><h3>หน่วยงานรัฐ</h3><p>เอกสารจัดซื้อจัดจ้างครบถ้วน</p></div>
+        <div class="card"><div class="icon o"><svg viewBox="0 0 24 24"><path d="M2 20h20M4 20V8l8-5 8 5v12M8 12h8M8 16h8"/></svg></div><h3>นิติบุคคลอาคาร</h3><p>ระบบส่วนกลางและห้องชุด</p></div>
+        <div class="card"><div class="icon o"><svg viewBox="0 0 24 24"><path d="M2 20l5-9 4 5 3-4 8 8zM14 6a2 2 0 1 0 0-.01"/></svg></div><h3>ผู้รับเหมาหลัก / MEP</h3><p>ผู้รับเหมาช่วงงานระบบแอร์</p></div>
+        <div class="card"><div class="icon"><svg viewBox="0 0 24 24"><path d="M4 7h16l-1 13H5zM9 7V5a3 3 0 0 1 6 0v2"/></svg></div><h3>ร้านค้า / SME</h3><p>งานติดตั้งและล้างตามรอบ</p></div>
+      </div>
+      <div class="b2c"><h4>ลูกค้าที่พักอาศัย</h4><p>บ้าน ทาวน์เฮาส์ คอนโด และโฮมออฟฟิศ — ซื้อพร้อมติดตั้ง เปลี่ยนเครื่องเก่า ล้าง ตรวจเช็ก และซ่อม ด้วยมาตรฐานเดียวกับงานองค์กร</p></div>
+    </div>
+    <div class="footer"><span><b>Sahaburapa Group</b> · Company Profile</span><span>09</span></div>
+  </section>
+
+  <!-- 10. Reference projects -->
+  <section class="slide">
+    <div class="accent-bar"></div>
+    <div class="kicker">Selected Projects · ผลงานที่ผ่านมา</div>
+    <h2>ตัวอย่างผลงาน</h2>
+    <div class="body grid g4 proj">
+      <div class="card">
+        <div class="seg">Industrial</div>
+        <h3>BBGI บ่อพลอย</h3>
+        <div class="stat"><b>~356</b><span>เมตร ท่อน้ำยา</span></div>
+        <ul><li>ติดตั้ง 3 ชั้น ชั้นละประมาณ 10 เครื่อง</li><li>ท่อบนฝ้า T-bar พร้อมจุดยึดทุกประมาณ 1.5 m</li><li>ระบบไฟ 1 เฟสและ 3 เฟส</li></ul>
+      </div>
+      <div class="card">
+        <div class="seg">Healthcare</div>
+        <h3>โรงพยาบาลเปาโล พระประแดง</h3>
+        <div class="stat"><b>~19</b><span>เครื่อง</span></div>
+        <ul><li>ล้างแอร์หลายรอบตามแผน</li><li>ควบคุมความสะอาดในพื้นที่</li><li>Service Report ทุกรอบ</li></ul>
+      </div>
+      <div class="card">
+        <div class="seg">Healthcare</div>
+        <h3>โรงพยาบาลสุขสวัสดิ์</h3>
+        <div class="stat"><b>~29</b><span>เครื่อง Carrier</span></div>
+        <ul><li>หลายขนาด BTU</li><li>ติดตั้ง เดินท่อ และงานไฟฟ้า</li><li>แยกขอบเขตเครื่อง/ติดตั้ง/ไฟฟ้า</li></ul>
+      </div>
+      <div class="card">
+        <div class="seg">Commercial</div>
+        <h3>เจริญไทย มอเตอร์</h3>
+        <div class="stat"><b>4</b><span>ประเภทเครื่อง</span></div>
+        <ul><li>Cassette, Wall, Floor Standing, Ceiling</li><li>เดินท่อบนฝ้าตามระยะจุดยึด</li><li>แยกแพ็กเกจงานตามขอบเขต</li></ul>
+      </div>
+    </div>
+    <div class="band"><h4>ความสามารถที่ใช้</h4><div class="chips"><span class="chip">เดินท่อบนฝ้า T-bar</span><span class="chip">ระบบไฟ 1 เฟส / 3 เฟส</span><span class="chip">งานในพื้นที่โรงพยาบาล</span><span class="chip">หลายประเภทเครื่อง</span><span class="chip">แบ่งรอบ / แบ่งโซน</span><span class="chip">Service Report</span></div></div>
+    <div class="footer"><span><b>Sahaburapa Group</b> · Company Profile</span><span>10</span></div>
+  </section>
+
+  <!-- 11. Brands & products -->
+  <section class="slide">
+    <div class="accent-bar"></div>
+    <div class="kicker">Brands &amp; Products · ยี่ห้อที่ให้บริการ</div>
+    <h2>จำหน่ายและติดตั้งเครื่องปรับอากาศหลากหลายยี่ห้อ</h2>
+    <div class="body">
+      <div class="logos">
+        <div class="own">Fujiva</div><div>Daikin</div><div>Mitsubishi</div><div>Carrier</div><div>Central Air</div>
+        <div>Haier</div><div>Hisense</div><div>Midea</div><div>TCL</div><div>AUX</div>
+      </div>
+      <p class="note">และยี่ห้ออื่นที่บริษัทอนุมัติ · ชื่อยี่ห้อเป็นเครื่องหมายการค้าของเจ้าของแต่ละราย</p>
+      <div class="grid g2" style="margin-top:44px">
+        <div class="card" style="border-top:10px solid var(--orange)">
+          <h3>Fujiva Inverter ติดผนัง</h3><div class="en">Wall-mounted Inverter · R32</div>
+          <ul><li>ขนาด 9,000 / 12,000 / 18,000 / 24,000 BTU</li><li>DC Inverter, Auto Clean, Turbo, คอยล์ทองแดง Gold Fin</li><li>รับประกันอะไหล่และคอมเพรสเซอร์ตามเงื่อนไขผู้ผลิต</li></ul>
+        </div>
+        <div class="card" style="border-top:10px solid var(--blue)">
+          <h3>Fujiva Air Foam Spray</h3><div class="en">Air-conditioner Care</div>
+          <ul><li>โฟมทำความสะอาดแผงคอยล์แอร์ กลิ่น Blue Ocean</li><li>อุปกรณ์ฉีดพ่นสำหรับงานล้างแอร์</li><li>จำหน่ายผ่านร้านค้า ตัวแทน และช่องทางออนไลน์</li></ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span><b>Sahaburapa Group</b> · Company Profile</span><span>11</span></div>
+  </section>
+
+  <!-- 12. Warranty & service hours -->
+  <section class="slide">
+    <div class="accent-bar"></div>
+    <div class="kicker">Warranty &amp; Coverage · การรับประกันและเวลาให้บริการ</div>
+    <h2>รับประกันชัดเจน ผูกกับขอบเขตงานที่เราทำ</h2>
+    <div class="body grid g3">
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3>งานติดตั้ง</h3>
+        <ul><li>รับประกันงานติดตั้ง 3 ปี*</li><li>ครอบคลุมท่อน้ำยา จุดเชื่อม ท่อน้ำทิ้ง สายไฟ และขาแขวน ในขอบเขตงาน</li><li>ตัวเครื่องรับประกันตามผู้ผลิต</li></ul>
+      </div>
+      <div class="card">
+        <div class="icon o"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></div>
+        <h3>งานซ่อมและงานล้าง</h3>
+        <ul><li>งานซ่อม: รับประกันเฉพาะอะไหล่ที่เปลี่ยนและจุดที่ซ่อม</li><li>งานล้าง: รับประกัน 30 วันตามเงื่อนไข*</li></ul>
+      </div>
+      <div class="card">
+        <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <h3>เวลาให้บริการ</h3>
+        <ul><li>จันทร์–เสาร์ 08:30–17:30 น.</li><li>กลางคืน วันอาทิตย์ วันหยุด ตามนัดหมาย</li><li>งานโครงการวางแผนแบ่งโซนได้</li></ul>
+      </div>
+    </div>
+    <div class="band"><h4>ขั้นตอนแจ้งเคลม</h4><div class="flow">แจ้งเลขที่งาน <i>›</i> นัดตรวจหน้างาน <i>›</i> หาสาเหตุ <i>›</i> แจ้งแนวทางแก้ไข <i>›</i> ดำเนินการและทดสอบ <i>›</i> ลูกค้าเซ็นรับ</div></div>
+    <p class="note" style="margin-top:24px">* ระยะเวลาและเงื่อนไขการรับประกันเป็นไปตามที่ระบุในใบเสนอราคาและใบรับประกันของแต่ละงาน ไม่ครอบคลุมความเสียหายจากไฟฟ้าตก/กระชาก สัตว์ การดัดแปลงโดยบุคคลอื่น การใช้งานผิดวิธี หรือการขาดการบำรุงรักษา</p>
+    <div class="footer"><span><b>Sahaburapa Group</b> · Company Profile</span><span>12</span></div>
+  </section>
+
+  <!-- 13. Contact -->
+  <section class="slide contact">
+    <div class="kicker">Contact · ติดต่อเรา</div>
+    <h2>ให้เราสำรวจหน้างานและเสนอราคา<br>ตามขอบเขตที่ชัดเจน</h2>
+    <p class="lead">แจ้งประเภทเครื่อง จำนวน ขนาด BTU และสถานที่ ทีมงานจะติดต่อกลับเพื่อนัดสำรวจหน้างาน</p>
+    <dl class="contact-grid">
+      <div><dt>บริษัท</dt><dd>บริษัท สหบูรพากรุ๊ป จำกัด</dd></div>
+      <div><dt>ที่ตั้ง</dt><dd><i class="ph">[ที่อยู่สำนักงาน]</i> พระราม 2 กรุงเทพฯ</dd></div>
+      <div><dt>โทรศัพท์</dt><dd><i class="ph">[เบอร์โทรศัพท์]</i></dd></div>
+      <div><dt>LINE OA</dt><dd><i class="ph">[@LINE ID]</i></dd></div>
+      <div><dt>อีเมล</dt><dd><i class="ph">[อีเมลบริษัท]</i></dd></div>
+      <div><dt>Facebook / เว็บไซต์</dt><dd><i class="ph">[Polar Air / Fujiva Official]</i></dd></div>
+    </dl>
+    <div class="footer"><span><b>Sahaburapa Group Co., Ltd.</b> · Polar Air · Fujiva · Tyga Factory</span><span>13</span></div>
+  </section>
+
+</main>
+
+<div class="controls" aria-label="Slide navigation">
+  <button id="prev" aria-label="Previous slide">‹</button>
+  <span id="count">1 / 13</span>
+  <button id="next" aria-label="Next slide">›</button>
+</div>
+
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const count = document.getElementById('count');
+  let i = 0;
+  try { i = Math.min(Math.max(parseInt(location.hash.slice(1), 10) - 1 || 0, 0), slides.length - 1); } catch (e) {}
+
+  function fit() {
+    const s = Math.min(innerWidth / 1920, innerHeight / 1080);
+    slides.forEach(el => el.style.transform = `scale(${s})`);
+  }
+  function show(n) {
+    i = (n + slides.length) % slides.length;
+    slides.forEach((el, k) => el.classList.toggle('active', k === i));
+    count.textContent = `${i + 1} / ${slides.length}`;
+    history.replaceState(null, '', '#' + (i + 1));
+  }
+  document.getElementById('prev').onclick = () => show(i - 1);
+  document.getElementById('next').onclick = () => show(i + 1);
+  addEventListener('keydown', e => {
+    if (['ArrowRight', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); show(i + 1); }
+    if (['ArrowLeft', 'PageUp'].includes(e.key)) { e.preventDefault(); show(i - 1); }
+    if (e.key === 'Home') show(0);
+    if (e.key === 'End') show(slides.length - 1);
+  });
+  let x0 = null;
+  addEventListener('touchstart', e => x0 = e.touches[0].clientX, { passive: true });
+  addEventListener('touchend', e => {
+    if (x0 === null) return;
+    const dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1));
+    x0 = null;
+  });
+  addEventListener('resize', fit);
+  fit(); show(i);
+</script>
+</body>
+</html>
