@@ -1,0 +1,43 @@
+<evaluation>
+  <!-- Answers verified against ui-ux-pro-max v2.15.0 data (catalog verified 2026-08-13). -->
+  <qa_pair>
+    <question>A Bangkok company wants a sans-serif Google Font that can render Thai script. Among the Thai-capable sans-serif families in the design database, which one has the best (numerically lowest) popularity rank? Answer with the font family name only.</question>
+    <answer>Kanit</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>The design database has a font pairing intended for children's learning products. Look up the typeface it uses for headings, then find who is credited as the designer of that typeface in the Google Fonts records. Answer with the designer name exactly as listed.</question>
+    <answer>Ek Type</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>In the React Native implementation guidelines, one rule names the specific built-in component to use for rendering long scrolling collections efficiently. What official documentation URL does that rule cite? Answer with the full URL.</question>
+    <answer>https://reactnative.dev/docs/flatlist</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Among the GSAP animation presets, find the most intense tier of the preset that animates list items in one after another. What easing function does it use? Answer with the exact easing string.</question>
+    <answer>expo.out</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>The color database has a semantic token palette for cryptocurrency and fintech products. What hex value does it assign to the muted token (not muted foreground)? Answer in the form #RRGGBB.</question>
+    <answer>#272F42</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>WCAG 2.2 has an AA-level criterion about sticky headers or overlays covering the control that currently has keyboard focus, and a stricter AAA variant. What severity does the UX guideline database assign to the AA-level (minimum) rule? Answer with one word: Critical, High, Medium or Low.</question>
+    <answer>High</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>For a chart showing each trading period's opening, highest, lowest and closing prices, which charting library does the database list first in its recommendation? Answer with the library name exactly as listed, including any text in parentheses.</question>
+    <answer>Lightweight Charts (TradingView)</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>Which Phosphor React component does the icon database recommend for the three-line button that opens a mobile navigation drawer? Answer with the component name as written in its import statement.</question>
+    <answer>List</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>According to the database's catalog summary, how many framework- and platform-specific implementation guideline records does it contain across all supported stacks? Answer with a number only.</question>
+    <answer>1260</answer>
+  </qa_pair>
+  <qa_pair>
+    <question>The database recommends a landing page pattern for a doctor's practice website (a medical clinic product type). What is that pattern's hyphenated identifier? Answer with the identifier only.</question>
+    <answer>trust-authority-conversion</answer>
+  </qa_pair>
+</evaluation>

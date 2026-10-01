@@ -29,3 +29,7 @@ uipro init --ai claude --force
 ```
 
 `frontend-design` comes from [anthropics/skills](https://github.com/anthropics/skills/tree/main/skills/frontend-design); to update it, copy the newer `SKILL.md` over `.claude/skills/frontend-design/SKILL.md`.
+
+## UI UX Pro Max MCP server
+
+`mcp/uiux_pro_max_mcp/` serves the same design database as MCP tools: generate or save a design system, search a domain, and search stack guidelines. Claude Code picks it up from `.mcp.json` as `uiux-pro-max` once you trust this folder. It needs [uv](https://docs.astral.sh/uv/). See [its README](mcp/uiux_pro_max_mcp/README.md) for Claude Desktop, HTTP mode and tests.

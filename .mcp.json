@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "uiux-pro-max": {
+      "command": "sh",
+      "args": [
+        "-c",
+        "d=\"${CLAUDE_PROJECT_DIR:-$PWD}\"; while [ ! -f \"$d/mcp/uiux_pro_max_mcp/server.py\" ] && [ \"$d\" != / ]; do d=$(dirname \"$d\"); done; exec uv run --quiet --script \"$d/mcp/uiux_pro_max_mcp/server.py\""
+      ]
+    }
+  }
+}
