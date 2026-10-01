@@ -14,4 +14,5 @@ Repo รวมงานหลายโปรเจกต์ — แต่ละ�
 - ⛔ `sbp-aircare/internal/sbp_real.json` (มีอัตราพิเศษ/โครงการ) **ห้าม commit / ห้ามเผยแพร่** — gitignored, เจ้าของอัปโหลดให้ในแต่ละ session เมื่อต้องรัน recon
 - ⛔ ห้ามแก้ราคาหรือกฎธุรกิจใน `sbp-aircare/CLAUDE.md` §6.6 โดยไม่มีคำอนุมัติเป็นลายลักษณ์อักษรจากเจ้าของ
 - หน้าทดสอบ A/B/C และหน้า a/b/c ที่เผยแพร่แล้ว (URL ใน `sbp-aircare/urls.json`) เป็นลิงก์ "ทุกคนที่มีลิงก์" — คนดูเห็นการอัปเดตทันที อย่า publish ทับโดยไม่ได้รับคำสั่ง
+- ชุดทดลองพัฒนา (private, URL ใน `sbp-aircare/urls.dev.json`): `npm run build:dev` แล้ว publish `dist/art/{a,b,c,index}.html` ทับ URL ชุดนั้น · `npm run build` = ลิงก์ชุดที่แชร์อยู่
 - ตอบผู้ใช้เป็นภาษาไทย
