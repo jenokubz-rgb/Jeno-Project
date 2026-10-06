@@ -135,7 +135,7 @@ export function glFocus(el) { const was = focusEl; focusEl = el || null; if (was
 export const glBudget = () => ({ max: MAX, live: entries.filter(e => e.state === 'live').length, total: entries.length });
 
 /* ---- r15 · adaptive resolution (owner 6 ต.ค. 2569: "ให้ smooth ไม่สะดุด") ------------------------------------------------
- * A display-rate probe runs only while some scene has drawn in the last half second. Every 45 frames it counts the late ones
+ * A display-rate probe runs only while some scene is drawing. Every 45 frames (or 3 s on a very slow device) it counts the late ones
  * (longer than 1.6 × the screen's own frame time): more than 1 in 6 late → every scene draws at a lower pixel ratio (one step,
  * at most every 2 s); 8 calm seconds → one step back toward full sharpness. Fill rate (pixels × shading) is what makes phones
  * stutter with animated scenes, and a lower pixel ratio is hard to see while things move. glLock(level) pins a level for the
@@ -155,9 +155,10 @@ function setLevel(n) { n = Math.max(0, Math.min(STEPS.length - 1, n)); if (n ===
 function startProbe() { prevT = 0; probe = requestAnimationFrame(tick); }
 function tick(t) {
   probe = 0;
-  if (document.hidden || t - lastDraw > 500) { prevT = 0; iv.length = 0; return; }   // idle: stop (the next draw restarts it)
+  if (document.hidden || t - lastDraw > 2500) { prevT = 0; iv.length = 0; return; }   // idle: stop (the next draw restarts it)
   if (prevT) iv.push(t - prevT); prevT = t;
-  if (iv.length >= 45) {
+  // judge every 45 frames — or sooner on a very slow device (a few frames covering 3 s say enough)
+  if (iv.length >= 45 || (iv.length >= 6 && iv.reduce((a, b) => a + b, 0) > 3000)) {
     const s = [...iv].sort((a, b) => a - b), frame = Math.max(6.9, Math.min(34, s[Math.floor(s.length * 0.2)]));
     const late = iv.filter(x => x > frame * 1.6 + 2).length / iv.length; iv.length = 0;
     const now = performance.now();
@@ -216,7 +217,7 @@ let lastInput = 0;
 if (typeof addEventListener === 'function') ['pointerdown', 'pointermove', 'wheel', 'keydown', 'touchstart', 'scroll'].forEach(t => addEventListener(t, () => { lastInput = performance.now(); }, { passive: true, capture: true }));
 export function whenCalm(fn, quiet = 1200) { calmQ.push({ fn, quiet }); pump(); }
 // one job at a time for the whole page (several scenes preparing at once would add up to a visible hitch), never in the
-// first seconds after the page opens, and a short breather between jobs so frames keep coming
+// first seconds after the page opens, and a second's breather between jobs so taps and frames always get through
 const calmQ = []; let calmBusy = false;
 const GRACE = 3000;
 function pump() {
@@ -225,11 +226,12 @@ function pump() {
   const tryIt = () => {
     const now = performance.now(), w = Math.max(quiet - (now - lastInput), GRACE - now);
     if (w > 0) { setTimeout(tryIt, w + 60); return; }
+    // a truly idle moment if the browser offers one soon; forced only after a long wait (a page that never idles still gets ready)
     whenIdle(() => {
       if (performance.now() - lastInput < quiet) { tryIt(); return; }
       calmQ.shift(); try { fn(); } catch (_) { /* a preparation that fails only means a later stall */ }
-      calmBusy = false; setTimeout(pump, 150);
-    }, 1500);
+      calmBusy = false; setTimeout(pump, 1000);
+    }, 6000);
   };
   tryIt();
 }
