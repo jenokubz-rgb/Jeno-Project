@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SBP AirCare · แบบ A2 Residence</title>
+<meta name="description" content="ดูแลแอร์ในบ้านและคอนโด ล้าง ติดตั้ง ซ่อม พร้อมภาพจำลองแอร์ทุกรุ่น และราคาจาก Pricebook ของบริษัท สหบูรพากรุ๊ป จำกัด">
+<meta property="og:title" content="SBP AirCare Residence ดูแลแอร์ในบ้าน ตั้งแต่ล้างจนถึงติดตั้งเครื่องใหม่">
+<meta property="og:description" content="เล่าอาการ ดูสาเหตุที่พบบ่อยในภาพ 3 มิติ ราคาจาก Pricebook แล้วจองคิวได้ในหน้าเดียว">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#14100D">
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/shared.css">
+<link rel="stylesheet" href="assets/business.css">
+<link rel="stylesheet" href="assets/booking.css">
+<link rel="stylesheet" href="assets/services.css">
+<link rel="stylesheet" href="assets/v2.css">
+<style>
+/* แบบ A2 · Residence (r12) — a home at dusk. The 3D set (walnut fluting, low amber sun, ivory walls) sets the palette:
+   umber night ground, ivory text, one amber "cove light" accent for focus and selection, SP orange only on the action
+   that books a job (#EF4E2E carries dark text at 5.3:1). Trirong (a Thai serif with loops) for headings, Noto Sans Thai
+   Looped for reading. A deliberately single dark theme: the page is lit like the film it frames. */
+:root{
+  --paper:#14100D; --surface:#1C1612; --frost:#221B15; --ink:#F3EADF; --ink-2:#D2C2AE; --ink-3:#AC9A84; --line:rgba(243,234,223,.11); --line-2:rgba(243,234,223,.26);
+  --brand:#F0B87A; --brand-soft:rgba(240,184,122,.13); --go:#EF4E2E; --go-2:#F4683F; --on-go:#1A0D08; --ok:#86D9A8; --warn:#F3B562; --bad:#FF8D80;
+  --glass:rgba(20,16,13,.74); --glass-ink:#F3EADF; --plate:#F6EFE6; --stage-bg:#1d1611; --r:3px;
+  --display:'Trirong','Noto Serif Thai',serif; --text:'Noto Sans Thai Looped','Noto Sans Thai',Tahoma,sans-serif;
+  --s-card:var(--surface); --s-card-2:var(--frost); --s-ink:var(--ink); --s-ink-2:var(--ink-2); --s-ink-3:var(--ink-3); --s-line:var(--line-2);
+  --s-accent:var(--go); --s-on-accent:var(--on-go); --s-accent-soft:var(--brand-soft); --s-ok:var(--ok); --s-warn:var(--warn); --s-bad:var(--bad); --s-r:4px; --s-mono:var(--text);
+  color-scheme:dark;
+}
+body{background:var(--paper)}
+h1,h2{font-weight:300}
+h3{font-weight:500}
+/* the cove light: a thin amber line that fades out, used where a chapter begins */
+.a-cove{display:block;height:1px;width:min(260px,40%);background:linear-gradient(90deg,var(--brand),transparent);margin-bottom:22px}
+
+/* header */
+.v-hd{position:fixed;inset:0 0 auto;z-index:60;padding-top:env(safe-area-inset-top,0px);transition:background .3s,box-shadow .3s}
+.v-hd::before{content:'';position:absolute;inset:0 0 -40px;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(20,16,13,.82),rgba(20,16,13,0));transition:opacity .3s}
+.v-hd.solid::before{opacity:0}
+.v-hd.solid{background:rgba(20,16,13,.92);box-shadow:0 1px 0 var(--line)}
+@supports (backdrop-filter:blur(8px)){.v-hd.solid{background:rgba(20,16,13,.78);backdrop-filter:blur(14px) saturate(1.2)}}
+.v-hd-in{display:flex;align-items:center;gap:20px;min-height:72px}
+.a-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.a-brand .plate{display:inline-grid;place-items:center;padding:5px 8px;border-radius:3px;background:var(--plate)}
+.a-brand img{display:block;height:26px;width:auto}
+.a-brand b{font:500 20px/1 var(--display);letter-spacing:.01em}
+.v-nav{display:flex;gap:2px;margin-left:auto}
+.v-nav a{padding:8px 12px;font-size:15px;color:var(--ink-2);text-decoration:none;border-radius:3px}
+.v-nav a:hover{color:var(--ink)}
+.v-act{display:flex;align-items:center;gap:8px}
+.a-quote{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 14px;border:1px solid var(--line-2);border-radius:3px;background:transparent;color:var(--ink);cursor:pointer;font-size:15px}
+.a-quote [data-cart-n]{min-width:22px;padding:0 6px;border-radius:11px;background:var(--brand);color:#1A0D08;font-weight:700;font-size:13px;line-height:22px;text-align:center}
+.v-act .v-btn{min-height:42px}
+.v-menu{display:none;min-height:42px;padding:0 14px;border:1px solid var(--line-2);border-radius:3px;background:transparent;color:var(--ink);cursor:pointer}
+@media (max-width:1120px){.v-nav a{padding:8px 8px;font-size:14.5px}}
+@media (max-width:980px){
+  .v-menu{display:inline-flex;align-items:center}
+  .v-nav{position:absolute;top:100%;left:0;right:0;display:none;flex-direction:column;gap:0;padding:8px 16px 16px;background:rgba(20,16,13,.97);border-bottom:1px solid var(--line)}
+  .v-nav.open{display:flex}.v-nav a{padding:12px 4px;font-size:16px;border-bottom:1px solid var(--line)}
+  .v-act{margin-left:auto}
+}
+@media (max-width:560px){.a-brand b{display:none}.a-quote .qt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.v-act .v-btn{padding:0 14px}}
+
+/* hero: the film, full bleed */
+.a-hero{position:relative;min-height:max(620px,100svh);display:grid;align-items:end}
+.a-hero>.stage{position:absolute;inset:0}
+.a-hero::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,rgba(20,16,13,.88) 0%,rgba(20,16,13,.55) 34%,rgba(20,16,13,0) 62%),linear-gradient(0deg,rgba(20,16,13,.9) 0%,rgba(20,16,13,0) 38%)}
+.a-hero-in{position:relative;z-index:3;padding-block:140px clamp(48px,8vh,96px);display:grid;gap:22px;max-width:1240px}
+.a-hero h1{font-size:clamp(42px,6.2vw,92px);line-height:1.1;max-width:11.5em}
+.a-hero p{font-size:clamp(17px,1.4vw,19px);line-height:1.75;color:var(--ink-2);max-width:34em}
+.a-cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.a-cta .v-btn{min-height:52px;padding:0 24px;font-size:16.5px}
+.a-hero-foot{position:absolute;z-index:3;right:clamp(16px,4vw,44px);bottom:22px;display:flex;gap:10px;align-items:center}
+.a-snd{min-height:40px;padding:0 14px;border:1px solid var(--line-2);border-radius:20px;background:var(--glass);color:var(--ink-2);font-size:14px;cursor:pointer}
+.a-snd[aria-pressed="true"]{color:var(--ink);border-color:var(--brand)}
+.a-cap{font-size:12.5px;color:var(--ink-2);padding:4px 9px;border-radius:4px;background:var(--glass)}
+@media (max-width:700px){.a-hero::after{background:linear-gradient(0deg,rgba(20,16,13,.96) 0%,rgba(20,16,13,.78) 42%,rgba(20,16,13,.1) 72%)}.a-hero-in{padding-bottom:96px}}
+
+/* chapters */
+.ch{border-top:1px solid var(--line)}
+.ch.alt{background:var(--frost)}
+.ch-h p{color:var(--ink-2)}
+/* concierge: questions + answer on the left, the stage follows on the right */
+.a-ask{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.02fr);grid-template-areas:"q s" "r s";gap:28px clamp(28px,4vw,56px);align-items:start}
+.a-ask #askRoot{display:contents}
+.a-ask .cc-ask{grid-area:q}.a-ask .cc-res{grid-area:r}
+.a-ask .stage{grid-area:s;position:sticky;top:92px;height:min(76vh,720px);border-radius:var(--r);border:1px solid var(--line)}
+@media (max-width:900px){.a-ask{grid-template-columns:minmax(0,1fr);grid-template-areas:"q" "s" "r"}.a-ask .stage{position:relative;top:0;height:auto;aspect-ratio:4/3}}
+/* showroom: a wide screen, controls under it, list + detail below */
+.a-sr{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);grid-template-areas:"s s" "c c" "p d";gap:18px clamp(28px,4vw,56px)}
+.a-sr #srRoot{display:contents}
+.a-sr .stage{grid-area:s;aspect-ratio:21/9;border-radius:var(--r);border:1px solid var(--line)}
+.a-sr #srCtl{grid-area:c;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.a-sr .sr-pick{grid-area:p}.a-sr .sr-det{grid-area:d;position:sticky;top:92px}
+@media (max-width:900px){.a-sr{grid-template-columns:minmax(0,1fr);grid-template-areas:"s" "c" "d" "p"}.a-sr .stage{aspect-ratio:4/3}.a-sr .sr-det{position:static}}
+.a-count{font:300 clamp(18px,1.6vw,22px) var(--display);color:var(--ink-2)}
+.a-count b{font-weight:500;color:var(--brand);font-variant-numeric:tabular-nums}
+
+/* footer */
+.a-ft{background:#0E0B09;color:var(--ink-2);padding-block:56px calc(56px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line)}
+.a-ft-in{display:grid;grid-template-columns:1.3fr 1fr 1.3fr 1.1fr;gap:32px}
+.a-ft h3{font:500 18px var(--display);color:var(--ink);margin-bottom:10px}
+.a-ft p,.a-ft li{font-size:14.5px;line-height:1.7}
+.a-ft ul{list-style:none;padding:0;display:grid;gap:6px}
+.a-ft a{color:var(--ink);text-underline-offset:3px}
+.a-ft .plates{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.a-ft .plate{display:inline-grid;place-items:center;padding:8px 12px;border-radius:3px;background:var(--plate)}
+.a-ft .plate img{display:block;height:34px;width:auto}
+@media (max-width:900px){.a-ft-in{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.a-ft-in{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<a class="v-skip" href="#main">ข้ามไปเนื้อหา</a>
+<header class="v-hd">
+  <div class="wrap v-hd-in">
+    <a class="a-brand" href="#top" aria-label="SBP AirCare หน้าแรก"><span class="plate"><img src="assets/logos/sbp.png" alt="" width="36" height="26"></span><b>SBP AirCare</b></a>
+    <nav class="v-nav" id="v-nav" aria-label="หัวข้อ">
+      <a href="#ask">เล่าอาการ</a><a href="#models">ลองทุกรุ่น</a><a href="#clean">ล้าง</a><a href="#install">ติดตั้ง</a><a href="#repair">ซ่อม</a><a href="#area">พื้นที่บริการ</a><a href="#contact">ติดต่อ</a>
+    </nav>
+    <div class="v-act">
+      <button type="button" class="a-quote" data-cart-btn aria-label="ใบเสนอราคา"><span class="qt">ใบเสนอราคา</span><span data-cart-n>0</span></button>
+      <a class="v-btn go" href="#booking" data-book>จองคิว</a>
+      <button type="button" class="v-menu" aria-expanded="false" aria-controls="v-nav">เมนู</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <section class="a-hero" id="top" aria-labelledby="h-hero">
+    <div class="stage" data-stage='{"type":"wall","shot":"hero","power":true,"auto":true,"frame":[0.3,0.08],"frameM":[0,0.22]}'><picture><source media="(max-width:700px)" srcset="assets/posters/a2-hero-m.jpg"><img class="stage-poster" src="assets/posters/a2-hero.jpg" alt="" fetchpriority="high" decoding="async"></picture></div>
+    <div class="wrap a-hero-in">
+      <h1 id="h-hero">ดูแลแอร์ในบ้าน ตั้งแต่ล้างจนถึงติดตั้งเครื่องใหม่</h1>
+      <p>เล่าอาการหรือสิ่งที่ต้องการ เราอธิบายสาเหตุที่พบบ่อยให้เห็นในภาพ บอกราคาจาก Pricebook ของบริษัท สหบูรพากรุ๊ป จำกัด แล้วจองคิวได้ในหน้านี้</p>
+      <div class="a-cta"><a class="v-btn go" href="#ask">เล่าอาการให้เราฟัง</a><a class="v-btn ghost" href="#models">ลองแอร์ทุกรุ่น</a></div>
+    </div>
+    <div class="a-hero-foot"><p class="a-cap">แบบจำลองเพื่ออธิบาย</p><button type="button" class="a-snd" data-sound aria-pressed="false">เสียงลม</button></div>
+  </section>
+
+  <section class="ch" id="ask" aria-labelledby="h-ask">
+    <div class="wrap">
+      <header class="ch-h"><span class="a-cove" aria-hidden="true"></span><h2 id="h-ask">เล่าให้เราฟัง</h2><p>ตอบสามข้อ เราสรุปสิ่งที่เข้าใจ ชี้สาเหตุที่พบบ่อยในภาพ แนะนำงานที่ควรทำก่อน พร้อมราคา ช่างยืนยันสาเหตุจริงที่หน้างานเสมอ</p></header>
+      <div class="a-ask ch-body">
+        <div id="askRoot"><p class="d-load">กำลังเตรียมคำถาม…</p></div>
+        <div class="stage" id="askStage" data-stage='{"type":"wall","shot":"close","power":true,"auto":false}'><p class="stage-cap">แบบจำลองเพื่ออธิบาย</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch alt" id="models" aria-labelledby="h-models">
+    <div class="wrap">
+      <header class="ch-h"><span class="a-cove" aria-hidden="true"></span><h2 id="h-models">ลองแอร์ได้ทุกรุ่น</h2><p class="a-count"><b data-fact="models">705</b> รุ่น จาก <b data-fact="brands">22</b> ยี่ห้อ เลือกรุ่นแล้วเปิดเครื่อง ดูทางลม มองทะลุ แยกชิ้นส่วน และดูการล้าง</p></header>
+      <div class="a-sr ch-body">
+        <div class="stage" id="srStage" data-stage='{"type":"wall","shot":"hero","power":true,"auto":false}'></div>
+        <div id="srCtl"></div>
+        <div id="srRoot"><p class="d-load">กำลังเตรียมรายการรุ่น…</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch" id="clean" aria-labelledby="h-clean">
+    <div class="wrap">
+      <header class="ch-h"><span class="a-cove" aria-hidden="true"></span><h2 id="h-clean">ล้างแอร์</h2><p>สองวิธีตามสภาพเครื่อง ล้างปกติที่ตำแหน่งเดิม หรือปลดเครื่องลงมาล้างใหญ่โดยไม่ตัดท่อน้ำยา ราคาต่อเครื่องขึ้นกับประเภท ขนาด และแพ็กเกจเอกสาร</p></header>
+      <div id="cleanRoot" class="ch-body"><p class="d-load">กำลังเตรียมข้อมูลงานล้าง…</p></div>
+      <div class="d-demand">
+        <button type="button" class="v-btn ghost" id="b3dClean">ดูทีมช่างทำงานแบบ 3 มิติ</button>
+        <p>ภาพจำลองช่าง 2 คนล้างแอร์ทีละขั้น ใช้ข้อมูลประมาณ 2–3 MB เปิดเมื่อต้องการดู</p>
+      </div>
+      <div id="v3dClean" class="d-3d" hidden></div>
+    </div>
+  </section>
+
+  <section class="ch alt" id="install" aria-labelledby="h-install">
+    <div class="wrap">
+      <header class="ch-h"><span class="a-cove" aria-hidden="true"></span><h2 id="h-install">ติดตั้งแอร์</h2><p>สองระดับงาน มาตรฐานและพรีเมียม ทุกงานระบุยี่ห้อวัสดุ รวมท่อและวัสดุ 4 เมตรแรก รับประกันงานติดตั้ง 3 ปีเมื่อซื้อเครื่องกับบริษัท หรือ 1 ปีเมื่อจัดหาเครื่องเอง</p></header>
+      <div id="installRoot" class="ch-body"><p class="d-load">กำลังเตรียมราคาติดตั้ง…</p></div>
+      <div class="d-demand">
+        <button type="button" class="v-btn ghost" id="bFit">ลองวางแอร์ในห้องของคุณ</button>
+        <p>ใส่ขนาดห้อง เลือกผนังและตำแหน่ง ดูแนวท่อ ระยะลม และงานเพิ่มที่อาจมี ก่อนนัดสำรวจ</p>
+      </div>
+      <div id="vFit" class="d-3d" hidden></div>
+    </div>
+  </section>
+
+  <section class="ch" id="repair" aria-labelledby="h-repair">
+    <div class="wrap">
+      <header class="ch-h"><span class="a-cove" aria-hidden="true"></span><h2 id="h-repair">ตรวจเช็กและซ่อม</h2><p>ช่างตรวจวินิจฉัยที่หน้างาน แจ้งผลและราคาซ่อมเป็นรายรายการ แล้วลงมือเมื่อคุณอนุมัติเท่านั้น</p></header>
+      <div id="repairRoot" class="ch-body"><p class="d-load">กำลังเตรียมราคางานซ่อม…</p></div>
+    </div>
+  </section>
+
+  <section class="ch alt" id="booking" aria-labelledby="h-booking">
+    <div class="wrap">
+      <header class="ch-h"><span class="a-cove" aria-hidden="true"></span><h2 id="h-booking">จองคิว</h2><p>เลือกวันที่สะดวก ทีมโทรยืนยันวัน เวลา และราคาก่อนเข้างานทุกครั้ง ได้เลขที่คำขอไว้ตรวจสถานะเอง</p></header>
+      <div id="bookRoot" class="ch-body"></div>
+    </div>
+  </section>
+
+  <section class="ch" id="area" aria-labelledby="h-area">
+    <div class="wrap">
+      <header class="ch-h"><span class="a-cove" aria-hidden="true"></span><h2 id="h-area">พื้นที่ให้บริการ</h2><p>กรุงเทพฯ และปริมณฑลไม่มีค่าเดินทาง จังหวัดใกล้เคียงรับงานถึงประมาณ 150 กม. จากสำนักงานใหญ่ ถนนพระราม 2 คิดค่าเดินทางต่อเที่ยวตามช่วงระยะ</p></header>
+      <div class="d-split ch-body" data-zone>
+        <div class="d-col">
+          <label class="d-field">ตรวจพื้นที่ของคุณ<input data-z-input placeholder="เขต อำเภอ หรือจังหวัด"></label>
+          <div class="d-try" role="group" aria-label="ตัวอย่างพื้นที่"><button type="button" data-z-try="บางนา">บางนา</button><button type="button" data-z-try="ปากเกร็ด">ปากเกร็ด</button><button type="button" data-z-try="สามพราน">สามพราน</button><button type="button" data-z-try="ศรีราชา">ศรีราชา</button></div>
+          <div class="d-zres" data-z-result hidden></div>
+          <p class="d-sub">ระยะทางคำนวณโดยประมาณจากพิกัดอำเภอ ทีมยืนยันจากที่อยู่จริงก่อนนัด</p>
+        </div>
+        <div class="d-col" id="travelTbl"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch alt" id="contact" aria-labelledby="h-contact">
+    <div class="wrap">
+      <header class="ch-h"><span class="a-cove" aria-hidden="true"></span><h2 id="h-contact">คำถามที่พบบ่อยและติดต่อ</h2><p>ไม่พบคำตอบ ฝากชื่อและเบอร์ไว้ ทีมติดต่อกลับ หรือโทรหาเราโดยตรง</p></header>
+      <div class="d-split ch-body">
+        <div class="d-col" id="faqList"></div>
+        <div class="d-col" id="quote">
+          <div class="d-contact">
+            <p><b data-company="th">บริษัท สหบูรพากรุ๊ป จำกัด</b><br><span data-company="addr">593 ถนนพระราม 2 แขวงบางมด เขตจอมทอง กรุงเทพฯ 10150</span></p>
+            <p>โทร <a href="tel:024593291" data-company="tel">02-459-3291-9</a><br>อีเมล <span data-company="email">Sahaburapa.official@gmail.com</span></p>
+          </div>
+          <form id="qform" class="d-form">
+            <label class="d-field">ชื่อ<input id="q-name" autocomplete="name" required></label>
+            <label class="d-field">เบอร์โทร<input id="q-tel" inputmode="tel" autocomplete="tel" required pattern="[0-9\- ]{9,12}"></label>
+            <label class="d-field">อีเมล (ถ้ามี)<input id="q-email" type="email" autocomplete="email"></label>
+            <button class="v-btn go">ส่งให้ทีมติดต่อกลับ</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="a-ft">
+  <div class="wrap a-ft-in">
+    <div><div class="plates"><span class="plate"><img src="assets/logos/sbp.png" alt="SP Quality Brand บริษัท สหบูรพากรุ๊ป จำกัด" width="55" height="40"></span><span class="plate"><img src="assets/logos/fujiva.png" alt="FUJIVA แบรนด์แอร์ของบริษัท" width="110" height="36"></span></div>
+      <p>SBP AirCare บริการล้าง ติดตั้ง ซ่อม และสัญญาดูแลแอร์ของบริษัท สหบูรพากรุ๊ป จำกัด</p></div>
+    <div><h3>บริการ</h3><ul><li><a href="#clean">ล้างแอร์</a></li><li><a href="#install">ติดตั้งแอร์</a></li><li><a href="#repair">ตรวจเช็กและซ่อม</a></li><li><a href="#models">ลองแอร์ทุกรุ่น</a></li><li><button type="button" class="v-link" data-prices="clean">ราคาค่าบริการทั้งหมด</button></li></ul></div>
+    <div><h3>ราคาบนเว็บ</h3><p>ทุกราคาก่อน VAT ปัดเป็นหลักร้อย จาก Pricebook 2569 ของบริษัท บุคคลทั่วไปชำระตามราคาที่แสดง นิติบุคคลที่ต้องการใบกำกับภาษีบวก VAT 7% รายการประเมินหน้างานแจ้งราคาก่อนเริ่มงาน ภาพ 3 มิติทั้งหมดเป็นแบบจำลองเพื่ออธิบาย</p></div>
+    <div><h3>เว็บไซต์ทดลอง</h3><p>แบบ A2 Residence ของเว็บต้นแบบ SBP AirCare รุ่นที่ 2 ใช้ข้อมูลและระบบจองคิวชุดเดียวกับทุกแบบ</p><p><a href="./">เทียบทุกแบบ</a></p><p><button type="button" class="v-btn ghost" data-feedback>ให้ความเห็นเรื่องเว็บไซต์</button></p></div>
+  </div>
+</footer>
+<div class="drawer" data-drawer id="drawer" hidden><div class="dp" role="dialog" aria-modal="true" aria-label="รายละเอียด"><button type="button" class="x" data-close aria-label="ปิด">×</button><div id="drawerBody"></div></div></div>
+
+<script type="module">
+// r12 แบบ A2 · Residence — homes and condos; the stage plays a living room at golden hour (mood "aurora")
+import { mountV2 } from './assets/v2site.js';
+await mountV2({ variant: 'A2', mood: 'aurora', place: 'home', theme: 'dark', srStart: { type: 'wall' } });
+</script>
+</body>
+</html>

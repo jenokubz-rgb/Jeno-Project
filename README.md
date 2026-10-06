@@ -5,7 +5,7 @@ Doing every work which I'm thinking of
 
 | Folder | What | Start here |
 |---|---|---|
-| [`sbp-aircare/`](sbp-aircare/) | SBP AirCare website prototypes A · B · C (vanilla ES modules + three.js r170, single-file builds) | [`sbp-aircare/CLAUDE.md`](sbp-aircare/CLAUDE.md) |
+| [`sbp-aircare/`](sbp-aircare/) | SBP AirCare website prototypes A · B · C (vanilla ES modules + three.js r170, single-file builds) | [`sbp-aircare/HANDOFF.md`](sbp-aircare/HANDOFF.md) → [`sbp-aircare/CLAUDE.md`](sbp-aircare/CLAUDE.md) |
 
 ### sbp-aircare quick start
 

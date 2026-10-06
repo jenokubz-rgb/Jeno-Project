@@ -4,7 +4,7 @@ Repo รวมงานหลายโปรเจกต์ — แต่ละ�
 
 ## sbp-aircare/ — เว็บต้นแบบ SBP AirCare (แบบ A · B · C)
 
-**อ่าน `sbp-aircare/CLAUDE.md` ให้ครบก่อนแก้อะไรในโฟลเดอร์นั้น** (สเปก, API ของโมดูล, กฎธุรกิจ §6.6, งานค้าง §7, roadmap §8)
+**เริ่มที่ `sbp-aircare/HANDOFF.md` (ภาพรวม + สถานะ + todo ในไฟล์เดียว) แล้วอ่าน `sbp-aircare/CLAUDE.md` ให้ครบก่อนแก้อะไรในโฟลเดอร์นั้น** (สเปก, API ของโมดูล, กฎธุรกิจ §6.6, งานค้าง §7, roadmap §8)
 
 - ทุกคำสั่ง npm / python รันใน `sbp-aircare/` (`cd sbp-aircare`)
 - dev server: `npm run serve` → http://localhost:8765/a.html · b.html · c.html · preview.html
