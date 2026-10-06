@@ -28,6 +28,8 @@ for (const ch of chapters) {
   else if (ch.spec.drive === 'blocks' || ch.spec.drive === 'player') await to(`${S} .fm-stage`, 'center');
   if (ch.spec.kind !== 'unit') {
     await p.waitForFunction(s => { const el = document.querySelector(s); return el.classList.contains('is-live') || el.classList.contains('no-gl'); }, S, { timeout: 180000 }).catch(() => {});
+    // (the map draws its canvas once it is on screen: wait for it)
+    await p.waitForFunction(s => document.querySelector(s + ' .fm-gl canvas'), S, { timeout: 60000 }).catch(() => {});
     const st = await p.evaluate(s => { const el = document.querySelector(s); return { live: el.classList.contains('is-live'), shots: el.querySelectorAll('.fm-shot').length, canvas: !!el.querySelector('.fm-gl canvas'), tag: /แบบจำลองเพื่ออธิบาย/.test(el.querySelector('.fm-stage').innerText) }; }, S);
     check(st.live && st.canvas, `${ch.id}: 3D scene built (${JSON.stringify(st)})`);
     check(st.shots > 0, `${ch.id}: shot list (${st.shots})`);
@@ -40,12 +42,16 @@ for (const ch of chapters) {
     const c = await p.evaluate(s => ({ step: document.querySelector(s).style.getPropertyValue('--step'), cur: document.querySelectorAll(s + ' .fm-shot[aria-current="step"]').length }), S);
     check(c.step !== a && c.cur === 1, `${ch.id}: next moves the shot (${a} → ${c.step})`);
   } else if (ch.spec.drive === 'progress') {
+    // (the shot follows the scroll position on the next frame; a heavy build can hold frames back on software WebGL)
+    await p.waitForFunction(s => document.querySelector(s + ' .fm-sub-t').textContent, S, { timeout: 30000 }).catch(() => {});
     const a = await p.evaluate(s => document.querySelector(s + ' .fm-sub-t').textContent, S);
-    await p.evaluate(s => { const t = document.querySelector(s + ' .fm-track'); scrollTo(0, scrollY + t.getBoundingClientRect().top + t.offsetHeight * 0.75); }, S); await p.waitForTimeout(500);
+    await p.evaluate(s => { const t = document.querySelector(s + ' .fm-track'); scrollTo(0, scrollY + t.getBoundingClientRect().top + t.offsetHeight * 0.75); }, S);
+    await p.waitForFunction(([s, a]) => { const t = document.querySelector(s + ' .fm-sub-t').textContent; return t && t !== a; }, [S, a], { timeout: 30000 }).catch(() => {});
     const c = await p.evaluate(s => document.querySelector(s + ' .fm-sub-t').textContent, S);
     check(a && c && a !== c, `${ch.id}: scrolling changes the shot ("${a.slice(0, 20)}" → "${c.slice(0, 20)}")`);
   } else if (ch.spec.drive === 'blocks') {
-    await p.evaluate(s => { const li = document.querySelectorAll(s + ' .fm-shot')[1]; li && li.scrollIntoView({ block: 'center' }); }, S); await p.waitForTimeout(500);
+    await p.evaluate(s => { const li = document.querySelectorAll(s + ' .fm-shot')[1]; li && li.scrollIntoView({ block: 'center' }); }, S);
+    await p.waitForFunction(s => document.querySelectorAll(s + ' .fm-shot')[1]?.classList.contains('on'), S, { timeout: 20000 }).catch(() => {});
     check(await p.evaluate(s => document.querySelectorAll(s + ' .fm-shot')[1]?.classList.contains('on'), S), `${ch.id}: the block in the middle plays`);
   }
   text += '\n' + await p.evaluate(s => [...document.querySelectorAll(s + ' .fm-shot')].map(x => x.textContent).join('\n'), S);
@@ -63,9 +69,6 @@ await p.locator('.fs-clean .fs-step button', { hasText: '+' }).click();
 let c0 = await cartN(); await p.locator('.fs-clean .fs-acts .v-btn.go').click(); await p.waitForTimeout(300);
 check(await cartN() >= c0 + 2, 'clean panel → 2 machines in the quote basket');
 text += '\n' + await p.evaluate(() => document.querySelector('.fs-clean').innerText);
-await p.locator('.fs-clean .fs-acts .v-btn.ghost').click(); await p.waitForTimeout(2500);
-const bk = await p.evaluate(() => document.querySelector('#bookRoot input[type=radio]:checked')?.value);
-check(bk === 'clean', `"จองคิวล้างแอร์" → booking preset clean (${bk})`);
 
 // ---- installation ----
 await to('[data-sell="install"]'); await p.waitForSelector('.fs-install .fs-price', { timeout: 60000 });
@@ -127,6 +130,13 @@ if (await p.evaluate(() => !!document.querySelector('[data-sell="business"]'))) 
   for (const k of ['sop', 'projects', 'amc']) { await p.locator(`.fs-biz [data-k="${k}"]`).click(); await p.waitForTimeout(400); check(await p.evaluate(k => document.getElementById('fs-' + k).children.length > 0, k), `business tab ${k} mounted`); }
   text += '\n' + await p.evaluate(() => document.querySelector('.fs-biz').innerText);
 }
+
+// ---- booking hand-off (last: it scrolls the page to the booking form) ----
+await to('[data-sell="clean"]'); await p.waitForTimeout(400);
+await p.locator('.fs-clean .fs-acts .v-btn.ghost').click();
+await p.waitForFunction(() => document.querySelector('#bookRoot input[type=radio]:checked'), null, { timeout: 60000 }).catch(() => {});
+const bk = await p.evaluate(() => document.querySelector('#bookRoot input[type=radio]:checked')?.value);
+check(bk === 'clean', `"จองคิวล้างแอร์" → booking preset clean (${bk})`);
 
 const st = await p.evaluate(() => ({ live: window.__ctx.filter(c => !c.isContextLost()).length, made: window.__ctx.length, ox: document.documentElement.scrollWidth - innerWidth }));
 check(st.live <= 5, `live WebGL contexts ≤ 5 (live ${st.live}, created ${st.made})`);

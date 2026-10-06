@@ -25,7 +25,7 @@
    single light theme: the page is lit like a showroom. */
 :root{
   --paper:#EEF0F2; --surface:#FFFFFF; --frost:#E5E8EB; --ink:#1B1F24; --ink-2:#3F4650; --ink-3:#5B636F; --line:rgba(27,31,36,.1); --line-2:rgba(27,31,36,.22);
-  --brand:#8A6534; --brand-soft:rgba(138,101,52,.1); --go:#EF4E2E; --go-2:#F4683F; --on-go:#1A0D08; --ok:#1E7A4C; --warn:#9A5B00; --bad:#B42318;
+  --brand:#7A5626; --brand-soft:rgba(122,86,38,.1); --go:#EF4E2E; --go-2:#F4683F; --on-go:#1A0D08; --ok:#1E7A4C; --warn:#9A5B00; --bad:#B42318;
   --glass:rgba(255,255,255,.82); --glass-ink:#1B1F24; --plate:#FFFFFF; --stage-bg:#E2E5E8; --r:2px;
   --sub-ink:#1B1F24; --sub-shade:rgba(255,255,255,.7); --cut-name:fm-flash; --cut-color:#FFFFFF; --cut-time:.55s;
   --display:'Fahkwang','Anuphan',serif; --text:'Anuphan','IBM Plex Sans Thai',Tahoma,sans-serif;
@@ -90,8 +90,10 @@ h3{font-weight:500}
 .c-pin{position:sticky;top:calc(var(--hd,66px) + 20px);height:calc(100svh - var(--hd,66px) - 64px - 40px);min-height:420px}
 .c-pin .fm-stage{height:100%;border:1px solid var(--line-2);box-shadow:0 30px 60px -34px rgba(27,31,36,.4)}
 .c-ch .fm-shots{display:grid}
-.c-ch .fm-shot{min-height:56vh;display:grid;align-content:center;gap:10px;padding-block:24px;opacity:.32;transition:opacity .5s}
-.c-ch .fm-shot.on{opacity:1}
+/* the steps not playing are quieter (a lighter ink that still reads at AA), the playing one is full ink */
+.c-ch .fm-shot{min-height:56vh;display:grid;align-content:center;gap:10px;padding-block:24px;color:var(--ink-3);transition:color .5s}
+.c-ch .fm-shot:not(.on) .fm-shot-d,.c-ch .fm-shot:not(.on) .fm-shot-x,.c-ch .fm-shot:not(.on) .fm-shot-x b,.c-ch .fm-shot:not(.on) .fm-shot-t{color:var(--ink-3)}
+.c-ch .fm-shot.on .fm-shot-t{color:var(--ink)}
 .c-ch .fm-shot:last-child{min-height:72vh}
 .c-ch .fm-shot-t{font:500 clamp(22px,2vw,30px)/1.4 var(--display);max-width:22em}
 .c-ch .fm-shot-t::before{content:counter(shot);counter-increment:shot;display:block;font:400 14px/1 var(--text);color:var(--brand);margin-bottom:10px;font-variant-numeric:tabular-nums}
@@ -106,6 +108,7 @@ h3{font-weight:500}
 @media (max-width:900px){
   .c-split,.c-ch.flip .c-split{grid-template-columns:minmax(0,1fr)}
   .c-ch.flip .c-col{order:0}
+  .c-pin{order:-1}
   .c-pin{top:var(--hd,66px);height:44svh;min-height:260px;z-index:3;margin-inline:calc(-1 * clamp(16px,4vw,44px))}
   .c-pin .fm-stage{border-inline:0;box-shadow:0 12px 24px -16px rgba(27,31,36,.4)}
   .c-ch .fm-shot{min-height:46vh}
@@ -188,7 +191,7 @@ h3{font-weight:500}
     <div class="wrap c-open-in">
       <div>
         <p class="pre">โชว์รูม SBP AirCare</p>
-        <h1 id="h-open" data-kinetic>เลือกแอร์ที่ใช่ ติดตั้งโดยทีมเดียว</h1>
+        <h1 id="h-open" data-kinetic>เลือกแอร์ที่ใช่ <span class="nw">ติดตั้ง</span>โดยทีมเดียว</h1>
         <p class="lede">ลองเปิดเครื่องได้ทุกรุ่นในภาพจำลอง 3 มิติ ดูวิธีติดตั้งทีละขั้น วัสดุที่อยู่ในผนัง และการดูแลหลังติดตั้ง ทุกราคามาจาก Pricebook ของ<span class="nw">บริษัท สหบูรพากรุ๊ป จำกัด</span> เก็บทุกอย่างไว้ใน<span class="nw">ใบเสนอราคาเดียว</span></p>
         <div class="c-cta"><a class="v-btn go" href="#buy">เข้าชมทุกรุ่น</a><a class="v-btn ghost" href="#room">หาขนาดที่พอดีห้อง</a></div>
       </div>

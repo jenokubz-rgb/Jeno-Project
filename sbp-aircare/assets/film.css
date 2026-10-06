@@ -14,7 +14,7 @@
 /* the 3D modules draw their own small controls and labels: kept, but under the film's overlays */
 .fm-gl>*{max-width:100%}
 .fm-tag{position:absolute;z-index:6;left:12px;top:12px;margin:0;padding:3px 9px;border-radius:4px;background:var(--glass);color:var(--glass-ink);font-size:12.5px;line-height:1.45;pointer-events:none}
-.fm-wait{position:absolute;inset:0;z-index:2;display:grid;place-content:center;justify-items:center;gap:14px;margin:0;color:var(--ink-3);font-size:14px;letter-spacing:.02em;pointer-events:none;transition:opacity .6s}
+.fm-wait{position:absolute;inset:0;z-index:2;display:grid;place-content:center;justify-items:center;gap:14px;margin:0;color:var(--ink-2);font-size:14px;letter-spacing:.02em;pointer-events:none;transition:opacity .6s}
 .fm-wait i{display:block;width:140px;height:2px;background:linear-gradient(90deg,transparent,var(--brand),transparent) 0 0/50% 100% no-repeat;background-color:var(--line);animation:fm-load 1.3s linear infinite}
 @keyframes fm-load{from{background-position:-100% 0}to{background-position:200% 0}}
 .fm.is-live .fm-wait{opacity:0}

@@ -105,7 +105,7 @@ def build_variant(v):
     m = re.search(r'<script type="module">(.*?)</script>', html, flags=re.S)
     assert m, v
     js = bundle(m.group(1), v)
-    html = html[:m.start()] + DATA_TAG + (TH_TAG if 'thaimap3d' in m.group(1) else '') + '<script type="module">' + js + '</script>' + html[m.end():]
+    html = html[:m.start()] + DATA_TAG + (TH_TAG if 'thaimap3d' in m.group(1) or 'thai-provinces.json' in js else '') + '<script type="module">' + js + '</script>' + html[m.end():]
     assert 'assets/' not in re.sub(r'<script type="module">.*?</script>', '', html, flags=re.S) or True
     return html
 

@@ -16,13 +16,19 @@ export function kinetic(root = document) {
     if (el.dataset.k) return;
     el.dataset.k = '1';
     const text = el.textContent.replace(/\s+/g, ' ').trim();
-    const parts = seg ? [...seg.segment(text)].map(s => s.segment) : text.split(/(\s+)/);
+    // a .nw span inside the heading stays one unit (a word the segmenter would split, e.g. a name)
+    const parts = [];
+    el.childNodes.forEach(nd => {
+      if (nd.nodeType === 1 && nd.classList.contains('nw')) { parts.push({ nw: nd.textContent }); return; }
+      const t = (nd.textContent || '').replace(/\s+/g, ' ');
+      (seg ? [...seg.segment(t)].map(s => s.segment) : t.split(/(\s+)/)).forEach(w => parts.push(w));
+    });
     const vis = document.createElement('span'); vis.className = 'kw-line'; vis.setAttribute('aria-hidden', 'true');
     let n = 0;
     parts.forEach(w => {
       if (!w) return;
-      if (/^\s+$/.test(w)) { vis.append(' '); return; }
-      const s = document.createElement('span'); s.className = 'kw'; s.style.setProperty('--i', n++); s.textContent = w; vis.append(s);
+      if (typeof w === 'string' && /^\s+$/.test(w)) { vis.append(' '); return; }
+      const s = document.createElement('span'); s.className = typeof w === 'string' ? 'kw' : 'kw nw'; s.style.setProperty('--i', n++); s.textContent = typeof w === 'string' ? w : w.nw; vis.append(s);
     });
     const sr = document.createElement('span'); sr.className = 'vh'; sr.textContent = text;
     el.replaceChildren(sr, vis);
