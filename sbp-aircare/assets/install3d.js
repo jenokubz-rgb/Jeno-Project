@@ -37,7 +37,7 @@ export function createStage(container, o = {}) {
   container.appendChild(renderer.domElement);
   const scene = new THREE.Scene();
   const pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; scene.environmentIntensity = dark ? 0.5 : 0.72;
-  glTrack(renderer, container, { scene });   // B1: context budget (gl-pool)
+  glTrack(renderer, container, { scene, name: o.name || 'บ้านจำลอง' });   // B1: context budget (gl-pool)
   scene.add(new THREE.HemisphereLight(0xffffff, dark ? 0x151b22 : 0xbcc4cc, dark ? 0.42 : 0.62));
   const sun = new THREE.DirectionalLight(0xfff0da, dark ? 1.35 : 2.05); sun.position.set(-3.2, 6.8, 5.6); sun.target.position.set(0.9, 0.6, -0.6);
   sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); Object.assign(sun.shadow.camera, { left: -6.2, right: 6.2, top: 5.2, bottom: -4.2, near: 1, far: 26 }); sun.shadow.bias = -0.0003; sun.shadow.normalBias = 0.025;

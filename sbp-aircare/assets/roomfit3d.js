@@ -55,7 +55,7 @@ export function createRoomFit3D(container, o = {}) {
 
   const scene = new THREE.Scene();
   const pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; scene.environmentIntensity = P.env; pm.dispose();
-  const gl = glTrack(renderer, container, { scene, redraw: () => kick() });   // B1: context budget (gl-pool)
+  const gl = glTrack(renderer, container, { scene, redraw: () => kick(), name: 'ลองวางในห้อง' });   // B1: context budget (gl-pool)
   scene.add(new THREE.HemisphereLight(0xffffff, theme === 'dark' ? 0x1a2230 : 0xd9dfe6, theme === 'dark' ? 0.45 : 0.7));
   const sun = new THREE.DirectionalLight(0xfff4e6, theme === 'dark' ? 0.9 : 1.5); sun.castShadow = true; sun.shadow.mapSize.set(1024, 1024); sun.shadow.radius = 5; sun.shadow.bias = -0.0004;
   scene.add(sun, sun.target);

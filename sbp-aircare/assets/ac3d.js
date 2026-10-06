@@ -5,7 +5,7 @@
 
 import * as THREE from './three.module.min.js';
 import { createWisps, airTint } from './wisp3d.js';
-import { track as glTrack } from './gl-pool.js';
+import { track as glTrack, warm, whenCalm } from './gl-pool.js';
 import { RoomEnvironment } from './RoomEnvironment.js';
 
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
@@ -530,7 +530,7 @@ export function createACViewer(container, opts = {}) {
     scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture;
     scene.environmentIntensity = o.style === 'showroom' ? 0.55 : 0.9;
   }
-  glTrack(renderer, container, { scene });   // B1: context budget (gl-pool)
+  glTrack(renderer, container, { scene, name: 'เครื่องแอร์ 3 มิติ' });   // B1: context budget (gl-pool)
   const hemi = new THREE.HemisphereLight(0xffffff, o.style === 'showroom' ? 0x1a2230 : 0xdfe6ee, o.style === 'blueprint' ? 1.6 : 0.6);
   scene.add(hemi);
   const key = new THREE.DirectionalLight(0xffffff, o.style === 'blueprint' ? 1.1 : 1.4); key.position.set(1.5, 2.2, 2.4); scene.add(key);
@@ -731,6 +731,19 @@ export function createACViewer(container, opts = {}) {
   raf = requestAnimationFrame(frame);
 
   setUnit(o.unit);
+  // r15: compile both units, solid and see-through (x-ray, and a picked part ghosting the rest), once the visitor pauses — the
+  // first press of x-ray, a part or the outdoor unit then shows at once instead of waiting for new shaders
+  whenCalm(() => {
+    const keepU = state.unit, keepX = state.xrayT, keepS = state.selected;
+    for (const k in units) {
+      state.unit = k; const ids = Object.keys(units[k].parts);
+      for (const x of [0, 0.5]) { state.xrayT = x; state.selected = null; applyVisual(); warm(renderer, scene, camera, units[k].root); }
+      // a picked part ghosts all the others (see-through): two picks cover every part's see-through version
+      state.xrayT = 0; for (const id of ids.slice(0, 2)) { state.selected = id; applyVisual(); warm(renderer, scene, camera, units[k].root); }
+    }
+    for (const k in units) { state.unit = k; state.xrayT = 0; state.selected = null; applyVisual(); }
+    state.unit = keepU; state.xrayT = keepX; state.selected = keepS; applyVisual(); renderer.render(scene, camera);
+  }, 1500);
   if (RM()) state.explode = state.explodeT;
 
   return {
@@ -768,7 +781,7 @@ export function createRoomSim(container, opts = {}) {
   const scene = new THREE.Scene();
   const pm = new THREE.PMREMGenerator(renderer);
   scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; scene.environmentIntensity = 0.5;
-  glTrack(renderer, container, { scene });   // B1: context budget (gl-pool)
+  glTrack(renderer, container, { scene, name: 'ห้องจำลอง' });   // B1: context budget (gl-pool)
   scene.add(new THREE.HemisphereLight(0xffffff, 0x3a4250, 0.8));
   const sun = new THREE.DirectionalLight(0xffe2b8, 1.6); scene.add(sun);
   const camera = new THREE.PerspectiveCamera(40, 1, 0.05, 60);

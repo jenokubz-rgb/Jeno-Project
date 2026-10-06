@@ -92,7 +92,7 @@ async function buildThaiMap(host, cfg = {}) {
   renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = theme === 'dark' ? 1.0 : 1.08;
   stage.prepend(renderer.domElement);
   const scene = new THREE.Scene();
-  glTrack(renderer, stage);   // B1: context budget (gl-pool)
+  glTrack(renderer, stage, { name: 'แผนที่บริการ' });   // B1: context budget (gl-pool)
   const camera = new THREE.PerspectiveCamera(30, 1, 0.5, 2000);
   scene.add(new THREE.HemisphereLight(0xffffff, theme === 'dark' ? 0x0b1118 : 0xb9c6d2, theme === 'dark' ? 0.9 : theme === 'blueprint' ? 1.6 : 1.25));
   const sun = new THREE.DirectionalLight(0xfff3e2, theme === 'dark' ? 1.2 : 1.6); sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048);

@@ -5,7 +5,7 @@
 // occupied-zone temperature, a distance scale runs along the front edge, and each person shows the temperature
 // around them. Fan speed / swing / dirty filter can be changed to see the throw grow or shrink. Illustrative only.
 import * as THREE from './three.module.min.js';
-import { track as glTrack } from './gl-pool.js';
+import { track as glTrack, warm, whenCalm, freeGeometry } from './gl-pool.js';
 import { RoomEnvironment } from './RoomEnvironment.js';
 import { materialSet } from './ac3d.js';
 import { buildWallUnit, buildCeilingUnit, buildCassetteUnit, buildFloorUnit, animateUnit } from './units3d.js';
@@ -37,7 +37,7 @@ export function createThrowSim(container, opts = {}) {
   container.appendChild(renderer.domElement);
   const scene = new THREE.Scene();
   const pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; scene.environmentIntensity = dark ? 0.35 : 0.6;
-  glTrack(renderer, container, { scene });   // B1: context budget (gl-pool)
+  glTrack(renderer, container, { scene, name: 'ระยะลม' });   // B1: context budget (gl-pool)
   scene.add(new THREE.HemisphereLight(0xffffff, dark ? 0x1a2230 : 0x9aa1ab, dark ? 0.5 : 0.8));
   const sun = new THREE.DirectionalLight(0xffe6c4, dark ? 1.1 : 2.2); sun.position.set(2, 7, -8); sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0005;
   Object.assign(sun.shadow.camera, { left: -8, right: 8, top: 6, bottom: -6, near: 1, far: 30 }); sun.target.position.set(6, 0, 0); scene.add(sun, sun.target);
@@ -208,6 +208,18 @@ export function createThrowSim(container, opts = {}) {
   paintDisp(false);
   requestAnimationFrame(frame);
   build('wall');
+  // r15: compile the other unit types' shaders once the visitor pauses (a sample of each, geometry freed again — the materials
+  // and so the programs stay), so switching type never waits for the GPU
+  const preDone = new Set();
+  function preload() {
+    const t = ['ceiling', 'cassette', 'floor'].find(k => !units[k] && !preDone.has(k)); if (!t) return;
+    whenCalm(() => {
+      preDone.add(t); if (units[t]) return preload();
+      const S2 = t === 'ceiling' ? buildCeilingUnit(M, { interior: false, rod: 0.02 }) : t === 'cassette' ? buildCassetteUnit(M, { interior: false, rod: 0.25 }) : buildFloorUnit(M, {});
+      S2.root.traverse(m => { if (m.isMesh) m.castShadow = true; }); warm(renderer, scene, camera, S2.root); freeGeometry(S2.root); preload();
+    }, 1500);
+  }
+  setTimeout(preload, 3000);
   return {
     setType(t) { if (t !== type) build(t); },
     setControl(c) { Object.assign(C, c); setParams(); paintDisp(true); },

@@ -9,6 +9,7 @@ import { typeArt, toast } from './proto-ui.js';
 import { askTeam, handoffBox, copyText, guardForm, submitTicket, consentBox, honeypot, requestBooking } from './contact.js';
 import { quoteFromCart, sourceTag } from './ticket.js';
 import { productVisual } from './product-media.js';
+import { modelViewer, hasGL } from './model3d.js';
 
 const exInc = ex => (ex == null ? null : { ex, inc: ex });
 const priceNode = (ex, unit) => ex == null
@@ -164,6 +165,7 @@ export function productDetail(m, skuIndex, { onPick, on3D, onAdded, onFit } = {}
     h('p', { class: 's-pd-brand' }, b.name, ' · ', t.th, d.system ? ' · ' + d.system : ''),
     h('h3', { class: 's-pd-title' }, s.sku),
     h('p', { class: 's-pd-meta' }, `${d.series || ''} · ${btuFmt(s.btu)} · น้ำยา ${d.refrigerant || '—'}`),
+    modelViewer(m, s),   // r15: this model in 3D (every catalogue model, every edition)
   );
   const chips = h('div', { class: 'btu-chips s-chips', role: 'radiogroup', 'aria-label': 'เลือกขนาด BTU' });
   m.skus.forEach((k, i) => chips.append(h('button', { type: 'button', role: 'radio', 'aria-checked': i === skuIndex, class: 'bchip', onclick: () => onPick && onPick(i) }, k.btu.toLocaleString())));
@@ -223,7 +225,9 @@ export function productDetail(m, skuIndex, { onPick, on3D, onAdded, onFit } = {}
     h('div', { class: 's-pd-cta' },
       h('button', { type: 'button', class: 's-btn primary', onclick: addToCart }, 'ใส่ใบเสนอราคา'),
       onFit ? h('button', { type: 'button', class: 's-btn', onclick: () => onFit(m, m.skus.indexOf(s)) }, 'ลองวางในห้องของคุณ') : null,
-      on3D ? h('button', { type: 'button', class: 's-btn ghost', onclick: () => on3D(m, s) }, 'ดูข้างในแบบ 3 มิติ') : null)));
+      // r15: the 3D view of this very model sits at the top of the panel; on3D (the page's own section) stays as the way in
+      // when the device cannot draw WebGL
+      on3D && !hasGL() ? h('button', { type: 'button', class: 's-btn ghost', onclick: () => on3D(m, s) }, 'ดูข้างในแบบ 3 มิติ') : null)));
   function lines() {
     const L = [{ kind: 'product', group: 'product', key: `P-${s.sku}`, name: `${b.name} ${s.sku}`, detail: `${t.th} ${btuFmt(s.btu)}`, unitEx: s.px, qty: state.qty }];
     const o = opts.find(o => o.key === state.level);

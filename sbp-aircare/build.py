@@ -199,6 +199,7 @@ open(os.path.join(DIST, 'offline', 'index3.html'), 'w', encoding='utf-8').write(
 art_pv3 = pv3
 for v in list(VARIANTS) + V2 + V3:
     u = URLS.get(v)
+    art_pv3 = art_pv3.replace(f'href="./{v}.html#perftest"', f'href="{u}#perftest" target="_blank" rel="noopener"' if u else 'href="#"')   # r15: opens with the test panel
     art_pv3 = art_pv3.replace(f'href="./{v}.html"', f'href="{u}" target="_blank" rel="noopener"' if u else 'href="#"')
 open(os.path.join(DIST, 'art', 'index3.html'), 'w', encoding='utf-8').write(strip_doc(art_pv3))
 sizes['hub3'] = len(art_pv3.encode()) // 1024

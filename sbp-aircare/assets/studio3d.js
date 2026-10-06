@@ -2,7 +2,7 @@
 // airflow particles whose throw shrinks as the unit gets dirty, floating dust, floor temperature map.
 // All visuals are illustrative. Production: replace furniture with GLB sets per scene; keep this API.
 import * as THREE from './three.module.min.js';
-import { track as glTrack } from './gl-pool.js';
+import { track as glTrack, disposeLater, freeGeometry, warm, whenCalm } from './gl-pool.js';
 import { RoomEnvironment } from './RoomEnvironment.js';
 import { materialSet, orbit, canvasTex } from './ac3d.js';
 import { buildWallUnit, buildCeilingUnit, buildCassetteUnit, animateUnit } from './units3d.js';
@@ -406,7 +406,7 @@ export function createStudio3D(container, opts = {}) {
   const scene = new THREE.Scene();
   const pm = new THREE.PMREMGenerator(renderer);
   scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; scene.environmentIntensity = dark ? 0.35 : 0.55;
-  glTrack(renderer, container, { scene });   // B1: context budget (gl-pool)
+  glTrack(renderer, container, { scene, name: 'สตูดิโอเครื่อง', onScale: () => resize() });   // r15: point sizes follow the pixel ratio   // B1: context budget (gl-pool)
   const hemi = new THREE.HemisphereLight(0xffffff, dark ? 0x1a2230 : 0x8a8f99, dark ? 0.55 : bp ? 1.6 : 0.9); scene.add(hemi);
   const sun = new THREE.DirectionalLight(0xffe2b8, 2); sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0004; scene.add(sun); scene.add(sun.target);
   const camera = new THREE.PerspectiveCamera(38, 1, 0.05, 200);
@@ -550,8 +550,11 @@ export function createStudio3D(container, opts = {}) {
   }
 
   // where units go: throw along the long side of the room, never through the opposite wall; wall units above the window line
+  // r15: the units a layout replaces are freed (geometry + their own tint materials; the shared sets stay) — they used to stay
+  // on the GPU after every change of type, count or room size
+  const shared = new Set([...Object.values(M), ...Object.values(P)].filter(m => m && m.isMaterial));
   function layoutUnits() {
-    units.forEach(u => room.remove(u.g)); units = []; emitters = [];
+    units.forEach(u => { room.remove(u.g); disposeLater(u.g, shared); }); units = []; emitters = [];
     if (ceilingM) { room.remove(ceilingM); ceilingM = null; }
     const { w, d, h } = S; const type = U.type; const n = U.n;
     const pos = [];
@@ -707,6 +710,14 @@ export function createStudio3D(container, opts = {}) {
     renderer.render(scene, camera); placeMarks();
   }
   raf = requestAnimationFrame(frame);
+  // r15: compile the other unit types' shaders once the visitor pauses (one type at a time), so choosing another type of
+  // air conditioner does not stall on the GPU; the sample units' geometry is freed again, their materials (and so the compiled programs) stay
+  const preDone = new Set();
+  function preload() {
+    const t = ['wall', 'ceiling', 'cassette', 'floor'].find(k => k !== U.type && !preDone.has(k)); if (!t) return;
+    whenCalm(() => { preDone.add(t); const { g } = unitMesh(t, P, M, { rod: 0.3 }); g.position.set(0, 1.5, 0); warm(renderer, scene, camera, g); freeGeometry(g); preload(); }, 1500);
+  }
+  setTimeout(preload, 2500);
 
   return {
     setScene(s, params) { scn = s; S = { ...params }; heatSpotsBase = []; makeHeatTex(); buildRoom(); buildPeople(); layoutUnits(); seedDust(); tintUnits(); },

@@ -8,7 +8,7 @@
 // FUJIVA work mat, SBP AirCare uniforms / tool box / cleaning-bag print / service sign / tablet report.
 // Water = droplets + mist, air = soft wisps (airflow3d), dirt is illustrative. Every state comes from jobguide.js.
 import * as THREE from './three.module.min.js';
-import { track as glTrack, disposeDeep } from './gl-pool.js';
+import { track as glTrack, disposeDeep, disposeLater, freeGeometry, warm, whenCalm } from './gl-pool.js';
 import { RoomEnvironment } from './RoomEnvironment.js';
 import { materialSet, buildPremiumIndoor, buildOutdoor, canvasTex } from './ac3d.js';
 import { buildCeilingUnit, buildCassetteUnit, buildFloorUnit, animateUnit } from './units3d.js';
@@ -53,7 +53,7 @@ export function createJobScene(container, o = {}) {
   container.append(renderer.domElement);
   const scene = new THREE.Scene();
   const pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; scene.environmentIntensity = dark ? 0.45 : 0.7; pm.dispose();
-  const gl = glTrack(renderer, container, { scene, redraw: () => kick() });
+  const gl = glTrack(renderer, container, { scene, redraw: () => kick(), name: 'ทีมช่างหน้างาน' });
   scene.add(new THREE.HemisphereLight(0xffffff, dark ? 0x1a2230 : 0xd9dfe6, dark ? 0.55 : 0.75));
   const sun = new THREE.DirectionalLight(0xfff4e6, dark ? 1.0 : 1.4); sun.position.set(3, 6.5, 5.5); sun.castShadow = true; sun.shadow.mapSize.set(1024, 1024); sun.shadow.radius = 4; sun.shadow.bias = -0.0004;
   { const c = sun.shadow.camera; c.left = -4.6; c.right = 4.6; c.top = 4.6; c.bottom = -3; c.near = 0.5; c.far = 17; c.updateProjectionMatrix(); } scene.add(sun, sun.target); sun.target.position.set(0, 0.8, 1.4);
@@ -238,8 +238,9 @@ export function createJobScene(container, o = {}) {
 
   function placeUnit(t) {
     // r8: parts of the previous unit that sit on the table or travel in a hand are attached to the world — remove them too
-    Object.values(HP).forEach(P => { if (P.h.parent && P.h.parent !== U.root) { P.h.parent.remove(P.h); disposeDeep(P.h, SHARED); } });
-    if (U) disposeDeep(U.root, SHARED);
+    // r15: freed two frames later (disposeLater) so the new unit re-uses the compiled shaders instead of compiling them again
+    Object.values(HP).forEach(P => { if (P.h.parent && P.h.parent !== U.root) { P.h.parent.remove(P.h); disposeLater(P.h, SHARED); } });
+    if (U) disposeLater(U.root, SHARED);
     unitG.clear(); Object.keys(HP).forEach(k => delete HP[k]); slotTop = [TT, TT, TT];
     if (t === 'wall') { U = buildPremiumIndoor(M, { logo: false }); U0.p = V(0, 2.18, 0.135); U0.bot = 2.03; U0.front = 0.26; U0.w = 0.9; }
     else if (t === 'ceiling') { U = buildCeilingUnit(M, { interior: true, rod: 0 }); U0.p = V(0, H - 0.1475, 0.35); U0.bot = H - 0.265; U0.front = 0.7; U0.w = 1.27; }
@@ -264,8 +265,8 @@ export function createJobScene(container, o = {}) {
   }
 
   function propsFor(t) {
-    [bag, hose, pcbCover, probes, marks, mount, brk, pipes, trunk, drainP, wire, tailOut].forEach(x => { if (x) { x.parent && x.parent.remove(x); disposeDeep(x, SHARED); } });
-    if (foam) { foam.parent && foam.parent.remove(foam); disposeDeep(foam, SHARED); foam = null; }
+    [bag, hose, pcbCover, probes, marks, mount, brk, pipes, trunk, drainP, wire, tailOut].forEach(x => { if (x) { x.parent && x.parent.remove(x); disposeLater(x, SHARED); } });
+    if (foam) { foam.parent && foam.parent.remove(foam); disposeLater(foam, SHARED); foam = null; }
     const u = U0.p, w = U0.w;
     // ---- positions: mat, table, tub, tool box, washer, bucket, ladders, sign
     const P = {
@@ -662,6 +663,20 @@ export function createJobScene(container, o = {}) {
     kick();
   }
   size(); setType(o.type || 'wall');
+  // r15: the other venues are built and their shaders (venue + unit) compiled once the visitor pauses — one type at a time —
+  // so a type tab switches without waiting for the GPU; the sample unit's geometry is freed, its materials' programs stay
+  const preDone = new Set();
+  function preload() {
+    const t = ['wall', 'ceiling', 'cassette', 'floor'].find(k => k !== type && !preDone.has(k)); if (!t) return;
+    whenCalm(() => {
+      preDone.add(t); if (t === type) return preload();
+      if (!venues[t]) { const keepV = venue, keepP = patch; buildVenue(t); venues[t].visible = false; venue = keepV; patch = keepP; if (venue) venue.visible = true; }
+      const S2 = t === 'wall' ? buildPremiumIndoor(M, { logo: false }) : t === 'ceiling' ? buildCeilingUnit(M, { interior: true, rod: 0 }) : t === 'cassette' ? buildCassetteUnit(M, { interior: true, rod: 0 }) : buildFloorUnit(M, { interior: true, w: 0.6, h: 1.85, d: 0.38 });
+      S2.root.traverse(m => { if (m.isMesh) { m.castShadow = true; m.receiveShadow = true; } });
+      whenCalm(() => { warm(renderer, scene, cam, venues[t]); warm(renderer, scene, cam, S2.root); freeGeometry(S2.root); preload(); }, 500);
+    }, 1500);
+  }
+  setTimeout(preload, 3000);
 
   return {
     setType(t) { setType(t); kick(); },

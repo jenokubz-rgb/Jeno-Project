@@ -14,6 +14,7 @@ import { createCrowd } from './people3d.js';
 import { animateUnit } from './units3d.js';
 import { canvasTex } from './ac3d.js';
 import { h } from './sbp-core.js';
+import { warm, whenCalm } from './gl-pool.js';
 
 const TYPE_TH = { wall: 'แอร์ติดผนัง', ceiling: 'แอร์แขวนใต้ฝ้า', cassette: 'แอร์สี่ทิศทาง' };
 const COL = { liq: 0x1d56d8, gas: 0x7cc6ff, hot: 0xff5a36, hot2: 0xffa24d, power: 0xffd23f, drain: 0x2f8fff, warm: 0xff9a4d, cool: 0x39a7ff };
@@ -70,7 +71,7 @@ function pts(n, size, additive) {
 }
 
 export function createSystem3D(container, opts = {}) {
-  const stage = createStage(container, { theme: opts.theme === 'dark' ? 'dark' : 'light' });
+  const stage = createStage(container, { theme: opts.theme === 'dark' ? 'dark' : 'light', name: 'ระบบแอร์ทั้งบ้าน' });
   const dark = opts.theme === 'dark';
   const labels = createLabels(container);
   let cur = null, type = null, step = -1, list = [];
@@ -203,6 +204,19 @@ export function createSystem3D(container, opts = {}) {
   stage.onFrame((dt, clock) => { if (cur) cur.update(dt, clock, list[step] || null); });
   stage.onAfter((camera, W, H) => labels.update(camera, W, H));
   setType(opts.type || 'wall');
+  // r15: the other two homes are built and their shaders compiled once the visitor pauses (no touch / scroll for a moment),
+  // one at a time — a type tab then switches at once instead of freezing while a whole house is built and compiled
+  let preN = 0;
+  function preload() {
+    const t = ['wall', 'ceiling', 'cassette'].find(k => !built[k]); if (!t || ++preN > 3) return;
+    whenCalm(() => {
+      if (built[t]) return preload();
+      const keep = type, b = build(t); b.home.root.visible = false;
+      type = keep; if (built[keep]) { built[keep].home.root.visible = true; labels.occluders(built[keep].home.walls); }
+      whenCalm(() => { warm(stage.renderer, stage.scene, stage.camera, b.home.root); preload(); }, 600);
+    }, 1500);
+  }
+  setTimeout(preload, 2500);
   return { setType, go, get steps() { return list; }, advance: s => stage.advance(s), dispose: () => { Object.values(built).forEach(b => b.dispose()); stage.dispose(); } };
 }
 

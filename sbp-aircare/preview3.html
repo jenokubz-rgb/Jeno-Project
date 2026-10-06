@@ -40,6 +40,9 @@ tbody th{font-weight:600;white-space:nowrap}
 .tasks li{counter-increment:t;display:grid;grid-template-columns:32px minmax(0,1fr);gap:2px 12px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:var(--card)}
 .tasks li::before{content:counter(t);grid-row:span 2;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--blue-l);color:var(--blue);font-weight:600}
 .tasks span{color:var(--ink-2);font-size:14.5px;line-height:1.6}
+.ptl{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:14px;color:var(--ink-2);font-size:14.5px}
+.ptl a{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--blue);font-weight:600;text-decoration:none}
+.ptl a:hover{border-color:var(--blue)}
 @media (max-width:1000px){.row.r4{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:820px){.row,.row.r4,.tasks{grid-template-columns:minmax(0,1fr)}}
 </style>
@@ -92,6 +95,23 @@ tbody th{font-weight:600;white-space:nowrap}
       <li><b>ตรวจว่ารับงานที่บ้านคุณไหม</b><span>พิมพ์เขตหรืออำเภอ ดูค่าเดินทาง</span></li>
       <li><b>จองคิว</b><span>เลือกงาน วัน และช่วงเวลา ช่วงทดลองระบบจะสรุปคำขอให้ส่งเอง ยังไม่ส่งถึงทีมอัตโนมัติ</span></li>
     </ol>
+  </section>
+
+  <section class="grp" aria-labelledby="g6">
+    <h2 id="g6">ทดสอบความลื่นของภาพ 3 มิติ แสง และภาพเคลื่อนไหว</h2>
+    <p>ทุกแบบมีปุ่ม "ทดสอบความลื่น" ที่แถบทดลองใช้ด้านบน หรือเปิดลิงก์ด้านล่างแล้วแผงทดสอบจะขึ้นเอง ผลวัดจากเครื่องที่ใช้เปิดจริง ควรลองทั้งมือถือและคอมพิวเตอร์</p>
+    <ol class="tasks">
+      <li><b>ดูตัวเลขสด</b><span>เลื่อนดูหน้าเว็บ กดเล่นภาพ 3 มิติ ดูภาพต่อวินาที เฟรมช้าสุด และจำนวนครั้งที่ภาพสะดุด</span></li>
+      <li><b>ทัวร์อัตโนมัติทุกส่วน</b><span>ระบบเปิดทุกหน้า กดปุ่มของภาพ 3 มิติทุกตัว แล้วสรุปว่าส่วนไหนลื่น ส่วนไหนสะดุด</span></li>
+      <li><b>ไล่ดูครบทุกรุ่น 705 รุ่น</b><span>สร้างภาพ 3 มิติของแอร์ทุกรุ่นตามขนาดจริงของรุ่นนั้น ตรวจว่าแสดงได้ครบและใช้เวลาเท่าไร</span></li>
+      <li><b>ลองเปลี่ยนความละเอียด</b><span>อัตโนมัติ (แนะนำ) หรือกำหนดเอง เพื่อเทียบความคมกับความลื่นบนเครื่องนั้น</span></li>
+      <li><b>ดูรุ่นนี้แบบ 3 มิติ</b><span>เปิดรายละเอียดสินค้ารุ่นใดก็ได้ เปิดเครื่อง มองทะลุ แยกชิ้นส่วน ดูการล้าง และเปิดเสียงลม</span></li>
+      <li><b>ส่งผลให้ทีม</b><span>ปุ่มในแผงทดสอบใส่ผลลงฟอร์มความเห็นให้ ตรวจดูก่อนส่ง</span></li>
+    </ol>
+    <p class="ptl">เปิดพร้อมแผงทดสอบ:
+      <a href="./a3.html#perftest">A3</a> <a href="./b3.html#perftest">B3</a> <a href="./c3.html#perftest">C3</a> ·
+      <a href="./a.html#perftest">A</a> <a href="./b.html#perftest">B</a> <a href="./c.html#perftest">C</a> <a href="./d.html#perftest">D</a> ·
+      <a href="./a2.html#perftest">A2</a> <a href="./b2.html#perftest">B2</a> <a href="./c2.html#perftest">C2</a> <a href="./d2.html#perftest">D2</a></p>
   </section>
 
   <section class="grp" aria-labelledby="g2">

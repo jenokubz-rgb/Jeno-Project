@@ -100,7 +100,7 @@ export function createMaterials3D(container, opts = {}) {
   container.appendChild(renderer.domElement);
   const scene = new THREE.Scene();
   { const pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; scene.environmentIntensity = dark ? 0.75 : 0.95; }
-  glTrack(renderer, container, { scene });   // B1: context budget (gl-pool)
+  glTrack(renderer, container, { scene, name: 'วัสดุติดตั้ง' });   // B1: context budget (gl-pool)
   scene.add(new THREE.HemisphereLight(0xffffff, dark ? 0x1a2230 : 0xcfd6de, 0.45));
   const key = new THREE.DirectionalLight(0xfff4e6, 1.9); key.position.set(1.6, 3.2, 2.6); key.castShadow = true;
   key.shadow.mapSize.set(2048, 2048); Object.assign(key.shadow.camera, { left: -2, right: 2, top: 2, bottom: -2, near: 0.5, far: 9 }); key.shadow.bias = -0.0004; key.shadow.normalBias = 0.01; scene.add(key);

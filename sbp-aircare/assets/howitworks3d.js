@@ -7,7 +7,7 @@
 import { icon, iconLabel } from './icons.js';
 import { mountThrowSim } from './throwsim3d.js';
 import * as THREE from './three.module.min.js';
-import { track as glTrack } from './gl-pool.js';
+import { track as glTrack, warm, whenCalm } from './gl-pool.js';
 import { createWisps, airTint } from './wisp3d.js';
 import { RoomEnvironment } from './RoomEnvironment.js';
 import { buildOutdoor, materialSet, canvasTex, orbit } from './ac3d.js';
@@ -169,7 +169,7 @@ export function createHowItWorks3D(container, opts = {}) {
   container.appendChild(renderer.domElement);
   const scene = new THREE.Scene();
   if (!bp) { const pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; scene.environmentIntensity = dark ? 0.5 : 0.85; }
-  glTrack(renderer, container, { scene });   // B1: context budget (gl-pool)
+  glTrack(renderer, container, { scene, name: 'หลักการทำงาน', onScale: () => resize() });   // r15: point sizes follow the pixel ratio   // B1: context budget (gl-pool)
   scene.add(new THREE.HemisphereLight(0xffffff, dark ? 0x1b2330 : 0xc9d3de, bp ? 1.7 : dark ? 0.55 : 0.75));
   const key = new THREE.DirectionalLight(0xffffff, bp ? 1.0 : 1.6); key.position.set(1.6, 2.2, 2.6); scene.add(key);
   if (dark) { const rim = new THREE.DirectionalLight(0x6fc8ff, 1.6); rim.position.set(-2, 1, -1.5); scene.add(rim); }
@@ -349,6 +349,15 @@ export function createHowItWorks3D(container, opts = {}) {
     o.onFrame && o.onFrame(anchors());
   }
   requestAnimationFrame(frame);
+  // r15: the other types are built and their shaders compiled while the page is idle (one per idle moment), so a type tab
+  // switches at once instead of stalling on the GPU compiling a new set of materials
+  let preT = 0;
+  function preload() {
+    const t = ['wall', 'ceiling', 'cassette'].find(k => !cache[k]); if (!t || ++preT > 3) return;
+    // compiled as it will be shown (x-ray state)
+    whenCalm(() => { if (cache[t]) return preload(); const C = build(t); C.xr.set(st.xray); whenCalm(() => { warm(renderer, scene, camera, C.G); preload(); }, 400); }, 800);
+  }
+  setTimeout(preload, 600);
 
   return {
     setType(t) { setType(t); },

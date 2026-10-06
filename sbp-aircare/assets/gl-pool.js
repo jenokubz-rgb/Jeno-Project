@@ -67,31 +67,179 @@ const COARSE = typeof matchMedia === 'function' && matchMedia('(pointer: coarse)
 const LOW = (navigator.deviceMemory && navigator.deviceMemory <= 3) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
 export const PR_CAP = COARSE ? (LOW ? 1.25 : 1.5) : 2;
 export function track(renderer, el, opts = {}) {
+  // r15: no shader diagnostics outside automated checks — reading the program / shader logs makes the page wait for the GPU to
+  // finish compiling (the stall when a new type or step appears); tests (navigator.webdriver) keep them to catch broken shaders
+  if (!navigator.webdriver) renderer.debug.checkShaderErrors = false;
   if (renderer.getPixelRatio() > PR_CAP) { const sz = renderer.getSize(new THREE.Vector2()); renderer.setPixelRatio(PR_CAP); if (sz.x && sz.y) renderer.setSize(sz.x, sz.y, false); }
   const gl = renderer.getContext();
-  const e = { renderer, el, scene: opts.scene || null, env: !!(opts.scene && opts.scene.environment), redraw: opts.redraw || null, ext: gl && gl.getExtension('WEBGL_lose_context'), state: 'live', t: performance.now(), d: 0 };
+  const e = { renderer, el, scene: opts.scene || null, env: !!(opts.scene && opts.scene.environment), redraw: opts.redraw || null, onScale: opts.onScale || null, name: opts.name || '', ext: gl && gl.getExtension('WEBGL_lose_context'), state: 'live', t: performance.now(), d: 0, base: renderer.getPixelRatio(), drawn: 0, cost: 0 };
+  if (lvl) applyScale(e, false);   // a scene being built: never call back into it from here
   const cv = renderer.domElement;
   // loseContext() makes the context unusable at once but three.js only learns of it from the async event — until then a
   // render would compile programs on a dead context (getProgramInfoLog → null). So render only while the slot is live.
   const render0 = renderer.render.bind(renderer);
-  renderer.render = (s, c) => { if (e.state === 'live') render0(s, c); };
+  // r15: the first frame's shaders are compiled in parallel (KHR_parallel_shader_compile, Chrome / Edge / Android and newer
+  // Safari) instead of blocking the page: the canvas waits invisibly until they are ready, then fades in. Browsers without
+  // the extension draw at once, as before. The compile runs inside the first draw call, so a post-processing chain's render
+  // target is current and the programs match what it draws.
+  const par = !!(renderer.compileAsync && gl && gl.getExtension('KHR_parallel_shader_compile'));
+  e.ready = !par;
+  renderer.render = (s, c) => {
+    if (e.state !== 'live') return;
+    if (focusEl && !(e.el === focusEl || focusEl.contains(e.el) || e.el.contains(focusEl))) return;   // r15: another scene has the stage (glFocus)
+    if (!e.ready) {
+      if (!e.compiling) {
+        e.compiling = true; cv.style.opacity = '0';
+        const done = () => { if (e.ready) return; e.ready = true; cv.style.transition = 'opacity .35s ease'; cv.style.opacity = ''; setTimeout(() => { cv.style.transition = ''; }, 400); if (e.redraw) try { e.redraw(); } catch (_) {} };
+        try { renderer.compileAsync(s, c).then(done, done); } catch (_) { done(); }
+        setTimeout(done, 5000);   // never wait longer than this
+      }
+      if (!e.ready) return;
+    }
+    if (s === e.scene && !e.cam) { e.cam = c; e.rt = renderer.getRenderTarget(); setTimeout(() => whenCalm(late, 2500), 4000); }
+    const t0 = performance.now(); render0(s, c); const t1 = performance.now(); e.cost += ((t1 - t0) - e.cost) * 0.1; e.drawn = lastDraw = t1; if (!probe) startProbe();
+  };
+  // r15: once the visitor pauses, everything the scene holds — hidden parts too (tools, later steps, other types kept for
+  // a quick switch) — is compiled (in parallel where the GPU can; otherwise in one frame with everything shown), so showing it
+  // later does not stall
+  function late() {
+    if (e.state !== 'live' || !e.cam || !e.scene) return;
+    if (!par) { warmHidden(renderer, e.scene, e.cam, e.rt || undefined); return; }   // no parallel compile: one frame with everything shown, now
+    const prev = renderer.getRenderTarget();
+    try { renderer.setRenderTarget(e.rt || null); renderer.compileAsync(e.scene, e.cam).catch(() => {}); } catch (_) {}
+    renderer.setRenderTarget(prev);
+  }
   cv.addEventListener('webglcontextlost', () => { e.state = 'lost'; schedule(); });
   cv.addEventListener('webglcontextrestored', () => {
     e.state = 'live'; e.t = performance.now();
+
     if (e.scene) forget(e.scene);   // r8: before the next render (three.js has just rebuilt its state in its own handler)
     // three.js restores its own state on this event (registered first); rebuild the GPU-generated environment map after it
     setTimeout(() => {
       if (e.env && e.scene) { try { const pm = new THREE.PMREMGenerator(renderer); const old = e.scene.environment; e.scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; pm.dispose(); old && old.dispose && old.dispose(); } catch (_) {} }
-      e.redraw && e.redraw();
+      if (par) { e.ready = false; e.compiling = false; }   // r15: the restored context compiles everything again — in parallel too (after the map above)
+      if (e.redraw) { try { e.redraw(); } catch (_) {} }
       schedule();
     }, 0);
   });
   // balance now, not on the next frame: scenes that boot back to back (fast scroll, single-file build) must not overshoot
   entries.push(e); wire(); if (queued) { cancelAnimationFrame(queued); } balance();
   // r12 move(el): the canvas was moved to another place on the page (one cinema serving several slots)
-  return { release() { const i = entries.indexOf(e); if (i >= 0) entries.splice(i, 1); schedule(); }, move(el2) { e.el = el2; schedule(); } };
+  // r15: a scene moved back onto the page after its old host was removed (the product drawer re-uses one viewer) joins again
+  return { release() { const i = entries.indexOf(e); if (i >= 0) entries.splice(i, 1); schedule(); }, move(el2) { e.el = el2; e.seen = false; if (!entries.includes(e)) entries.push(e); schedule(); } };
 }
+/** r15: while a panel shows its own 3D (the product panel's model viewer over the page), the scenes behind it pause their
+ *  drawing — one scene gets the GPU instead of two or three. glFocus(null) lets them draw again. */
+let focusEl = null;
+export function glFocus(el) { const was = focusEl; focusEl = el || null; if (was && !focusEl) entries.forEach(e => { if (e.redraw) try { e.redraw(); } catch (_) {} }); }
 export const glBudget = () => ({ max: MAX, live: entries.filter(e => e.state === 'live').length, total: entries.length });
+
+/* ---- r15 · adaptive resolution (owner 6 ต.ค. 2569: "ให้ smooth ไม่สะดุด") ------------------------------------------------
+ * A display-rate probe runs only while some scene has drawn in the last half second. Every 45 frames it counts the late ones
+ * (longer than 1.6 × the screen's own frame time): more than 1 in 6 late → every scene draws at a lower pixel ratio (one step,
+ * at most every 2 s); 8 calm seconds → one step back toward full sharpness. Fill rate (pixels × shading) is what makes phones
+ * stutter with animated scenes, and a lower pixel ratio is hard to see while things move. glLock(level) pins a level for the
+ * owner's test panel (null = automatic). */
+const STEPS = [1, 0.85, 0.72, 0.6];
+const PR_MIN = 0.75;
+let lvl = 0, lock = null, probe = 0, lastDraw = 0, lastChange = 0, calmSince = 0, prevT = 0;
+const iv = [];
+function applyScale(e, notify = true) {   // notify = false while the scene is still being built (its callbacks are not ready)
+  const pr = Math.max(Math.min(PR_MIN, e.base), +(e.base * STEPS[lvl]).toFixed(3));
+  if (Math.abs(e.renderer.getPixelRatio() - pr) < 0.01) return;
+  e.renderer.setPixelRatio(pr);                     // three keeps the CSS size (setSize(w, h, false) inside)
+  if (notify && e.onScale) { try { e.onScale(pr); } catch (_) {} }
+  if (notify && e.redraw && e.drawn && performance.now() - e.drawn > 300) { try { e.redraw(); } catch (_) {} }   // still scenes: show the new sharpness now
+}
+function setLevel(n) { n = Math.max(0, Math.min(STEPS.length - 1, n)); if (n === lvl) return; lvl = n; lastChange = performance.now(); iv.length = 0; entries.forEach(e => applyScale(e)); }
+function startProbe() { prevT = 0; probe = requestAnimationFrame(tick); }
+function tick(t) {
+  probe = 0;
+  if (document.hidden || t - lastDraw > 500) { prevT = 0; iv.length = 0; return; }   // idle: stop (the next draw restarts it)
+  if (prevT) iv.push(t - prevT); prevT = t;
+  if (iv.length >= 45) {
+    const s = [...iv].sort((a, b) => a - b), frame = Math.max(6.9, Math.min(34, s[Math.floor(s.length * 0.2)]));
+    const late = iv.filter(x => x > frame * 1.6 + 2).length / iv.length; iv.length = 0;
+    const now = performance.now();
+    stats.late = Math.round(late * 100); stats.frame = +frame.toFixed(1);
+    if (lock == null) {
+      if (late > 1 / 6) { calmSince = 0; if (now - lastChange > 2000) setLevel(lvl + 1); }
+      else if (late < 0.03) { if (!calmSince) calmSince = now; else if (now - calmSince > 8000 && now - lastChange > 4000) { calmSince = now; setLevel(lvl - 1); } }
+      else calmSince = 0;
+    }
+  }
+  probe = requestAnimationFrame(tick);
+}
+const stats = { late: 0, frame: 0 };
+/** r15: what the owner's test panel shows — level 0 = full sharpness … 3 = lightest; per scene: state, pixel ratio, draw cost */
+export const glStats = () => ({ max: MAX, level: lvl, scale: STEPS[lvl], locked: lock != null, late: stats.late, frame: stats.frame, cap: PR_CAP,
+  scenes: entries.map(e => ({ name: e.name || (e.el && (e.el.id || e.el.className || e.el.tagName)) || '?', state: e.state, pr: +e.renderer.getPixelRatio().toFixed(2), on: e.d === 0, cost: +e.cost.toFixed(1), active: performance.now() - e.drawn < 600 })) });
+export function glLock(level) { lock = level == null ? null : Math.max(0, Math.min(STEPS.length - 1, +level)); if (lock != null) setLevel(lock); else { calmSince = 0; } }
+export const GL_STEPS = STEPS;
+
+/* ---- r15 · shader warm-up: compile what a scene will show next while the page is idle, so a click never waits for it ----
+ * warm(renderer, scene, camera, obj, target) draws the scene once with obj forced visible (and not culled), so three.js builds
+ * every program obj needs with the exact lights, clipping, tone mapping and output of a real frame. On screen (no target) the
+ * normal frame is drawn again straight after, in the same task — the warm-up frame is never shown. Scenes drawn through a
+ * post-processing chain pass its render target (the chain renders the scene into one, which needs other programs).
+ * whenIdle(fn) runs fn when the main thread has nothing to do (or after `timeout` ms). */
+export function warm(renderer, scene, camera, obj, target) {
+  if (!obj || renderer.getContext().isContextLost()) return false;
+  const added = !obj.parent; if (added) scene.add(obj);
+  const vis = []; for (let o = obj; o; o = o.parent) { vis.push([o, o.visible]); o.visible = true; }
+  const culled = []; obj.traverse(o => { if (o.frustumCulled) { culled.push(o); o.frustumCulled = false; } });
+  const prev = renderer.getRenderTarget();
+  try { if (target !== undefined) renderer.setRenderTarget(target); renderer.render(scene, camera); } catch (_) { /* a lost context: the next frame compiles */ }
+  renderer.setRenderTarget(prev);
+  culled.forEach(o => { o.frustumCulled = true; }); vis.forEach(([o, v]) => { o.visible = v; }); if (added) scene.remove(obj);
+  if (target === undefined) { try { renderer.render(scene, camera); } catch (_) {} }
+  return true;
+}
+/** r15: draw the scene once with everything hidden in it shown (tools for later steps, the next job's parts …) so their shaders
+ *  compile now, at a calm moment, not when they first appear; the normal frame is drawn again straight after */
+export function warmHidden(renderer, scene, camera, target) {
+  if (!scene || renderer.getContext().isContextLost()) return false;
+  const shown = [], culled = [];
+  scene.traverse(o => { if (o !== scene && o.visible === false) { o.visible = true; shown.push(o); } if (o.frustumCulled) { o.frustumCulled = false; culled.push(o); } });
+  if (!shown.length) { culled.forEach(o => { o.frustumCulled = true; }); return false; }
+  const prev = renderer.getRenderTarget();
+  try { if (target !== undefined) renderer.setRenderTarget(target); renderer.render(scene, camera); } catch (_) {}
+  renderer.setRenderTarget(prev);
+  shown.forEach(o => { o.visible = false; }); culled.forEach(o => { o.frustumCulled = true; });
+  if (target === undefined) { try { renderer.render(scene, camera); } catch (_) {} }
+  return true;
+}
+export const whenIdle = (fn, timeout = 2000) => (typeof requestIdleCallback === 'function' ? requestIdleCallback(() => fn(), { timeout }) : setTimeout(fn, 300));
+// whenCalm(fn): like whenIdle, but also only after `quiet` ms without a touch, click, key, wheel or scroll — building the next
+// type is a long task, and it must never land while the visitor is dragging, scrolling or pressing something
+let lastInput = 0;
+if (typeof addEventListener === 'function') ['pointerdown', 'pointermove', 'wheel', 'keydown', 'touchstart', 'scroll'].forEach(t => addEventListener(t, () => { lastInput = performance.now(); }, { passive: true, capture: true }));
+export function whenCalm(fn, quiet = 1200) { calmQ.push({ fn, quiet }); pump(); }
+// one job at a time for the whole page (several scenes preparing at once would add up to a visible hitch), never in the
+// first seconds after the page opens, and a short breather between jobs so frames keep coming
+const calmQ = []; let calmBusy = false;
+const GRACE = 3000;
+function pump() {
+  if (calmBusy || !calmQ.length) return; calmBusy = true;
+  const { fn, quiet } = calmQ[0];
+  const tryIt = () => {
+    const now = performance.now(), w = Math.max(quiet - (now - lastInput), GRACE - now);
+    if (w > 0) { setTimeout(tryIt, w + 60); return; }
+    whenIdle(() => {
+      if (performance.now() - lastInput < quiet) { tryIt(); return; }
+      calmQ.shift(); try { fn(); } catch (_) { /* a preparation that fails only means a later stall */ }
+      calmBusy = false; setTimeout(pump, 150);
+    }, 1500);
+  };
+  tryIt();
+}
+
+/** r15: free a replaced subtree two frames later — after its replacement has been drawn once. three.js deletes a shader program
+ *  as soon as no material uses it any more; disposing the old part first meant the new part (same kinds of material) had to
+ *  compile them all again, on every switch. */
+export function disposeLater(root, keep = null) { if (!root) return; const f = () => disposeDeep(root, keep); requestAnimationFrame(() => requestAnimationFrame(f)); }
+/** r15: free only the geometry of a sample built for a shader warm-up — its materials stay, so their programs stay compiled */
+export function freeGeometry(root) { if (root) root.traverse(o => { if (o.geometry && o.geometry.dispose) o.geometry.dispose(); }); }
 
 /** r8: free what a removed subtree holds on the GPU — geometries, and the materials / textures that are not shared (keep =
  *  a Set of shared materials; their textures are kept too). Disposing something still in use is safe in three.js (it is

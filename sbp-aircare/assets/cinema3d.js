@@ -21,12 +21,13 @@ import { OutputPass } from './three-pp/OutputPass.js';
 import { materialSet } from './ac3d.js';
 import { buildUnit, animateUnit } from './units3d.js';
 import { createAirflow } from './airflow3d.js';
-import { track, PR_CAP, disposeDeep } from './gl-pool.js';
+import { track, PR_CAP, disposeDeep, warm, whenCalm } from './gl-pool.js';
 
 const V = (x, y, z) => new THREE.Vector3(x, y, z);
 const RM = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 const ease = t => t < 0 ? 0 : t > 1 ? 1 : t * t * t * (t * (t * 6 - 15) + 10);   // smootherstep
 const W = 6.4, D = 5.6, H = 2.9;   // the set: x ∈ [−W/2, W/2], back wall at z = 0, room toward +z, floor y = 0, ceiling y = H
+const DIRT_C = new THREE.Color(0x4a3f33);
 
 /* ---------- art direction: one mood per edition (light, materials, grade) ---------- */
 export const MOODS = {
@@ -123,7 +124,7 @@ export function createCinema(container0, opts = {}) {
   const scene = new THREE.Scene();
   const pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture; pm.dispose();
   const cam = new THREE.PerspectiveCamera(32, 16 / 9, 0.05, 60);
-  const slot = track(renderer, container, { scene, redraw: () => frame() });
+  const slot = track(renderer, container, { scene, redraw: () => frame(), name: 'ภาพยนตร์ 3 มิติ', onScale: pr => { composer.setPixelRatio(pr); size.w = 0; } });   // r15: the post chain follows the adaptive pixel ratio
   const FPS = matchMedia('(pointer: coarse)').matches || Q !== 'high' ? 30 : 60;   // phones / mid tier: 30 fps is calmer on battery
 
   // post chain
@@ -208,36 +209,56 @@ export function createCinema(container0, opts = {}) {
   const shellMats = [], dispMats = [], dirtMats = [];
   const S = { power: 0, powerT: 1, mode: 'cool', swing: true, xray: 0, xrayT: 0, explode: 0, explodeT: 0, dirt: 0, dirtT: 0, cleaning: 0, spray: 0, auto: true, shot: 'hero' };
   const partHome = new Map();
-  function setModel({ type: t = 'wall', w, h, d } = {}) {
-    curDims = { w, h };
-    if (U) { unitG.remove(U.root); disposeDeep(U.root); }
-    shellMats.length = dispMats.length = dirtMats.length = 0; partHome.clear();
-    type = t; M = materialSet('studio');
-    U = buildUnit(t, M, t === 'floor' ? { interior: true } : { interior: true, rod: 0.02 });
-    if (U.parts.pipes) U.parts.pipes.visible = false; if (U.parts.drain) U.parts.drain.visible = false; if (U.parts.hangers) U.parts.hangers.visible = t === 'cassette';
+  // r15: one built unit per type, kept — the 705 catalogue models are four bodies at different sizes, so switching between
+  // models of a type only rescales (no rebuild, no new shaders, no texture uploads); a new type is built once
+  const units = new Map();   // type → { U, M, shell, disp, dirt, home }
+  function buildType(t) {
+    const M2 = materialSet('studio');
+    const U2 = buildUnit(t, M2, t === 'floor' ? { interior: true } : { interior: true, rod: 0.02 });
+    if (U2.parts.pipes) U2.parts.pipes.visible = false; if (U2.parts.drain) U2.parts.drain.visible = false; if (U2.parts.hangers) U2.parts.hangers.visible = t === 'cassette';
+    const home = new Map(), shell = [], disp = [], dirt = [];
     // exploded view: every part slides out along (its centre − unit centre) plus the face the unit shows the room
     // (front for wall / floor, underside for ceiling / cassette); outer parts travel further, the casing stays
-    { const c0 = visBox(U.root).getCenter(V(0, 0, 0)), bias = t === 'ceiling' || t === 'cassette' ? V(0, -1, 0) : V(0, 0, 1), dm = U.dims, big = Math.max(dm.w, dm.h, dm.d);
-      const list = Object.entries(U.parts).filter(([id, g]) => g.visible && !/^(chassis|casing|pipes|drain|hangers)$/.test(id)).map(([id, g]) => { const c = visBox(g).getCenter(V(0, 0, 0)); return { g, rel: c.sub(c0) }; });
+    { const c0 = visBox(U2.root).getCenter(V(0, 0, 0)), bias = t === 'ceiling' || t === 'cassette' ? V(0, -1, 0) : V(0, 0, 1), dm = U2.dims, big = Math.max(dm.w, dm.h, dm.d);
+      const list = Object.entries(U2.parts).filter(([id, g]) => g.visible && !/^(chassis|casing|pipes|drain|hangers)$/.test(id)).map(([id, g]) => { const c = visBox(g).getCenter(V(0, 0, 0)); return { g, rel: c.sub(c0) }; });
       const dots = list.map(x => x.rel.dot(bias)), lo = Math.min(...dots), hi = Math.max(...dots);
-      list.forEach((x, i) => { const out = hi > lo ? (dots[i] - lo) / (hi - lo) : 1; const dir = V(x.rel.x / dm.w, x.rel.y / dm.h, x.rel.z / dm.d).multiplyScalar(0.6).add(bias.clone().multiplyScalar(0.9)).normalize(); partHome.set(x.g, { p0: x.g.position.clone(), off: dir.multiplyScalar(big * (0.18 + 0.42 * out)) }); }); }
+      list.forEach((x, i) => { const out = hi > lo ? (dots[i] - lo) / (hi - lo) : 1; const dir = V(x.rel.x / dm.w, x.rel.y / dm.h, x.rel.z / dm.d).multiplyScalar(0.6).add(bias.clone().multiplyScalar(0.9)).normalize(); home.set(x.g, { p0: x.g.position.clone(), off: dir.multiplyScalar(big * (0.18 + 0.42 * out)) }); }); }
+    U2.root.traverse(m => {
+      if (!m.isMesh) return; m.castShadow = true; m.receiveShadow = true;
+      const mt = m.material; if (!mt) return;
+      const ghost = m.userData.shell || (t === 'cassette' && (isIn(m, U2.parts.panel) || isIn(m, U2.parts.grille)));   // cassette: see up through the panel
+      if (ghost && !shell.includes(mt)) { mt.transparent = true; mt.depthWrite = true; shell.push(mt); }
+      if (mt.isMeshBasicMaterial && mt.map && !disp.includes(mt)) disp.push(mt);
+    });
+    [M2.filter, M2.fin, M2.blade, M2.pan].forEach(m2 => { if (m2 && m2.color) { m2.userData.c0 = m2.color.clone(); dirt.push(m2); } });
+    const e = { U: U2, M: M2, shell, disp, dirt, home }; units.set(t, e); return e;
+  }
+  function setModel({ type: t = 'wall', w, h, d } = {}) {
+    curDims = { w, h };
+    if (U) { unitG.remove(U.root); partHome.forEach((hm, g) => g.position.copy(hm.p0)); }
+    const e = units.get(t) || buildType(t);
+    type = t; U = e.U; M = e.M;
+    shellMats.length = dispMats.length = dirtMats.length = 0; shellMats.push(...e.shell); dispMats.push(...e.disp); dirtMats.push(...e.dirt);
+    partHome.clear(); e.home.forEach((v, k) => partHome.set(k, v));
+    U.root.position.set(0, 0, 0); U.root.rotation.set(0, 0, 0);
     const base = U.dims, sx = w ? w / base.w : 1, sy = h ? h / base.h : 1;
     const s = Math.max(0.7, Math.min(1.5, (sx + sy) / 2)); U.root.scale.setScalar(s);
     dims = { w: base.w * s, h: base.h * s, d: base.d * s };
     const E = placeUnit(t, U, s);
-    U.root.traverse(m => {
-      if (!m.isMesh) return; m.castShadow = true; m.receiveShadow = true;
-      const mt = m.material; if (!mt) return;
-      const ghost = m.userData.shell || (t === 'cassette' && (isIn(m, U.parts.panel) || isIn(m, U.parts.grille)));   // cassette: see up through the panel
-      if (ghost && !shellMats.includes(mt)) { mt.transparent = true; mt.depthWrite = true; shellMats.push(mt); }
-      if (mt.isMeshBasicMaterial && mt.map && !dispMats.includes(mt)) dispMats.push(mt);
-    });
-    [M.filter, M.fin, M.blade, M.pan].forEach(m2 => { if (m2 && m2.color) { m2.userData.c0 = m2.color.clone(); dirtMats.push(m2); } });
     unitG.add(U.root); fitProps();
     const bb = visBox(U.root); center = bb.getCenter(V(0, 0, 0)); radius = bb.getSize(V(0, 0, 0)).length() / 2;
     air.setEmitters(E); air.prewarm(Q === 'high' ? 140 : 80, 0.05);   // settle the jet before it is shown (fewer steps on phones)
     go(S.shot, true); frame();
+    if (!preT) preT = setTimeout(preload, 900);
   }
+  // r15: the other three bodies are built and their shaders compiled while the page is idle (one per idle moment, through the
+  // post chain's own target), so the next type — a stage slot further down, another model — appears without a stall
+  let preT = 0;
+  function preload() {
+    const t = ['wall', 'ceiling', 'cassette', 'floor'].find(k => !units.has(k)); if (!t || disposed) return;
+    whenCalm(() => { if (disposed) return; if (!units.has(t)) buildType(t); whenCalm(() => { if (!disposed) warm(renderer, scene, cam, units.get(t).U.root, composer.renderTarget1); preload(); }, 400); }, 900);
+  }
+  let disposed = false;
 
   const isIn = (m, g) => { for (let p2 = m; p2; p2 = p2.parent) if (p2 === g) return true; return false; };
   // set pieces that would collide with a model: the sideboard makes room for a floor-standing unit, the noir plinth lifts it
@@ -303,7 +324,7 @@ export function createCinema(container0, opts = {}) {
       if (S.power > 0.5) animateUnit(U, dt, clock, S.mode === 'fan' ? 0.8 : 1);
       shellMats.forEach(m => { m.opacity = 1 - S.xray * 0.86; m.depthWrite = S.xray < 0.5; });
       dispMats.forEach(m => { m.opacity = 0.15 + 0.85 * S.power; m.transparent = true; });
-      dirtMats.forEach(m => m.color.copy(m.userData.c0).lerp(new THREE.Color(0x4a3f33), S.dirt * 0.75));
+      dirtMats.forEach(m => m.color.copy(m.userData.c0).lerp(DIRT_C, S.dirt * 0.75));
       partHome.forEach((h, g) => { g.position.copy(h.p0).addScaledVector(h.off, S.explode); });
     }
     air.set({ running: S.power > 0.5 && S.mode !== 'off', swing: S.swing, fan: S.mode === 'fan' ? 0.8 : 1, airF: 1 - S.dirt * 0.45, supplyT: S.mode === 'fan' ? 26 : S.mode === 'dry' ? 18 : 14, roomT: 29 });
@@ -393,7 +414,9 @@ export function createCinema(container0, opts = {}) {
     setMood: k => { buildSet(k); api.kick(); }, letterbox: v => { o.bars = !!v; api.kick(); },
     kick: () => { if (RM()) { for (let i = 0; i < 40; i++) step(0.05); frame(); } else if (!raf && onScreen) { last = performance.now(); loop(); } },
     frame, advance: sec => { for (let t = 0; t < sec; t += 0.05) step(0.05); frame(); }, quality: Q,
-    dispose() { sound(false); cancelAnimationFrame(raf); raf = 0; io.disconnect(); ro.disconnect(); slot.release(); air.dispose(); disposeDeep(scene); composer.dispose && composer.dispose(); renderer.dispose(); renderer.forceContextLoss(); el.remove(); },
+    // r15: what the owner's every-model walk checks — the unit that was built, its size on screen in metres (finite, > 0)
+    probe() { if (!U) return null; U.root.updateMatrixWorld(true); const b = visBox(U.root).getSize(V(0, 0, 0)); return { type, dims: { ...dims }, box: [b.x, b.y, b.z], parts: Object.keys(U.parts).length }; },
+    dispose() { disposed = true; clearTimeout(preT); sound(false); cancelAnimationFrame(raf); raf = 0; io.disconnect(); ro.disconnect(); slot.release(); air.dispose(); units.forEach(e => { if (e.U !== U) disposeDeep(e.U.root); }); units.clear(); disposeDeep(scene); composer.dispose && composer.dispose(); renderer.dispose(); renderer.forceContextLoss(); el.remove(); },
   };
   return api;
 }

@@ -151,7 +151,7 @@ function cloud(n, color, size, additive = false) {
 /* ================================================================= 3D engine */
 export function createTechStory3D(container, opts = {}) {
   const dark = opts.theme === 'dark';
-  const stage = createStage(container, { theme: opts.theme });
+  const stage = createStage(container, { theme: opts.theme, name: 'เรื่องเล่างานช่าง' });
   const home = buildHome(stage.scene, { type: 'wall', theme: opts.theme });
   const tools = buildTools(home), tech = createTech(home, { tools });
   const labels = createLabels(container); labels.occluders(home.walls);

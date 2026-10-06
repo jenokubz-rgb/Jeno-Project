@@ -15,7 +15,7 @@ export function trapFocus(box) {
     else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
   });
 }
-export function openFeedback({ variant = 'A', pages = [], seen = [] } = {}) {
+export function openFeedback({ variant = 'A', pages = [], seen = [], note = '' } = {}) {   // r15 note: text put in "ควรปรับ" (the test panel's results)
   const prev = document.activeElement;
   const close = () => { dlg.remove(); removeEventListener('keydown', esc); prev && prev.focus && prev.focus(); };
   const esc = e => { if (e.key === 'Escape') close(); };
@@ -24,7 +24,7 @@ export function openFeedback({ variant = 'A', pages = [], seen = [] } = {}) {
     h('fieldset', {}, h('legend', {}, 'โดยรวมใช้งานง่ายแค่ไหน'), radios('sx-ease', ['1 ยากมาก', '2', '3', '4', '5 ง่ายมาก'])),
     h('fieldset', {}, h('legend', {}, 'หาสิ่งที่ต้องการเจอไหม'), radios('sx-find', ['เจอทันที', 'เจอแต่ใช้เวลา', 'หาไม่เจอ'])),
     h('label', { class: 's-field' }, 'ส่วนที่ชอบหรือมีประโยชน์ที่สุด', h('select', { name: 'sx-best' }, h('option', { value: '' }, 'เลือก'), pages.map(t => h('option', {}, t)))),
-    h('label', { class: 's-field' }, 'อะไรที่สับสน หรืออยากให้ปรับ', h('textarea', { name: 'sx-fix', rows: 3 })),
+    h('label', { class: 's-field' }, 'อะไรที่สับสน หรืออยากให้ปรับ', h('textarea', { name: 'sx-fix', rows: note ? 8 : 3 }, note)),
     h('label', { class: 's-field' }, 'ชื่อ / เบอร์ (ถ้าต้องการให้ทีมติดต่อกลับ)', h('input', { name: 'sx-who', autocomplete: 'name' })),
     h('div', { class: 'sx-dlg-a' }, h('button', { type: 'submit', class: 's-btn primary' }, 'สร้างสรุปความเห็น'), h('button', { type: 'button', class: 's-btn ghost', onclick: close }, 'ปิด')));
   const body = h('div', { class: 'sx-dlg-b' }, h('h2', { id: 'sx-fb-h' }, `ช่วยเราปรับเว็บไซต์ · แบบ ${variant}`), h('p', {}, 'ใช้เวลาไม่ถึง 1 นาที ความเห็นของคุณใช้ตัดสินใจเลือกแบบเว็บไซต์จริง'), f);
@@ -46,6 +46,13 @@ export function openFeedback({ variant = 'A', pages = [], seen = [] } = {}) {
   requestAnimationFrame(() => { const x = dlg.querySelector('input,select,textarea,button'); x && x.focus(); });
 }
 
+// r15: the owner's smoothness test panel (perfhud.js — loaded only when asked); #perftest at the end of a link opens it at once
+export function perfButton(variant) {
+  const open = () => import('./perfhud.js').then(m => m.openPerfHud({ variant }));
+  if (/^#perftest$/i.test(location.hash)) setTimeout(open, 1500);
+  return h('button', { type: 'button', class: 'sx-fbb sx-perfb', onclick: open }, 'ทดสอบความลื่น');
+}
+
 // the beta notice for pages without site.js (แบบ D, รุ่นที่ 2): a thin bar above the page header — inside the header when the
 // header is fixed — with the feedback button and the way back to the hub; plus every [data-feedback] button in the page
 export function mountBeta({ variant = 'D', pages = null, hubLabel = 'หน้ารวมทุกแบบ' } = {}) {
@@ -57,7 +64,7 @@ export function mountBeta({ variant = 'D', pages = null, hubLabel = 'หน้�
   const hd = $('header'), inHd = !!hd && getComputedStyle(hd).position === 'fixed';   // a fixed header carries the bar (an aside inside a header is not a landmark of its own)
   const bar = h(inHd ? 'div' : 'aside', { class: 'proto sx-beta sx-beta-x', 'aria-label': inHd ? null : 'สถานะเว็บไซต์ทดลอง' },
     h('b', {}, `ทดลองใช้ (Beta) · แบบ ${variant}`), h('span', { class: 'sx-bt' }, ' · ราคาจาก Pricebook 2569 · ช่วงทดลองระบบยังไม่ส่งคำขอถึงทีมอัตโนมัติ'), ' ',
-    h('button', { type: 'button', class: 'sx-fbb', onclick: fb }, 'ให้ความเห็น'),
+    h('button', { type: 'button', class: 'sx-fbb', onclick: fb }, 'ให้ความเห็น'), ' ', perfButton(variant),
     hub ? [' ', h('a', { href: hub, target: /^https?:/.test(hub) ? '_blank' : null, rel: /^https?:/.test(hub) ? 'noopener' : null }, hubLabel)] : null);
   if (inHd) hd.prepend(bar); else if (hd) hd.before(bar); else document.body.prepend(bar);
   return { open: fb };
