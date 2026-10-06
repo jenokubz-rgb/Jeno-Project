@@ -3,189 +3,301 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>SBP AirCare · แบบ C2 Noir</title>
-<meta name="description" content="ดูแอร์ทุกรุ่นก่อนตัดสินใจ 705 รุ่น 22 ยี่ห้อ ภาพจำลอง 3 มิติทุกรุ่น ราคาเครื่องและค่าติดตั้งจาก Pricebook ของบริษัท สหบูรพากรุ๊ป จำกัด">
-<meta property="og:title" content="SBP AirCare Noir ดูแอร์ทุกรุ่นก่อนตัดสินใจ">
-<meta property="og:description" content="เลือกรุ่น เปิดเครื่อง ดูทางลม มองทะลุ แยกชิ้นส่วน พร้อมราคาเครื่องและค่าติดตั้ง">
+<title>SBP AirCare · แบบ C2 โชว์รูม</title>
+<meta name="description" content="โชว์รูมแอร์ 705 รุ่น ลองเปิดเครื่องได้ทุกรุ่นในภาพจำลอง 3 มิติ พร้อมค่าติดตั้ง วัสดุที่ใช้ และการดูแลหลังติดตั้ง ราคาจาก Pricebook ของบริษัท สหบูรพากรุ๊ป จำกัด">
+<meta property="og:title" content="SBP AirCare · โชว์รูมแอร์ พร้อมติดตั้งโดยทีมเดียว">
+<meta property="og:description" content="เลือกรุ่น ดูวิธีติดตั้ง วัสดุ และการดูแลทีละขั้น แล้วเก็บไว้ในใบเสนอราคาเดียว">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#050505">
+<meta name="theme-color" content="#EEF0F2">
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/shared.css">
 <link rel="stylesheet" href="assets/business.css">
 <link rel="stylesheet" href="assets/booking.css">
 <link rel="stylesheet" href="assets/services.css">
 <link rel="stylesheet" href="assets/v2.css">
+<link rel="stylesheet" href="assets/film.css">
 <style>
-/* แบบ C2 · Noir (r12) — a product theatre. The 3D set is gloss black with gold light lines and two hard spots; the page
-   is the auditorium around the screen: true black, ivory titles, gold for focus and the live control, SP orange (dark
-   text) only for booking. The screen is letterboxed 2.39:1 like a feature film. Fahkwang — a high-contrast Thai display
-   face — sets titles centred, like opening credits; Anuphan carries reading text. Single dark theme by choice. */
+/* แบบ C2 · โชว์รูม (r16) — a gallery for buying an air conditioner with its installation. The product is the exhibit: each
+   chapter pins a 3D stage on one side (like a lit plinth) while the visitor reads down the other side, step by step; the stage
+   follows the step that sits in the middle of the screen. A buy bar stays at the foot of the screen with the quote so far.
+   Palette: cool porcelain gallery walls, graphite text, a bronze hairline accent (the metal trim of a showroom), SP orange only
+   on the action that books a job. Type: Fahkwang (display — sharp, fashion-like Thai) and Anuphan (reading). A deliberately
+   single light theme: the page is lit like a showroom. */
 :root{
-  --paper:#050505; --surface:#0F0E0C; --frost:#0A0908; --ink:#EFE8DA; --ink-2:#C9BFA9; --ink-3:#A39882; --line:rgba(239,232,218,.1); --line-2:rgba(239,232,218,.24);
-  --brand:#D9B26A; --brand-soft:rgba(217,178,106,.12); --go:#EF4E2E; --go-2:#F4683F; --on-go:#160A06; --ok:#7FD3A3; --warn:#F0B55E; --bad:#FF8C80;
-  --glass:rgba(5,5,5,.74); --glass-ink:#EFE8DA; --plate:#F4EFE6; --stage-bg:#030303; --r:0px;
-  --display:'Fahkwang','Anuphan',serif; --text:'Anuphan','Noto Sans Thai',Tahoma,sans-serif;
+  --paper:#EEF0F2; --surface:#FFFFFF; --frost:#E5E8EB; --ink:#1B1F24; --ink-2:#3F4650; --ink-3:#5B636F; --line:rgba(27,31,36,.1); --line-2:rgba(27,31,36,.22);
+  --brand:#8A6534; --brand-soft:rgba(138,101,52,.1); --go:#EF4E2E; --go-2:#F4683F; --on-go:#1A0D08; --ok:#1E7A4C; --warn:#9A5B00; --bad:#B42318;
+  --glass:rgba(255,255,255,.82); --glass-ink:#1B1F24; --plate:#FFFFFF; --stage-bg:#E2E5E8; --r:2px;
+  --sub-ink:#1B1F24; --sub-shade:rgba(255,255,255,.7); --cut-name:fm-flash; --cut-color:#FFFFFF; --cut-time:.55s;
+  --display:'Fahkwang','Anuphan',serif; --text:'Anuphan','IBM Plex Sans Thai',Tahoma,sans-serif;
   --s-card:var(--surface); --s-card-2:var(--frost); --s-ink:var(--ink); --s-ink-2:var(--ink-2); --s-ink-3:var(--ink-3); --s-line:var(--line-2);
   --s-accent:var(--go); --s-on-accent:var(--on-go); --s-accent-soft:var(--brand-soft); --s-ok:var(--ok); --s-warn:var(--warn); --s-bad:var(--bad); --s-r:2px; --s-mono:var(--text);
-  color-scheme:dark;
+  color-scheme:light;
 }
-body{background:var(--paper)}
-h1,h2{font-weight:300;letter-spacing:.005em}
+body{background:var(--paper);padding-bottom:76px}
+h1,h2{font-weight:300}
 h3{font-weight:500}
+.v-btn.ghost:hover{color:var(--ink)}
 
-.v-hd{position:sticky;top:0;z-index:60;background:rgba(5,5,5,.92);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
-.v-hd-in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;min-height:66px}
-.c-brand{justify-self:center;display:flex;align-items:center;gap:10px;text-decoration:none;grid-column:2}
-.c-brand .plate{display:inline-grid;place-items:center;padding:4px 7px;background:var(--plate)}
-.c-brand img{display:block;height:24px;width:auto}
-.c-brand b{font:500 19px/1 var(--display);letter-spacing:.06em}
-.v-nav{grid-column:1;grid-row:1;display:flex;gap:0;flex-wrap:wrap}
-.v-nav a{padding:8px 10px;font-size:14.5px;color:var(--ink-2);text-decoration:none}
-.v-nav a:hover{color:var(--brand)}
-.v-act{grid-column:3;justify-self:end;display:flex;align-items:center;gap:8px}
-.c-quote{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 12px;border:1px solid var(--line-2);background:transparent;color:var(--ink);cursor:pointer;font-size:14.5px}
-.c-quote [data-cart-n]{min-width:22px;padding:0 6px;background:var(--brand);color:#140F05;font-weight:700;font-size:13px;line-height:22px;text-align:center}
-.v-act .v-btn{min-height:40px}
-.v-menu{display:none;min-height:40px;padding:0 12px;border:1px solid var(--line-2);background:transparent;color:var(--ink);cursor:pointer}
-@media (max-width:1100px){.v-hd-in{grid-template-columns:auto 1fr}.c-brand{grid-column:1;justify-self:start}.v-act{grid-column:2}.v-menu{display:inline-flex;align-items:center}.v-nav{position:absolute;top:100%;left:0;right:0;display:none;flex-direction:column;padding:8px 16px 16px;background:rgba(5,5,5,.98);border-bottom:1px solid var(--line)}.v-nav.open{display:flex}.v-nav a{padding:12px 4px;font-size:16px;border-bottom:1px solid var(--line)}}
-@media (max-width:560px){.c-brand b{display:none}.c-quote .qt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}}
+/* header */
+.v-hd{position:fixed;inset:0 0 auto;z-index:60;padding-top:env(safe-area-inset-top,0px);background:rgba(238,240,242,.9);box-shadow:0 1px 0 var(--line)}
+@supports (backdrop-filter:blur(8px)){.v-hd{background:rgba(238,240,242,.72);backdrop-filter:blur(14px) saturate(1.4)}}
+.v-hd-in{display:flex;align-items:center;gap:20px;min-height:66px}
+.c-brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.c-brand img{display:block;height:28px;width:auto}
+.c-brand b{font:500 19px/1 var(--display);white-space:nowrap}
+.v-nav{display:flex;gap:2px;margin-left:auto}
+.v-nav a{padding:8px 11px;font-size:15px;color:var(--ink-2);text-decoration:none;white-space:nowrap}
+.v-nav a:hover,.v-nav a[aria-current]{color:var(--ink);box-shadow:inset 0 -1px 0 var(--brand)}
+.v-act{display:flex;align-items:center;gap:8px}
+.c-quote{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 14px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--surface);color:var(--ink);cursor:pointer;font-size:15px}
+.c-quote [data-cart-n]{min-width:22px;padding:0 6px;border-radius:11px;background:var(--ink);color:#fff;font-weight:600;font-size:13px;line-height:22px;text-align:center}
+.v-act .v-btn{min-height:42px}
+.v-menu{display:none;min-height:42px;padding:0 14px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--surface);color:var(--ink);cursor:pointer}
+@media (max-width:1180px){
+  .v-menu{display:inline-flex;align-items:center}
+  .v-nav{position:absolute;top:100%;left:0;right:0;display:none;flex-direction:column;gap:0;padding:8px 16px 16px;background:rgba(238,240,242,.98);border-bottom:1px solid var(--line)}
+  .v-nav.open{display:flex}.v-nav a{padding:12px 4px;font-size:16px;border-bottom:1px solid var(--line)}
+  .v-act{margin-left:auto}
+}
+@media (max-width:560px){.c-brand b{display:none}.c-quote .qt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.v-act .v-btn{padding:0 14px}}
 
-/* opening titles */
-.c-open{text-align:center;padding-block:clamp(40px,6vw,72px) clamp(20px,3vw,32px);display:grid;gap:14px;justify-items:center}
-.c-open .pre{font-size:14px;color:var(--brand);letter-spacing:.04em}
-.c-open h1{font-size:clamp(38px,5.6vw,84px);line-height:1.1;max-width:14em}
-.c-open p{font-size:17px;color:var(--ink-2);max-width:40em}
-.c-open .a-cta{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-/* the screen */
-.c-screen{position:relative}
-.c-screen .stage{aspect-ratio:2.39/1;max-height:78vh;width:100%;margin-inline:auto;border-block:1px solid var(--line)}
-@media (max-width:760px){.c-screen .stage{aspect-ratio:4/3}}
-.c-show{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"c c" "d p";gap:20px clamp(28px,4vw,56px);padding-block:22px clamp(56px,7vw,96px)}
-.c-show #srRoot{display:contents}
-.c-show #srCtl{grid-area:c;justify-content:center;padding-bottom:18px;border-bottom:1px solid var(--line)}
-.c-show #srCtl .sr-ctl{justify-content:center}
-.c-show .sr-det{grid-area:d;position:sticky;top:86px}.c-show .sr-pick{grid-area:p}
-.c-show .sr-list{max-height:640px;overflow:auto}
-.c-show .sr-name{font-weight:300;font-size:clamp(30px,3.4vw,44px)}
-@media (max-width:900px){.c-show{grid-template-columns:minmax(0,1fr);grid-template-areas:"c" "d" "p"}.c-show .sr-det{position:static}}
+/* opening: the exhibit */
+.c-open{padding-block:calc(var(--hd,66px) + clamp(28px,6vh,72px)) clamp(48px,8vh,88px)}
+.c-open-in{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:clamp(28px,4vw,64px);align-items:center}
+.c-open .pre{font-size:15px;color:var(--brand);margin-bottom:18px}
+.c-open h1{font-size:clamp(42px,5.6vw,88px);line-height:1.12}
+.c-open p.lede{margin-top:22px;font-size:clamp(17px,1.3vw,19px);line-height:1.8;color:var(--ink-2);max-width:32em}
+.c-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.c-cta .v-btn{min-height:52px;padding:0 24px;font-size:16px}
+.c-plinth{position:relative}
+.c-plinth .stage{aspect-ratio:5/4;border:1px solid var(--line-2);box-shadow:0 30px 60px -30px rgba(27,31,36,.35)}
+.c-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0;border-top:1px solid var(--line-2)}
+.c-facts div{padding:14px 14px 0 0}
+.c-facts dt{font-size:13px;color:var(--ink-3)}
+.c-facts dd{margin:2px 0 0;font:500 clamp(20px,1.8vw,26px)/1.3 var(--display);font-variant-numeric:tabular-nums}
+@media (max-width:900px){.c-open-in{grid-template-columns:minmax(0,1fr)}.c-plinth{order:-1}}
 
-/* chapters: centred credits */
-.ch{border-top:1px solid var(--line)}
-.ch.alt{background:var(--frost)}
-.ch-h{margin-inline:auto;text-align:center}
-.ch-h h2{font-size:clamp(34px,4.6vw,60px)}
-.ch-h p{margin-inline:auto}
-.ch-h::after{content:'';display:block;width:56px;height:1px;background:var(--brand);margin:22px auto 0}
-.c-ask{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"q s" "r s";gap:28px clamp(28px,4vw,56px);align-items:start}
-.c-ask #askRoot{display:contents}
+/* a chapter: the plinth pinned, the steps read down beside it */
+.c-ch{padding-block:clamp(64px,10vh,120px) 0;border-top:1px solid var(--line)}
+.c-ch.alt{background:#F6F7F8}
+.c-ch-h{max-width:40em;margin-bottom:12px}
+.c-ch-h .no{font-size:15px;color:var(--brand);margin-bottom:12px}
+.c-ch-h h2{font-size:clamp(34px,4vw,60px);line-height:1.15}
+.c-ch-h p{margin-top:14px;color:var(--ink-2);font-size:17.5px}
+.c-split{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,5vw,80px);align-items:start}
+.c-ch.flip .c-split{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}
+.c-ch.flip .c-col{order:2}
+.c-pin{position:sticky;top:calc(var(--hd,66px) + 20px);height:calc(100svh - var(--hd,66px) - 64px - 40px);min-height:420px}
+.c-pin .fm-stage{height:100%;border:1px solid var(--line-2);box-shadow:0 30px 60px -34px rgba(27,31,36,.4)}
+.c-ch .fm-shots{display:grid}
+.c-ch .fm-shot{min-height:56vh;display:grid;align-content:center;gap:10px;padding-block:24px;opacity:.32;transition:opacity .5s}
+.c-ch .fm-shot.on{opacity:1}
+.c-ch .fm-shot:last-child{min-height:72vh}
+.c-ch .fm-shot-t{font:500 clamp(22px,2vw,30px)/1.4 var(--display);max-width:22em}
+.c-ch .fm-shot-t::before{content:counter(shot);counter-increment:shot;display:block;font:400 14px/1 var(--text);color:var(--brand);margin-bottom:10px;font-variant-numeric:tabular-nums}
+.c-ch .fm-shots{counter-reset:shot}
+.c-ch .fm-shot-d{font-size:17px;line-height:1.8;color:var(--ink-2);max-width:34em}
+.c-ch .fm-shot-x{font-size:15.5px;line-height:1.7;color:var(--ink-2);max-width:34em}
+.c-ch .fm-shot-x b{color:var(--ink)}
+.c-ch .fm-shot-f{font-size:13.5px;color:var(--ink-3)}
+.c-ch .fm-tag{background:var(--glass)}
+/* the stage's own subtitle is not needed here: the text column is the caption */
+.c-ch .fm-stage .fm-sub{display:none}
+@media (max-width:900px){
+  .c-split,.c-ch.flip .c-split{grid-template-columns:minmax(0,1fr)}
+  .c-ch.flip .c-col{order:0}
+  .c-pin{top:var(--hd,66px);height:44svh;min-height:260px;z-index:3;margin-inline:calc(-1 * clamp(16px,4vw,44px))}
+  .c-pin .fm-stage{border-inline:0;box-shadow:0 12px 24px -16px rgba(27,31,36,.4)}
+  .c-ch .fm-shot{min-height:46vh}
+}
+
+/* what it costs: the price card under each exhibit */
+.c-buy{margin-top:clamp(36px,6vh,64px);padding:clamp(18px,3vw,36px);background:var(--surface);border:1px solid var(--line-2);border-top:2px solid var(--brand)}
+.c-buy-h{display:grid;gap:6px;margin-bottom:22px;max-width:44em}
+.c-buy-h h3{font:400 clamp(24px,2.4vw,32px)/1.3 var(--display)}
+.c-buy-h p{color:var(--ink-2)}
+.c-ch>.wrap:last-child{padding-bottom:clamp(64px,10vh,120px)}
+
+/* showroom chapter */
+.c-sr{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);grid-template-areas:"s d" "c d" "p d";gap:18px clamp(28px,4vw,56px);margin-top:28px}
+.c-sr [data-showroom]{display:contents}
+.c-sr .fm-stage{grid-area:s;aspect-ratio:16/10;border:1px solid var(--line-2);box-shadow:0 30px 60px -34px rgba(27,31,36,.4)}
+.c-sr [data-sr-ctl]{grid-area:c;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.c-sr .sr-pick{grid-area:p}.c-sr .sr-det{grid-area:d;position:sticky;top:calc(var(--hd,66px) + 16px);align-self:start;padding:20px;background:var(--surface);border:1px solid var(--line-2)}
+@media (max-width:1000px){.c-sr{grid-template-columns:minmax(0,1fr);grid-template-areas:"s" "c" "d" "p"}.c-sr .sr-det{position:static}}
+
+/* repair: the concierge beside its own stage */
+.c-ask{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"q s" "r s";gap:24px clamp(28px,4vw,56px);align-items:start;margin-top:28px}
+.c-ask [data-concierge]{display:contents}
 .c-ask .cc-ask{grid-area:q}.c-ask .cc-res{grid-area:r}
-.c-ask .stage{grid-area:s;position:sticky;top:88px;aspect-ratio:3/4;max-height:76vh;border:1px solid var(--line)}
-@media (max-width:900px){.c-ask{grid-template-columns:minmax(0,1fr);grid-template-areas:"q" "s" "r"}.c-ask .stage{position:relative;top:0;aspect-ratio:4/3;max-height:none}}
+.c-ask .stage{grid-area:s;position:sticky;top:calc(var(--hd,66px) + 16px);aspect-ratio:4/3;border:1px solid var(--line-2)}
+@media (max-width:900px){.c-ask{grid-template-columns:minmax(0,1fr);grid-template-areas:"q" "s" "r"}.c-ask .stage{position:relative;top:0}}
 
-.c-ft{background:#000;color:var(--ink-2);padding-block:56px calc(56px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);text-align:center}
-.c-ft-in{display:grid;gap:22px;justify-items:center;max-width:820px;margin-inline:auto}
-.c-ft .plates{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-.c-ft .plate{display:inline-grid;place-items:center;padding:8px 12px;background:var(--plate)}
+/* booking + contact */
+.c-sec{padding-block:clamp(64px,10vh,120px);border-top:1px solid var(--line)}
+.c-sec .c-ch-h{margin-bottom:28px}
+.c-book{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,4vw,56px);align-items:start}
+.c-book .stage{position:sticky;top:calc(var(--hd,66px) + 16px);aspect-ratio:4/5;max-height:76vh;border:1px solid var(--line-2)}
+@media (max-width:900px){.c-book{grid-template-columns:minmax(0,1fr)}.c-book .stage{position:relative;top:0;aspect-ratio:16/10}}
+
+/* the buy bar */
+.c-bar{position:fixed;z-index:55;left:0;right:0;bottom:0;padding-bottom:env(safe-area-inset-bottom,0px);background:rgba(27,31,36,.94);color:#F3F4F6}
+@supports (backdrop-filter:blur(8px)){.c-bar{background:rgba(27,31,36,.84);backdrop-filter:blur(12px)}}
+.c-bar-in{display:flex;align-items:center;gap:16px;min-height:64px}
+.c-bar p{margin:0;font-size:15px;line-height:1.4;min-width:0}
+.c-bar p b{font:500 20px var(--display);font-variant-numeric:tabular-nums;color:#fff}
+.c-bar p small{display:block;color:#B9C0C9;font-size:13px}
+.c-bar .sp{flex:1}
+.c-bar .c-q2{min-height:44px;padding:0 16px;border:1px solid rgba(255,255,255,.35);border-radius:var(--r);background:transparent;color:#fff;font:500 15px var(--text);cursor:pointer}
+.c-bar .v-btn{min-height:44px}
+@media (max-width:640px){.c-bar p small{display:none}.c-bar .c-q2{display:none}}
+
+/* footer */
+.c-ft{background:#E3E6E9;color:var(--ink-2);padding-block:56px calc(56px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line-2)}
+.c-ft-in{display:grid;grid-template-columns:1.3fr 1fr 1.3fr 1.1fr;gap:32px}
+.c-ft h3{font:500 18px var(--display);color:var(--ink);margin-bottom:10px}
+.c-ft p,.c-ft li{font-size:14.5px;line-height:1.7}
+.c-ft ul{list-style:none;padding:0;display:grid;gap:6px}
+.c-ft a{color:var(--ink);text-underline-offset:3px}
+.c-ft .plates{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.c-ft .plate{display:inline-grid;place-items:center;padding:8px 12px;background:#fff;border:1px solid var(--line)}
 .c-ft .plate img{display:block;height:32px;width:auto}
-.c-ft p{font-size:14px;line-height:1.75}
-.c-ft nav{display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:center}
-.c-ft a{color:var(--ink);text-underline-offset:3px;font-size:14.5px}
+@media (max-width:900px){.c-ft-in{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.c-ft-in{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){.c-ch .fm-shot{transition:none}}
 </style>
 </head>
 <body>
 <a class="v-skip" href="#main">ข้ามไปเนื้อหา</a>
 <header class="v-hd">
   <div class="wrap v-hd-in">
-    <a class="c-brand" href="#top" aria-label="SBP AirCare หน้าแรก"><span class="plate"><img src="assets/logos/sbp.png" alt="" width="33" height="24"></span><b>SBP AirCare</b></a>
-    <nav class="v-nav" id="v-nav" aria-label="หัวข้อ">
-      <a href="#top">ทุกรุ่น</a><a href="#ask">ช่วยเลือก</a><a href="#install">ติดตั้ง</a><a href="#clean">ล้าง</a><a href="#repair">ซ่อม</a><a href="#contact">ติดต่อ</a>
+    <a class="c-brand" href="#top" aria-label="SBP AirCare หน้าแรก"><img src="assets/logos/sbp.png" alt="" width="39" height="28"><b>SBP AirCare</b></a>
+    <nav class="v-nav" id="v-nav" aria-label="ห้องจัดแสดง" data-spy>
+      <a href="#buy">ทุกรุ่น</a><a href="#how">ข้างในเครื่อง</a><a href="#room">ขนาดห้อง</a><a href="#install">ติดตั้ง</a><a href="#quality">วัสดุ</a><a href="#clean">ดูแลหลังติดตั้ง</a><a href="#repair">ซ่อม</a><a href="#booking">นัดวัน</a>
     </nav>
     <div class="v-act">
       <button type="button" class="c-quote" data-cart-btn aria-label="ใบเสนอราคา"><span class="qt">ใบเสนอราคา</span><span data-cart-n>0</span></button>
-      <a class="v-btn go" href="#booking" data-book="install">จองคิว</a>
+      <a class="v-btn go" href="#booking" data-book>จองคิว</a>
       <button type="button" class="v-menu" aria-expanded="false" aria-controls="v-nav">เมนู</button>
     </div>
   </div>
 </header>
 
 <main id="main">
-  <section id="top" aria-labelledby="h-hero">
-    <div class="wrap c-open">
-      <p class="pre">SBP AirCare นำเสนอ</p>
-      <h1 id="h-hero">ดูแอร์ทุกรุ่นก่อนตัดสินใจ</h1>
-      <p><span data-fact="models">705</span> รุ่น จาก <span data-fact="brands">22</span> ยี่ห้อ เปิดเครื่อง ดูทางลม มองทะลุ แยกชิ้นส่วน และดูการล้างได้ทุกรุ่น พร้อมราคาเครื่องและค่าติดตั้งจาก Pricebook ของบริษัท สหบูรพากรุ๊ป จำกัด</p>
-    </div>
-    <div class="c-screen" id="models">
-      <div class="stage" id="srStage" data-stage='{"type":"wall","shot":"hero","power":true,"auto":true}'><picture><source media="(max-width:760px)" srcset="assets/posters/c2-hero-m.jpg"><img class="stage-poster" src="assets/posters/c2-hero.jpg" alt="" fetchpriority="high" decoding="async"></picture><p class="stage-cap">แบบจำลองเพื่ออธิบาย ตัวเครื่องแบบกลางไม่มียี่ห้อ</p></div>
-    </div>
-    <div class="wrap c-show">
-      <div id="srCtl"></div>
-      <div id="srRoot"><p class="d-load">กำลังเตรียมรายการรุ่น…</p></div>
-    </div>
-  </section>
-
-  <section class="ch alt" id="ask" aria-labelledby="h-ask">
-    <div class="wrap">
-      <header class="ch-h"><h2 id="h-ask">ช่วยเลือกให้เหมาะ</h2><p>บอกขนาดห้องหรืออาการของเครื่องเดิม เราแนะนำขนาด BTU งานที่ควรทำก่อน และราคา ช่างยืนยันจากหน้างานจริงเสมอ</p></header>
-      <div class="c-ask ch-body">
-        <div id="askRoot"><p class="d-load">กำลังเตรียมคำถาม…</p></div>
-        <div class="stage" id="askStage" data-stage='{"type":"wall","shot":"air","power":true,"auto":false}'><p class="stage-cap">แบบจำลองเพื่ออธิบาย</p></div>
+  <section class="c-open" id="top" aria-labelledby="h-open">
+    <div class="wrap c-open-in">
+      <div>
+        <p class="pre">โชว์รูม SBP AirCare</p>
+        <h1 id="h-open" data-kinetic>เลือกแอร์ที่ใช่ ติดตั้งโดยทีมเดียว</h1>
+        <p class="lede">ลองเปิดเครื่องได้ทุกรุ่นในภาพจำลอง 3 มิติ ดูวิธีติดตั้งทีละขั้น วัสดุที่อยู่ในผนัง และการดูแลหลังติดตั้ง ทุกราคามาจาก Pricebook ของ<span class="nw">บริษัท สหบูรพากรุ๊ป จำกัด</span> เก็บทุกอย่างไว้ใน<span class="nw">ใบเสนอราคาเดียว</span></p>
+        <div class="c-cta"><a class="v-btn go" href="#buy">เข้าชมทุกรุ่น</a><a class="v-btn ghost" href="#room">หาขนาดที่พอดีห้อง</a></div>
+      </div>
+      <div class="c-plinth">
+        <div class="stage" data-stage='{"type":"wall","shot":"hero","power":true,"auto":true}'><picture><source media="(max-width:760px)" srcset="assets/posters/c2-hero-m.jpg"><img class="stage-poster" src="assets/posters/c2-hero.jpg" alt="" fetchpriority="high" decoding="async"></picture><p class="stage-cap">แบบจำลองเพื่ออธิบาย</p></div>
+        <dl class="c-facts"><div><dt>รุ่นในโชว์รูม</dt><dd data-fact="models">705</dd></div><div><dt>ยี่ห้อ</dt><dd data-fact="brands">22</dd></div><div><dt>รับประกันงานติดตั้ง</dt><dd>3 ปี</dd></div></dl>
       </div>
     </div>
   </section>
 
-  <section class="ch" id="install" aria-labelledby="h-install">
+  <section class="fm c-ch alt" id="buy" data-film='{"kind":"unit","drive":"none"}' aria-labelledby="h-buy">
     <div class="wrap">
-      <header class="ch-h"><h2 id="h-install">ติดตั้งแอร์</h2><p>มาตรฐานและพรีเมียม ทุกงานระบุยี่ห้อวัสดุ รวมท่อและวัสดุ 4 เมตรแรก รับประกันงานติดตั้ง 3 ปีเมื่อซื้อเครื่องกับบริษัท หรือ 1 ปีเมื่อจัดหาเครื่องเอง</p></header>
-      <div id="installRoot" class="ch-body"><p class="d-load">กำลังเตรียมราคาติดตั้ง…</p></div>
-      <div class="d-demand">
-        <button type="button" class="v-btn ghost" id="bFit">ลองวางแอร์ในห้องของคุณ</button>
-        <p>เลือกรุ่นจากรายการ ใส่ขนาดห้อง ดูแนวท่อ ระยะลม และงานเพิ่มที่อาจมี ก่อนนัดสำรวจ</p>
+      <header class="c-ch-h"><p class="no">ห้องจัดแสดง 1</p><h2 id="h-buy" data-kinetic>ทุกรุ่น ลองเปิดได้</h2><p><b data-fact="models">705</b> รุ่น จาก <b data-fact="brands">22</b> ยี่ห้อ เลือกประเภท ยี่ห้อ และขนาด แล้วเปิดเครื่อง ดูทางลม มองทะลุ แยกชิ้นส่วน ราคาเครื่องและค่าติดตั้งอยู่ข้างรุ่น รับประกันงานติดตั้ง 3 ปีเมื่อซื้อเครื่องกับบริษัท</p></header>
+      <div class="c-sr">
+        <div class="fm-stage stage" data-stage='{"type":"wall","shot":"hero","power":true,"auto":false}'></div>
+        <div data-sr-ctl></div>
+        <div data-showroom><p class="d-load">กำลังเตรียมรายการรุ่น…</p></div>
       </div>
-      <div id="vFit" class="d-3d" hidden></div>
+      <div style="height:clamp(64px,10vh,120px)"></div>
     </div>
   </section>
 
-  <section class="ch alt" id="clean" aria-labelledby="h-clean">
+  <section class="fm c-ch" id="how" data-film='{"kind":"cycle","type":"wall","drive":"blocks"}' aria-labelledby="h-how">
     <div class="wrap">
-      <header class="ch-h"><h2 id="h-clean">ล้างแอร์</h2><p>ล้างปกติที่ตำแหน่งเดิม หรือปลดเครื่องลงมาล้างใหญ่โดยไม่ตัดท่อน้ำยา ราคาต่อเครื่องขึ้นกับประเภท ขนาด และแพ็กเกจเอกสาร</p></header>
-      <div id="cleanRoot" class="ch-body"><p class="d-load">กำลังเตรียมข้อมูลงานล้าง…</p></div>
-    </div>
-  </section>
-
-  <section class="ch" id="repair" aria-labelledby="h-repair">
-    <div class="wrap">
-      <header class="ch-h"><h2 id="h-repair">ตรวจเช็กและซ่อม</h2><p>ช่างตรวจวินิจฉัยที่หน้างาน แจ้งผลและราคาซ่อมเป็นรายรายการ แล้วลงมือเมื่อคุณอนุมัติเท่านั้น</p></header>
-      <div id="repairRoot" class="ch-body"><p class="d-load">กำลังเตรียมราคางานซ่อม…</p></div>
-    </div>
-  </section>
-
-  <section class="ch alt" id="booking" aria-labelledby="h-booking">
-    <div class="wrap">
-      <header class="ch-h"><h2 id="h-booking">จองคิว</h2><p>เลือกวันที่สะดวก ทีมโทรยืนยันวัน เวลา และราคาก่อนเข้างานทุกครั้ง ได้เลขที่คำขอไว้ตรวจสถานะเอง</p></header>
-      <div id="bookRoot" class="ch-body"></div>
-    </div>
-  </section>
-
-  <section class="ch" id="area" aria-labelledby="h-area">
-    <div class="wrap">
-      <header class="ch-h"><h2 id="h-area">พื้นที่ให้บริการ</h2><p>กรุงเทพฯ และปริมณฑลไม่มีค่าเดินทาง จังหวัดใกล้เคียงรับงานถึงประมาณ 150 กม. จากสำนักงานใหญ่ ถนนพระราม 2</p></header>
-      <div class="d-split ch-body" data-zone>
-        <div class="d-col">
-          <label class="d-field">ตรวจพื้นที่ของคุณ<input data-z-input placeholder="เขต อำเภอ หรือจังหวัด"></label>
-          <div class="d-try" role="group" aria-label="ตัวอย่างพื้นที่"><button type="button" data-z-try="บางนา">บางนา</button><button type="button" data-z-try="นนทบุรี">นนทบุรี</button><button type="button" data-z-try="นครปฐม">นครปฐม</button><button type="button" data-z-try="ศรีราชา">ศรีราชา</button></div>
-          <div class="d-zres" data-z-result hidden></div>
-          <p class="d-sub">ระยะทางคำนวณโดยประมาณจากพิกัดอำเภอ ทีมยืนยันจากที่อยู่จริงก่อนนัด</p>
-        </div>
-        <div class="d-col" id="travelTbl"></div>
+      <header class="c-ch-h"><p class="no">ห้องจัดแสดง 2</p><h2 id="h-how" data-kinetic>ข้างในเครื่องทำงานอย่างไร</h2><p>ตามลมร้อนในห้องเข้าเครื่อง ผ่านคอยล์เย็น แล้วพาความร้อนออกไปนอกบ้าน เลื่อนอ่านทีละขั้น ภาพข้าง ๆ เปลี่ยนตาม</p></header>
+      <div class="c-split">
+        <div class="c-col"><ol class="fm-shots"></ol></div>
+        <div class="c-pin"><div class="fm-stage"></div></div>
       </div>
     </div>
   </section>
 
-  <section class="ch alt" id="contact" aria-labelledby="h-contact">
+  <section class="fm c-ch alt flip" id="room" data-film='{"kind":"room","drive":"blocks"}' aria-labelledby="h-room">
     <div class="wrap">
-      <header class="ch-h"><h2 id="h-contact">คำถามที่พบบ่อยและติดต่อ</h2><p>ฝากชื่อและเบอร์ไว้ ทีมติดต่อกลับ หรือโทรหาเราโดยตรง</p></header>
-      <div class="d-split ch-body">
+      <header class="c-ch-h"><p class="no">ห้องจัดแสดง 3</p><h2 id="h-room" data-kinetic>ขนาดที่พอดีกับห้อง</h2><p>ความแรงพัดลม บานสวิง และความสะอาดของเครื่อง เปลี่ยนระยะลมเย็นในห้อง แล้วคำนวณขนาดของห้องคุณ</p></header>
+      <div class="c-split">
+        <div class="c-col"><ol class="fm-shots"></ol></div>
+        <div class="c-pin"><div class="fm-stage"></div></div>
+      </div>
+    </div>
+    <div class="wrap"><div class="c-buy"><div class="c-buy-h"><h3>ขนาดเครื่องของห้องคุณ</h3><p>ใส่ขนาดห้องและแดดที่ได้รับ ได้ขนาด BTU ที่แนะนำ แล้วดูรุ่นที่มีขนาดนั้นในโชว์รูมได้ทันที</p></div><div data-sell="room"><p class="d-load">กำลังเตรียมเครื่องคำนวณ…</p></div></div></div>
+  </section>
+
+  <section class="fm c-ch" id="install" data-film='{"kind":"story","story":"install","tier":"PREMIUM","drive":"blocks"}' aria-labelledby="h-install">
+    <div class="wrap">
+      <header class="c-ch-h"><p class="no">ห้องจัดแสดง 4</p><h2 id="h-install" data-kinetic>ติดตั้งทีละขั้น</h2><p>ช่างทำตามแบบฟอร์มงานติดตั้งของบริษัท SBP-SR-ACIN-UNI-001 Rev.04 ทุกขั้นบอกว่าทำอะไร ทำไม และคุณได้อะไร</p></header>
+      <div class="c-split">
+        <div class="c-col"><ol class="fm-shots"></ol></div>
+        <div class="c-pin"><div class="fm-stage"></div></div>
+      </div>
+    </div>
+    <div class="wrap"><div class="c-buy"><div class="c-buy-h"><h3>ค่าติดตั้ง</h3><p>สองระดับงาน มาตรฐานและพรีเมียม รวมท่อและวัสดุ 4 เมตรแรก รับประกันงานติดตั้ง 3 ปีเมื่อซื้อเครื่องกับบริษัท หรือ 1 ปีเมื่อจัดหาเครื่องเอง</p></div><div data-sell="install"><p class="d-load">กำลังเตรียมราคาติดตั้ง…</p></div></div></div>
+  </section>
+
+  <section class="fm c-ch alt flip" id="quality" data-film='{"kind":"materials","drive":"blocks"}' aria-labelledby="h-quality">
+    <div class="wrap">
+      <header class="c-ch-h"><p class="no">ห้องจัดแสดง 5</p><h2 id="h-quality" data-kinetic>วัสดุที่อยู่ในผนัง</h2><p>สิ่งที่มองไม่เห็นหลังติดตั้งเสร็จ ทุกชิ้นระบุยี่ห้อ ทองแดงหนา 0.70 มม. ทั้งสองระดับงาน</p></header>
+      <div class="c-split">
+        <div class="c-col"><ol class="fm-shots"></ol></div>
+        <div class="c-pin"><div class="fm-stage"></div></div>
+      </div>
+    </div>
+    <div class="wrap"><div class="c-buy"><div class="c-buy-h"><h3>วัสดุแต่ละระดับงาน</h3><p>ตารางเดียวกับที่ทีมใช้เตรียมงาน เลือกประเภทแอร์เพื่อดูรายการของงานนั้น</p></div><div data-sell="quality"><p class="d-load">กำลังเตรียมตารางวัสดุ…</p></div></div></div>
+  </section>
+
+  <section class="fm c-ch" id="clean" data-film='{"kind":"story","story":"C1","drive":"blocks"}' aria-labelledby="h-clean">
+    <div class="wrap">
+      <header class="c-ch-h"><p class="no">ห้องจัดแสดง 6</p><h2 id="h-clean" data-kinetic>ดูแลหลังติดตั้ง</h2><p>ล้างปกติ C1 ทีละขั้นตามแบบฟอร์มงานล้าง SBP-SR-ACCL-UNI-001 Rev.07 ล้างตามรอบช่วยให้ลมและความเย็นกลับมาเต็มที่</p></header>
+      <div class="c-split">
+        <div class="c-col"><ol class="fm-shots"></ol></div>
+        <div class="c-pin"><div class="fm-stage"></div></div>
+      </div>
+    </div>
+    <div class="wrap"><div class="c-buy"><div class="c-buy-h"><h3>ค่าล้างแอร์</h3><p>เลือกประเภท ขนาด วิธีล้าง แพ็กเกจเอกสาร และจำนวนเครื่อง ได้ราคาต่อเครื่องจาก Pricebook ทันที</p></div><div data-sell="clean"><p class="d-load">กำลังเตรียมราคางานล้าง…</p></div></div></div>
+  </section>
+
+  <section class="c-sec" id="repair" aria-labelledby="h-repair">
+    <div class="wrap">
+      <header class="c-ch-h"><p class="no">ห้องจัดแสดง 7</p><h2 id="h-repair" data-kinetic>เมื่อเครื่องมีอาการ</h2><p>ตอบสามข้อ เราสรุปสิ่งที่เข้าใจ ชี้สาเหตุที่พบบ่อยในภาพ แนะนำงานที่ควรทำก่อน พร้อมราคา ช่างยืนยันสาเหตุจริงที่หน้างานและซ่อมเมื่อคุณอนุมัติเท่านั้น</p></header>
+      <div class="c-ask"><div data-concierge><p class="d-load">กำลังเตรียมคำถาม…</p></div><div class="stage" data-cc-stage data-stage='{"type":"wall","shot":"close","power":true,"auto":false}'><p class="stage-cap">แบบจำลองเพื่ออธิบาย</p></div></div>
+      <div class="c-buy"><div class="c-buy-h"><h3>ค่าตรวจและตัวอย่างราคาซ่อม</h3></div><div data-sell="repair"></div></div>
+    </div>
+  </section>
+
+  <section class="fm c-ch alt flip" id="area" data-film='{"kind":"map","drive":"blocks"}' aria-labelledby="h-area">
+    <div class="wrap">
+      <header class="c-ch-h"><p class="no">ห้องจัดแสดง 8</p><h2 id="h-area" data-kinetic>ทีมเดินทางถึงคุณ</h2><p>สำนักงานใหญ่ถนนพระราม 2 ดูแลกรุงเทพฯ และปริมณฑลโดยไม่มีค่าเดินทาง จังหวัดใกล้เคียงรับงานถึงประมาณ 150 กม.</p></header>
+      <div class="c-split">
+        <div class="c-col"><ol class="fm-shots"></ol></div>
+        <div class="c-pin"><div class="fm-stage"></div></div>
+      </div>
+    </div>
+    <div class="wrap"><div class="c-buy"><div class="c-buy-h"><h3>ตรวจพื้นที่และค่าเดินทาง</h3><p>พิมพ์เขต อำเภอ หรือจังหวัด ดูผลบนแผนที่และค่าเดินทางต่อเที่ยวตามช่วงระยะ</p></div><div data-sell="area"><p class="d-load">กำลังเตรียมพื้นที่บริการ…</p></div></div></div>
+  </section>
+
+  <section class="c-sec" id="booking" aria-labelledby="h-booking">
+    <div class="wrap">
+      <header class="c-ch-h"><p class="no">นัดวัน</p><h2 id="h-booking" data-kinetic>นัดทีมเข้าติดตั้งหรือดูแล</h2><p>เลือกวันที่สะดวก ทีมโทรยืนยันวัน เวลา และราคาก่อนเข้างานทุกครั้ง ใบเสนอราคาที่เก็บไว้ส่งไปพร้อมคำขอ</p></header>
+      <div class="c-book">
+        <div class="stage" data-stage='{"type":"wall","shot":"wide","power":true,"auto":false}'><p class="stage-cap">แบบจำลองเพื่ออธิบาย</p></div>
+        <div id="bookRoot"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="c-sec" id="contact" aria-labelledby="h-contact">
+    <div class="wrap">
+      <header class="c-ch-h"><h2 id="h-contact">คำถามที่พบบ่อยและติดต่อ</h2><p>ไม่พบคำตอบ ฝากชื่อและเบอร์ไว้ ทีมติดต่อกลับ หรือโทรหาเราโดยตรง</p></header>
+      <div class="d-split">
         <div class="d-col" id="faqList"></div>
         <div class="d-col" id="quote">
           <div class="d-contact">
@@ -206,18 +318,38 @@ h3{font-weight:500}
 
 <footer class="c-ft">
   <div class="wrap c-ft-in">
-    <div class="plates"><span class="plate"><img src="assets/logos/sbp.png" alt="SP Quality Brand บริษัท สหบูรพากรุ๊ป จำกัด" width="55" height="40"></span><span class="plate"><img src="assets/logos/fujiva.png" alt="FUJIVA แบรนด์แอร์ของบริษัท" width="110" height="36"></span></div>
-    <nav aria-label="ลิงก์ท้ายหน้า"><a href="#top">ทุกรุ่น</a><a href="#ask">ช่วยเลือก</a><a href="#install">ติดตั้ง</a><a href="#clean">ล้าง</a><a href="#repair">ซ่อม</a><button type="button" class="v-link" data-prices="install">ราคาค่าบริการทั้งหมด</button><a href="./">เทียบทุกแบบ</a></nav>
-    <p>SBP AirCare ของบริษัท สหบูรพากรุ๊ป จำกัด · ทุกราคาก่อน VAT ปัดเป็นหลักร้อย จาก Pricebook 2569 นิติบุคคลที่ต้องการใบกำกับภาษีบวก VAT 7% · ภาพ 3 มิติเป็นแบบจำลองเพื่ออธิบาย ตัวเครื่องในภาพเป็นแบบกลางไม่มียี่ห้อ ไม่ใช่ดีไซน์จริงของแบรนด์ใด · แบบ C2 Noir ของเว็บต้นแบบรุ่นที่ 2</p>
-    <p>เว็บไซต์ทดลอง แบบ C2 Noir รุ่นที่ 2 · <a href="./">เทียบทุกแบบ</a> · <button type="button" class="v-link" data-feedback>ให้ความเห็นเรื่องเว็บไซต์</button></p>
+    <div><div class="plates"><span class="plate"><img src="assets/logos/sbp.png" alt="SP Quality Brand บริษัท สหบูรพากรุ๊ป จำกัด" width="55" height="40"></span><span class="plate"><img src="assets/logos/fujiva.png" alt="FUJIVA แบรนด์แอร์ของบริษัท" width="110" height="36"></span></div>
+      <p>SBP AirCare บริการล้าง ติดตั้ง ซ่อม และสัญญาดูแลแอร์ของ<span class="nw">บริษัท สหบูรพากรุ๊ป จำกัด</span></p></div>
+    <div><h3>โชว์รูม</h3><ul><li><a href="#buy">ทุกรุ่น</a></li><li><a href="#install">ติดตั้ง</a></li><li><a href="#clean">ดูแลหลังติดตั้ง</a></li><li><a href="#repair">ซ่อม</a></li><li><button type="button" class="v-link" data-prices="clean">ราคาค่าบริการทั้งหมด</button></li></ul></div>
+    <div><h3>ราคาบนเว็บ</h3><p>ทุกราคาก่อน VAT ปัดเป็นหลักร้อย จาก Pricebook 2569 ของบริษัท บุคคลทั่วไปชำระตามราคาที่แสดง นิติบุคคลที่ต้องการใบกำกับภาษีบวก VAT 7% รายการประเมินหน้างานแจ้งราคาก่อนเริ่มงาน ภาพ 3 มิติทั้งหมดเป็นแบบจำลองเพื่ออธิบาย ตัวเครื่องในภาพเป็นแบบกลาง ไม่มียี่ห้อ</p></div>
+    <div><h3>เว็บไซต์ทดลอง</h3><p>แบบ C2 โชว์รูม ของเว็บต้นแบบ SBP AirCare รุ่นที่ 2 ใช้ข้อมูลและระบบจองคิวชุดเดียวกับทุกแบบ</p><p><a href="./">เทียบทุกแบบ</a></p><p><button type="button" class="v-btn ghost" data-feedback>ให้ความเห็นเรื่องเว็บไซต์</button></p></div>
   </div>
 </footer>
+<aside class="c-bar" aria-label="ใบเสนอราคาของคุณ">
+  <div class="wrap c-bar-in">
+    <p><span data-bar-n>ยังไม่มีรายการในใบเสนอราคา</span><small data-bar-s>กดใส่ใบเสนอราคาจากรุ่นหรือราคางานในแต่ละห้องจัดแสดง</small></p>
+    <span class="sp"></span>
+    <button type="button" class="c-q2" data-cart-btn>ดูใบเสนอราคา</button>
+    <a class="v-btn go" href="#booking" data-book>จองคิว</a>
+  </div>
+</aside>
 <div class="drawer" data-drawer id="drawer" hidden><div class="dp" role="dialog" aria-modal="true" aria-label="รายละเอียด"><button type="button" class="x" data-close aria-label="ปิด">×</button><div id="drawerBody"></div></div></div>
 
 <script type="module">
-// r12 แบบ C2 · Noir — product first: the showroom is the hero (mood "noir" on a 2.39:1 screen)
-import { mountV2 } from './assets/v2site.js';
-await mountV2({ variant: 'C2', mood: 'noir', place: 'home', theme: 'dark', srStart: { type: 'wall' } });
+// r16 แบบ C2 · โชว์รูม — each exhibit pins its 3D stage while the steps are read beside it (film.js "blocks")
+import { mountFilmSite } from './assets/filmsite.js';
+import { baht } from './assets/sbp-core.js';
+const api = await mountFilmSite({ variant: 'C2', theme: 'light', mood: 'atelier', place: 'home', srStart: { type: 'wall' } });
+// the buy bar: what is in the quote so far (same totals as the quote drawer, before VAT)
+const n = document.querySelector('[data-bar-n]'), sub = document.querySelector('[data-bar-s]');
+const draw = c => {
+  const k = c.items.length;
+  if (!k) { n.textContent = 'ยังไม่มีรายการในใบเสนอราคา'; sub.textContent = 'กดใส่ใบเสนอราคาจากรุ่นหรือราคางานในแต่ละห้องจัดแสดง'; return; }
+  const t = c.totals();
+  n.replaceChildren(`ใบเสนอราคา ${k} รายการ · `, Object.assign(document.createElement('b'), { textContent: baht(t.totalEx) }), ' ก่อน VAT');
+  sub.textContent = t.surveys ? `รวม ${t.surveys} รายการที่ประเมินหน้างาน ทีมแจ้งราคาก่อนเริ่มงาน` : 'ทีมโทรยืนยันวัน เวลา และราคาก่อนเข้างานทุกครั้ง';
+};
+api.cart.subs.add(draw); draw(api.cart);
 </script>
 </body>
 </html>

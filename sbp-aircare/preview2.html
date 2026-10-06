@@ -75,11 +75,11 @@ textarea{width:100%;min-height:84px;border-radius:10px;border:1px solid var(--li
 </head>
 <body>
 <header class="top">
-  <h1>ต้นแบบเว็บ SBP AirCare รุ่นที่ 2<small>4 แบบใหม่ ภาพ 3 มิติแบบภาพยนตร์ ปรึกษาอาการ และลองแอร์ได้ทุกรุ่น — ลองทีละแบบหรือเทียบพร้อมกัน แล้วให้คะแนน</small></h1>
+  <h1>ต้นแบบเว็บ SBP AirCare รุ่นที่ 2<small>r16 · 4 แบบใหม่ทั้งหมด ภาพยนตร์ ภารกิจ โชว์รูม ดิจิทัลทวิน ทุกหัวข้อมีภาพ 3 มิติที่เล่นทีละขั้น พร้อมราคาและจองคิว — ลองทีละแบบหรือเทียบพร้อมกัน แล้วให้คะแนน</small></h1>
   <div class="grp" role="group" aria-label="โหมด"><button type="button" data-mode="one" aria-pressed="true">ทีละแบบ</button><button type="button" data-mode="cmp" aria-pressed="false">เทียบ 4 แบบ</button></div>
-  <div class="grp v" role="group" aria-label="แบบ" id="vgrp"><button type="button" data-v="a2" aria-pressed="true">A2 · Residence</button><button type="button" data-v="b2" aria-pressed="false">B2 · Tower</button><button type="button" data-v="c2" aria-pressed="false">C2 · Noir</button><button type="button" data-v="d2" aria-pressed="false">D2 · Atelier</button></div>
+  <div class="grp v" role="group" aria-label="แบบ" id="vgrp"><button type="button" data-v="a2" aria-pressed="true">A2 · ภาพยนตร์</button><button type="button" data-v="b2" aria-pressed="false">B2 · ภารกิจ</button><button type="button" data-v="c2" aria-pressed="false">C2 · โชว์รูม</button><button type="button" data-v="d2" aria-pressed="false">D2 · ดิจิทัลทวิน</button></div>
   <div class="grp" role="group" aria-label="อุปกรณ์" id="dgrp"><button type="button" data-d="desktop" aria-pressed="true">คอม</button><button type="button" data-d="tablet" aria-pressed="false">แท็บเล็ต</button><button type="button" data-d="phone" aria-pressed="false">มือถือ</button></div>
-  <label><span class="cap">ไปที่หัวข้อ</span><br><select id="jump" aria-label="ไปที่หัวข้อ"><option value="">หน้าแรก</option><option value="ask">ปรึกษาอาการ</option><option value="models">ลองแอร์ทุกรุ่น</option><option value="clean">ล้างแอร์</option><option value="install">ติดตั้ง</option><option value="repair">ซ่อม</option><option value="business">สำหรับองค์กร</option><option value="booking">จองคิว</option><option value="area">พื้นที่บริการ</option><option value="contact">คำถามและติดต่อ</option></select></label>
+  <label><span class="cap">ไปที่หัวข้อ</span><br><select id="jump" aria-label="ไปที่หัวข้อ"><option value="">หน้าแรก</option><option value="how">ระบบแอร์ทำงานอย่างไร</option><option value="room">ขนาดห้อง ลมในห้อง</option><option value="buy">ลองแอร์ทุกรุ่น</option><option value="install">ติดตั้ง</option><option value="quality">วัสดุ</option><option value="clean">ล้างแอร์</option><option value="repair">ซ่อม / เล่าอาการ</option><option value="area">พื้นที่บริการ</option><option value="booking">จองคิว</option></select></label>
   <span class="sp"></span>
   <a class="full" id="full" href="./a2.html" target="_blank" rel="noopener">เปิดเต็มจอ ↗</a>
   <a class="full" id="hub" href="./preview.html">ต้นแบบรุ่นแรก A B C D</a>
@@ -99,33 +99,33 @@ textarea{width:100%;min-height:84px;border-radius:10px;border:1px solid var(--li
     <table class="score" id="score"></table>
     <div class="bars" id="bars"></div>
     <div class="verdict" id="verdict">ยังไม่มีคะแนน</div>
-    <label><span class="cap">บันทึกความเห็น</span><textarea id="note" placeholder="เช่น ชอบภาพของ C2 แต่ชอบส่วนปรึกษาของ D2"></textarea></label>
+    <label><span class="cap">บันทึกความเห็น</span><textarea id="note" placeholder="เช่น ชอบความเป็นหนังของ A2 แต่ชอบหน้าราคาของ D2"></textarea></label>
     <div class="row"><button type="button" class="btn p" id="copy">คัดลอกผลไปส่ง LINE</button><button type="button" class="btn" id="reset">ล้างคะแนน</button></div>
-    <p class="n">ข้อควรรู้: ทุกแบบใช้ภาพ 3 มิติตัวเดียวที่ย้ายไปตามส่วนที่กำลังดู โหมด "เทียบ 4 แบบ" เปิดทั้ง 4 หน้าพร้อมกัน อาจช้าบนมือถือ ใช้ทีละแบบจะลื่นกว่า</p>
+    <p class="n">ข้อควรรู้: ทุกหัวข้อมีภาพ 3 มิติของตัวเอง สร้างเมื่อเลื่อนมาใกล้ และคืนหน่วยความจำเมื่อเลื่อนไกล โหมด "เทียบ 4 แบบ" เปิดทั้ง 4 หน้าพร้อมกัน อาจช้าบนมือถือ ใช้ทีละแบบจะลื่นกว่า</p>
   </aside>
 </main>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
-const V = { a2: { th: 'A2 · Residence', col: 'var(--A)' }, b2: { th: 'B2 · Tower', col: 'var(--B)' }, c2: { th: 'C2 · Noir', col: 'var(--C)' }, d2: { th: 'D2 · Atelier', col: 'var(--D)' } };
+const V = { a2: { th: 'A2 · ภาพยนตร์', col: 'var(--A)' }, b2: { th: 'B2 · ภารกิจ', col: 'var(--B)' }, c2: { th: 'C2 · โชว์รูม', col: 'var(--C)' }, d2: { th: 'D2 · ดิจิทัลทวิน', col: 'var(--D)' } };
 const VK = Object.keys(V);
 const DEV = { desktop: { w: 1366, h: 860, th: 'คอม 1366' }, tablet: { w: 820, h: 1180, th: 'แท็บเล็ต 820' }, phone: { w: 390, h: 820, th: 'มือถือ 390' } };
 const TASKS = [
-  { id: 'v1', h: '', b: 'ดูหน้าแรกเต็มจอ', d: 'ภาพ 3 มิติขยับเปลี่ยนมุมเอง ลากบนภาพเพื่อหมุน กด "เสียงลม" (A2) ฟังเสียงประกอบ' },
-  { id: 'v2', h: 'ask', b: 'ปรึกษาอาการ', d: 'เลือกสถานที่ → "ไม่เย็น หรือเย็นน้อย" → ล้างครั้งล่าสุด "เกิน 1 ปี" ดูสาเหตุในภาพและราคาที่แนะนำ' },
-  { id: 'v3', h: 'ask', b: 'กดสาเหตุแต่ละข้อ', d: 'ภาพเปลี่ยนตาม มองทะลุ แยกชิ้นส่วน พร้อมป้ายชื่อชิ้นส่วน' },
-  { id: 'v4', h: 'ask', b: 'ซื้อแอร์ใหม่จากขนาดห้อง', d: 'เลือก "ซื้อแอร์ใหม่" ใส่ขนาดห้อง แล้วกด "ดูรุ่น … ทุกยี่ห้อ"' },
-  { id: 'v5', h: 'models', b: 'ลองแอร์ทุกรุ่น', d: 'เลือกประเภท ยี่ห้อ ขนาด แล้วกด BTU ของรุ่นที่สนใจ ภาพเปลี่ยนตามขนาดตัวเครื่อง' },
-  { id: 'v6', h: 'models', b: 'เล่นกับตัวเครื่อง', d: 'ปิด/เปิดเครื่อง โหมด บานสวิง มุมกล้อง มองทะลุ เลื่อนแยกชิ้นส่วน และ "ดูการล้าง"' },
-  { id: 'v7', h: 'clean', b: 'ตารางราคาล้าง', d: 'กดราคาในตารางเพื่อใส่ใบเสนอราคา' },
-  { id: 'v8', h: 'booking', b: 'จองคิวจากคำแนะนำ', d: 'จากผลปรึกษา กด "เลือกวันและจองคิว" ฟอร์มจองคิวเติมงานและจำนวนเครื่องให้' },
-  { id: 'v9', h: '', b: 'ใบเสนอราคา', d: 'ปุ่ม "ใบเสนอราคา" มุมขวาบน ดูรายการที่ใส่ไว้ สลับบุคคลทั่วไป / นิติบุคคล' },
+  { id: 'v1', h: '', b: 'ดูหน้าแรก', d: 'ภาพ 3 มิติขยับเอง ชื่อเรื่องค่อย ๆ ปรากฏทีละคำ (B2 เลือกภารกิจ · D2 ระบบแอร์ทั้งอาคารเล่นเอง)' },
+  { id: 'v2', h: 'how', b: 'ระบบแอร์ทำงานอย่างไร', d: 'A2 เลื่อนหน้าแล้วช็อตเปลี่ยน · B2 / D2 กดเล่นหรือเลือกขั้น · C2 อ่านทีละขั้น ภาพข้าง ๆ เปลี่ยนตาม' },
+  { id: 'v3', h: 'clean', b: 'งานล้างทีละขั้น', d: 'ดูทีมช่างในภาพทำตามแบบฟอร์มงานล้าง ขั้นต่อขั้น (D2 อยู่ในแผนดูแลรายปี)' },
+  { id: 'v4', h: 'clean', b: 'ราคาล้าง', d: 'เลือกประเภท ขนาด วิธีล้าง แพ็กเกจ จำนวนเครื่อง แล้วกด "ใส่ใบเสนอราคา"' },
+  { id: 'v5', h: 'install', b: 'ติดตั้งและราคาติดตั้ง', d: 'ดูขั้นติดตั้งในภาพ แล้วเลือกขนาดและระดับงาน ดูวัสดุที่ใช้' },
+  { id: 'v6', h: 'room', b: 'ขนาดที่พอดีห้อง', d: 'ใส่ขนาดห้อง แล้วกด "ดูติดผนัง …" ไปที่รุ่นขนาดนั้นในโชว์รูม' },
+  { id: 'v7', h: 'buy', b: 'ลองแอร์ทุกรุ่น', d: 'เลือกประเภท ยี่ห้อ ขนาด ปิด/เปิดเครื่อง มุมกล้อง มองทะลุ และ "ดูการล้าง"' },
+  { id: 'v8', h: 'repair', b: 'เล่าอาการ', d: 'เลือกอาการ ดูสาเหตุในภาพพร้อมป้ายชิ้นส่วน ราคาที่แนะนำ แล้วกดจองคิว' },
+  { id: 'v9', h: '', b: 'ใบเสนอราคาและจองคิว', d: 'ปุ่ม "ใบเสนอราคา" ดูรายการที่ใส่ไว้ สลับบุคคลทั่วไป / นิติบุคคล แล้วจองคิว' },
 ];
 const CRIT = [
   { id: 'look', th: 'ความสวยงาม / ภาพลักษณ์' }, { id: 'ease', th: 'ใช้ง่าย หาของเจอ' }, { id: 'trust', th: 'น่าเชื่อถือสำหรับองค์กร' },
   { id: 'home', th: 'เหมาะกับลูกค้าบ้าน' }, { id: 'sim', th: 'ภาพ 3 มิติ / ความเพลิดเพลิน' }, { id: 'mobile', th: 'ใช้บนมือถือดี' },
 ];
 const KEY = 'sbp-preview-v2';
-const ALIAS = { c2: { models: 'top' }, d2: { ask: 'top' } };   // C2: the showroom is the hero · D2: the concierge is the hero
+const ALIAS = { d2: { how: 'top', clean: 'plan' } };   // D2: the whole-building system is the hero, cleaning lives in the annual plan
 const hashFor = (v, h) => (ALIAS[v] && ALIAS[v][h]) || h;
 let S = { mode: 'one', v: 'a2', d: innerWidth < 700 ? 'phone' : 'desktop', hash: '', done: {}, score: { a2: {}, b2: {}, c2: {}, d2: {} }, note: '' };
 try { Object.assign(S, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) {}

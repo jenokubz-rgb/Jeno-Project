@@ -43,7 +43,7 @@ function outdoorPaths() {
 }
 
 /* ---------------------------------------------------------------- steps */
-function steps(type) {
+export function steps(type) {   // r16: exported — the film chapters read the captions without building the 3D view
   const T = TYPE_TH[type];
   const intake = { wall: 'ตะแกรงด้านบนของตัวเครื่อง', ceiling: 'ตะแกรงใต้ตัวเครื่องครึ่งหลัง', cassette: 'หน้ากากกลางใต้ฝ้า' }[type];
   const fan = { wall: 'พัดลมกรงกระรอก (Cross-flow) ยาวตลอดตัวเครื่อง', ceiling: 'โบลเวอร์ซีร็อกโคหลายตัวบนแกนเดียว ในเสื้อพัดลมก้นหอย', cassette: 'พัดลมเทอร์โบหมุนแนวนอน เหวี่ยงลมออกรอบตัว' }[type];

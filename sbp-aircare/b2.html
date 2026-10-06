@@ -3,237 +3,362 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>SBP AirCare · แบบ B2 Tower</title>
-<meta name="description" content="สัญญาล้างแอร์รายปีสำหรับสำนักงาน อาคาร โรงงาน ราคาขั้นบันไดตามจำนวนเครื่อง รายงานรายเครื่อง และงานโครงการ จากบริษัท สหบูรพากรุ๊ป จำกัด">
-<meta property="og:title" content="SBP AirCare Tower ดูแลแอร์ทั้งอาคารด้วยแผนรายปี">
-<meta property="og:description" content="ใส่จำนวนเครื่อง ดูราคาต่อปีตามขั้นบันได ขั้นตอนและรายงานรายเครื่อง แล้วนัดสำรวจหน้างาน">
+<title>SBP AirCare · แบบ B2 ภารกิจ</title>
+<meta name="description" content="8 ภารกิจกับทีมช่าง SBP AirCare เล่นทีละขั้นในภาพจำลอง 3 มิติ ตั้งแต่รู้จักระบบแอร์ เลือกเครื่อง ติดตั้ง ล้างใหญ่ ซ่อม จนส่งทีมถึงบ้าน ทุกภารกิจจบด้วยราคาจาก Pricebook และปุ่มสั่งงาน">
+<meta property="og:title" content="SBP AirCare · ภารกิจดูแลอากาศ 8 ภารกิจ">
+<meta property="og:description" content="เล่นทีละขั้นกับทีมช่าง เก็บเหรียญครบทุกภารกิจ แล้วรับราคาจริงของงานนั้น">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#070B12">
+<meta name="theme-color" content="#0A1330">
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/shared.css">
 <link rel="stylesheet" href="assets/business.css">
 <link rel="stylesheet" href="assets/booking.css">
 <link rel="stylesheet" href="assets/services.css">
 <link rel="stylesheet" href="assets/v2.css">
+<link rel="stylesheet" href="assets/film.css">
 <style>
-/* แบบ B2 · Tower (r12) — facilities at night. The 3D set is a meeting floor high in a tower: smoked steel, the city
-   behind glass, cyan light lines. The page reads like the building's control room: deep night ground, steel panels,
-   cyan for focus and live values, SP orange (dark text, 5.3:1) only on the action that books a survey. Bai Jamjuree —
-   a squared, architectural Thai face — for everything; figures are tabular. Single dark theme by choice. */
+/* แบบ B2 · ภารกิจ (r16) — the site as a game played with the SBP crew. Eight missions, each a 3D sequence stepped through like
+   a level: an objective list that ticks off, a dialogue box with what the crew is doing, a progress bar, and at the end a
+   "mission complete" banner, a badge, and the reward — the real price of that job from the Pricebook with the buttons that
+   order it. A HUD on top counts missions and holds the quote basket (the inventory).
+   Palette: night shift — deep FUJIVA navy, cool steel lines, caution amber (job-site tape) for objectives and progress, SP
+   orange only on the action that books a job. Type: Bai Jamjuree (squared, like a HUD) for headings and numbers, Kanit
+   (light) for reading. A deliberately single dark theme. */
 :root{
-  --paper:#070B12; --surface:#0D1420; --frost:#0B111B; --ink:#E3ECF7; --ink-2:#A9BBD2; --ink-3:#8A9DB6; --line:rgba(160,195,240,.12); --line-2:rgba(160,195,240,.27);
-  --brand:#52D1FF; --brand-soft:rgba(82,209,255,.11); --go:#EF4E2E; --go-2:#F4683F; --on-go:#160A06; --ok:#5FD9A2; --warn:#F5B65E; --bad:#FF8A80;
-  --glass:rgba(7,11,18,.76); --glass-ink:#E3ECF7; --plate:#EEF3FA; --stage-bg:#05070d; --r:2px;
-  --display:'Bai Jamjuree','Noto Sans Thai',system-ui,sans-serif; --text:'Bai Jamjuree','Noto Sans Thai',Tahoma,sans-serif;
+  --paper:#0A1330; --surface:#111C40; --frost:#0D1736; --ink:#EEF3FF; --ink-2:#BCC8E8; --ink-3:#8D9CC4; --line:rgba(238,243,255,.12); --line-2:rgba(238,243,255,.26);
+  --brand:#FFB627; --brand-soft:rgba(255,182,39,.14); --hud:#7FD6FF; --go:#EF4E2E; --go-2:#F4683F; --on-go:#1A0D08; --ok:#7BE0A6; --warn:#FFC966; --bad:#FF8D80;
+  --glass:rgba(10,19,48,.8); --glass-ink:#EEF3FF; --plate:#F4F7FF; --stage-bg:#070E26; --r:6px;
+  --sub-ink:#EEF3FF; --cut-name:fm-wipe; --cut-color:#0A1330; --cut-time:.5s; --sub-shade:transparent;
+  --display:'Bai Jamjuree','Kanit',sans-serif; --text:'Kanit','Anuphan',Tahoma,sans-serif;
   --s-card:var(--surface); --s-card-2:var(--frost); --s-ink:var(--ink); --s-ink-2:var(--ink-2); --s-ink-3:var(--ink-3); --s-line:var(--line-2);
-  --s-accent:var(--go); --s-on-accent:var(--on-go); --s-accent-soft:var(--brand-soft); --s-ok:var(--ok); --s-warn:var(--warn); --s-bad:var(--bad); --s-r:2px; --s-mono:var(--text);
+  --s-accent:var(--go); --s-on-accent:var(--on-go); --s-accent-soft:var(--brand-soft); --s-ok:var(--ok); --s-warn:var(--warn); --s-bad:var(--bad); --s-r:6px; --s-mono:var(--display);
   color-scheme:dark;
 }
-body{background:var(--paper);font-size:16.5px;line-height:1.7}
+body{background:var(--paper);font-weight:300}
+b,strong{font-weight:500}
 h1,h2,h3{font-weight:600}
-.num{font-variant-numeric:tabular-nums}
 
-/* header: a thin instrument strip */
-.v-hd{position:sticky;top:0;z-index:60;background:rgba(7,11,18,.94);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
-@supports (backdrop-filter:blur(8px)){.v-hd{background:rgba(7,11,18,.8);backdrop-filter:blur(12px)}}
+/* HUD header */
+.v-hd{position:fixed;inset:0 0 auto;z-index:60;padding-top:env(safe-area-inset-top,0px);background:rgba(10,19,48,.86);box-shadow:0 1px 0 var(--line)}
+@supports (backdrop-filter:blur(8px)){.v-hd{background:rgba(10,19,48,.7);backdrop-filter:blur(14px) saturate(1.3)}}
 .v-hd-in{display:flex;align-items:center;gap:18px;min-height:64px}
 .b-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
-.b-brand .plate{display:inline-grid;place-items:center;padding:4px 7px;border-radius:2px;background:var(--plate)}
-.b-brand img{display:block;height:24px;width:auto}
-.b-brand b{font:600 17px/1.1 var(--display)}
-.b-brand small{display:block;font-size:12px;color:var(--ink-3);font-weight:400}
-.v-nav{display:flex;gap:0;margin-left:auto}
-.v-nav a{padding:8px 11px;font-size:14.5px;color:var(--ink-2);text-decoration:none}
-.v-nav a:hover{color:var(--brand)}
+.b-brand .plate{display:inline-grid;place-items:center;padding:4px 7px;border-radius:4px;background:var(--plate)}
+.b-brand img{display:block;height:22px;width:auto}
+.b-brand b{font:600 17px/1 var(--display);white-space:nowrap}
+.b-xp{display:grid;gap:4px;min-width:180px}
+.b-xp p{margin:0;display:flex;justify-content:space-between;gap:10px;font:600 13px/1 var(--display);color:var(--ink-2)}
+.b-xp p b{color:var(--brand);font-variant-numeric:tabular-nums}
+.b-xpbar{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.b-xpbar i{display:block;height:100%;width:calc(var(--xp,0) * 100%);background:linear-gradient(90deg,var(--brand),#FFD978);transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.v-nav{display:flex;gap:2px;margin-left:auto}
+.v-nav a{padding:8px 10px;font:600 14px/1 var(--display);color:var(--ink-2);text-decoration:none;border-radius:4px;white-space:nowrap}
+.v-nav a:hover,.v-nav a[aria-current]{color:var(--ink);background:var(--brand-soft)}
 .v-act{display:flex;align-items:center;gap:8px}
-.b-quote{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 12px;border:1px solid var(--line-2);border-radius:2px;background:transparent;color:var(--ink);cursor:pointer;font-size:14.5px}
-.b-quote [data-cart-n]{min-width:22px;padding:0 6px;border-radius:2px;background:var(--brand);color:#04131B;font-weight:700;font-size:13px;line-height:22px;text-align:center}
-.v-act .v-btn{min-height:40px}
-.v-menu{display:none;min-height:40px;padding:0 12px;border:1px solid var(--line-2);border-radius:2px;background:transparent;color:var(--ink);cursor:pointer}
-@media (max-width:1180px){.b-brand small{display:none}.v-nav a{padding:8px 7px;font-size:14px}}
-@media (max-width:1000px){.v-menu{display:inline-flex;align-items:center}.v-nav{position:absolute;top:100%;left:0;right:0;display:none;flex-direction:column;padding:8px 16px 16px;background:rgba(7,11,18,.98);border-bottom:1px solid var(--line)}.v-nav.open{display:flex}.v-nav a{padding:12px 4px;font-size:16px;border-bottom:1px solid var(--line)}.v-act{margin-left:auto}}
-@media (max-width:560px){.b-brand b{display:none}.b-quote .qt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}}
+.b-inv{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 12px;border:1px solid var(--line-2);border-radius:var(--r);background:transparent;color:var(--ink);cursor:pointer;font:600 14px var(--display)}
+.b-inv [data-cart-n]{min-width:22px;padding:0 6px;border-radius:11px;background:var(--brand);color:#1A1200;font-weight:700;font-size:13px;line-height:22px;text-align:center}
+.b-snd{min-height:42px;padding:0 12px;border:1px solid var(--line-2);border-radius:var(--r);background:transparent;color:var(--ink-2);font:600 14px var(--display);cursor:pointer}
+.b-snd[aria-pressed="true"]{color:var(--ink);border-color:var(--brand)}
+.v-act .v-btn{min-height:42px}
+.v-menu{display:none;min-height:42px;padding:0 14px;border:1px solid var(--line-2);border-radius:var(--r);background:transparent;color:var(--ink);cursor:pointer;font:600 14px var(--display)}
+@media (max-width:1440px){
+  .v-menu{display:inline-flex;align-items:center}
+  .v-nav{position:absolute;top:100%;left:0;right:0;display:none;flex-direction:column;gap:0;padding:8px 16px 16px;background:rgba(10,19,48,.98);border-bottom:1px solid var(--line)}
+  .v-nav.open{display:flex}.v-nav a{padding:12px 4px;font-size:16px;border-bottom:1px solid var(--line)}
+  .v-act{margin-left:auto}
+}
+@media (max-width:640px){.b-brand b,.b-snd{display:none}.b-xp{min-width:0;flex:1}.b-inv .qt{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.v-act .v-btn{padding:0 12px}}
 
-/* hero: control room — text + fleet board on the left, the tower floor on the right edge */
-.b-hero{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);min-height:calc(100svh - 64px);border-bottom:1px solid var(--line)}
-.b-hero-in{display:grid;gap:22px;align-content:center;padding:clamp(32px,5vw,64px) clamp(20px,3.4vw,52px) clamp(32px,5vw,64px) max(clamp(16px,4vw,44px),calc((100vw - 1240px)/2 + 44px))}
-.b-hero h1{font-size:clamp(32px,3.3vw,50px);line-height:1.15}
-.nw{white-space:nowrap}
-.b-hero h1+p{font-size:17px;line-height:1.75;color:var(--ink-2);max-width:36em}
-.b-hero>.stage{min-height:420px;border-left:1px solid var(--line)}
-.b-hud{position:absolute;z-index:4;left:16px;top:14px;display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-2)}
-.b-hud span{padding:3px 8px;background:var(--glass);border:1px solid var(--line)}
-.b-hud b{color:var(--brand);font-weight:600}
-@media (max-width:960px){.b-hero{grid-template-columns:minmax(0,1fr)}.b-hero>.stage{order:-1;min-height:0;aspect-ratio:16/11;border-left:0;border-bottom:1px solid var(--line)}.b-hero-in{padding-inline:clamp(16px,4vw,44px)}}
+/* start screen */
+.b-start{position:relative;min-height:max(620px,100svh);display:grid;align-items:center}
+.b-start>.stage{position:absolute;inset:0}
+.b-start::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(120% 90% at 20% 60%,rgba(10,19,48,.92),rgba(10,19,48,.55) 50%,rgba(10,19,48,.15) 80%),linear-gradient(0deg,rgba(10,19,48,.95),rgba(10,19,48,0) 40%)}
+.b-start-in{position:relative;z-index:3;width:100%;padding-block:130px 80px;display:grid;gap:20px}
+.b-start .b-pre{font:600 14px/1 var(--display);color:var(--hud);letter-spacing:.06em}
+.b-start h1{font-size:clamp(46px,7.4vw,112px);line-height:1.02;max-width:9em;letter-spacing:-.01em}
+.b-start p.lede{font-size:clamp(17px,1.4vw,20px);line-height:1.7;color:var(--ink-2);max-width:34em}
+.b-cta{display:flex;flex-wrap:wrap;gap:10px}
+.b-cta .v-btn{min-height:54px;padding:0 26px;font:600 17px var(--display)}
+.b-start .stage-cap{position:absolute;z-index:3;left:auto;right:16px;bottom:16px}
 
-/* fleet board — the edition's one bold element */
-.fleet{display:grid;gap:14px;padding:18px 18px 16px;border:1px solid var(--line-2);background:linear-gradient(180deg,rgba(82,209,255,.05),rgba(82,209,255,0) 60%),var(--surface)}
-.fleet h2{font-size:18px;line-height:1.3;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
-.fleet h2 small{font-size:12.5px;font-weight:400;color:var(--ink-3)}
-.fl-units{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-.fl-u{display:grid;gap:6px;font-size:13.5px;color:var(--ink-2);font-weight:600}
-.fl-u .cc-num-in{grid-template-columns:32px minmax(0,1fr) 32px;width:100%}
-.fl-row{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;font-size:14px;color:var(--ink-2)}
-.fl-out{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:4px 18px;padding-top:12px;border-top:1px solid var(--line)}
-.fl-out .big{font:600 clamp(32px,3.2vw,44px)/1.05 var(--display);font-variant-numeric:tabular-nums;color:var(--ink)}
-.fl-out .lab{font-size:13px;color:var(--ink-3)}
-.fl-out .tier{font-size:14px;color:var(--brand);font-weight:600}
-.fl-out .next{grid-column:1/-1;font-size:13.5px;color:var(--ink-2)}
-.fl-acts{display:flex;gap:8px;flex-wrap:wrap}
-@media (max-width:520px){.fl-units{grid-template-columns:repeat(2,minmax(0,1fr))}.fl-out{grid-template-columns:minmax(0,1fr)}}
+/* mission select */
+.b-select{padding-block:clamp(56px,9vh,96px);background:var(--frost);border-block:1px solid var(--line)}
+.b-select h2{font-size:clamp(28px,3vw,40px)}
+.b-select>.wrap>p{color:var(--ink-2);margin:8px 0 26px;max-width:42em}
+.b-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.b-card{position:relative;display:grid;gap:8px;align-content:start;height:100%;padding:18px 18px 16px;border:1px solid var(--line-2);border-radius:var(--r);background:linear-gradient(180deg,rgba(255,255,255,.03),transparent),var(--surface);text-decoration:none;transition:border-color .2s,transform .2s}
+.b-card:hover{border-color:var(--brand);transform:translateY(-2px)}
+.b-card .n{font:600 13px/1 var(--display);color:var(--hud);letter-spacing:.05em}
+.b-card b{font:600 19px/1.35 var(--display)}
+.b-card span{font-size:14.5px;line-height:1.55;color:var(--ink-2)}
+.b-card small{font:600 12.5px/1.4 var(--display);color:var(--ink-3)}
+.b-card .st{position:absolute;top:14px;right:14px;font:600 12px/1 var(--display);padding:5px 8px;border-radius:10px;border:1px solid var(--line-2);color:var(--ink-3)}
+.b-card[data-done] .st{border-color:var(--brand);background:var(--brand);color:#1A1200}
+.b-card[data-done]{border-color:rgba(255,182,39,.6)}
+@media (max-width:1000px){.b-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.b-grid{grid-template-columns:minmax(0,1fr)}}
 
-/* chapters: an instrument bar beside each heading */
-.ch{border-bottom:1px solid var(--line)}
-.ch.alt{background:var(--frost)}
-.ch-h{padding-left:18px;border-left:2px solid var(--brand)}
-.ch-h h2{font-size:clamp(32px,4.2vw,52px)}
-.b-ask{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"s q" "s r";gap:28px clamp(28px,4vw,56px);align-items:start}
-.b-ask #askRoot{display:contents}
+/* a mission */
+.b-mis{padding-block:clamp(56px,9vh,104px);border-top:1px solid var(--line)}
+.b-mh{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px 28px;align-items:end;margin-bottom:22px}
+.b-mh .n{font:600 14px/1 var(--display);color:var(--hud);letter-spacing:.05em;margin-bottom:10px}
+.b-mh h2{font-size:clamp(30px,3.6vw,52px);line-height:1.12}
+.b-mh .obj{margin-top:10px;color:var(--ink-2);max-width:44em}
+.b-mh .obj b{color:var(--brand)}
+.b-go{min-height:50px;padding:0 22px;border:1px solid var(--brand);border-radius:var(--r);background:var(--brand);color:#1A1200;font:600 16px var(--display);cursor:pointer}
+.b-go:hover{background:#FFC857}
+.b-game{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}
+.b-game .fm-stage{aspect-ratio:16/9;border:1px solid var(--line-2);border-radius:var(--r)}
+/* HUD corners on the viewport */
+.b-hud{position:absolute;inset:10px;z-index:6;pointer-events:none;
+  background:linear-gradient(var(--hud),var(--hud)) 0 0/18px 2px no-repeat,linear-gradient(var(--hud),var(--hud)) 0 0/2px 18px no-repeat,
+  linear-gradient(var(--hud),var(--hud)) 100% 0/18px 2px no-repeat,linear-gradient(var(--hud),var(--hud)) 100% 0/2px 18px no-repeat,
+  linear-gradient(var(--hud),var(--hud)) 0 100%/18px 2px no-repeat,linear-gradient(var(--hud),var(--hud)) 0 100%/2px 18px no-repeat,
+  linear-gradient(var(--hud),var(--hud)) 100% 100%/18px 2px no-repeat,linear-gradient(var(--hud),var(--hud)) 100% 100%/2px 18px no-repeat;opacity:.75}
+.b-game .fm-tag,.b-game .stage-cap{left:22px;top:20px;bottom:auto;background:rgba(10,19,48,.7);font-family:var(--display)}
+.b-cnt{position:absolute;z-index:7;right:22px;top:18px;margin:0;padding:4px 10px;border-radius:12px;background:rgba(10,19,48,.75);font:600 13px/1.3 var(--display);color:var(--brand);font-variant-numeric:tabular-nums}
+/* dialogue box */
+.b-game .fm-sub{left:16px;right:16px;bottom:16px;width:auto;transform:none;justify-items:start;text-align:left;gap:3px;padding:12px 16px 13px;border:1px solid var(--line-2);border-left:3px solid var(--brand);border-radius:var(--r);background:rgba(8,15,40,.86);color:var(--ink)}
+@supports (backdrop-filter:blur(6px)){.b-game .fm-sub{background:rgba(8,15,40,.7);backdrop-filter:blur(8px)}}
+.b-game .fm-sub-k{font:600 12.5px/1.2 var(--display);color:var(--brand);letter-spacing:.04em;opacity:1}
+.b-game .fm-sub-t{font:600 clamp(16px,1.5vw,19px)/1.4 var(--display);text-shadow:none}
+.b-game .fm-sub-d{font-size:clamp(14px,1.05vw,15.5px);line-height:1.6;max-width:none;text-shadow:none;color:var(--ink-2)}
+.b-game .fm-sub.is-in .fm-sub-d{animation:b-type 1.4s steps(28,end) both}
+@keyframes b-type{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.b-game .fm-prog{top:auto;bottom:0;height:3px;border-radius:0 0 var(--r) var(--r)}
+.b-game .fm-prog::after{background:linear-gradient(90deg,var(--brand),#FFD978)}
+/* mission complete */
+.b-done{position:absolute;z-index:9;inset:0;display:grid;place-content:center;justify-items:center;gap:8px;margin:0;background:radial-gradient(closest-side,rgba(10,19,48,.82),rgba(10,19,48,.25));pointer-events:none;opacity:0;transform:scale(1.06);transition:opacity .5s,transform .7s cubic-bezier(.2,.8,.2,1)}
+.b-done b{font:600 clamp(30px,4vw,56px)/1 var(--display);color:var(--brand);letter-spacing:.02em;text-shadow:0 0 30px rgba(255,182,39,.45)}
+.b-done span{font:600 15px var(--display);color:var(--ink)}
+.fm.is-won .b-done{opacity:1;transform:none}
+/* objectives */
+.b-obj{display:grid;gap:12px;align-content:start;padding:14px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--surface);min-width:0}
+.b-obj h3{font:600 15px/1 var(--display);color:var(--ink-2);display:flex;justify-content:space-between;gap:10px}
+.b-obj h3 span{color:var(--brand);font-variant-numeric:tabular-nums}
+.b-obj .fm-shots{display:grid;gap:2px;max-height:min(46vh,420px);overflow:auto;padding-right:4px;scrollbar-width:thin}
+.b-obj button.fm-shot{font-size:14px;padding:7px 8px}
+.b-obj button.fm-shot.past{color:var(--ink-3)}
+.b-obj button.fm-shot.past .fm-shot-t{text-decoration:line-through;text-decoration-color:rgba(255,182,39,.6)}
+.b-obj button.fm-shot.past .fm-shot-n{color:#1A1200}
+.b-obj .fm-ctl .fm-play{flex:1}
+.b-crew{display:grid;gap:6px;margin:0;font-size:13.5px;line-height:1.5}
+.b-crew dt{font:600 12px var(--display);color:var(--hud)}
+.b-crew dd{margin:0 0 4px;color:var(--ink-2)}
+@media (max-width:980px){.b-game{grid-template-columns:minmax(0,1fr)}.b-game .fm-stage{aspect-ratio:4/3}.b-obj .fm-shots{max-height:260px}}
+@media (max-width:640px){.b-game .fm-stage{aspect-ratio:3/4}.b-game .fm-sub{left:10px;right:10px;bottom:10px;padding:10px 12px}.b-game .fm-sub-d{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}}
+
+/* the reward: the real price */
+.b-reward{margin-top:22px;padding:clamp(16px,2.4vw,28px);border:1px solid var(--line-2);border-radius:var(--r);background:var(--frost);transition:border-color .6s,box-shadow .6s}
+.fm.is-done .b-reward{border-color:var(--brand);box-shadow:0 0 0 1px var(--brand),0 0 40px rgba(255,182,39,.12)}
+.b-rh{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-bottom:18px}
+.b-rh h3{font-size:clamp(20px,1.8vw,24px)}
+.b-rh p{margin:0;color:var(--ink-2);font-size:15px}
+.b-rh .tag{font:600 12px/1 var(--display);padding:5px 9px;border-radius:10px;background:var(--brand-soft);color:var(--brand)}
+.b-next{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;color:var(--ink-2)}
+.b-next a{color:var(--brand);font-weight:500;text-underline-offset:4px}
+
+/* showroom mission */
+.b-sr{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);grid-template-areas:"c c" "p d";gap:16px 28px;margin-top:18px}
+.b-sr [data-showroom]{display:contents}
+.b-sr [data-sr-ctl]{grid-area:c;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.b-sr .sr-pick{grid-area:p}.b-sr .sr-det{grid-area:d;position:sticky;top:calc(var(--hd,64px) + 12px)}
+@media (max-width:900px){.b-sr{grid-template-columns:minmax(0,1fr);grid-template-areas:"c" "d" "p"}.b-sr .sr-det{position:static}}
+/* repair mission: concierge + its own unit stage */
+.b-ask{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"q s" "r s";gap:22px 28px;align-items:start;margin-bottom:28px}
+.b-ask [data-concierge]{display:contents}
 .b-ask .cc-ask{grid-area:q}.b-ask .cc-res{grid-area:r}
-.b-ask .stage{grid-area:s;position:sticky;top:84px;height:min(74vh,700px);border:1px solid var(--line-2)}
-@media (max-width:900px){.b-ask{grid-template-columns:minmax(0,1fr);grid-template-areas:"q" "s" "r"}.b-ask .stage{position:relative;top:0;height:auto;aspect-ratio:4/3}}
-.b-sr{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);grid-template-areas:"p s" "p c" "p d";gap:16px clamp(24px,3.5vw,48px);align-items:start}
-.b-sr #srRoot{display:contents}
-.b-sr .sr-pick{grid-area:p}.b-sr .sr-det{grid-area:d}
-.b-sr .stage{grid-area:s;aspect-ratio:16/10;border:1px solid var(--line-2)}
-.b-sr #srCtl{grid-area:c}
-@media (max-width:960px){.b-sr{grid-template-columns:minmax(0,1fr);grid-template-areas:"s" "c" "d" "p"}}
-.b-sr .sr-list{max-height:560px;overflow:auto}
+.b-ask .stage{grid-area:s;position:sticky;top:calc(var(--hd,64px) + 12px);aspect-ratio:4/3;border-radius:var(--r);border:1px solid var(--line-2)}
+@media (max-width:900px){.b-ask{grid-template-columns:minmax(0,1fr);grid-template-areas:"q" "s" "r"}.b-ask .stage{position:relative;top:0}}
 
-.b-ft{background:#04070C;color:var(--ink-2);padding-block:52px calc(52px + env(safe-area-inset-bottom,0px))}
+/* booking + contact */
+.b-sec{padding-block:clamp(56px,9vh,104px);border-top:1px solid var(--line)}
+.b-sec .ch-h{margin-bottom:24px}
+.b-sec .ch-h h2{font-size:clamp(30px,3.4vw,48px)}
+.b-sec .ch-h p{color:var(--ink-2);margin-top:8px;max-width:44em}
+.b-book{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:28px;align-items:start}
+.b-book .stage{position:sticky;top:calc(var(--hd,64px) + 12px);aspect-ratio:4/3;border-radius:var(--r);border:1px solid var(--line-2)}
+@media (max-width:900px){.b-book{grid-template-columns:minmax(0,1fr)}.b-book .stage{position:relative;top:0}}
+
+/* toast for badges */
+.b-toast{position:fixed;z-index:80;left:50%;top:calc(var(--hd,64px) + 14px);transform:translate(-50%,-20px);display:flex;gap:12px;align-items:center;padding:12px 18px;border:1px solid var(--brand);border-radius:var(--r);background:rgba(10,19,48,.94);color:var(--ink);font:600 15px var(--display);opacity:0;pointer-events:none;transition:opacity .4s,transform .5s cubic-bezier(.2,.8,.2,1)}
+.b-toast.on{opacity:1;transform:translate(-50%,0)}
+.b-toast i{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--brand);color:#1A1200;font-style:normal}
+
+/* footer */
+.b-ft{background:#060C22;color:var(--ink-2);padding-block:56px calc(56px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line)}
 .b-ft-in{display:grid;grid-template-columns:1.3fr 1fr 1.3fr 1.1fr;gap:32px}
-.b-ft h3{font-size:16px;color:var(--ink);margin-bottom:10px}
-.b-ft p,.b-ft li{font-size:14px;line-height:1.7}
+.b-ft h3{font:600 16px var(--display);color:var(--ink);margin-bottom:10px}
+.b-ft p,.b-ft li{font-size:14.5px;line-height:1.7}
 .b-ft ul{list-style:none;padding:0;display:grid;gap:6px}
 .b-ft a{color:var(--ink);text-underline-offset:3px}
 .b-ft .plates{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
-.b-ft .plate{display:inline-grid;place-items:center;padding:8px 12px;border-radius:2px;background:var(--plate)}
+.b-ft .plate{display:inline-grid;place-items:center;padding:8px 12px;border-radius:4px;background:var(--plate)}
 .b-ft .plate img{display:block;height:32px;width:auto}
 @media (max-width:900px){.b-ft-in{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:560px){.b-ft-in{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){.b-done,.b-toast,.b-card,.b-xpbar i{transition:none}.b-game .fm-sub.is-in .fm-sub-d{animation:none}}
 </style>
 </head>
 <body>
 <a class="v-skip" href="#main">ข้ามไปเนื้อหา</a>
 <header class="v-hd">
   <div class="wrap v-hd-in">
-    <a class="b-brand" href="#top" aria-label="SBP AirCare หน้าแรก"><span class="plate"><img src="assets/logos/sbp.png" alt="" width="33" height="24"></span><span><b>SBP AirCare</b><small>สำหรับองค์กรและอาคาร</small></span></a>
-    <nav class="v-nav" id="v-nav" aria-label="หัวข้อ">
-      <a href="#business">สัญญาและขั้นตอน</a><a href="#ask">แจ้งอาการ</a><a href="#models">ทุกรุ่น</a><a href="#clean">ล้าง</a><a href="#install">ติดตั้ง</a><a href="#repair">ซ่อม</a><a href="#area">พื้นที่</a><a href="#contact">ติดต่อ</a>
+    <a class="b-brand" href="#top" aria-label="SBP AirCare หน้าแรก"><span class="plate"><img src="assets/logos/sbp.png" alt="" width="30" height="22"></span><b>SBP AirCare</b></a>
+    <div class="b-xp" aria-live="polite"><p><span>ภารกิจสำเร็จ</span><b data-xp-n>0 / 8</b></p><div class="b-xpbar" aria-hidden="true"><i></i></div></div>
+    <nav class="v-nav" id="v-nav" aria-label="ภารกิจ" data-spy>
+      <a href="#missions">เลือกภารกิจ</a><a href="#how">ระบบแอร์</a><a href="#room">ขนาดห้อง</a><a href="#buy">เลือกเครื่อง</a><a href="#install">ติดตั้ง</a><a href="#clean">ล้างใหญ่</a><a href="#repair">ซ่อม</a><a href="#booking">นัดวัน</a>
     </nav>
     <div class="v-act">
-      <button type="button" class="b-quote" data-cart-btn aria-label="ใบเสนอราคา"><span class="qt">ใบเสนอราคา</span><span data-cart-n>0</span></button>
-      <a class="v-btn go" href="#booking" data-book="amc">นัดสำรวจ</a>
+      <button type="button" class="b-snd" data-sound aria-pressed="false">เสียง</button>
+      <button type="button" class="b-inv" data-cart-btn aria-label="ใบเสนอราคา"><span class="qt">ใบเสนอราคา</span><span data-cart-n>0</span></button>
+      <a class="v-btn go" href="#booking" data-book>จองคิว</a>
       <button type="button" class="v-menu" aria-expanded="false" aria-controls="v-nav">เมนู</button>
     </div>
   </div>
 </header>
+<p class="b-toast" role="status" aria-live="polite"></p>
 
 <main id="main">
-  <section class="b-hero" id="top" aria-labelledby="h-hero">
-    <div class="b-hero-in">
-      <h1 id="h-hero">ดูแลแอร์ทั้งอาคารด้วยแผนรายปี <span class="nw">ที่ตรวจสอบได้</span><span class="nw">ทุกเครื่อง</span></h1>
-      <p>รอบล้างวางไว้ทั้งปี รายงานรายเครื่องตามแบบฟอร์ม SBP-SR-ACCL-UNI-001 Rev.07 ราคาขั้นบันไดตามจำนวนเครื่อง และงานโครงการ สร้างใหม่ รีโนเวต หรือเปลี่ยนทั้งชุด</p>
-      <div class="fleet" id="fleet" aria-labelledby="h-fleet"><p class="d-load">กำลังเตรียมตัวคำนวณ…</p></div>
-    </div>
-    <div class="stage" data-stage='{"type":"cassette","shot":"hero","power":true,"auto":true}'><picture><source media="(max-width:960px)" srcset="assets/posters/b2-hero-m.jpg"><img class="stage-poster" src="assets/posters/b2-hero.jpg" alt="" fetchpriority="high" decoding="async"></picture>
-      <div class="b-hud" aria-hidden="true"><span>ห้องประชุมชั้นบน</span><span>สี่ทิศทาง <b>เดินเครื่อง</b></span></div>
-      <p class="stage-cap">แบบจำลองเพื่ออธิบาย</p>
+  <section class="b-start" id="top" aria-labelledby="h-start">
+    <div class="stage" data-stage='{"type":"cassette","shot":"hero","power":true,"auto":true}'><picture><source media="(max-width:960px)" srcset="assets/posters/b2-hero-m.jpg"><img class="stage-poster" src="assets/posters/b2-hero.jpg" alt="" fetchpriority="high" decoding="async"></picture><p class="stage-cap">แบบจำลองเพื่ออธิบาย</p></div>
+    <div class="wrap b-start-in">
+      <p class="b-pre">SBP AirCare · 8 ภารกิจ</p>
+      <h1 id="h-start" data-kinetic>ภารกิจดูแลอากาศ</h1>
+      <p class="lede">เล่นทีละขั้นไปกับทีมช่างในภาพจำลอง 3 มิติ ตั้งแต่รู้จักระบบแอร์ หาขนาดเครื่อง ติดตั้ง ล้างใหญ่ ซ่อม จนส่งทีมถึงบ้าน ทุกภารกิจจบด้วยราคาจริงจาก Pricebook และ<span class="nw">ปุ่มสั่งงาน</span></p>
+      <div class="b-cta"><a class="v-btn go" href="#how" data-start="how">เริ่มภารกิจแรก</a><a class="v-btn ghost" href="#missions">เลือกภารกิจ</a></div>
     </div>
   </section>
 
-  <section class="ch" id="business" aria-labelledby="h-business">
+  <section class="b-select" id="missions" aria-labelledby="h-missions">
     <div class="wrap">
-      <header class="ch-h"><h2 id="h-business">สัญญา ขั้นตอน และงานโครงการ</h2><p>ราคาขั้นบันไดพร้อมตัวอย่างงบต่อปี ขั้นตอนต่อเครื่องจากแบบฟอร์มบริษัทพร้อมตัวอย่าง Service Report และงานโครงการทีละห้อง</p></header>
-      <div class="d-biztabs ch-body" role="tablist" aria-label="หัวข้อสำหรับองค์กร">
-        <button type="button" role="tab" id="bt-amc" aria-controls="amc" aria-selected="true" data-biz="amc">สัญญาล้างรายปีและราคาขั้นบันได</button>
-        <button type="button" role="tab" id="bt-sop" aria-controls="sop" aria-selected="false" tabindex="-1" data-biz="sop">ขั้นตอนและ Service Report</button>
-        <button type="button" role="tab" id="bt-projects" aria-controls="projects" aria-selected="false" tabindex="-1" data-biz="projects">งานโครงการ สร้างใหม่ รีโนเวต</button>
+      <h2 id="h-missions">เลือกภารกิจ</h2>
+      <p>เล่นตามลำดับหรือเลือกภารกิจที่ตรงกับงานของคุณ ภารกิจที่เล่นจบแล้วจะได้เหรียญ เก็บไว้ในเครื่องนี้เท่านั้น</p>
+      <ul class="b-grid">
+        <li><a class="b-card" href="#how" data-mission="how"><span class="n">ภารกิจ 1</span><b>รู้จักระบบแอร์</b><span>ตามความร้อนจากในห้องออกไปนอกบ้านให้ครบวงจร</span><small>9 ขั้น · ระบบแอร์ทั้งบ้าน</small><i class="st">ยังไม่เล่น</i></a></li>
+        <li><a class="b-card" href="#room" data-mission="room"><span class="n">ภารกิจ 2</span><b>หาขนาดที่พอดีห้อง</b><span>ดูลมเย็นเดินทางในห้อง แล้วคำนวณ BTU ของห้องคุณ</span><small>5 ขั้น · ลมในห้อง</small><i class="st">ยังไม่เล่น</i></a></li>
+        <li><a class="b-card" href="#buy" data-mission="buy"><span class="n">ภารกิจ 3</span><b>สำรวจเครื่องก่อนซื้อ</b><span>เปิดเครื่อง ดูทางลม มองทะลุ เลือกจาก <b data-fact="models">705</b> รุ่น</span><small>5 ขั้น · ตัวเครื่อง</small><i class="st">ยังไม่เล่น</i></a></li>
+        <li><a class="b-card" href="#install" data-mission="install"><span class="n">ภารกิจ 4</span><b>ติดตั้งตามมาตรฐาน</b><span>ช่าง 2 คนติดตั้งแอร์ติดผนังตามแบบฟอร์มงานติดตั้ง</span><small>13 ขั้น · ทีมช่าง</small><i class="st">ยังไม่เล่น</i></a></li>
+        <li><a class="b-card" href="#clean" data-mission="clean"><span class="n">ภารกิจ 5</span><b>ล้างใหญ่ C2</b><span>ปลดคอยล์เย็นลงล้างโดยไม่ตัดท่อน้ำยา ทีละขั้นตามแบบฟอร์ม</span><small>27 ขั้น · ทีมช่าง</small><i class="st">ยังไม่เล่น</i></a></li>
+        <li><a class="b-card" href="#repair" data-mission="repair"><span class="n">ภารกิจ 6</span><b>หาสาเหตุก่อนซ่อม</b><span>รับแจ้งอาการ ตรวจวัด แจ้งผล ซ่อมเมื่ออนุมัติ</span><small>10 ขั้น · ช่างตรวจเช็ก</small><i class="st">ยังไม่เล่น</i></a></li>
+        <li><a class="b-card" href="#quality" data-mission="quality"><span class="n">ภารกิจ 7</span><b>ตรวจวัสดุก่อนติดตั้ง</b><span>ท่อทองแดง ฉนวน สายไฟ ท่อน้ำทิ้ง เบรกเกอร์กันดูด</span><small>7 ขั้น · วัสดุ</small><i class="st">ยังไม่เล่น</i></a></li>
+        <li><a class="b-card" href="#area" data-mission="area"><span class="n">ภารกิจ 8</span><b>ส่งทีมถึงบ้านคุณ</b><span>ดูพื้นที่บริการจากถนนพระราม 2 แล้วตรวจค่าเดินทาง</span><small>3 ขั้น · แผนที่</small><i class="st">ยังไม่เล่น</i></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ภารกิจ 1 -->
+  <section class="fm b-mis" id="how" data-film='{"kind":"cycle","type":"wall","drive":"player"}' aria-labelledby="h-how">
+    <div class="wrap">
+      <header class="b-mh"><div><p class="n">ภารกิจ 1</p><h2 id="h-how">รู้จักระบบแอร์</h2><p class="obj"><b>เป้าหมาย</b> ตามลมร้อนในห้องเข้าเครื่อง ผ่านคอยล์เย็น แล้วพาความร้อนออกไปนอกบ้านให้ครบวงจร</p></div><button type="button" class="b-go" data-start="how">เริ่มภารกิจ</button></header>
+      <div class="b-game">
+        <div class="fm-stage"><span class="b-hud" aria-hidden="true"></span><p class="b-cnt" data-count></p><p class="b-done" aria-hidden="true"><b>ภารกิจสำเร็จ</b><span>ได้เหรียญ นักสำรวจระบบ</span></p><div class="fm-prog" data-prog></div></div>
+        <aside class="b-obj" aria-label="ขั้นของภารกิจ"><h3>ขั้นของภารกิจ <span data-count></span></h3><ol class="fm-shots"></ol><div class="fm-ctl"></div></aside>
       </div>
-      <div id="amc" role="tabpanel" aria-labelledby="bt-amc"><div id="amcRoot"><p class="d-load">กำลังเตรียมข้อมูลสัญญา…</p></div></div>
-      <div id="sop" role="tabpanel" aria-labelledby="bt-sop" hidden><div id="sopRoot"></div></div>
-      <div id="projects" role="tabpanel" aria-labelledby="bt-projects" hidden><div id="projRoot"></div></div>
+      <div class="b-reward"><div class="b-next"><span>ภารกิจต่อไป ความเย็นที่พอดีเริ่มจากขนาดเครื่องที่พอดีกับห้อง</span><a href="#room" data-start="room">ไปภารกิจ 2 หาขนาดที่พอดีห้อง</a></div></div>
     </div>
   </section>
 
-  <section class="ch alt" id="ask" aria-labelledby="h-ask">
+  <!-- ภารกิจ 2 -->
+  <section class="fm b-mis" id="room" data-film='{"kind":"room","drive":"player"}' aria-labelledby="h-room">
     <div class="wrap">
-      <header class="ch-h"><h2 id="h-ask">แจ้งอาการหรือสิ่งที่ต้องการ</h2><p>สำหรับฝ่ายอาคารและผู้ดูแลสถานที่ ตอบสามข้อ เราสรุปสิ่งที่เข้าใจ ชี้สาเหตุที่พบบ่อยในภาพ และแนะนำงานพร้อมราคา ช่างยืนยันสาเหตุจริงที่หน้างาน</p></header>
-      <div class="b-ask ch-body">
-        <div class="stage" id="askStage" data-stage='{"type":"cassette","shot":"close","power":true,"auto":false}'><p class="stage-cap">แบบจำลองเพื่ออธิบาย</p></div>
-        <div id="askRoot"><p class="d-load">กำลังเตรียมคำถาม…</p></div>
+      <header class="b-mh"><div><p class="n">ภารกิจ 2</p><h2 id="h-room">หาขนาดที่พอดีห้อง</h2><p class="obj"><b>เป้าหมาย</b> ดูว่าพัดลม บานสวิง และความสะอาดของเครื่องเปลี่ยนระยะลมเย็นอย่างไร แล้วคำนวณขนาดของห้องคุณ</p></div><button type="button" class="b-go" data-start="room">เริ่มภารกิจ</button></header>
+      <div class="b-game">
+        <div class="fm-stage"><span class="b-hud" aria-hidden="true"></span><p class="b-cnt" data-count></p><p class="b-done" aria-hidden="true"><b>ภารกิจสำเร็จ</b><span>ได้เหรียญ นักวัดห้อง</span></p><div class="fm-prog" data-prog></div></div>
+        <aside class="b-obj" aria-label="ขั้นของภารกิจ"><h3>ขั้นของภารกิจ <span data-count></span></h3><ol class="fm-shots"></ol><div class="fm-ctl"></div></aside>
+      </div>
+      <div class="b-reward"><div class="b-rh"><span class="tag">รางวัล</span><h3>ขนาดเครื่องของห้องคุณ</h3><p>ใส่ขนาดห้อง ได้ BTU ที่แนะนำ แล้วดูรุ่นที่มีขนาดนั้นได้ทันที</p></div><div data-sell="room"><p class="d-load">กำลังเตรียมเครื่องคำนวณ…</p></div></div>
+    </div>
+  </section>
+
+  <!-- ภารกิจ 3 -->
+  <section class="fm b-mis" id="buy" data-film='{"kind":"unit","drive":"player"}' aria-labelledby="h-buy">
+    <div class="wrap">
+      <header class="b-mh"><div><p class="n">ภารกิจ 3</p><h2 id="h-buy">สำรวจเครื่องก่อนซื้อ</h2><p class="obj"><b>เป้าหมาย</b> เลือกรุ่นจาก <b data-fact="models">705</b> รุ่น <b data-fact="brands">22</b> ยี่ห้อ แล้วดูตัวเครื่องให้ครบทุกมุม ราคาเครื่องและค่าติดตั้งอยู่ข้างรุ่น</p></div><button type="button" class="b-go" data-start="buy">เริ่มภารกิจ</button></header>
+      <div class="b-game">
+        <div class="fm-stage stage" data-stage='{"type":"wall","shot":"hero","power":true,"auto":false}'><span class="b-hud" aria-hidden="true"></span><p class="b-cnt" data-count></p><p class="b-done" aria-hidden="true"><b>ภารกิจสำเร็จ</b><span>ได้เหรียญ นักเลือกเครื่อง</span></p><div class="fm-prog" data-prog></div></div>
+        <aside class="b-obj" aria-label="ขั้นของภารกิจ"><h3>ขั้นของภารกิจ <span data-count></span></h3><ol class="fm-shots"></ol><div class="fm-ctl"></div></aside>
+      </div>
+      <div class="b-sr"><div data-sr-ctl></div><div data-showroom><p class="d-load">กำลังเตรียมรายการรุ่น…</p></div></div>
+    </div>
+  </section>
+
+  <!-- ภารกิจ 4 -->
+  <section class="fm b-mis" id="install" data-film='{"kind":"crew","job":"install","type":"wall","level":"STANDARD","drive":"player"}' aria-labelledby="h-install">
+    <div class="wrap">
+      <header class="b-mh"><div><p class="n">ภารกิจ 4</p><h2 id="h-install">ติดตั้งตามมาตรฐาน</h2><p class="obj"><b>เป้าหมาย</b> ช่าง 2 คนติดตั้งแอร์ติดผนังตามแบบฟอร์มงานติดตั้ง SBP-SR-ACIN-UNI-001 Rev.04 ทดสอบรอยรั่วและทำสุญญากาศก่อนเปิดวาล์ว</p></div><button type="button" class="b-go" data-start="install">เริ่มภารกิจ</button></header>
+      <div class="b-game">
+        <div class="fm-stage"><span class="b-hud" aria-hidden="true"></span><p class="b-cnt" data-count></p><p class="b-done" aria-hidden="true"><b>ภารกิจสำเร็จ</b><span>ได้เหรียญ ผู้คุมงานติดตั้ง</span></p><div class="fm-prog" data-prog></div></div>
+        <aside class="b-obj" aria-label="ขั้นของภารกิจ"><h3>ขั้นของภารกิจ <span data-count></span></h3><ol class="fm-shots"></ol><dl class="b-crew" data-crew hidden></dl><div class="fm-ctl"></div></aside>
+      </div>
+      <div class="b-reward"><div class="b-rh"><span class="tag">รางวัล</span><h3>ค่าติดตั้งของงานนี้</h3><p>รวมท่อและวัสดุ 4 เมตรแรก รับประกันงานติดตั้ง 3 ปีเมื่อซื้อเครื่องกับบริษัท หรือ 1 ปีเมื่อจัดหาเครื่องเอง</p></div><div data-sell="install"><p class="d-load">กำลังเตรียมราคาติดตั้ง…</p></div></div>
+    </div>
+  </section>
+
+  <!-- ภารกิจ 5 -->
+  <section class="fm b-mis" id="clean" data-film='{"kind":"crew","job":"clean","type":"wall","level":"C2","drive":"player"}' aria-labelledby="h-clean">
+    <div class="wrap">
+      <header class="b-mh"><div><p class="n">ภารกิจ 5</p><h2 id="h-clean">ล้างใหญ่ C2</h2><p class="obj"><b>เป้าหมาย</b> ปลดคอยล์เย็นลงล้างโดยไม่ตัดท่อน้ำยา ถอดใบพัดและถาดน้ำทิ้งตามทะเบียนชิ้นส่วน ทีละขั้นตามแบบฟอร์มงานล้าง SBP-SR-ACCL-UNI-001 Rev.07</p></div><button type="button" class="b-go" data-start="clean">เริ่มภารกิจ</button></header>
+      <div class="b-game">
+        <div class="fm-stage"><span class="b-hud" aria-hidden="true"></span><p class="b-cnt" data-count></p><p class="b-done" aria-hidden="true"><b>ภารกิจสำเร็จ</b><span>ได้เหรียญ ผู้คุมงานล้าง</span></p><div class="fm-prog" data-prog></div></div>
+        <aside class="b-obj" aria-label="ขั้นของภารกิจ"><h3>ขั้นของภารกิจ <span data-count></span></h3><ol class="fm-shots"></ol><dl class="b-crew" data-crew hidden></dl><div class="fm-ctl"></div></aside>
+      </div>
+      <div class="b-reward"><div class="b-rh"><span class="tag">รางวัล</span><h3>ค่าล้างของเครื่องคุณ</h3><p>เลือกประเภท ขนาด วิธีล้าง แพ็กเกจ และจำนวนเครื่อง ได้ราคาจาก Pricebook ทันที</p></div><div data-sell="clean"><p class="d-load">กำลังเตรียมราคางานล้าง…</p></div></div>
+    </div>
+  </section>
+
+  <!-- ภารกิจ 6 -->
+  <section class="fm b-mis" id="repair" data-film='{"kind":"story","story":"repair","drive":"player"}' aria-labelledby="h-repair">
+    <div class="wrap">
+      <header class="b-mh"><div><p class="n">ภารกิจ 6</p><h2 id="h-repair">หาสาเหตุก่อนซ่อม</h2><p class="obj"><b>เป้าหมาย</b> รับแจ้งอาการ ตรวจวัดที่หน้างาน แจ้งผลและราคาเป็นรายรายการ แล้วลงมือเมื่อลูกค้าอนุมัติเท่านั้น</p></div><button type="button" class="b-go" data-start="repair">เริ่มภารกิจ</button></header>
+      <div class="b-game">
+        <div class="fm-stage"><span class="b-hud" aria-hidden="true"></span><p class="b-cnt" data-count></p><p class="b-done" aria-hidden="true"><b>ภารกิจสำเร็จ</b><span>ได้เหรียญ นักวินิจฉัย</span></p><div class="fm-prog" data-prog></div></div>
+        <aside class="b-obj" aria-label="ขั้นของภารกิจ"><h3>ขั้นของภารกิจ <span data-count></span></h3><ol class="fm-shots"></ol><div class="fm-ctl"></div></aside>
+      </div>
+      <div class="b-reward"><div class="b-rh"><span class="tag">รางวัล</span><h3>เล่าอาการของแอร์คุณ</h3><p>ตอบสามข้อ เราชี้สาเหตุที่พบบ่อยในภาพ แนะนำงานที่ควรทำก่อน พร้อมราคา ช่างยืนยันสาเหตุจริงที่หน้างานเสมอ</p></div>
+        <div class="b-ask"><div data-concierge><p class="d-load">กำลังเตรียมคำถาม…</p></div><div class="stage" data-cc-stage data-stage='{"type":"wall","shot":"close","power":true,"auto":false}'><p class="stage-cap">แบบจำลองเพื่ออธิบาย</p></div></div>
+        <div data-sell="repair"></div></div>
+    </div>
+  </section>
+
+  <!-- ภารกิจ 7 -->
+  <section class="fm b-mis" id="quality" data-film='{"kind":"materials","drive":"player"}' aria-labelledby="h-quality">
+    <div class="wrap">
+      <header class="b-mh"><div><p class="n">ภารกิจ 7</p><h2 id="h-quality">ตรวจวัสดุก่อนติดตั้ง</h2><p class="obj"><b>เป้าหมาย</b> ดูวัสดุทุกชิ้นที่อยู่ในผนังหลังติดตั้งเสร็จ ทุกรายการระบุยี่ห้อ ทองแดงหนา 0.70 มม.</p></div><button type="button" class="b-go" data-start="quality">เริ่มภารกิจ</button></header>
+      <div class="b-game">
+        <div class="fm-stage"><span class="b-hud" aria-hidden="true"></span><p class="b-cnt" data-count></p><p class="b-done" aria-hidden="true"><b>ภารกิจสำเร็จ</b><span>ได้เหรียญ ผู้ตรวจวัสดุ</span></p><div class="fm-prog" data-prog></div></div>
+        <aside class="b-obj" aria-label="ขั้นของภารกิจ"><h3>ขั้นของภารกิจ <span data-count></span></h3><ol class="fm-shots"></ol><div class="fm-ctl"></div></aside>
+      </div>
+      <div class="b-reward"><div class="b-rh"><span class="tag">รางวัล</span><h3>วัสดุแต่ละระดับงาน</h3><p>ตารางเดียวกับที่ทีมใช้เตรียมงาน</p></div><div data-sell="quality"><p class="d-load">กำลังเตรียมตารางวัสดุ…</p></div></div>
+    </div>
+  </section>
+
+  <!-- ภารกิจ 8 -->
+  <section class="fm b-mis" id="area" data-film='{"kind":"map","drive":"player"}' aria-labelledby="h-area">
+    <div class="wrap">
+      <header class="b-mh"><div><p class="n">ภารกิจ 8</p><h2 id="h-area">ส่งทีมถึงบ้านคุณ</h2><p class="obj"><b>เป้าหมาย</b> ดูพื้นที่บริการจากสำนักงานใหญ่ถนนพระราม 2 แล้วตรวจว่าบ้านคุณอยู่ในพื้นที่และมีค่าเดินทางเท่าไร</p></div><button type="button" class="b-go" data-start="area">เริ่มภารกิจ</button></header>
+      <div class="b-game">
+        <div class="fm-stage"><span class="b-hud" aria-hidden="true"></span><p class="b-cnt" data-count></p><p class="b-done" aria-hidden="true"><b>ภารกิจสำเร็จ</b><span>ได้เหรียญ ผู้นำทาง</span></p><div class="fm-prog" data-prog></div></div>
+        <aside class="b-obj" aria-label="ขั้นของภารกิจ"><h3>ขั้นของภารกิจ <span data-count></span></h3><ol class="fm-shots"></ol><div class="fm-ctl"></div></aside>
+      </div>
+      <div class="b-reward"><div class="b-rh"><span class="tag">รางวัล</span><h3>พื้นที่และค่าเดินทางของคุณ</h3><p>พิมพ์เขต อำเภอ หรือจังหวัด ดูผลบนแผนที่และค่าเดินทางต่อเที่ยว</p></div><div data-sell="area"><p class="d-load">กำลังเตรียมพื้นที่บริการ…</p></div></div>
+    </div>
+  </section>
+
+  <section class="b-sec" id="booking" aria-labelledby="h-booking">
+    <div class="wrap">
+      <header class="ch-h"><h2 id="h-booking">นัดทีมช่าง</h2><p>เลือกวันที่สะดวก ทีมโทรยืนยันวัน เวลา และราคาก่อนเข้างานทุกครั้ง ได้เลขที่คำขอไว้ตรวจสถานะเอง ใบเสนอราคาที่เก็บไว้ส่งไปพร้อมคำขอ</p></header>
+      <div class="b-book">
+        <div class="stage" data-stage='{"type":"wall","shot":"wide","power":true,"auto":false}'><p class="stage-cap">แบบจำลองเพื่ออธิบาย</p></div>
+        <div id="bookRoot"></div>
       </div>
     </div>
   </section>
 
-  <section class="ch" id="models" aria-labelledby="h-models">
+  <section class="b-sec" id="contact" aria-labelledby="h-contact">
     <div class="wrap">
-      <header class="ch-h"><h2 id="h-models">แอร์ทุกรุ่นสำหรับงานอาคาร</h2><p><span class="num" data-fact="models">705</span> รุ่น จาก <span class="num" data-fact="brands">22</span> ยี่ห้อ ติดผนัง แขวนใต้ฝ้า สี่ทิศทาง ตู้ตั้งพื้น เลือกรุ่นแล้วดูตัวเครื่องตามขนาดสเปก ทางลม และชิ้นส่วนภายใน</p></header>
-      <div class="b-sr ch-body">
-        <div class="stage" id="srStage" data-stage='{"type":"cassette","shot":"hero","power":true,"auto":false}'><p class="stage-cap">แบบจำลองเพื่ออธิบาย</p></div>
-        <div id="srCtl"></div>
-        <div id="srRoot"><p class="d-load">กำลังเตรียมรายการรุ่น…</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="ch alt" id="clean" aria-labelledby="h-clean">
-    <div class="wrap">
-      <header class="ch-h"><h2 id="h-clean">ล้างแอร์</h2><p>ล้างปกติที่ตำแหน่งเดิม หรือปลดเครื่องลงมาล้างใหญ่โดยไม่ตัดท่อน้ำยา แพ็กเกจเอกสารต่างกันที่การวัดค่า ภาพก่อน–หลัง และรายงานที่ส่งมอบ</p></header>
-      <div id="cleanRoot" class="ch-body"><p class="d-load">กำลังเตรียมข้อมูลงานล้าง…</p></div>
-      <div class="d-demand">
-        <button type="button" class="v-btn ghost" id="b3dClean">ดูทีมช่างทำงานแบบ 3 มิติ</button>
-        <p>ภาพจำลองช่าง 2 คนล้างแอร์สี่ทิศทางทีละขั้น ใช้ข้อมูลประมาณ 2–3 MB เปิดเมื่อต้องการดู</p>
-      </div>
-      <div id="v3dClean" class="d-3d" hidden></div>
-    </div>
-  </section>
-
-  <section class="ch" id="install" aria-labelledby="h-install">
-    <div class="wrap">
-      <header class="ch-h"><h2 id="h-install">ติดตั้งแอร์</h2><p>มาตรฐานและพรีเมียม ทุกงานระบุยี่ห้อวัสดุ ทดสอบรั่วและทำ Vacuum ตามแบบฟอร์ม SBP-SR-ACIN-UNI-001 Rev.04 รับประกันงานติดตั้ง 3 ปีเมื่อซื้อเครื่องกับบริษัท หรือ 1 ปีเมื่อจัดหาเครื่องเอง</p></header>
-      <div id="installRoot" class="ch-body"><p class="d-load">กำลังเตรียมราคาติดตั้ง…</p></div>
-      <div class="d-demand">
-        <button type="button" class="v-btn ghost" id="bFit">ลองวางแอร์ในห้องของคุณ</button>
-        <p>ใส่ขนาดห้อง ฝ้า ผนังภายนอก แนวท่อ และตำแหน่งคอยล์ร้อน ส่งแบบห้องให้ทีมประเมินได้</p>
-      </div>
-      <div id="vFit" class="d-3d" hidden></div>
-    </div>
-  </section>
-
-  <section class="ch alt" id="repair" aria-labelledby="h-repair">
-    <div class="wrap">
-      <header class="ch-h"><h2 id="h-repair">ตรวจเช็กและซ่อม</h2><p>ช่างตรวจวินิจฉัยที่หน้างาน แจ้งผลและราคาซ่อมเป็นรายรายการ แล้วลงมือเมื่อคุณอนุมัติเท่านั้น</p></header>
-      <div id="repairRoot" class="ch-body"><p class="d-load">กำลังเตรียมราคางานซ่อม…</p></div>
-    </div>
-  </section>
-
-  <section class="ch" id="booking" aria-labelledby="h-booking">
-    <div class="wrap">
-      <header class="ch-h"><h2 id="h-booking">นัดสำรวจหรือจองคิว</h2><p>เลือกวันที่สะดวก ทีมโทรยืนยันวัน เวลา ขอบเขตงาน และราคาก่อนเข้างานทุกครั้ง ได้เลขที่คำขอไว้ตรวจสถานะเอง</p></header>
-      <div id="bookRoot" class="ch-body"></div>
-    </div>
-  </section>
-
-  <section class="ch alt" id="area" aria-labelledby="h-area">
-    <div class="wrap">
-      <header class="ch-h"><h2 id="h-area">พื้นที่ให้บริการ</h2><p>กรุงเทพฯ และปริมณฑลไม่มีค่าเดินทาง จังหวัดใกล้เคียงรับงานถึงประมาณ 150 กม. จากสำนักงานใหญ่ ถนนพระราม 2 งานสัญญาจำนวนมากยกเว้นค่าเดินทางตามเกณฑ์</p></header>
-      <div class="d-split ch-body" data-zone>
-        <div class="d-col">
-          <label class="d-field">ตรวจพื้นที่ของคุณ<input data-z-input placeholder="เขต อำเภอ หรือจังหวัด"></label>
-          <div class="d-try" role="group" aria-label="ตัวอย่างพื้นที่"><button type="button" data-z-try="บางพลี">บางพลี</button><button type="button" data-z-try="ลาดกระบัง">ลาดกระบัง</button><button type="button" data-z-try="ศรีราชา">ศรีราชา</button><button type="button" data-z-try="บางปะอิน">บางปะอิน</button></div>
-          <div class="d-zres" data-z-result hidden></div>
-          <p class="d-sub">ระยะทางคำนวณโดยประมาณจากพิกัดอำเภอ ทีมยืนยันจากที่อยู่จริงก่อนนัด</p>
-        </div>
-        <div class="d-col" id="travelTbl"></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="ch" id="contact" aria-labelledby="h-contact">
-    <div class="wrap">
-      <header class="ch-h"><h2 id="h-contact">คำถามที่พบบ่อยและติดต่อ</h2><p>ฝากชื่อและเบอร์ไว้ ทีมติดต่อกลับเพื่อนัดสำรวจหรือส่งใบเสนอราคาอย่างเป็นทางการ</p></header>
-      <div class="d-split ch-body">
+      <header class="ch-h"><h2 id="h-contact">คำถามที่พบบ่อยและติดต่อ</h2><p>ไม่พบคำตอบ ฝากชื่อและเบอร์ไว้ ทีมติดต่อกลับ หรือโทรหาเราโดยตรง</p></header>
+      <div class="d-split">
         <div class="d-col" id="faqList"></div>
         <div class="d-col" id="quote">
           <div class="d-contact">
@@ -255,46 +380,60 @@ h1,h2,h3{font-weight:600}
 <footer class="b-ft">
   <div class="wrap b-ft-in">
     <div><div class="plates"><span class="plate"><img src="assets/logos/sbp.png" alt="SP Quality Brand บริษัท สหบูรพากรุ๊ป จำกัด" width="55" height="40"></span><span class="plate"><img src="assets/logos/fujiva.png" alt="FUJIVA แบรนด์แอร์ของบริษัท" width="110" height="36"></span></div>
-      <p>SBP AirCare บริการล้าง ติดตั้ง ซ่อม และสัญญาดูแลแอร์ของบริษัท สหบูรพากรุ๊ป จำกัด</p></div>
-    <div><h3>สำหรับองค์กร</h3><ul><li><a href="#amc">สัญญาล้างรายปี</a></li><li><a href="#sop">ขั้นตอนและ Service Report</a></li><li><a href="#projects">งานโครงการ</a></li><li><button type="button" class="v-link" data-prices="clean">ราคาค่าบริการทั้งหมด</button></li></ul></div>
-    <div><h3>ราคาบนเว็บ</h3><p>ทุกราคาก่อน VAT ปัดเป็นหลักร้อย จาก Pricebook 2569 ของบริษัท นิติบุคคลที่ต้องการใบกำกับภาษีบวก VAT 7% ราคาขั้นบันไดคิดจากยอดสัญญา ไม่รวมค่าเดินทาง ภาพ 3 มิติทั้งหมดเป็นแบบจำลองเพื่ออธิบาย</p></div>
-    <div><h3>เว็บไซต์ทดลอง</h3><p>แบบ B2 Tower ของเว็บต้นแบบ SBP AirCare รุ่นที่ 2 ใช้ข้อมูลและระบบจองคิวชุดเดียวกับทุกแบบ</p><p><a href="./">เทียบทุกแบบ</a></p><p><button type="button" class="v-btn ghost" data-feedback>ให้ความเห็นเรื่องเว็บไซต์</button></p></div>
+      <p>SBP AirCare บริการล้าง ติดตั้ง ซ่อม และสัญญาดูแลแอร์ของ<span class="nw">บริษัท สหบูรพากรุ๊ป จำกัด</span></p></div>
+    <div><h3>ภารกิจ</h3><ul><li><a href="#install">ติดตั้งตามมาตรฐาน</a></li><li><a href="#clean">ล้างใหญ่ C2</a></li><li><a href="#repair">หาสาเหตุก่อนซ่อม</a></li><li><a href="#buy">สำรวจเครื่องก่อนซื้อ</a></li><li><button type="button" class="v-link" data-prices="clean">ราคาค่าบริการทั้งหมด</button></li></ul></div>
+    <div><h3>ราคาบนเว็บ</h3><p>ทุกราคาก่อน VAT ปัดเป็นหลักร้อย จาก Pricebook 2569 ของบริษัท บุคคลทั่วไปชำระตามราคาที่แสดง นิติบุคคลที่ต้องการใบกำกับภาษีบวก VAT 7% รายการประเมินหน้างานแจ้งราคาก่อนเริ่มงาน ภาพ 3 มิติทั้งหมดเป็นแบบจำลองเพื่ออธิบาย เหรียญในหน้านี้เป็นเพียงการนับภารกิจที่เล่นจบ ไม่มีมูลค่าและไม่ใช่ส่วนลด</p></div>
+    <div><h3>เว็บไซต์ทดลอง</h3><p>แบบ B2 ภารกิจ ของเว็บต้นแบบ SBP AirCare รุ่นที่ 2 ใช้ข้อมูลและระบบจองคิวชุดเดียวกับทุกแบบ</p><p><a href="./">เทียบทุกแบบ</a></p><p><button type="button" class="v-btn ghost" data-feedback>ให้ความเห็นเรื่องเว็บไซต์</button></p></div>
   </div>
 </footer>
 <div class="drawer" data-drawer id="drawer" hidden><div class="dp" role="dialog" aria-modal="true" aria-label="รายละเอียด"><button type="button" class="x" data-close aria-label="ปิด">×</button><div id="drawerBody"></div></div></div>
 
 <script type="module">
-// r12 แบบ B2 · Tower — facilities and buildings; the stage plays a meeting floor at night (mood "tower").
-// The fleet board (hero) prices an annual cleaning contract with the public quantity ladder (estimateContract, §6.6 #3).
-import { mountV2 } from './assets/v2site.js';
-import { TYPE_BY_ID, CLEAN_PKGS, estimateContract, baht, h, $, $$ } from './assets/sbp-core.js';
-const V = await mountV2({ variant: 'B2', mood: 'tower', place: 'office', theme: 'dark', srStart: { type: 'cassette' } });
-const F = { n: { wall: 12, ceiling: 4, cassette: 16, floor: 0 }, visits: 3, pkg: 'Standard Care' };
-const box = $('#fleet');
-const out = h('div', { class: 'fl-out', 'aria-live': 'polite' });
-const step = (t) => { const i = h('input', { type: 'number', inputmode: 'numeric', min: 0, max: 999, value: F.n[t], 'aria-label': `จำนวน${TYPE_BY_ID[t].th}` });
-  const set = v => { F.n[t] = Math.max(0, Math.min(999, Math.round(+v || 0))); i.value = F.n[t]; calc(); };
-  i.addEventListener('change', () => set(i.value)); i.addEventListener('input', () => { if (i.value !== '') set(i.value); });
-  return h('label', { class: 'fl-u' }, TYPE_BY_ID[t].th, h('span', { class: 'cc-num-in' }, h('button', { type: 'button', 'aria-label': `ลด ${TYPE_BY_ID[t].th}`, onclick: () => set(F.n[t] - 1) }, '−'), i, h('button', { type: 'button', 'aria-label': `เพิ่ม ${TYPE_BY_ID[t].th}`, onclick: () => set(F.n[t] + 1) }, '+'))); };
-const seg = (opts, cur, label, on) => { const g = h('div', { class: 'cc-chips', role: 'group', 'aria-label': label }); const draw = v => $$('button', g).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === String(v)))); opts.forEach(([v, th]) => g.append(h('button', { type: 'button', 'data-v': v, onclick: () => { draw(v); on(v); } }, th))); draw(cur); return g; };
-const book = h('button', { type: 'button', class: 'v-btn go' }, 'นัดสำรวจหน้างาน');
-box.replaceChildren(
-  h('h2', { id: 'h-fleet' }, 'ประมาณการสัญญาล้างรายปี', h('small', {}, 'ราคาขั้นบันไดสาธารณะ')),
-  h('div', { class: 'fl-units' }, ['wall', 'ceiling', 'cassette', 'floor'].map(step)),
-  h('div', { class: 'fl-row' }, h('span', {}, 'ล้างต่อปี'), seg([['2', '2 ครั้ง'], ['3', '3 ครั้ง'], ['4', '4 ครั้ง']], String(F.visits), 'ล้างต่อปี', v => { F.visits = +v; calc(); })),
-  h('div', { class: 'fl-row' }, h('span', {}, 'แพ็กเกจ'), seg(CLEAN_PKGS.map(p => [p.id, p.th]), F.pkg, 'แพ็กเกจ', v => { F.pkg = v; calc(); })),
-  out, h('div', { class: 'fl-acts' }, book, h('a', { class: 'v-btn ghost', href: '#amc' }, 'ดูตารางขั้นบันได')));
-let E = null;
-function calc() {
-  E = estimateContract({ units: F.n, visits: F.visits, pkg: F.pkg });
-  if (!E.count) { out.replaceChildren(h('p', { class: 'next' }, 'ใส่จำนวนเครื่องอย่างน้อย 1 เครื่อง')); return; }
-  out.replaceChildren(
-    h('div', {}, h('p', { class: 'lab' }, `ประมาณการต่อปี ${E.count} เครื่อง ${F.visits} ครั้ง`), h('p', { class: 'big' }, baht(E.annualEx)), h('p', { class: 'lab' }, 'ก่อน VAT ไม่รวมค่าเดินทาง ล้างใหญ่ปีละ 1 ครั้งรวมในยอดนี้')),
-    h('div', {}, h('p', { class: 'lab' }, 'เฉลี่ยต่อเครื่องต่อปี'), h('p', { class: 'big', style: 'font-size:clamp(24px,2.2vw,30px)' }, baht(E.perUnitYear)), h('p', { class: 'tier' }, E.tierTh)),
-    h('p', { class: 'next' }, E.next ? `เพิ่มอีก ${E.next.need} เครื่อง ได้ราคาขั้น ${E.next.tier.th} (${E.next.tier.note})` : E.project ? 'จำนวนนี้ขอราคาโครงการเพิ่มเติมได้ในใบเสนอราคา' : ''));
-}
-book.addEventListener('click', () => V.book({ service: 'amc', units: Object.fromEntries(Object.entries(F.n).filter(([, v]) => v)), pkg: F.pkg, notes: E && E.count ? `สัญญาล้างรายปี ${E.count} เครื่อง ${F.visits} ครั้ง/ปี · ${F.pkg} · ประมาณ ${baht(E.annualEx)} ต่อปี ก่อน VAT` : '' }));
-calc();
+// r16 แบบ B2 · ภารกิจ — every chapter a mission played step by step (film.js "player"); badges kept in this browser only
+import { mountFilmSite } from './assets/filmsite.js';
+import { tone } from './assets/filmfx.js';
+const KEY = 'sbp-b2-missions', IDS = ['how', 'room', 'buy', 'install', 'clean', 'repair', 'quality', 'area'];
+const BADGE = { how: 'นักสำรวจระบบ', room: 'นักวัดห้อง', buy: 'นักเลือกเครื่อง', install: 'ผู้คุมงานติดตั้ง', clean: 'ผู้คุมงานล้าง', repair: 'นักวินิจฉัย', quality: 'ผู้ตรวจวัสดุ', area: 'ผู้นำทาง' };
+let done = new Set();
+try { done = new Set((JSON.parse(localStorage.getItem(KEY) || '[]') || []).filter(x => IDS.includes(x))); } catch (_) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify([...done])); } catch (_) {} };
+const hud = () => {
+  document.querySelector('[data-xp-n]').textContent = `${done.size} / ${IDS.length}`;
+  document.querySelector('.b-xp').style.setProperty('--xp', done.size / IDS.length);
+  document.querySelectorAll('[data-mission]').forEach(a => { const on = done.has(a.dataset.mission); a.toggleAttribute('data-done', on); a.querySelector('.st').textContent = on ? 'สำเร็จ' : 'ยังไม่เล่น'; });
+  IDS.forEach(id => document.getElementById(id)?.classList.toggle('is-done', done.has(id)));
+};
+const toastEl = document.querySelector('.b-toast');
+let tt = 0;
+const badge = text => { toastEl.replaceChildren(Object.assign(document.createElement('i'), { textContent: '★', ariaHidden: 'true' }), text); toastEl.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => toastEl.classList.remove('on'), 3600); };
+hud();
+
+const api = await mountFilmSite({
+  variant: 'B2', theme: 'dark', mood: 'tower', place: 'home', srStart: { type: 'wall' },
+  onStep(ch, i, s) {
+    if (i >= 0) tone('step');
+    // crew missions: who does what in this step
+    const crew = ch.el.querySelector('[data-crew]');
+    if (crew) { crew.hidden = !(s && s.who); if (s && s.who) crew.replaceChildren(...[['ช่างหัวหน้า', s.who[0]], ['ช่างผู้ช่วย', s.who[1]]].flatMap(([k, v]) => [Object.assign(document.createElement('dt'), { textContent: k }), Object.assign(document.createElement('dd'), { textContent: v })])); }
+    // leaving the last step takes the banner away
+    if (ch.steps && i < ch.steps.length - 1) ch.el.classList.remove('is-won');
+  },
+  onDone(ch) {
+    ch.el.classList.add('is-won'); setTimeout(() => ch.el.classList.remove('is-won'), 3800);
+    tone('done');
+    if (!done.has(ch.id) && BADGE[ch.id]) { done.add(ch.id); save(); hud(); setTimeout(() => { badge(`ได้เหรียญ ${BADGE[ch.id]} · ภารกิจ ${done.size} จาก ${IDS.length}`); tone('badge'); }, 900); }
+  },
+});
+// "เริ่มภารกิจ": from the first step, with the viewport on screen
+document.querySelectorAll('[data-start]').forEach(b => b.addEventListener('click', e => {
+  const id = b.dataset.start, sec = document.getElementById(id); if (!sec) return;
+  if (b.tagName === 'A') e.preventDefault();
+  const view = sec.querySelector('.b-game') || sec;
+  view.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
+  api.film.go(id, -1); setTimeout(() => api.film.play(id), 700);
+}));
+// a mission card scrolls to its mission and plays it
+document.querySelectorAll('[data-mission]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); document.querySelector(`[data-start="${a.dataset.mission}"].b-go`)?.click(); history.replaceState(null, '', '#' + a.dataset.mission); }));
 </script>
 </body>
 </html>

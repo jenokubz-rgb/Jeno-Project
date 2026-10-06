@@ -6,9 +6,8 @@ import { launch } from '../tests/_lib.mjs';
 const BASE = process.env.BASE || 'http://localhost:8765';
 const JOBS = {
   a2: { mood: 'aurora', type: 'wall', d: [1600, 900, 0.3, 0.08], m: [780, 1500, 0, 0.22] },
-  b2: { mood: 'tower', type: 'cassette', d: [900, 1000, 0, 0], m: [900, 620, 0, 0] },
-  c2: { mood: 'noir', type: 'wall', d: [1600, 670, 0, 0], m: [900, 675, 0, 0] },
-  d2: { mood: 'atelier', type: 'wall', d: [880, 1100, 0, 0], m: [900, 675, 0, 0] },
+  b2: { mood: 'tower', type: 'cassette', d: [1600, 900, 0, 0], m: [780, 1500, 0, 0] },
+  c2: { mood: 'atelier', type: 'wall', d: [1000, 800, 0, 0], m: [900, 720, 0, 0] },
 };
 const pages = process.argv.slice(2).length ? process.argv.slice(2) : Object.keys(JOBS);
 const b = await launch();
