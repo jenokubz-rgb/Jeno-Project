@@ -51,3 +51,17 @@ section.sec{padding-block:64px 8px}
 footer{background:var(--tile-2);border-top:0}
 .c3-tabs .nav{flex:1}
 .c3-hero>.wrap{width:100%}
+/* r17 · gallery prints: every photo hangs in a white mat with a soft shadow on the wall, lit from above; the hero gets a
+   spotlight on the wall behind the headline and a soft shadow under the panorama */
+:root{
+  --r-ph:6px;
+  --ph-shadow:0 0 0 10px #FFFFFF,0 0 0 11px rgba(16,28,46,.08),0 40px 60px -36px rgba(16,28,46,.45);
+  --ph-light:radial-gradient(130% 90% at 50% -12%,rgba(255,255,255,.34),rgba(255,255,255,0) 58%),linear-gradient(0deg,rgba(16,28,46,.18),rgba(16,28,46,0) 34%);
+  --ph-blend:soft-light;
+}
+.c3-hero{background:radial-gradient(56% 62% at 50% 0%,#E6EDF6 0%,rgba(230,237,246,.55) 38%,rgba(255,255,255,0) 72%)}
+.c3-hero>.wrap:has(.ph3)::after{content:"";display:block;height:34px;margin:2px 6% 0;background:radial-gradient(50% 60% at 50% 0%,rgba(16,28,46,.16),rgba(16,28,46,0) 72%)}
+.c3-hero-ph{--ph-pos:50% 46%}
+.ph3{margin:11px}
+.c3-hero .ph3{margin-inline:11px}
+.sx-vh.has-ph{background:radial-gradient(40% 70% at 76% 40%,#EDF2F8,rgba(237,242,248,0) 70%)}

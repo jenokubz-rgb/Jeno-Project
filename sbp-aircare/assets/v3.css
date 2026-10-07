@@ -275,14 +275,36 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
 @media (max-width:760px){#quote>div,#quote>.tile,#quote .sheet,#quote .panel{grid-template-columns:1fr!important}#qform{grid-template-columns:1fr!important}}
 
 /* ---- r13 · photos: AI illustrations, always captioned "ภาพประกอบ" (rules: no brand on the units, no person presented as our team) ---- */
-.ph3{position:relative;margin:0;border-radius:var(--r-ph);overflow:hidden;background:linear-gradient(155deg,var(--blue-l),var(--tile-2) 70%);aspect-ratio:var(--ar);max-width:100%;isolation:isolate}
-.ph3 img{display:block;width:100%;height:100%;object-fit:cover}
-.ph3 figcaption{position:absolute;right:10px;bottom:10px;z-index:1;font-size:12px;line-height:1.4;padding:2px 9px;border-radius:999px;background:rgba(255,255,255,.88);color:#34425A}
-/* page heading + its photo (site.js puts <figure data-sx-photo> into .sx-vh) */
-.sx-vh.has-ph{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);column-gap:clamp(20px,4vw,56px);align-items:center}
-.sx-vh.has-ph>:not(figure){grid-column:1}
-.sx-vh.has-ph>figure{grid-column:2;grid-row:1/span 8;align-self:stretch;aspect-ratio:auto;min-height:260px}
-@media (max-width:860px){.sx-vh.has-ph{grid-template-columns:minmax(0,1fr)}.sx-vh.has-ph>figure{grid-column:1;grid-row:auto;order:-1;min-height:0;aspect-ratio:16/9}}
+.ph3{position:relative;margin:0;border-radius:var(--r-ph);overflow:hidden;background:linear-gradient(155deg,var(--blue-l),var(--tile-2) 70%);aspect-ratio:var(--ar);max-width:100%;isolation:isolate;box-shadow:var(--ph-shadow,none)}
+.ph3 img{display:block;width:100%;height:100%;object-fit:cover;object-position:var(--ph-pos,50% 50%);filter:var(--ph-filter,none)}
+/* r17 · the edition's light over the print (::before) and a hairline so white walls never melt into a white page (::after) */
+.ph3::before,.ph3::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit}
+.ph3::before{background:var(--ph-light,none);mix-blend-mode:var(--ph-blend,normal)}
+.ph3::after{box-shadow:inset 0 0 0 1px rgba(16,28,46,.09)}
+.ph3 figcaption{position:absolute;right:10px;bottom:10px;z-index:1;font-size:12px;line-height:1.4;padding:2px 9px;border-radius:var(--ph-cap-r,999px);background:var(--ph-cap-bg,rgba(255,255,255,.86));color:var(--ph-cap-ink,#34425A);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+/* r17 · a photo settles into place when its page opens (replays on every page switch: hidden → shown restarts it);
+   hero photos drift 5% inside their frame while the hero scrolls away (at rest the frame shows the top of the photo).
+   Nothing moves with reduced motion. */
+@media (prefers-reduced-motion:no-preference){
+  .ph3 img{animation:ph3-in 1.8s var(--ease) both}
+  @keyframes ph3-in{from{scale:1.05}to{scale:1}}
+  @supports (animation-timeline:view()){
+    .ph3.hero-ph img{height:105.3%;animation:ph3-in 1.8s var(--ease) both,ph3-drift linear both;animation-timeline:auto,view();animation-range:normal,exit}
+    @keyframes ph3-drift{to{translate:0 -5%}}
+  }
+}
+/* page heading + its photo (site.js puts <figure data-sx-photo> into .sx-vh): the words sit centred against a 3:2 print */
+@media (min-width:861px){
+  .sx-vh.has-ph{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr) repeat(6,auto) minmax(0,1fr);column-gap:clamp(28px,4.6vw,72px);row-gap:10px;align-items:start}
+  .sx-vh.has-ph>:not(figure){grid-column:1}
+  .sx-vh.has-ph>.sx-crumb{grid-row:2}.sx-vh.has-ph>h1{grid-row:3}.sx-vh.has-ph>.sx-lead{grid-row:4}.sx-vh.has-ph>.sx-facts{grid-row:5}.sx-vh.has-ph>.sx-jump{grid-row:6}.sx-vh.has-ph>.sx-js{grid-row:7}
+  .sx-vh.has-ph>figure{grid-column:2;grid-row:1/-1;align-self:center;aspect-ratio:3/2;min-height:0}
+  .sx-vh.has-ph>.sx-lead{max-width:34em}
+}
+/* narrow: heading and lead first, then the photo, then the facts and the jump links */
+@media (max-width:860px){.sx-vh.has-ph>:is(.sx-crumb,h1,.sx-lead){order:-2}.sx-vh.has-ph>figure{order:-1;aspect-ratio:16/10;margin-block:6px 4px}}
+/* the pricing collage keeps its own 4:3 and no light overlay, so its white gutters stay even and white */
+.sx-vh.has-ph>figure[data-sx-photo="pricing"]{aspect-ratio:4/3;--ph-light:none}
 .sx-facts{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--ink-2)}
 .sx-facts li::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ok);margin-right:8px;vertical-align:2px}
 /* a section's own lead block */

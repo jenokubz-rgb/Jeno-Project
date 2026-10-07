@@ -65,6 +65,20 @@ section.sec{padding-block:64px 8px}
 footer{background:var(--tile-2);border-top:0}
 .c3-tabs .nav{flex:1}
 .c3-hero>.wrap{width:100%}
+/* r17 · gallery prints: every photo hangs in a white mat with a soft shadow on the wall, lit from above; the hero gets a
+   spotlight on the wall behind the headline and a soft shadow under the panorama */
+:root{
+  --r-ph:6px;
+  --ph-shadow:0 0 0 10px #FFFFFF,0 0 0 11px rgba(16,28,46,.08),0 40px 60px -36px rgba(16,28,46,.45);
+  --ph-light:radial-gradient(130% 90% at 50% -12%,rgba(255,255,255,.34),rgba(255,255,255,0) 58%),linear-gradient(0deg,rgba(16,28,46,.18),rgba(16,28,46,0) 34%);
+  --ph-blend:soft-light;
+}
+.c3-hero{background:radial-gradient(56% 62% at 50% 0%,#E6EDF6 0%,rgba(230,237,246,.55) 38%,rgba(255,255,255,0) 72%)}
+.c3-hero>.wrap:has(.ph3)::after{content:"";display:block;height:34px;margin:2px 6% 0;background:radial-gradient(50% 60% at 50% 0%,rgba(16,28,46,.16),rgba(16,28,46,0) 72%)}
+.c3-hero-ph{--ph-pos:50% 46%}
+.ph3{margin:11px}
+.c3-hero .ph3{margin-inline:11px}
+.sx-vh.has-ph{background:radial-gradient(40% 70% at 76% 40%,#EDF2F8,rgba(237,242,248,0) 70%)}
 
 </style>
 </head>
@@ -86,7 +100,7 @@ footer{background:var(--tile-2);border-top:0}
     <p class="lede">ดูขนาดที่เหมาะกับห้องของคุณ เทียบรุ่นพร้อมราคาติดตั้ง ลองวางในห้องจำลองก่อนตัดสินใจ แล้วให้ทีมช่างของบริษัทติดตั้ง ล้าง และดูแลต่อ ในกรุงเทพฯ และปริมณฑล</p>
     <p class="c3-cta"><a class="btn-primary" href="#shop">เลือกแอร์ใหม่</a><a class="btn-ghost" href="#cleaning">ล้างแอร์ที่มีอยู่</a></p>
   </div>
-  <div class="wrap"><figure class="ph3 c3-hero-ph" style="--ar:21/9"><img src="assets/photos/hero-c.webp" alt="ห้องนั่งเล่นคอนโดชั้นสูงวิวเมือง แอร์ติดผนังสีขาว แสงธรรมชาติ" loading="eager" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure></div>
+  <div class="wrap"><figure class="ph3 c3-hero-ph hero-ph" style="--ar:21/9"><img src="assets/photos/hero-c.webp" alt="ห้องนั่งเล่นคอนโดชั้นสูงวิวเมือง แอร์ติดผนังเหนือผนังทีวี แสงบ่ายจากประตูระเบียง" loading="eager" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure></div>
   <div class="wrap">
     <ul class="jobs c3-jobs" aria-label="เลือกงาน">
       <li><a href="#shop"><span class="ji" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v8H3zM6 15v2M18 15v2M7 11h6"/></svg></span><span><b>ซื้อแอร์ใหม่</b><small data-models></small></span><span class="jp" data-from-buy></span></a></li>
@@ -317,14 +331,14 @@ footer{background:var(--tile-2);border-top:0}
 <div class="tray" data-compare hidden><ul data-compare-list></ul><button type="button" class="btn-primary" data-compare-go>เทียบ</button></div>
 <div class="drawer" data-drawer id="drawer" hidden><div class="dp" role="dialog" aria-modal="true" aria-label="รายละเอียด"><button type="button" class="x" data-close aria-label="ปิด">×</button><div id="drawerBody"></div></div></div>
 <div hidden>
-<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="shop" hidden><img src="assets/photos/pg-shop.webp" alt="ห้องนอนสว่าง มีแอร์ติดผนังเครื่องใหม่เหนือหัวเตียง" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
+<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="shop" hidden><img src="assets/photos/pg-shop.webp" alt="ห้องนอนทาวน์เฮาส์หลังติดตั้งแอร์ติดผนังเครื่องใหม่ รางครอบท่อเดินไปมุมห้อง แสงไฟตอนหัวค่ำ" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
 <figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="cleaning" hidden><img src="assets/photos/pg-clean.webp" alt="ภาพใกล้ครีบคอยล์เย็นขณะฉีดน้ำล้าง มีละอองน้ำ" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
-<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="install" hidden><img src="assets/photos/pg-install.webp" alt="ช่างกำลังบานแฟลร์ท่อทองแดงด้วยเครื่องมือ ข้างคอยล์ร้อน" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
-<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="repair" hidden><img src="assets/photos/pg-repair.webp" alt="ช่างต่อเกจวัดแรงดันกับคอยล์ร้อน ตรวจระบบน้ำยา" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
-<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="business" hidden><img src="assets/photos/pg-business.webp" alt="สำนักงานโล่งกว้าง มีแอร์สี่ทิศทางฝังฝ้าหลายเครื่อง" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
-<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="pricing" hidden><img src="assets/photos/pg-pricing.webp" alt="แอร์สี่ประเภท ติดผนัง แขวนใต้ฝ้า สี่ทิศทาง และตู้ตั้งพื้น ในห้องต่างกัน" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
+<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="install" hidden><img src="assets/photos/pg-install.webp" alt="ช่างคุกเข่าขันแฟลร์นัตเข้าวาล์วคอยล์ร้อนบนขาแขวน ระเบียงคอนโด มีปั๊มสุญญากาศและขดท่อทองแดง" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
+<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="repair" hidden><img src="assets/photos/pg-repair.webp" alt="มือช่างต่อชุดเกจวัดแรงดันเข้าวาล์วคอยล์ร้อน ตรวจระบบน้ำยา" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
+<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="business" hidden><img src="assets/photos/pg-business.webp" alt="สำนักงานที่มีคนทำงาน ฝ้าทีบาร์มีแอร์สี่ทิศทางหลายเครื่อง แสงบ่าย" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
+<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="pricing" hidden><img src="assets/photos/pg-pricing.webp" alt="ภาพสี่ช่อง: แอร์ติดผนังในห้องนอน แอร์สี่ทิศทางในร้านก๋วยเตี๋ยว แอร์สี่ทิศทางในสำนักงาน และแอร์ตู้ตั้งพื้นในห้องประชุม" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
 <figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="guide" hidden><img src="assets/photos/pg-guide.webp" alt="มือถอดแผ่นกรองฝุ่นออกจากแอร์ติดผนัง" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
-<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="contact" hidden><img src="assets/photos/pg-contact.webp" alt="ช่างยื่นแท็บเล็ตแสดงรายงานงานให้ลูกค้าตรวจในบ้าน" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
+<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="contact" hidden><img src="assets/photos/pg-contact.webp" alt="ช่างยื่นแท็บเล็ตให้เจ้าของบ้านดูที่หน้าประตูรั้วทาวน์เฮาส์ในซอย" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
 </div>
 <script type="module">
 import { mountV3 } from './assets/v3site.js';

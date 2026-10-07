@@ -51,7 +51,7 @@ h1,h2,h3,h4{font-family:var(--display)}
 .a3-hero .jobs a{box-shadow:var(--shadow);border-color:transparent}
 .a3-hero .jobs a:hover{box-shadow:var(--shadow),0 0 0 1.5px var(--blue-2)}
 .a3-hero-ph{--ar:4/5;min-height:100%}
-@media (max-width:900px){.a3-hero-g,.a3-hero-g:not(:has(.ph3)){grid-template-columns:minmax(0,1fr);grid-template-areas:"ph" "t" "j"}.a3-hero-ph{--ar:16/10;min-height:0}}
+@media (max-width:900px){.a3-hero-g,.a3-hero-g:not(:has(.ph3)){grid-template-columns:minmax(0,1fr);grid-template-areas:"t" "ph" "j"}.a3-hero .a3-hero-ph{aspect-ratio:5/4;min-height:0;--ph-pos:50% 15%}}
 /* sections */
 section.sec{padding-block:56px 8px}
 .sec-h h2{font-size:clamp(25px,2.8vw,34px);font-weight:700}
@@ -65,6 +65,27 @@ section.sec{padding-block:56px 8px}
 footer{background:var(--tile)}
 @media (min-width:1241px) and (max-width:1480px){.logo small{display:none}.nav a{padding:8px 10px;font-size:14.5px}.hdr .wrap{gap:12px}}
 @media (min-width:1241px) and (max-width:1480px){.sx-sbtn span,.sx-sbtn kbd{display:none}}
+/* r17 · morning light: photos are warmed from the top-left like the window light in the pictures, sit on a long soft
+   shadow, and the hero and every page heading get pale sun bars falling through a window behind the photo */
+:root{
+  --ph-shadow:0 1px 2px rgba(16,34,60,.06),0 34px 60px -34px rgba(16,34,60,.42);
+  --ph-light:linear-gradient(122deg,rgba(255,214,168,.38) 0%,rgba(255,214,168,0) 46%),linear-gradient(0deg,rgba(14,27,48,.16),rgba(14,27,48,0) 32%);
+  --ph-blend:soft-light;
+  --sun:rgba(255,224,180,.72);
+}
+.a3-hero,.sx-vh.has-ph{position:relative;isolation:isolate}
+.a3-hero{overflow-x:clip}
+.a3-hero::before,.sx-vh.has-ph::before{content:"";position:absolute;z-index:-1;pointer-events:none;
+  background:radial-gradient(46% 40% at 70% 14%,rgba(255,221,176,.55),rgba(255,221,176,0) 70%),repeating-linear-gradient(112deg,transparent 0 64px,var(--sun) 64px 132px,transparent 132px 176px);
+  filter:blur(18px);-webkit-mask:radial-gradient(56% 66% at 48% 42%,#000 26%,transparent 76%);mask:radial-gradient(56% 66% at 48% 42%,#000 26%,transparent 76%)}
+.a3-hero::before{inset:-2% -4% -8% 22%}
+.sx-vh.has-ph::before{inset:0 -40px -10px 28%}
+@media (prefers-reduced-motion:no-preference){.a3-hero::before{animation:a3-sun 26s ease-in-out infinite alternate}@keyframes a3-sun{to{translate:-34px 10px}}}
+.a3-hero-ph{--ph-pos:50% 60%}
+.a3-hero .lede{max-width:33em}
+.sx-vh.has-ph h1{line-height:1.2}
+@media (max-width:900px){.a3-hero::before{inset:34% -12% -4% 8%}}
+@media (max-width:860px){.sx-vh.has-ph::before{inset:auto -16px -10px 0;height:70%}}
 
 </style>
 </head>
@@ -92,7 +113,7 @@ footer{background:var(--tile)}
         <li><a href="#repair"><span class="ji" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6a4 4 0 0 0 5 5l-9 9-3-3 9-9"/></svg></span><span><b>แอร์มีอาการ ซ่อม ตรวจเช็ก</b><small>ไม่เย็น น้ำหยด มีเสียง มีกลิ่น</small></span><span class="jp" data-from="repair"></span></a></li>
         <li><a href="#business"><span class="ji" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V8l8-4 8 4v12M9 20v-6h6v6"/></svg></span><span><b>องค์กร สัญญาล้างรายปี</b><small>สำนักงาน ร้านค้า โรงงาน อาคาร</small></span><span class="jp">ราคาขั้นบันได</span></a></li>
       </ul>
-    <figure class="ph3 a3-hero-ph" style="--ar:4/5"><img src="assets/photos/hero-a.webp" alt="ห้องนั่งเล่นสว่างช่วงเช้า มีแอร์ติดผนังสีขาวเหนือโซฟา" loading="eager" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
+    <figure class="ph3 a3-hero-ph hero-ph" style="--ar:4/5"><img src="assets/photos/hero-a.webp" alt="ห้องนั่งเล่นคอนโดช่วงสาย มีแอร์ติดผนังสีขาวและรางครอบท่อเหนือโซฟา" loading="eager" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
   </div>
 </section>
 <div class="wrap">
@@ -316,14 +337,14 @@ footer{background:var(--tile)}
 <div class="tray" data-compare hidden><ul data-compare-list></ul><button type="button" class="btn-primary" data-compare-go>เทียบ</button></div>
 <div class="drawer" data-drawer id="drawer" hidden><div class="dp" role="dialog" aria-modal="true" aria-label="รายละเอียด"><button type="button" class="x" data-close aria-label="ปิด">×</button><div id="drawerBody"></div></div></div>
 <div hidden>
-<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="shop" hidden><img src="assets/photos/pg-shop.webp" alt="ห้องนอนสว่าง มีแอร์ติดผนังเครื่องใหม่เหนือหัวเตียง" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
+<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="shop" hidden><img src="assets/photos/pg-shop.webp" alt="ห้องนอนทาวน์เฮาส์หลังติดตั้งแอร์ติดผนังเครื่องใหม่ รางครอบท่อเดินไปมุมห้อง แสงไฟตอนหัวค่ำ" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
 <figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="cleaning" hidden><img src="assets/photos/pg-clean.webp" alt="ภาพใกล้ครีบคอยล์เย็นขณะฉีดน้ำล้าง มีละอองน้ำ" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
-<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="install" hidden><img src="assets/photos/pg-install.webp" alt="ช่างกำลังบานแฟลร์ท่อทองแดงด้วยเครื่องมือ ข้างคอยล์ร้อน" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
-<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="repair" hidden><img src="assets/photos/pg-repair.webp" alt="ช่างต่อเกจวัดแรงดันกับคอยล์ร้อน ตรวจระบบน้ำยา" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
-<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="business" hidden><img src="assets/photos/pg-business.webp" alt="สำนักงานโล่งกว้าง มีแอร์สี่ทิศทางฝังฝ้าหลายเครื่อง" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
-<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="pricing" hidden><img src="assets/photos/pg-pricing.webp" alt="แอร์สี่ประเภท ติดผนัง แขวนใต้ฝ้า สี่ทิศทาง และตู้ตั้งพื้น ในห้องต่างกัน" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
+<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="install" hidden><img src="assets/photos/pg-install.webp" alt="ช่างคุกเข่าขันแฟลร์นัตเข้าวาล์วคอยล์ร้อนบนขาแขวน ระเบียงคอนโด มีปั๊มสุญญากาศและขดท่อทองแดง" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
+<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="repair" hidden><img src="assets/photos/pg-repair.webp" alt="มือช่างต่อชุดเกจวัดแรงดันเข้าวาล์วคอยล์ร้อน ตรวจระบบน้ำยา" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
+<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="business" hidden><img src="assets/photos/pg-business.webp" alt="สำนักงานที่มีคนทำงาน ฝ้าทีบาร์มีแอร์สี่ทิศทางหลายเครื่อง แสงบ่าย" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
+<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="pricing" hidden><img src="assets/photos/pg-pricing.webp" alt="ภาพสี่ช่อง: แอร์ติดผนังในห้องนอน แอร์สี่ทิศทางในร้านก๋วยเตี๋ยว แอร์สี่ทิศทางในสำนักงาน และแอร์ตู้ตั้งพื้นในห้องประชุม" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
 <figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="guide" hidden><img src="assets/photos/pg-guide.webp" alt="มือถอดแผ่นกรองฝุ่นออกจากแอร์ติดผนัง" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
-<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="contact" hidden><img src="assets/photos/pg-contact.webp" alt="ช่างยื่นแท็บเล็ตแสดงรายงานงานให้ลูกค้าตรวจในบ้าน" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
+<figure class="ph3 sx-ph" style="--ar:4/3" data-sx-photo="contact" hidden><img src="assets/photos/pg-contact.webp" alt="ช่างยื่นแท็บเล็ตให้เจ้าของบ้านดูที่หน้าประตูรั้วทาวน์เฮาส์ในซอย" loading="lazy" decoding="async"><figcaption>ภาพประกอบ</figcaption></figure>
 </div>
 <script type="module">
 import { mountV3 } from './assets/v3site.js';
