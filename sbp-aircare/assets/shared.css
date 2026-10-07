@@ -605,7 +605,7 @@ a.s-flow-c:hover{border-color:var(--s-accent);transform:translateY(-1px)}
 /* the unit display chip in the 3D room */
 .tsim-disp{position:absolute;left:0;top:0;z-index:3;visibility:hidden;padding:2px 9px;border-radius:7px;font:600 12px/1.5 "IBM Plex Mono",ui-monospace,monospace;background:#0e1620;color:#8fe8ff;border:1px solid rgba(143,232,255,.35);pointer-events:none;white-space:nowrap}
 .tsim-disp.off{color:#7b8794;border-color:rgba(123,135,148,.35)}
-.tsim-disp.ping{animation:tping .7s ease-out}
+.tsim-disp.tsim-ping{animation:tping .7s ease-out}   /* r19: was .ping — clashed with A's status dot class */
 @keyframes tping{0%{box-shadow:0 0 0 0 rgba(143,232,255,.7)}100%{box-shadow:0 0 0 14px rgba(143,232,255,0)}}
 @media (max-width:900px){.tsim-wrap{grid-template-columns:minmax(0,1fr)}.tctl{max-width:340px}}
 @media (pointer:coarse){.tctl .tk{min-height:44px}}

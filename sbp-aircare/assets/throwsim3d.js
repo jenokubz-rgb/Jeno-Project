@@ -204,7 +204,7 @@ export function createThrowSim(container, opts = {}) {
   // unit display chip (what the remote just set)
   const disp = h('div', { class: 'tsim-disp', 'aria-hidden': 'true' }); container.append(disp);
   const MODE_TH = { cool: 'เย็น', dry: 'แห้ง', fan: 'พัดลม', auto: 'อัตโน' };
-  function paintDisp(ping) { disp.className = 'tsim-disp' + (C.power ? '' : ' off'); disp.textContent = C.power ? `${MODE_TH[C.mode]} ${C.mode === 'fan' ? '' : C.temp + '°'}`.trim() : 'ปิด'; if (ping && !RM()) { disp.classList.remove('ping'); void disp.offsetWidth; disp.classList.add('ping'); } }
+  function paintDisp(ping) { disp.className = 'tsim-disp' + (C.power ? '' : ' off'); disp.textContent = C.power ? `${MODE_TH[C.mode]} ${C.mode === 'fan' ? '' : C.temp + '°'}`.trim() : 'ปิด'; if (ping && !RM()) { disp.classList.remove('tsim-ping'); void disp.offsetWidth; disp.classList.add('tsim-ping'); } }
   paintDisp(false);
   requestAnimationFrame(frame);
   build('wall');
