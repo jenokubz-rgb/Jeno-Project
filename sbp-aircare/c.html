@@ -353,7 +353,7 @@ html.sx-on .sec-h h2{font-size:clamp(28px,3vw,40px);line-height:1.22}
 @media (max-width:900px){
   .stage{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"copy" "cv" "dock"}
   .stage .hero-copy{grid-area:copy;padding-block:22px 6px}
-  .stage .cv,.stage .labels,.stage .fb{grid-area:cv;position:relative;inset:auto;height:56vh;min-height:340px}
+  .stage .cv,.stage .labels,.stage .fb{grid-area:cv;position:relative;inset:auto;height:50vh;min-height:320px}
   .stage .dock{grid-area:dock}
   .hero-copy h1{font-size:clamp(34px,9vw,48px)}
 }
@@ -590,7 +590,7 @@ const dark = () => getComputedStyle(document.documentElement).colorScheme.includ
 const lab = a => h('button', { type: 'button', class: 'hs', 'aria-label': a.th }, h('span', {}, a.th));
 
 // hero showroom
-const HV = mountViewer($('#top'), { style: 'showroom', premium: true, targetOffset: innerWidth > 900 ? [-0.04, -0.2] : [0, 0], labelTpl: lab, labelsAlways: innerWidth > 640, dirt: 0.6, exposure: dark() ? 1.0 : 1.15, onCleaned: () => toast('ล้างเสร็จ · ลมกลับมาแรงขึ้น (แบบจำลอง)') });
+const HV = mountViewer($('#top'), { style: 'showroom', premium: true, targetOffset: innerWidth > 900 ? [-0.04, -0.2] : [0, -0.12], labelTpl: lab, labelsAlways: innerWidth > 640, dirt: 0.6, exposure: dark() ? 1.0 : 1.15, onCleaned: () => toast('ล้างเสร็จ · ลมกลับมาแรงขึ้น (แบบจำลอง)') });
 if (HV && innerWidth > 900) HV.zoom(1.42);   // Rev.09: smaller + higher so the unit clears the headline and the control dock
 
 // how each unit type works (3D section)

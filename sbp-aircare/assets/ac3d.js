@@ -660,7 +660,8 @@ export function createACViewer(container, opts = {}) {
   function resize() {
     const w = container.clientWidth || 1, h = container.clientHeight || 1;
     renderer.setSize(w, h, false); camera.aspect = w / h;
-    camera.fov = w / h < 0.9 ? 44 : 32; camera.updateProjectionMatrix();
+    // r19: between portrait and landscape keep the horizontal view at ~40° (no jump at 0.9 that cropped the unit on phones)
+    const a = w / h; camera.fov = a < 0.9 ? 44 : a < 1.25 ? 2 * Math.atan(Math.tan(0.349) / a) * 57.296 : 32; camera.updateProjectionMatrix();
   }
   new ResizeObserver(resize).observe(container); resize();
   orbit(renderer.domElement, state, () => { state.camTo = null; });
