@@ -418,7 +418,7 @@ a.s-flow-c:hover{border-color:var(--s-accent);transform:translateY(-1px)}
 .hw-co-layer{position:absolute;inset:0;pointer-events:none;z-index:2;overflow:hidden}
 .hw-co{position:absolute;left:0;top:0;padding:5px 10px;border-radius:999px;background:color-mix(in oklab,var(--s-card) 92%,transparent);border:1px solid var(--s-line);color:var(--s-ink);font-size:12.5px;font-weight:600;white-space:nowrap;box-shadow:0 2px 8px rgba(10,25,45,.12);backdrop-filter:blur(6px)}
 .hw-co.on{background:var(--s-accent);border-color:var(--s-accent);color:var(--s-on-accent,#fff)}
-.hw-co.dot{width:22px;height:22px;padding:0;display:grid;place-items:center;font:700 11px var(--s-mono);background:var(--s-accent);color:var(--s-on-accent,#fff);border:2px solid #fff}
+.hw-co.dot{width:22px;height:22px;padding:0;display:grid;place-items:center;font:700 12px var(--s-mono);background:var(--s-accent);color:var(--s-on-accent,#fff);border:2px solid #fff}
 .hw-co-layer[hidden],.hw-lines[hidden]{display:none}
 .hw-legend-m{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 12px;font-size:12.5px;color:var(--s-ink-2)}
 .hw-legend-m[hidden]{display:none}
@@ -552,7 +552,7 @@ a.s-flow-c:hover{border-color:var(--s-accent);transform:translateY(-1px)}
 .tctl--remote .tctl-lcd{padding:10px 12px 8px;border-radius:12px;background:linear-gradient(180deg,#d4dccb,#c4cdb9);color:#1f2a1f;box-shadow:inset 0 2px 5px rgba(0,0,0,.2)}
 .tctl--remote.off .tctl-lcd{background:linear-gradient(180deg,#b9bfb3,#adb3a7)}
 .tctl--remote .tk{border-radius:12px;border:1px solid #d3d7d2;background:linear-gradient(180deg,#ffffff,#eceeeb);color:#1d2430;box-shadow:inset 0 1px 0 #fff,0 2px 3px rgba(0,0,0,.09)}
-.tctl--remote .tk-pow{grid-column:1/-1;justify-self:center;width:62px;height:62px;border-radius:50%;border-color:#c4561a;background:radial-gradient(circle at 35% 30%,#f59a4e,#d8661f 70%);color:#fff;font-size:11px;flex-direction:column;gap:2px;padding:0}
+.tctl--remote .tk-pow{grid-column:1/-1;justify-self:center;width:62px;height:62px;border-radius:50%;border-color:#c4561a;background:radial-gradient(circle at 35% 30%,#f59a4e,#d8661f 70%);color:#fff;font-size:12.5px;flex-direction:column;gap:2px;padding:0}
 .tctl--remote .tk-pow .tk-i{width:22px;height:22px}
 .tk-rock{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:14px;overflow:hidden;border:1px solid #d3d7d2}
 .tctl--remote .tk-rock .tk{border:0;border-radius:0;font-size:22px;min-height:46px}
