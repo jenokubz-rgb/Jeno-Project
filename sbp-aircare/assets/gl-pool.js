@@ -63,9 +63,13 @@ function forget(root) {
  *  after a restore; opts.redraw() → called after a restore for scenes that render on demand. Returns { release() }. */
 // r8: touch devices draw at ≤ 1.5× (≤ 1.25× on low-memory / few-core phones) instead of 2×: several animated scenes at 2× on a
 // 3× phone screen were fill-rate bound (stutter, heat); the difference is hard to see at phone size
+// r18 (owner: "ความคมชัด"): strong phones (≥ 6 GB, or ≥ 6 cores when the browser hides memory, as iOS does) draw at 2× — 1.5×
+// on a 3× screen read soft on product edges and labels. The adaptive resolution below still steps every scene down
+// (85 / 72 / 60 %) the moment frames run late, so the sharper start cannot cost smoothness.
 const COARSE = typeof matchMedia === 'function' && matchMedia('(pointer: coarse)').matches;
 const LOW = (navigator.deviceMemory && navigator.deviceMemory <= 3) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
-export const PR_CAP = COARSE ? (LOW ? 1.25 : 1.5) : 2;
+const HIGH = !LOW && (navigator.deviceMemory ? navigator.deviceMemory >= 6 : (navigator.hardwareConcurrency || 0) >= 6);
+export const PR_CAP = COARSE ? (LOW ? 1.25 : HIGH ? 2 : 1.5) : 2;
 export function track(renderer, el, opts = {}) {
   // r15: no shader diagnostics outside automated checks — reading the program / shader logs makes the page wait for the GPU to
   // finish compiling (the stall when a new type or step appears); tests (navigator.webdriver) keep them to catch broken shaders

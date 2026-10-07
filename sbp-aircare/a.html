@@ -64,7 +64,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .logo{display:flex;flex:none;align-items:center;gap:10px;text-decoration:none;font-weight:700}
 .logo-mk{height:32px;width:auto;flex:none}   /* Rev.09 r9: company mark (owner-supplied SP logo) */
 .fuj-logo{display:block;height:34px;width:auto;max-width:100%;background:var(--plate);border-radius:8px;padding:2px 6px;box-sizing:content-box}
-.logo small{display:block;font-weight:400;font-size:11px;color:var(--ink-3);line-height:1.1;white-space:nowrap}
+.logo small{display:block;font-weight:400;font-size:12.5px;color:var(--ink-3);line-height:1.1;white-space:nowrap}
 .nav{display:flex;gap:2px;margin-inline:auto;min-width:0;overflow-x:auto;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}
 .nav a{padding:8px 10px;border-radius:999px;text-decoration:none;color:var(--ink-2);font-size:14.5px;white-space:nowrap}
 .nav a:hover{background:var(--tile);color:var(--ink)}
@@ -107,7 +107,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .t-queue .d{font-size:24px;font-weight:600;margin-top:6px}
 .ping{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--ok);margin-right:8px;box-shadow:0 0 0 0 rgba(27,122,69,.5);animation:ping 2s infinite}
 @keyframes ping{70%{box-shadow:0 0 0 10px rgba(27,122,69,0)}100%{box-shadow:0 0 0 0 rgba(27,122,69,0)}}
-.demo{font-size:11px;color:var(--ink-3);border:1px dashed var(--line);border-radius:6px;padding:1px 6px;display:inline-block;margin-top:8px}
+.demo{font-size:12.5px;color:var(--ink-3);border:1px dashed var(--line);border-radius:6px;padding:1px 6px;display:inline-block;margin-top:8px}
 .t-fuj{grid-area:fuj;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(160deg,var(--blue-l),var(--tile) 70%)}
 .t-fuj .art{width:100%;height:auto;color:var(--blue-2);margin-block:10px}
 .t-fuj h3{font-size:22px}
@@ -179,7 +179,7 @@ section.sec{padding-block:64px 8px}
 .opt input:disabled~span{color:var(--ink-3)}
 .opt .dot{width:8px;height:8px;border-radius:50%}
 .opt.more{display:none}.facet.open .opt.more{display:flex}
-.own-tag{font-size:10.5px;font-weight:600;background:var(--or-l);color:var(--or-d);padding:1px 6px;border-radius:6px;margin-left:4px}
+.own-tag{font-size:12px;font-weight:600;background:var(--or-l);color:var(--or-d);padding:1px 6px;border-radius:6px;margin-left:4px}
 .facet-more{border:0;background:none;color:var(--blue-2);font-size:13px;padding:4px 6px}
 .cat-top{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
 .search{flex:1;min-width:220px;position:relative}
@@ -196,7 +196,7 @@ section.sec{padding-block:64px 8px}
 @keyframes up{from{opacity:0;transform:translateY(10px)}}
 .card .ph{background:var(--tile-2);border-radius:12px;aspect-ratio:4/3;display:grid;place-items:center;color:var(--ink-3);position:relative}
 .card .ph .art{width:78%;height:auto}
-.card .ph .tag{position:absolute;left:8px;top:8px;font-size:11px;background:var(--tile);border-radius:6px;padding:1px 7px;color:var(--ink-2)}
+.card .ph .tag{position:absolute;left:8px;top:8px;font-size:12.5px;background:var(--tile);border-radius:6px;padding:1px 7px;color:var(--ink-2)}
 .card .tstripe{position:absolute;left:14px;right:14px;top:14px;height:3px;border-radius:3px}
 .card .br{font-size:13px;color:var(--ink-3);display:flex;align-items:center;gap:6px}
 .card h3{font-size:16px}
@@ -299,7 +299,7 @@ table.cmp{border-collapse:collapse;font-size:14px;width:100%}
 .info .tag-dirty{margin-top:8px;color:var(--warn);font-size:13px}
 .parts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .part-btn{display:flex;gap:8px;align-items:baseline;text-align:left;border:1px solid var(--line);background:var(--tile);border-radius:12px;padding:8px 10px;font-size:14px}
-.part-btn .pn{font:500 11px var(--mono);color:var(--ink-3)}
+.part-btn .pn{font:500 12.5px var(--mono);color:var(--ink-3)}
 .part-btn small{display:none}
 .part-btn[aria-pressed="true"]{border-color:var(--or);background:var(--or-l)}
 @media (max-width:860px){.inside{grid-template-columns:1fr}.inside .stage{min-height:380px}}
@@ -372,6 +372,25 @@ html.sx-on .t-queue .d a{color:inherit;text-decoration:none}
 #start .sx-int:focus-within{box-shadow:var(--shadow),0 0 0 2.5px var(--or)}
 #start .sx-int[data-k="fujiva"]{background:linear-gradient(160deg,var(--blue-l),var(--tile) 70%)}
 html.sx-on #start .sec-h{margin-bottom:18px}
+
+/* ---- r18 · page heading as the opening tile of the bento (owner 7 ต.ค. 2569: "ตรวจเช็คและพัฒนาทุกจุด") ----
+   The page name is the largest type on the page; facts are soft tinted chips (information, not buttons); the section links sit
+   in one white segmented bar and each section's eyebrow repeats its number. */
+html.sx-on .sx-vh{padding-block:clamp(30px,4vw,52px) 6px;gap:12px}
+html.sx-on .sx-vh h1{font-size:clamp(36px,4.8vw,58px);line-height:1.14;letter-spacing:-.012em}
+html.sx-on .sx-lead{font-size:17px;max-width:42em}
+html.sx-on .sx-facts{gap:8px}
+html.sx-on .sx-facts li{min-height:34px;padding:5px 14px 5px 12px;border:0;background:var(--blue-l);color:var(--blue);font-size:14px;font-weight:500}
+html.sx-on .sx-facts li::before{background:var(--blue-2)}
+html.sx-on .sx-jump{gap:4px;width:fit-content;max-width:100%;margin-top:10px;padding:5px;border-radius:16px;background:var(--tile);box-shadow:var(--shadow)}
+html.sx-on .sx-jump a{min-height:42px;padding:0 14px 0 6px;border:0;border-radius:12px;background:transparent}
+html.sx-on .sx-jump a:hover{background:var(--tile-2)}
+html.sx-on .sx-jump a b{border-radius:9px;background:var(--blue-l);color:var(--blue-2);font-weight:700}
+.sec-h .eyebrow[data-zone]::before{content:attr(data-zone);content:attr(data-zone) / "";display:inline-grid;place-items:center;vertical-align:middle;margin-right:8px;width:24px;height:24px;border-radius:8px;background:var(--blue-l);color:var(--blue-2);font:700 13px var(--sans)}
+html.sx-on .sec-h h2{font-size:clamp(26px,2.8vw,36px)}
+@media (pointer:coarse){html.sx-on .sx-jump a{min-height:44px}.vsw a{display:inline-grid;place-items:center;min-width:44px;min-height:44px}}
+/* r18: between 1081 and 1239 px the six-item menu did not fit beside the logo and tools (clipped, scrolled) — it takes the second header row there too */
+@media (min-width:1081px) and (max-width:1239px){html.sx-on .hdr .vsw{margin-left:auto}html.sx-on .hdr .wrap{flex-wrap:wrap;height:auto;padding-block:8px 0;row-gap:0}html.sx-on .hdr .nav{order:9;flex:1 0 100%;margin:0 0 6px}html.sx-on{scroll-padding-top:128px}}
 </style>
 </head>
 <body>
@@ -699,6 +718,7 @@ import { mountRoomFit } from './assets/roomfit.js';
 import { mountKnowledge } from './assets/knowledge.js';
 import { mountJobGuide } from './assets/jobguide.js';
 import { mountSite } from './assets/site.js';
+import { thaiPhrases, zoneMarks } from './assets/typeset.js';
 await loadData(); await loadMedia();
 enhanceQuoteForm();
 $$('[data-ask]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); askTeam(a.dataset.ask); }));
@@ -816,6 +836,9 @@ mountSite({
   views: { home: ['hero', 'start', 'flow', 'services'], shop: ['catalog', 'studio', 'fit'], service: ['cleanflow', 'prices', 'quality', 'story', 'inside'], business: ['amc', 'b2b', 'sop', 'projects'], knowledge: ['learn', 'howto'], contact: ['booking', 'about', 'area', 'faq', 'quote'] },
   hooks: { clean: () => JOB.setJob('clean'), install: () => JOB.setJob('install'), repair: () => SVX && SVX.set('repair') },
 });
+// r18: Thai headings keep each phrase on one line when it fits · section eyebrows carry the number of their jump link
+thaiPhrases('.sx-vh h1, .sx-lead, .sec-h h2, .sec-h h2 + p, #start .sx-int h3, #start .sx-int-s, .sx-next h2');
+zoneMarks();
 </script>
 </body>
 </html>

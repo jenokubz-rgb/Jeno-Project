@@ -316,6 +316,52 @@ table.cmp{border-collapse:collapse;font-size:14px;width:100%}.cmp th,.cmp td{pad
 #start .sx-int:hover{border-color:color-mix(in oklab,var(--cool) 48%,transparent);box-shadow:0 22px 44px -26px color-mix(in oklab,var(--cool) 60%,transparent)}
 #start .sx-int:focus-within{box-shadow:0 0 0 2px var(--cool)}
 #start .sx-int-go{border-radius:12px}
+
+/* ---- r18 · showroom entrance (owner 7 ต.ค. 2569: C leads — sharper, more detail, every part checked) ----
+   Each page opens like a display plinth: the page name is the largest type on the page and stands in a cone of cool light;
+   the facts sit on one placard (information, not buttons); the section links are numbered zones and every section carries
+   the same number; a floor line closes the entrance. */
+html.sx-on .sx-vh{position:relative;isolation:isolate;padding-block:clamp(34px,4.6vw,60px) 0;gap:12px}
+html.sx-on .sx-vh::before{content:"";position:absolute;z-index:-1;top:-30px;bottom:0;left:-8%;width:min(900px,100%);pointer-events:none;background:radial-gradient(46% 72% at 32% 0%,color-mix(in oklab,var(--cool) 16%,transparent) 0%,color-mix(in oklab,var(--cool) 5%,transparent) 48%,transparent 76%)}
+html.sx-on .sx-vh::after{content:"";height:1px;margin-top:clamp(22px,3vw,38px);background:linear-gradient(90deg,transparent,color-mix(in oklab,var(--cool) 42%,transparent) 22%,color-mix(in oklab,var(--cool) 42%,transparent) 64%,transparent)}
+html.sx-on .sx-vh h1{font-size:clamp(40px,5.4vw,68px);line-height:1.12;letter-spacing:-.012em;text-shadow:0 0 46px color-mix(in oklab,var(--cool) 24%,transparent)}
+html.sx-on .sx-crumb{font-size:13.5px}
+html.sx-on .sx-lead{font-size:17.5px;line-height:1.7;max-width:40em}
+html.sx-on .sx-facts{gap:0;margin-top:8px;width:fit-content;max-width:100%;border:1px solid var(--line);border-radius:14px;background:color-mix(in oklab,var(--panel) 70%,transparent);overflow:hidden}
+html.sx-on .sx-facts li{flex:1 1 auto;min-height:42px;padding:8px 16px;border:0;border-radius:0;background:none;box-shadow:-1px 0 0 var(--line),0 -1px 0 var(--line);font-size:14px;color:var(--ink-2)}
+html.sx-on .sx-facts li::before{background:var(--cool);box-shadow:0 0 8px var(--cool)}
+html.sx-on .sx-jump{gap:8px;margin-top:12px}
+html.sx-on .sx-jump a{min-height:44px;padding:0 16px 0 7px;border-radius:12px;border-color:var(--line);background:transparent;font-size:14.5px;transition:border-color .2s,background .2s}
+html.sx-on .sx-jump a b{width:30px;height:30px;border-radius:9px;background:color-mix(in oklab,var(--cool) 14%,transparent);color:var(--cool);font:500 14.5px var(--display);box-shadow:inset 0 0 0 1px color-mix(in oklab,var(--cool) 32%,transparent)}
+html.sx-on .sx-jump a:hover{border-color:color-mix(in oklab,var(--cool) 55%,transparent);background:color-mix(in oklab,var(--cool) 6%,transparent)}
+html.sx-on .sx-jump a:hover b{background:var(--cool);color:#04121C}
+/* section heads: the zone number of the jump link that opens it, lit like the tab · headings a step below the page name */
+.sec-h .eyebrow[data-zone]{font-size:13.5px}
+.sec-h .eyebrow[data-zone]::before{content:attr(data-zone);content:attr(data-zone) / "";display:inline-grid;place-items:center;vertical-align:middle;margin-right:10px;width:28px;height:28px;border-radius:9px;font:500 14px var(--display);color:var(--cool);background:color-mix(in oklab,var(--cool) 14%,transparent);box-shadow:inset 0 0 0 1px color-mix(in oklab,var(--cool) 32%,transparent),0 0 20px -6px var(--cool)}
+html.sx-on .sec-h h2{font-size:clamp(28px,3vw,40px);line-height:1.22}
+/* legibility floor (Thai below 12px is unreadable on a dark ground) */
+.own-tag{font-size:12px}.demo{font-size:12.5px}.gauge li small{font-size:12.5px}.opt .n{font-size:12.5px}.vsw a{font-size:12.5px}
+/* touch: hotspot hit areas and the edition switch reach 44 px on phones; the dot itself stays small */
+@media (pointer:coarse){
+  .hs{width:44px;height:44px;margin:-22px 0 0 -22px}.hs::before{inset:16px}.hs span{left:40px;top:10px}
+  .vsw a{display:inline-grid;place-items:center;min-width:44px;min-height:44px;padding:0 8px}
+}
+/* hero while the 3D boots or compiles: a lit silhouette of the unit instead of an empty dark box */
+.stage .cv:is(:empty,:has(>canvas[style*="opacity: 0"]))::before{content:"";position:absolute;left:50%;top:44%;width:min(56%,460px);aspect-ratio:3.5/1;transform:translate(-50%,-50%);border-radius:20px 20px 30px 30px;background:linear-gradient(180deg,color-mix(in oklab,var(--ink) 14%,transparent),color-mix(in oklab,var(--ink) 5%,transparent));box-shadow:0 0 70px -12px color-mix(in oklab,var(--cool) 55%,transparent);pointer-events:none}
+@media (prefers-reduced-motion:no-preference){.stage .cv:is(:empty,:has(>canvas[style*="opacity: 0"]))::before{animation:cvwait 1.6s ease-in-out infinite alternate}@keyframes cvwait{to{opacity:.45}}}
+/* phones: the headline comes first, then the product, then its controls (the copy used to sit below a full screen of 3D) */
+@media (max-width:900px){
+  .stage{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"copy" "cv" "dock"}
+  .stage .hero-copy{grid-area:copy;padding-block:22px 6px}
+  .stage .cv,.stage .labels,.stage .fb{grid-area:cv;position:relative;inset:auto;height:56vh;min-height:340px}
+  .stage .dock{grid-area:dock}
+  .hero-copy h1{font-size:clamp(34px,9vw,48px)}
+}
+/* the page name's halo belongs to the dark showroom; on the light theme the type stands on its own */
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .sx-vh h1{text-shadow:none}}
+:root[data-theme="light"] .sx-vh h1{text-shadow:none}
+/* r18: between 1081 and 1239 px the six-item menu did not fit beside the logo and tools (clipped, scrolled) — it takes the second header row there too */
+@media (min-width:1081px) and (max-width:1239px){html.sx-on .hdr .vsw{margin-left:auto}html.sx-on .hdr .wrap{flex-wrap:wrap;height:auto;padding-block:8px 0;row-gap:0}html.sx-on .hdr .nav{order:9;flex:1 0 100%;margin:0 0 6px}html.sx-on{scroll-padding-top:120px}}
 </style>
 </head>
 <body>
@@ -531,6 +577,7 @@ import { mountRoomFit } from './assets/roomfit.js';
 import { mountKnowledge } from './assets/knowledge.js';
 import { mountJobGuide } from './assets/jobguide.js';
 import { mountSite } from './assets/site.js';
+import { thaiPhrases, zoneMarks } from './assets/typeset.js';
 await loadData(); await loadMedia();
 enhanceQuoteForm();
 $$('[data-ask]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); askTeam(a.dataset.ask); }));
@@ -628,6 +675,9 @@ mountSite({
     repair: () => { SVX.set('repair'); const b = $$('#storyRoot [role="tab"]').find(x => /ซ่อม/.test(x.textContent)); if (b && b.getAttribute('aria-selected') !== 'true') b.click(); },
   },
 });
+// r18: Thai headings keep each phrase on one line when it fits · section eyebrows carry the number of their jump link
+thaiPhrases('.sx-vh h1, .sx-lead, .sec-h h2, .sec-h h2 + p, #start .sx-int h3, #start .sx-int-s, .sx-next h2');
+zoneMarks();
 </script>
 </body>
 </html>

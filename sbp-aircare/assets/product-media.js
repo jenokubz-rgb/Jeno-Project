@@ -36,7 +36,8 @@ let shotsP = null;
 const SHOTS = {};
 // r15: the five studio shots are kept in this browser after the first visit (the same images every time), so a returning visitor's
 // shop needs no WebGL context and no renders at all; encoding is asynchronous (toBlob) instead of a blocking toDataURL
-const KEY = 'sbp-shots-r15';
+const KEY = 'sbp-shots-r18';   // r18: renders 1080×720 (was 720×480 — soft in the product panel on 2× screens); new key drops the old cache
+try { localStorage.removeItem('sbp-shots-r15'); } catch (_) {}   // r18: the smaller r15 renders are not used any more
 const fromCache = () => { try { const j = JSON.parse(localStorage.getItem(KEY) || 'null'); return j && j.wall && j.floor ? j : null; } catch (_) { return null; } };
 const toData = b => new Promise(res => { try { const fr = new FileReader(); fr.onload = () => res(fr.result); fr.onerror = () => res(null); fr.readAsDataURL(b); } catch (_) { res(null); } });
 export function productShots() {
@@ -50,7 +51,7 @@ export function productShots() {
       const { buildCeilingUnit, buildCassetteUnit, buildFloorUnit } = await import('./units3d.js');
       const { RoomEnvironment } = await import('./RoomEnvironment.js');
       const idle = () => new Promise(res => (window.requestIdleCallback ? requestIdleCallback(() => res(), { timeout: 400 }) : setTimeout(res, 30)));
-      const W = 720, H = 480;
+      const W = 1080, H = 720;
       const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
       r = new THREE.WebGLRenderer({ canvas: cv, antialias: true, alpha: true, preserveDrawingBuffer: true, powerPreference: 'low-power' });
       r.setPixelRatio(1); r.setSize(W, H, false);
