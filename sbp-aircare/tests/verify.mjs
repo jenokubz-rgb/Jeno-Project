@@ -1,6 +1,8 @@
 // r20 one-command verification of A · B · C → tests/out/summary.md (+ one log per check in tests/out/)
 //   npm run verify          full set (~60–90 min on the swiftshader container: smoke (one at a time), flows, axe, measured audit …)
 //   npm run verify:quick    the fast subset (~10 min) — run before every commit
+//   node tests/verify.mjs --only flow-a-1366,axe-a-light   re-run those checks of the last full run (keys = log names)
+//                           and rewrite summary.md with them merged in (tests/out/results.json keeps the rest)
 // Starts `python3 -m http.server 8765` when nothing answers on BASE. Recon runs only when internal/sbp_real.json exists
 // (the internal Pricebook extract is never committed — CLAUDE.md §7). Exit 1 when any check fails.
 import { spawn } from 'node:child_process';
@@ -10,6 +12,7 @@ import { dirname, join } from 'node:path';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..'), OUT = join(ROOT, 'tests', 'out');
 const BASE = process.env.BASE || 'http://localhost:8765';
 const QUICK = process.argv.includes('--quick');
+const ONLY = process.argv.includes('--only') ? new Set(process.argv[process.argv.indexOf('--only') + 1].split(',')) : null;
 const JOBS = Math.max(1, +(process.env.VERIFY_JOBS || 2));
 mkdirSync(OUT, { recursive: true });
 
@@ -50,10 +53,16 @@ const run = ([label, key, cmd]) => new Promise(res => {
     res(out);
   });
 });
+const RES = join(OUT, 'results.json');
+let prev = {};
+if (ONLY) { try { prev = JSON.parse((await import('node:fs')).readFileSync(RES, 'utf8')); } catch (e) { console.log('no tests/out/results.json — run the full set first'); process.exit(2); } }
+if (ONLY) for (let i = checks.length - 1; i >= 0; i--) if (!ONLY.has(checks[i][1])) { const r = prev.results?.find(x => x.key === checks[i][1]); checks[i].prev = r || { label: checks[i][0], key: checks[i][1], status: 'skip', ms: 0, line: 'ไม่ได้รันในรอบนี้' }; }
 const results = new Array(checks.length);
+checks.forEach((c, i) => { if (c.prev) results[i] = c.prev; });
 // phase 1: smoke one at a time — two software-WebGL browsers at once make the context pool lose/restore contexts
 // and three.js then warns about deleting objects of the lost context (0 warnings when run alone)
-const solo = checks.map((c, i) => i).filter(i => checks[i][1].startsWith('smoke-')), rest = checks.map((c, i) => i).filter(i => !solo.includes(i));
+const todo = checks.map((c, i) => i).filter(i => !checks[i].prev);
+const solo = todo.filter(i => checks[i][1].startsWith('smoke-')), rest = todo.filter(i => !solo.includes(i));
 for (const i of solo) results[i] = await run(checks[i]);
 let next = 0;
 await Promise.all(Array.from({ length: JOBS }, async () => { while (next < rest.length) { const i = rest[next++]; results[i] = await run(checks[i]); } }));
@@ -62,7 +71,7 @@ if (srv) srv.kill();
 const fail = results.filter(r => r.status === 'fail'), pass = results.filter(r => r.status === 'pass');
 const git = await new Promise(r => { let o = ''; const g = spawn('git', ['log', '-1', '--format=%h %s'], { cwd: ROOT }); g.stdout.on('data', d => o += d); g.on('close', () => r(o.trim())); });
 const md = [
-  `# ผลตรวจ A · B · C ${QUICK ? '(ชุดเร็ว)' : '(ชุดเต็ม)'}`,
+  `# ผลตรวจ A · B · C ${QUICK ? '(ชุดเร็ว)' : '(ชุดเต็ม)'}${ONLY ? ` · รันซ้ำ ${[...ONLY].join(', ')} (${prev.git ? 'ที่เหลือจาก ' + prev.git.split(' ')[0] : ''})` : ''}`,
   '', `- วันที่: ${new Date().toISOString().replace('T', ' ').slice(0, 16)} UTC · commit: \`${git}\` · BASE: ${BASE}`,
   `- ผล: **${fail.length ? `ไม่ผ่าน ${fail.length} จาก ${pass.length + fail.length}` : `ผ่านทั้งหมด ${pass.length}`}**${results.some(r => r.status === 'skip') ? ` · ข้าม ${results.filter(r => r.status === 'skip').length}` : ''}`,
   '', '| ผล | การตรวจ | เวลา | สรุป |', '|---|---|---|---|',
@@ -70,5 +79,6 @@ const md = [
   '', 'log ของแต่ละการตรวจ: `tests/out/<key>.log` · ภาพ 3 มิติบนเครื่องทดสอบใช้ WebGL แบบซอฟต์แวร์ (swiftshader) — ค่าความคมของ canvas และความเร็วใช้เทียบก่อน/หลังเท่านั้น', '',
 ];
 writeFileSync(join(OUT, 'summary.md'), md.join('\n'));
+writeFileSync(RES, JSON.stringify({ quick: QUICK, git, results }, null, 1));
 console.log(`\n${fail.length ? 'FAIL' : 'ok'} — tests/out/summary.md`);
 process.exit(fail.length ? 1 : 0);
