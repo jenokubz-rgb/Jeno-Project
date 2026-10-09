@@ -80,6 +80,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .vsw a[aria-current]{background:var(--ink);color:var(--bg)}
 .hdr .btn-primary{min-height:40px;padding:0 16px;font-size:15px}
 @media (max-width:1080px){.nav{display:none}.hdr .wrap{gap:12px}.vsw{margin-left:auto}}
+@media (max-width:440px){.hdr .vsw{display:none}.hdr .sx-sbtn{margin-left:auto}}   /* r20: on touch phones the A/B/C switch (3 × 44 px targets) pushed the header past the screen — B hides it ≤ 640 px; the beta hub links every edition */
 @media (max-width:640px){.hdr .btn-primary{display:none}}
 
 /* bento */
@@ -853,8 +854,6 @@ const V = {
       h('div', { class: 'stp' }, h('button', { type: 'button', 'data-b-step': `${t.id}:-1`, 'aria-label': `ลด ${t.th}` }, '−'), h('input', { type: 'number', min: '0', id: `va-u-${t.id}`, 'data-b-unit': t.id, 'aria-label': `จำนวน ${t.th}`, inputmode: 'numeric' }), h('button', { type: 'button', 'data-b-step': `${t.id}:1`, 'aria-label': `เพิ่ม ${t.th}` }, '+')),
       h('div', { class: 'bar' }, h('i', { 'data-b-bar': t.id })))));
     BLD = mountBuilder($('[data-builder]'));
-    // Rev.09 r9: corporate page — why us + quantity ladder, contract flow + sample report, projects (new build / renovation / replacement)
-    mountAmc($('#amcRoot')); mountSop($('#sopRoot')); mountProjects($('#projRoot'), { onCatalog: () => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' }) });
     // Rev.09 r9: corporate page — why us + quantity ladder, contract flow + sample report, projects (new build / renovation / replacement)
     mountAmc($('#amcRoot')); mountSop($('#sopRoot')); mountProjects($('#projRoot'), { onCatalog: () => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' }) });
   }),

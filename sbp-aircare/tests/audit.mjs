@@ -32,7 +32,7 @@ for (const v of views.split(',')) {
     for (const el of document.querySelectorAll('body *')) { if (!vis(el) || el.children.length > 3) continue; const s = getComputedStyle(el); if (!/(hidden|clip)/.test(s.overflowX + s.overflow) || s.textOverflow === 'ellipsis') continue; if (el.scrollWidth > el.clientWidth + 2 && el.textContent.trim() && !el.closest('[class*=scroll],[class*=tabs],nav,.tbl-wrap,table')) out.clip.push(`${sel(el)} ${el.scrollWidth}>${el.clientWidth}`); }
     out.small = Object.entries(out.small).sort((a, b) => b[1] - a[1]).slice(0, 18).map(([k, n]) => `${n}× ${k}`);
     out.clip = out.clip.slice(0, 15); out.glyph = [...new Set(out.glyph)].slice(0, 12); out.softImg = out.softImg.slice(0, 15); out.softCanvas = out.softCanvas.slice(0, 15);
-    out.overflowX = document.documentElement.scrollWidth > innerWidth + 1;
+    out.overflowX = document.documentElement.scrollWidth > document.documentElement.clientWidth + 1;   // clientWidth: with isMobile the layout viewport (innerWidth) grows to the content
     return out;
   }, { mob });
 }

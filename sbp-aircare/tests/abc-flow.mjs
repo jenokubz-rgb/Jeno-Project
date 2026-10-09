@@ -72,7 +72,7 @@ ok('meta description + Open Graph', seo.desc.length > 60 && seo.og);
 
 // 8. page health
 await p.evaluate(() => { location.hash = 'home'; }); await p.waitForTimeout(1000);
-ok('ไม่เลื่อนแนวนอน', await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
+ok('ไม่เลื่อนแนวนอน', await p.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1));
 ok('ไม่มี error ใน console', errs.length === 0, errs.slice(0, 3).join(' | '));
 
 const fail = out.filter(x => !x.pass).length;

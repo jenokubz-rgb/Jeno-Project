@@ -1123,7 +1123,8 @@ footer .sx-foot{display:grid;grid-template-columns:1.6fr 1fr 1.3fr 1fr;gap:24px;
 .sx-here p b{font-size:12.5px;font-weight:600;color:var(--s-ink-2)}
 html.sx-on .sx-here+section,html.sx-on .sx-vh+section{margin-top:0;padding-top:28px}
 html.sx-on .sx-vh+.sx-here{margin-top:20px}
-html.sx-on .mbar:has(.s-mmenu){grid-template-columns:1fr 1fr 1.6fr!important}   /* r5: menu · contact · quote (a LINE button returns once the owner supplies the account) */
+html.sx-on .mbar:has(.s-mmenu){grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.6fr)!important}   /* r20: minmax(0,…) — the quote button's min-content (label + count) pushed the bar 17 px past the screen on touch phones */
+html.sx-on .mbar>*{min-width:0}   /* r5: menu · contact · quote (a LINE button returns once the owner supplies the account) */
 /* r6 · field errors next to the field (contact.guardForm) */
 .s-err{display:block;margin-top:4px;color:var(--s-bad);font-size:13px;line-height:1.45;font-weight:500}
 input[aria-invalid="true"],select[aria-invalid="true"],textarea[aria-invalid="true"]{border-color:var(--s-bad)!important;box-shadow:0 0 0 1px var(--s-bad)}

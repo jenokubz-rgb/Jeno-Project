@@ -4,7 +4,8 @@
 //   pages: a.html b.html c.html (multi-file dev) or dist/offline/a.html (built single file)
 import { launch, BASE, scrollAll } from './_lib.mjs';
 const [,, page = 'a.html', w = 1366, h = 900] = process.argv;
-const b = await launch(); const p = await b.newPage({ viewport: { width: +w, height: +h } });
+// r20: phone widths emulate a touch phone (pointer:coarse → 44 px targets) — without it a header that only overflows on real phones passed
+const b = await launch(); const p = await b.newPage({ viewport: { width: +w, height: +h }, ...(+w < 600 ? { isMobile: true, hasTouch: true } : {}) });
 const errs = [];
 p.on('pageerror', e => errs.push('PAGEERR ' + e.message));
 p.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') errs.push(m.type() + ': ' + m.text().slice(0, 200)); });

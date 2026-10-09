@@ -66,6 +66,7 @@ button{font:inherit;color:inherit;cursor:pointer}a{color:inherit}
 .vsw a[aria-current]{background:var(--cool);color:#04121C}
 .hdr .btn-primary{min-height:38px;padding:0 14px;font-size:14.5px}
 @media (max-width:1080px){.nav{display:none}.vsw{margin-left:auto}}
+@media (max-width:440px){.hdr .vsw{display:none}.hdr .sx-sbtn{margin-left:auto}}   /* r20: on touch phones the A/B/C switch (3 × 44 px targets) pushed the header past the screen — B hides it ≤ 640 px; the beta hub links every edition */
 @media (max-width:379px){.vsw{display:none}}
 @media (max-width:640px){.hdr .btn-primary{display:none}}
 
