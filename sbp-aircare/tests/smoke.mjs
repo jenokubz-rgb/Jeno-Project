@@ -8,7 +8,7 @@ const [,, page = 'a.html', w = 1366, h = 900] = process.argv;
 const b = await launch(); const p = await b.newPage({ viewport: { width: +w, height: +h }, ...(+w < 600 ? { isMobile: true, hasTouch: true } : {}) });
 const errs = [];
 p.on('pageerror', e => errs.push('PAGEERR ' + e.message));
-p.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') errs.push(m.type() + ': ' + m.text().slice(0, 200)); });
+p.on('console', m => { if ((m.type() === 'error' || m.type() === 'warning') && !/GL Driver Message \(OpenGL, Performance/.test(m.text())) errs.push(m.type() + ': ' + m.text().slice(0, 200)); });   // r20: swiftshader's own performance notices are not page errors
 // count real WebGL contexts the page creates, and how many are live (created − lost + restored), without creating any
 // live WebGL contexts: a context stops counting the moment loseContext() is called on it (the context is lost at once;
 // only the 'webglcontextlost' event is queued, and on swiftshader it can arrive seconds later) or when a real loss fires

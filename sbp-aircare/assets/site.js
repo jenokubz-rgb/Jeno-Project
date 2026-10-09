@@ -13,7 +13,7 @@ import { GUIDES } from './knowledge.js';
 import { cart } from './commerce.js';
 import { askTeam, handoffBox, guardForm, submitTicket, requestBooking, honeypot } from './contact.js';
 import { quoteFromCart, sourceTag } from './ticket.js';
-import { openFeedback, trapFocus, perfButton } from './feedback.js';
+import { openFeedback, trapFocus, perfButton, BETA_NOTE } from './feedback.js';
 
 const RM = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 const store = {
@@ -330,7 +330,7 @@ export function mountSite(cfg) {
   if (proto) {
     const hub = proto.querySelector('a');
     proto.innerHTML = ''; proto.classList.add('sx-beta');
-    proto.append(h('b', {}, `ทดลองใช้ (Beta) · แบบ ${variant}`), h('span', { class: 'sx-bt' }, ' · ราคาจาก Pricebook 2569 · ช่วงทดลองระบบยังไม่ส่งคำขอถึงทีมอัตโนมัติ'), ' ', fbBtn(), ' ', perfButton(variant));
+    proto.append(h('b', {}, `ทดลองใช้ (Beta) · แบบ ${variant}`), h('span', { class: 'sx-bt' }, BETA_NOTE()), ' ', fbBtn(), ' ', perfButton(variant));
     if (hub) { hub.textContent = hubLabel; proto.append(' ', hub); }
   }
   const foot = $('footer');

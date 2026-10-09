@@ -1,5 +1,5 @@
 // r20 one-command verification of A · B · C → tests/out/summary.md (+ one log per check in tests/out/)
-//   npm run verify          full set (~60–90 min on the swiftshader container: smoke, flows, axe, measured audit …)
+//   npm run verify          full set (~60–90 min on the swiftshader container: smoke (one at a time), flows, axe, measured audit …)
 //   npm run verify:quick    the fast subset (~10 min) — run before every commit
 // Starts `python3 -m http.server 8765` when nothing answers on BASE. Recon runs only when internal/sbp_real.json exists
 // (the internal Pricebook extract is never committed — CLAUDE.md §7). Exit 1 when any check fails.
@@ -50,8 +50,13 @@ const run = ([label, key, cmd]) => new Promise(res => {
     res(out);
   });
 });
-const results = new Array(checks.length); let next = 0;
-await Promise.all(Array.from({ length: JOBS }, async () => { while (next < checks.length) { const i = next++; results[i] = await run(checks[i]); } }));
+const results = new Array(checks.length);
+// phase 1: smoke one at a time — two software-WebGL browsers at once make the context pool lose/restore contexts
+// and three.js then warns about deleting objects of the lost context (0 warnings when run alone)
+const solo = checks.map((c, i) => i).filter(i => checks[i][1].startsWith('smoke-')), rest = checks.map((c, i) => i).filter(i => !solo.includes(i));
+for (const i of solo) results[i] = await run(checks[i]);
+let next = 0;
+await Promise.all(Array.from({ length: JOBS }, async () => { while (next < rest.length) { const i = rest[next++]; results[i] = await run(checks[i]); } }));
 if (srv) srv.kill();
 
 const fail = results.filter(r => r.status === 'fail'), pass = results.filter(r => r.status === 'pass');

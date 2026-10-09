@@ -4,7 +4,7 @@
 // openFeedback({variant, pages, seen}) · trapFocus(box) · mountBeta({variant, pages, hubLabel})
 import { h, $, $$ } from './sbp-core.js';
 import { submitTicket, honeypot } from './contact.js';
-import { sourceTag } from './ticket.js';
+import { sourceTag, connected } from './ticket.js';
 
 export function trapFocus(box) {
   box.addEventListener('keydown', e => {
@@ -55,6 +55,8 @@ export function perfButton(variant) {
 
 // the beta notice for pages without site.js (แบบ D, รุ่นที่ 2): a thin bar above the page header — inside the header when the
 // header is fixed — with the feedback button and the way back to the hub; plus every [data-feedback] button in the page
+// r20: the notice follows the real connection — once the back-office URL is set (ticket.js), requests do reach the team
+export const BETA_NOTE = () => connected() ? ' · ราคาจาก Pricebook 2569 · คำขอส่งถึงทีมโดยตรง' : ' · ราคาจาก Pricebook 2569 · ช่วงทดลองระบบยังไม่ส่งคำขอถึงทีมอัตโนมัติ';
 export function mountBeta({ variant = 'D', pages = null, hubLabel = 'หน้ารวมทุกแบบ' } = {}) {
   // the parts of the page a tester can name as the most useful: its chapter headings unless given
   const list = () => pages || [...new Set($$('main section h2').map(x => x.textContent.trim()).filter(Boolean))].slice(0, 14);
@@ -63,7 +65,7 @@ export function mountBeta({ variant = 'D', pages = null, hubLabel = 'หน้�
   const hub = globalThis.SBP_HUB ?? './';
   const hd = $('header'), inHd = !!hd && getComputedStyle(hd).position === 'fixed';   // a fixed header carries the bar (an aside inside a header is not a landmark of its own)
   const bar = h(inHd ? 'div' : 'aside', { class: 'proto sx-beta sx-beta-x', 'aria-label': inHd ? null : 'สถานะเว็บไซต์ทดลอง' },
-    h('b', {}, `ทดลองใช้ (Beta) · แบบ ${variant}`), h('span', { class: 'sx-bt' }, ' · ราคาจาก Pricebook 2569 · ช่วงทดลองระบบยังไม่ส่งคำขอถึงทีมอัตโนมัติ'), ' ',
+    h('b', {}, `ทดลองใช้ (Beta) · แบบ ${variant}`), h('span', { class: 'sx-bt' }, BETA_NOTE()), ' ',
     h('button', { type: 'button', class: 'sx-fbb', onclick: fb }, 'ให้ความเห็น'), ' ', perfButton(variant),
     hub ? [' ', h('a', { href: hub, target: /^https?:/.test(hub) ? '_blank' : null, rel: /^https?:/.test(hub) ? 'noopener' : null }, hubLabel)] : null);
   if (inHd) hd.prepend(bar); else if (hd) hd.before(bar); else document.body.prepend(bar);

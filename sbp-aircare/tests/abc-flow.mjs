@@ -60,7 +60,8 @@ ok('เลือกวันและจองคิว → เปิดส่�
 ok('จองคิว: รับงานและจำนวนเครื่องจากใบประเมิน (ล้าง · ติดผนัง 2)', bk.svc === 'clean' && bk.wall === '2', `${bk.svc} · wall ${bk.wall}`);
 
 // 6. lazy mounting on demand: open the shop view → catalog builds
-await p.evaluate(() => { location.hash = 'shop'; }); await p.waitForTimeout(2500);
+await p.evaluate(() => { location.hash = 'shop'; });
+await p.waitForFunction(n => (document.getElementById('catalog')?.querySelectorAll('*').length || 0) > n + 150, cat0, { timeout: 30000 }).catch(() => {});
 const cat1 = await p.evaluate(() => document.getElementById('catalog')?.querySelectorAll('*').length || 0);
 ok('แคตตาล็อกสร้างเมื่อเปิดหน้าซื้อแอร์ครั้งแรก (lazy mount)', cat0 < 100 && cat1 > cat0 + 150, `catalog nodes ${cat0} → ${cat1}`);
 

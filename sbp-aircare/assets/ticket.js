@@ -16,7 +16,10 @@ const override = () => { try { if (/^(localhost|127\.0\.0\.1)$/.test(location.ho
 // staff board only: the back-office URL typed at login (offline board file, before TICKET_ENDPOINT is set) — https only
 let manual = null;
 export const useEndpoint = u => { manual = /^https:\/\/\S+$/.test(u || '') ? u : null; return !!manual; };
-export const endpoint = () => override() || manual || TICKET_ENDPOINT;
+// r20: or set it without rebuilding — the page's <meta name="sbp-ticket-endpoint" content="https://…/exec"> (https only;
+// a.html/b.html/c.html carry the empty tag in <head>, so the owner can paste the URL into the built file with a text editor)
+const fromPage = () => { try { const u = (document.querySelector('meta[name="sbp-ticket-endpoint"]')?.content || '').trim(); return /^https:\/\/\S+$/.test(u) ? u : null; } catch (e) { return null; } };
+export const endpoint = () => override() || manual || TICKET_ENDPOINT || fromPage();
 export const connected = () => !!endpoint();
 
 const ERR_TH = {

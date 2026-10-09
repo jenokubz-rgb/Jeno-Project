@@ -28,7 +28,8 @@
     "test:abc": "node tests/abc-flow.mjs a 1366 light && node tests/abc-flow.mjs b 1366 dark && node tests/abc-flow.mjs c 390 dark",
     "axe": "node tests/axe.mjs a light && node tests/axe.mjs b light && node tests/axe.mjs c dark",
     "tokens": "node tools/tokens.mjs",
-    "heroposters": "node tools/heroposters.mjs"
+    "heroposters": "node tools/heroposters.mjs",
+    "release": "python3 tools/release.py"
   },
   "devDependencies": {
     "playwright": "1.56.0",
