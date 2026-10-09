@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SBP AirCare · แบบ B Engineering</title>
 <meta name="description" content="สัญญาล้างแอร์รายปีสำหรับองค์กร ราคาขั้นบันได ขั้นตอนตามแบบฟอร์มบริษัท ตัวอย่าง Service Report ล้าง ติดตั้ง ซ่อม ซื้อแอร์ — SBP AirCare โดย บริษัท สหบูรพากรุ๊ป จำกัด">
-<meta name="theme-color" content="#F4F7FB">
+<meta name="theme-color" content="#F4F7FB" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#071630" media="(prefers-color-scheme: dark)">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="th_TH">
 <meta property="og:site_name" content="SBP AirCare">
@@ -204,9 +205,9 @@ section.s{padding-block:40px 0}
 .card .acts button+button{border-left:1px solid var(--ink)}
 .card .acts .open{background:var(--ink);color:var(--paper)}
 .card .acts [aria-pressed="true"]{color:var(--safety)}
-table.rows{width:100%;border-collapse:collapse;font-size:14px;table-layout:fixed;min-width:820px}
+table.rows{width:100%;border-collapse:collapse;font-size:14px;table-layout:fixed;min-width:1000px}
 .rows td{padding:8px 12px;border-bottom:1px solid var(--rule);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.rows td:nth-child(1){width:130px;font-family:var(--mono);font-size:12.5px}.rows td:nth-child(2){width:150px}.rows td:nth-child(4){width:110px}.rows td:nth-child(5),.rows td:nth-child(6){width:96px;text-align:right;font-family:var(--mono)}.rows td:nth-child(7){width:96px;text-align:right;font-family:var(--mono)}.rows td:nth-child(8){width:70px}
+.rows td:nth-child(1){width:130px;font-family:var(--mono);font-size:12.5px}.rows td:nth-child(2){width:150px}.rows td:nth-child(4){width:110px}.rows td:nth-child(5),.rows td:nth-child(6){width:96px;text-align:right;font-family:var(--mono)}.rows td:nth-child(7){width:96px;text-align:right;font-family:var(--mono)}.rows td:nth-child(8){width:146px}.rows td.ra{overflow:visible}.rows td:nth-child(1),.rows td:nth-child(3){white-space:normal;overflow-wrap:anywhere;line-height:1.35}.rows td.ra .chip{margin:0 6px 0 0;display:inline-flex;align-items:center;gap:4px}.rows td.ra .chip[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
 .rows tr:hover td{background:var(--blue-l)}
 .thead{min-width:820px;display:grid;grid-template-columns:130px 150px 1fr 110px 96px 96px 96px 70px;font:500 12.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);background:var(--paper);border-bottom:1px solid var(--ink)}
 .thead span{padding:8px 12px}.thead span:nth-child(5),.thead span:nth-child(6),.thead span:nth-child(7){text-align:right}
@@ -386,7 +387,7 @@ html.sx-on .sx-jump a:hover{border-color:var(--line)}
 </style>
 </head>
 <body>
-<aside class="proto" aria-label="สถานะต้นแบบ">PROTOTYPE B · ราคาจาก Pricebook 2569 ของบริษัท · สถานะทีมและรายงานเป็นตัวอย่าง · ฟอร์มยังไม่ส่งข้อมูลจริง · <a href="./">กลับหน้ารวม</a></aside>
+<aside class="proto sx-beta" aria-label="สถานะต้นแบบ"><b>ทดลองใช้ (Beta) · แบบ B</b><span class="sx-bt"> · ราคาจาก Pricebook 2569 · ช่วงทดลองระบบยังไม่ส่งคำขอถึงทีมอัตโนมัติ</span> <button type="button" class="sx-fbb">ให้ความเห็น</button> <button type="button" class="sx-fbb sx-perfb">ทดสอบความลื่น</button> <a href="./">หน้ารวมทุกแบบ</a></aside><!-- r21: same markup site.js writes (no layout shift when it takes over) -->
 <header class="hdr"><div class="wrap">
   <div class="cell"><a class="logo" href="#top"><img class="logo-mk" src="assets/logos/sbp.png" alt="" width="38" height="28"><span>SBP AirCare</span></a></div>
   <nav class="cell nav" aria-label="เมนูหลัก"><a href="#learn">00 คู่มือ</a><a href="#b2b">01 สัญญา</a><a href="#cleanflow">ทีมช่าง</a><a href="#howto">SOP</a><a href="#prices">02 ราคา</a><a href="#quality">03 วัสดุ</a><a href="#catalog">04 สินค้า</a><a href="#fit">05 วางห้อง</a><a href="#studio">06 จำลอง</a><a href="#inside">07 ข้างใน</a><a href="#area">08 พื้นที่</a></nav>
@@ -537,7 +538,7 @@ html.sx-on .sx-jump a:hover{border-color:var(--line)}
   <!-- SOP -->
   <section class="s" id="howto">
     <div class="sheet">
-      <div class="sheet-h"><div><p class="lbl">Sheet 01B · SOP งานบริการ</p><h2>Function ของเครื่อง 3 ประเภทหลัก และขั้นตอนล้าง ติดตั้ง ซ่อม</h2><p>ขั้นตอนตามแบบฟอร์มงานบริการของบริษัท (SBP-SR-ACCL / SBP-SR-ACIN) ค่าที่ต้องวัด ชิ้นส่วนที่ถอด เอกสารส่งมอบ และราคามาตรฐาน</p></div><span class="sheet-no">SOP-01</span></div>
+      <div class="sheet-h"><div><p class="lbl">Sheet 01B · SOP งานบริการ</p><h2>การทำงานของเครื่อง 3 ประเภทหลัก และขั้นตอนล้าง ติดตั้ง ซ่อม</h2><p>ขั้นตอนตามแบบฟอร์มงานบริการของบริษัท (SBP-SR-ACCL / SBP-SR-ACIN) ค่าที่ต้องวัด ชิ้นส่วนที่ถอด เอกสารส่งมอบ และราคามาตรฐาน</p></div><span class="sheet-no">SOP-01</span></div>
       <div id="howRoot" style="padding:14px 20px 6px"></div>
       <div style="padding:14px 20px 0"><h3 class="sy3-h">ลำดับการทำงานของระบบ — ดูในบ้านจริงแบบ 3 มิติ</h3><p class="sy3-sub">ตั้งแต่กดเปิด ลมในห้องผ่านคอยล์เย็น น้ำทิ้งไหลออกท่อสีฟ้า จนความร้อนถูกทิ้งที่คอยล์ร้อน ท่อทั้งหมดเดินในรางครอบท่อ ขั้นที่เกี่ยวกับน้ำยาแสดงแบบมองทะลุราง</p></div>
       <div id="edRoot" style="padding:6px 20px 6px"></div>
@@ -556,7 +557,7 @@ html.sx-on .sx-jump a:hover{border-color:var(--line)}
   <!-- 03 MATERIALS -->
   <section class="s" id="quality">
     <div class="sheet">
-      <div class="sheet-h"><div><p class="lbl">Sheet 03 · มาตรฐานวัสดุ</p><h2>Material schedule ของงานติดตั้ง 2 ระดับ</h2><p>ท่อ ฉนวน ราง สายไฟ ท่อน้ำทิ้ง เบรกเกอร์ และขั้นตอนทดสอบ ระบุยี่ห้อและสเปกในแพ็กเกจ ใช้แนบเอกสารจัดซื้อและตรวจรับงานได้</p></div><span class="sheet-no">S-01</span></div>
+      <div class="sheet-h"><div><p class="lbl">Sheet 03 · มาตรฐานวัสดุ</p><h2>ตารางวัสดุงานติดตั้ง 2 ระดับ (Material schedule)</h2><p>ท่อ ฉนวน ราง สายไฟ ท่อน้ำทิ้ง เบรกเกอร์ และขั้นตอนทดสอบ ระบุยี่ห้อและสเปกในแพ็กเกจ ใช้แนบเอกสารจัดซื้อและตรวจรับงานได้</p></div><span class="sheet-no">S-01</span></div>
       <div id="qualityRoot" style="padding:14px 20px 16px"></div>
     </div>
   </section>
@@ -569,7 +570,7 @@ html.sx-on .sx-jump a:hover{border-color:var(--line)}
         <aside class="facets-wrap" aria-label="ตัวกรอง"><div data-cat-facets></div></aside>
         <div style="min-width:0">
           <div class="ctop">
-            <label class="search"><span class="vh">ค้นหา</span><input data-cat-search placeholder="ค้นหารหัสรุ่น / แบรนด์ / BTU เช่น DAI-W 18000"></label>
+            <label class="search"><span class="vh">ค้นหา</span><input data-cat-search placeholder="ค้นหารหัสรุ่น แบรนด์ หรือ BTU"></label>
             <button type="button" class="btn-ghost filter-btn" data-cat-sheet-open style="border:0;border-radius:0">ตัวกรอง</button>
             <select data-cat-sort aria-label="เรียง"><option value="rec">แนะนำ</option><option value="price-asc">ราคาต่ำ–สูง</option><option value="price-desc">ราคาสูง–ต่ำ</option><option value="btu">BTU น้อย–มาก</option></select>
             <div class="seg" role="group" aria-label="มุมมอง"><button type="button" data-cat-view="table" aria-pressed="true">ตาราง</button><button type="button" data-cat-view="grid" aria-pressed="false">การ์ด</button></div>
@@ -634,7 +635,7 @@ html.sx-on .sx-jump a:hover{border-color:var(--line)}
   <!-- 04 AREA (036 transit style) -->
   <section class="s" id="area">
     <div class="sheet">
-      <div class="sheet-h"><div><p class="lbl">Sheet 07 · พื้นที่ให้บริการ</p><h2>เครือข่ายทีมบริการ</h2><p>แผนที่ประเทศไทยแสดงจังหวัดที่ให้บริการและช่วงค่าเดินทางจากสำนักงานใหญ่ พระราม 2 ซอย 31 แตะจังหวัดหรือพิมพ์เขต/อำเภอเพื่อตรวจค่าเดินทาง</p></div><span class="sheet-no">G-01</span></div>
+      <div class="sheet-h"><div><p class="lbl">Sheet 07 · พื้นที่ให้บริการ</p><h2>เครือข่ายทีมบริการ</h2><p>แผนที่ประเทศไทยแสดงจังหวัดที่ให้บริการและช่วงค่าเดินทางจากสำนักงานใหญ่ ถนนพระราม 2 แตะจังหวัดหรือพิมพ์เขต/อำเภอเพื่อตรวจค่าเดินทาง</p></div><span class="sheet-no">G-01</span></div>
       <div class="net" data-zone>
         <div class="map" id="mapRoot"></div>
         <div class="side">
@@ -725,7 +726,7 @@ const drawer = $('#drawer');
 function openProduct(m, i = 0) {
   const b = $('#drawerBody'); b.innerHTML = '';
   b.append(productDetail(m, i, { onPick: j => openProduct(m, j), on3D: () => { closeDrawer(drawer); $('#inside').scrollIntoView({ behavior: 'smooth' }); }, onFit: (mm, k) => { closeDrawer(drawer); ensure('shop'); FIT.setModel(mm, k); } }));
-  if (drawer.hidden) openDrawer(drawer);
+  if (!drawer.classList.contains('open')) openDrawer(drawer);
 }
 function shopCatalog() {
 const thead = h('div', { class: 'thead' }, ...['รหัสรุ่น', 'แบรนด์', 'ซีรีส์', 'ประเภท', 'BTU', 'เครื่อง', '+ติดตั้ง', ''].map(x => h('span', {}, x)));
@@ -743,10 +744,11 @@ cat = mountCatalog($('[data-catalog]'), {
       h('p', { class: 'lbl' }, s.installStdEx ? `+ติดตั้ง ${baht((s.px + s.installStdEx))}` : 'ติดตั้ง: ประเมิน'),
       h('div', { class: 'acts' }, h('button', { type: 'button', class: 'open', onclick: () => openProduct(m, m.skus.indexOf(s)) }, 'รายละเอียด'), h('button', { type: 'button', 'aria-pressed': act.inCompare, onclick: act.compare }, icon(act.inCompare ? 'check' : 'plus', { size: 15 }), 'เทียบ')));
   },
-  rowTpl: (m, skus) => h('table', { class: 'rows' }, h('tbody', {}, skus.map(s => h('tr', {},
+  rowTpl: (m, skus, si, act) => h('table', { class: 'rows' }, h('tbody', {}, skus.map(s => h('tr', {},
     h('td', {}, s.sku), h('td', {}, BRAND_BY_ID[m.brand].name, BRAND_BY_ID[m.brand].own ? h('b', { class: 'own-tag' }, 'แบรนด์เรา') : null), h('td', {}, m.series), h('td', {}, TYPE_BY_ID[m.type].th),
     h('td', {}, s.btu.toLocaleString()), h('td', {}, baht(s.price)), h('td', {}, s.installStdEx ? baht((s.px + s.installStdEx)) : '—'),
-    h('td', {}, h('button', { type: 'button', class: 'chip', onclick: () => openProduct(m, m.skus.indexOf(s)) }, 'เปิด')))))),
+    h('td', { class: 'ra' }, h('button', { type: 'button', class: 'chip', onclick: () => openProduct(m, m.skus.indexOf(s)) }, 'เปิด'),
+      h('button', { type: 'button', class: 'chip', 'aria-pressed': act.inCompareSku(s), 'aria-label': `เทียบ ${m.series} ${s.btu.toLocaleString()} BTU`, onclick: () => act.compareSku(s) }, icon(act.inCompareSku(s) ? 'check' : 'plus', { size: 14 }), 'เทียบ')))))),
   onOpen: (m, s) => openProduct(m, m.skus.indexOf(s)),
   onCompare: items => { const b = $('#drawerBody'); b.innerHTML = ''; b.append(h('h3', { style: 'font-size:22px;margin-bottom:10px' }, 'ตารางเทียบรุ่น'), compareTable(items)); openDrawer(drawer); },
 });

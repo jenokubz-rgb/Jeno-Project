@@ -73,6 +73,7 @@ export function mountSite(cfg) {
   // r13: an edition may add or rename views ({id: {th, lead}}), and give them their own facts and next-step cards
   const VV = { ...VIEWS, ...viewDefs };
   document.documentElement.classList.add('sx-on');
+  document.documentElement.dataset.sbpEdition = variant;   // r21: ticket.sourceTag reads it (production titles no longer say "แบบ A")
   const L = id => labels[id] || SEC_TH[id] || id;
   /* ---- 1 · which view each section belongs to ---- */
   const VOF = {}, ELS = {};
@@ -293,7 +294,7 @@ export function mountSite(cfg) {
         h('h3', {}, 'ทำงานกับเราอย่างไร'),
         h('ol', {}, PROCESS.map(p => h('li', {}, h('b', {}, p.th), h('span', {}, p.d)))),
         h('h3', {}, 'มาตรฐานที่ตรวจสอบได้'),
-        h('ul', { class: 'sx-std' }, ['ขั้นตอนงานล้างตามแบบฟอร์ม SBP-SR-ACCL-UNI-001', 'ขั้นตอนงานติดตั้งตามแบบฟอร์ม SBP-SR-ACIN-UNI-001', 'รับประกันงานติดตั้ง 3 ปี เมื่อซื้อเครื่องจากบริษัท · 1 ปี เมื่อจัดหาเครื่องเอง', 'ใบเสนอราคาระบุยี่ห้อและสเปกวัสดุ'].map(t => h('li', {}, t))))));
+        h('ul', { class: 'sx-std' }, ['ขั้นตอนงานล้างตามแบบฟอร์ม SBP-SR-ACCL-UNI-001', 'ขั้นตอนงานติดตั้งตามแบบฟอร์ม SBP-SR-ACIN-UNI-001', 'รับประกันงานติดตั้ง 3 ปี เมื่อซื้อเครื่องจากบริษัท · 1 ปี เมื่อจัดหาเครื่องเอง', 'ใบเสนอราคาระบุยี่ห้อและสเปกวัสดุ'].map(t => h('li', {}, ...t.split(/(SBP-SR-\w+-UNI-\d+)/).map(x => /^SBP-SR-/.test(x) ? h('span', { class: 's-nw' }, x) : x)))))));   // r21: form codes stay on one line
   }
 
   /* ---- 8 · contact form → a ticket in the back office (r10) · honest hand-off when the back office cannot be reached ---- */

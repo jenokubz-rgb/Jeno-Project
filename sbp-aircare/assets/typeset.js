@@ -17,7 +17,8 @@ export function thaiPhrases(sel, root = document) {
       if (parts.length === 1 && !/\S/.test(parts[0])) continue;
       const frag = document.createDocumentFragment();
       for (const s of parts) {
-        if (/^\s+$/.test(s) || !TH.test(s)) frag.append(s);
+        // r21: codes with hyphens (SBP-SR-ACCL-UNI-001, 9,000-18,000) stay on one line too, like a Thai phrase
+        if (/^\s+$/.test(s) || (!TH.test(s) && !/\w-\w/.test(s))) frag.append(s);
         else { const sp = document.createElement('span'); sp.className = 'thp'; sp.textContent = s; frag.append(sp); }
       }
       n.replaceWith(frag);

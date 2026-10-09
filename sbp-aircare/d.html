@@ -292,7 +292,7 @@ onDemand($('#b3dClean'), $('#d3dClean'), async host => { const { mountJobGuide }
 // shop
 function openProduct(m, idx = 0) {
   const body = $('#drawerBody'); body.replaceChildren(productDetail(m, idx, { onPick: i => openProduct(m, i), onFit: (mm, i) => { closeDrawer($('#drawer')); openFit().then(F => F && F.setModel(mm, i)); } }));
-  if ($('#drawer').hidden) openDrawer($('#drawer'));
+  if (!$('#drawer').classList.contains('open')) openDrawer($('#drawer'));
 }
 let FIT = null;
 const fitBtn = $('#bFit');

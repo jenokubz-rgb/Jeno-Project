@@ -75,7 +75,7 @@ export async function mountFilmSite({ variant = 'A2', theme = 'dark', mood = 'au
   $$('[data-prices]').forEach(b => b.addEventListener('click', () => openPrices(b.dataset.prices || 'clean')));
   function openProduct(m, idx = 0) {
     const body = $('#drawerBody'); body.replaceChildren(productDetail(m, idx, { onPick: i => openProduct(m, i) }));
-    if ($('#drawer').hidden) openDrawer($('#drawer'));
+    if (!$('#drawer').classList.contains('open')) openDrawer($('#drawer'));
   }
   wireDrawers();
 

@@ -30,7 +30,8 @@ export function mountMobileMenu() {
   if (!bar || !links().length) return;
   const sheet = h('div', { class: 's-msheet', hidden: true, role: 'dialog', 'aria-modal': 'true', 'aria-label': 'เมนู' });
   const panel = h('div', { class: 's-msheet-p' });
-  const close = () => { sheet.classList.remove('open'); setTimeout(() => sheet.hidden = true, 220); };
+  let hideT;   // r21: reopening inside the close animation must not be hidden by the pending timer
+  const close = () => { sheet.classList.remove('open'); clearTimeout(hideT); hideT = setTimeout(() => sheet.hidden = true, 220); };
   const hub = globalThis.SBP_HUB ?? './';   // single-file builds set this (artifact URL, or '' when embedded in the tester)
   // links are read when the sheet opens, so a menu rebuilt later (site.js views) is what the sheet shows
   const fill = () => {
@@ -42,7 +43,7 @@ export function mountMobileMenu() {
   sheet.addEventListener('click', e => { if (e.target === sheet) close(); });
   sheet.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
   const btn = h('button', { type: 'button', class: 'btn-ghost s-mmenu', 'aria-haspopup': 'dialog' }, 'เมนู');
-  btn.addEventListener('click', () => { fill(); sheet.hidden = false; requestAnimationFrame(() => { sheet.classList.add('open'); const a = panel.querySelector('a'); a && a.focus(); }); });
+  btn.addEventListener('click', () => { clearTimeout(hideT); fill(); sheet.hidden = false; requestAnimationFrame(() => { sheet.classList.add('open'); const a = panel.querySelector('a'); a && a.focus(); }); });
   bar.prepend(btn);
 }
 

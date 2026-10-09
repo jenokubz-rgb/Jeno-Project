@@ -989,7 +989,7 @@ a.s-flow-c:hover{border-color:var(--s-accent);transform:translateY(-1px)}
 html.sx-on header nav a[aria-current="page"]{background:var(--s-accent-soft);color:var(--s-ink);font-weight:600}
 /* view intro */
 .sx-vh{padding-block:28px 4px;display:grid;gap:8px}
-.sx-crumb{display:flex;flex-wrap:wrap;gap:4px;font-size:13px;color:var(--s-ink-3)}
+.sx-crumb{display:flex;flex-wrap:wrap;align-items:center;gap:4px;font-size:13px;color:var(--s-ink-3)}
 .sx-crumb a{color:inherit}
 .sx-vh h1{margin:0;font-size:clamp(28px,4vw,40px);line-height:1.2;color:var(--s-ink);text-wrap:balance;outline:none}
 .sx-lead{margin:0;max-width:68ch;color:var(--s-ink-2);font-size:16px;line-height:1.65}
@@ -1358,3 +1358,5 @@ html.sx-on .s-dock{display:none!important}   /* r6: views + the journey strip re
   .s-doc{border:0;padding:0;background:#fff;color:#000;--s-ink:#000;--s-ink-2:#222;--s-ink-3:#444;--s-line:#bbb;--s-card:#fff;--s-warn:#7a3a00}
   .s-doc-t tr{break-inside:avoid}
 }
+/* r21: keep form codes / ranges on one line (SBP-SR-ACCL-UNI-001) */
+.s-nw{white-space:nowrap}

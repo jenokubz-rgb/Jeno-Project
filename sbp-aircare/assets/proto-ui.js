@@ -73,7 +73,7 @@ export function mountCatalog(root, cfg) {
   let lastQ;
   function renderGrid() {
     const q = queryCatalog(f); lastQ = q;
-    els.count && (els.count.innerHTML = `<b>${q.list.length.toLocaleString()}</b> รุ่น · <b>${q.skuTotal.toLocaleString()}</b> SKU`);
+    els.count && (els.count.innerHTML = `<b>${q.list.length.toLocaleString()}</b> ซีรีส์ · <b>${q.skuTotal.toLocaleString()}</b> รุ่น`);
     const shown = q.list.slice(0, page * per);
     els.grid.innerHTML = '';
     els.grid.dataset.view = view;
@@ -88,13 +88,16 @@ export function mountCatalog(root, cfg) {
         open: () => cfg.onOpen && cfg.onOpen(m, skus[si]),
         compare: () => toggleCompare(m, skus[si]),
         inCompare: compare.has(m.id),
+        // r21: per-size compare for table rows (one size per model in the tray; another size of the same model replaces it)
+        compareSku: s => compare.get(m.id)?.sku === s ? toggleCompare(m, s) : (compare.delete(m.id), toggleCompare(m, s)),
+        inCompareSku: s => compare.get(m.id)?.sku === s,
       });
       if (!reduceMotion() && idx >= (page - 1) * per) card.style.animationDelay = `${(idx % per) * 28}ms`;
       els.grid.append(card);
     });
     if (els.more) {
       els.more.hidden = shown.length >= q.list.length;
-      els.more.textContent = `โหลดเพิ่ม (${Math.min(per, q.list.length - shown.length)} จาก ${q.list.length - shown.length} รุ่นที่เหลือ)`;
+      els.more.textContent = `โหลดเพิ่ม (${Math.min(per, q.list.length - shown.length)} จาก ${q.list.length - shown.length} ซีรีส์ที่เหลือ)`;
     }
   }
   function toggleCompare(m, sku) {
@@ -427,8 +430,10 @@ export function reveal(sel = '[data-reveal]') {
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
   $$(sel).forEach(el => { if (el.getBoundingClientRect().top < innerHeight) return; el.classList.add('rv'); io.observe(el); });
 }
-export function openDrawer(drawer) { drawer.hidden = false; requestAnimationFrame(() => drawer.classList.add('open')); document.body.classList.add('lock'); const c = $('[data-close]', drawer); c && c.focus(); }
-export function closeDrawer(drawer) { drawer.classList.remove('open'); document.body.classList.remove('lock'); setTimeout(() => drawer.hidden = true, 260); }
+// r21: one pending hide per drawer (WeakMap, no globals) — opening again inside the close animation cancels it
+const hideT = new WeakMap();
+export function openDrawer(drawer) { clearTimeout(hideT.get(drawer)); drawer.hidden = false; requestAnimationFrame(() => drawer.classList.add('open')); document.body.classList.add('lock'); const c = $('[data-close]', drawer); c && c.focus(); }
+export function closeDrawer(drawer) { drawer.classList.remove('open'); document.body.classList.remove('lock'); clearTimeout(hideT.get(drawer)); hideT.set(drawer, setTimeout(() => drawer.hidden = true, 260)); }
 export function wireDrawers() {
   $$('[data-drawer]').forEach(d => {
     $$('[data-close]', d).forEach(b => b.addEventListener('click', () => closeDrawer(d)));

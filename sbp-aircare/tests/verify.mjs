@@ -1,4 +1,4 @@
-// r20 one-command verification of A · B · C → tests/out/summary.md (+ one log per check in tests/out/)
+// r20 one-command verification of A · B · C (r21: + interaction sweep) → tests/out/summary.md (+ one log per check in tests/out/)
 //   npm run verify          full set (~60–90 min on the swiftshader container: smoke (one at a time), flows, axe, measured audit …)
 //   npm run verify:quick    the fast subset (~10 min) — run before every commit
 //   node tests/verify.mjs --only flow-a-1366,axe-a-light   re-run those checks of the last full run (keys = log names)
@@ -6,7 +6,7 @@
 // Starts `python3 -m http.server 8765` when nothing answers on BASE. Recon runs only when internal/sbp_real.json exists
 // (the internal Pricebook extract is never committed — CLAUDE.md §7). Exit 1 when any check fails.
 import { spawn } from 'node:child_process';
-import { mkdirSync, writeFileSync, existsSync } from 'node:fs';
+import { mkdirSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..'), OUT = join(ROOT, 'tests', 'out');
@@ -18,6 +18,8 @@ mkdirSync(OUT, { recursive: true });
 
 const node = (f, ...a) => ['node', [`tests/${f}`, ...a]];
 const E = 'abc';
+// r21: the newest production package (npm run release) — checked from disk when it exists
+const REL = (() => { try { const d = join(ROOT, 'dist', 'release'); const r = readdirSync(d).filter(x => /^SBP-AirCare-ABC-r\d+$/.test(x)).sort((a, b) => +a.split('-r').pop() - +b.split('-r').pop()).pop(); return r ? join(d, r) : null; } catch (e) { return null; } })();
 const checks = [
   ['ราคา: หลักร้อย ก่อน VAT ใบกำกับภาษี ราคาขั้นบันได', 'pricing', node('pricing.mjs')],
   ['กระทบยอดราคากับ Pricebook ภายใน (recon)', 'recon', existsSync(join(ROOT, 'internal', 'sbp_real.json')) ? ['python3', ['tools_recon.py']] : null],
@@ -31,6 +33,9 @@ const checks = [
   ...(QUICK ? [] : [...E].map(v => [`วัดค่า มือถือ 390 DPR 3 · ${v.toUpperCase()} (ตัวอักษร เป้ากด ตัดคำ)`, `audit-${v}-390`, node('audit.mjs', v, '390', v === 'c' ? 'dark' : 'light', '3')])
     .concat([['วัดค่า จอใหญ่ 1366 DPR 2 · C', 'audit-c-1366', node('audit.mjs', 'c', '1366', 'dark', '2')]])),
   ...(QUICK ? [] : [['จองคิว → ticket → หลังบ้าน (A 1366)', 'booking-e2e-a', node('booking-e2e.mjs', 'a.html', '1366', 'light')]]),
+  // r21 every main control on every page (catalog · price centre · contract builder · area · booking · forms · search · basket · print)
+  ...(QUICK ? [] : [['ชุดใช้งานจริง (zip): เปิดจากไฟล์ · ชื่อแท็บ · หลังบ้านจำลองผ่าน meta', 'release-check', REL ? node('release-check.mjs', REL) : null]]),
+  ...(QUICK ? [] : [['ไล่กดทุกฟังก์ชัน A 1366 สว่าง', 'sweep-a-1366', node('abc-sweep.mjs', 'a', '1366', 'light')], ['ไล่กดทุกฟังก์ชัน B 1366 มืด', 'sweep-b-1366', node('abc-sweep.mjs', 'b', '1366', 'dark')], ['ไล่กดทุกฟังก์ชัน C 390 มืด', 'sweep-c-390', node('abc-sweep.mjs', 'c', '390', 'dark')]]),
 ];
 
 const up = async () => { try { return (await fetch(`${BASE}/a.html`, { method: 'HEAD' })).ok; } catch (e) { return false; } };
@@ -40,7 +45,7 @@ if (!(await up())) {
   for (let i = 0; i < 40 && !(await up()); i++) await new Promise(r => setTimeout(r, 250));
 }
 const run = ([label, key, cmd]) => new Promise(res => {
-  if (!cmd) return res({ label, key, status: 'skip', ms: 0, line: 'ไม่มี internal/sbp_real.json (ไฟล์ภายใน — เจ้าของอัปโหลดให้เมื่อต้องรัน)' });
+  if (!cmd) return res({ label, key, status: 'skip', ms: 0, line: key === 'release-check' ? 'ยังไม่มีชุดใช้งานจริง — npm run build && npm run release' : 'ไม่มี internal/sbp_real.json (ไฟล์ภายใน — เจ้าของอัปโหลดให้เมื่อต้องรัน)' });
   const t0 = Date.now(); let log = '';
   const c = spawn(cmd[0], cmd[1], { cwd: ROOT, env: { ...process.env, BASE } });
   c.stdout.on('data', d => log += d); c.stderr.on('data', d => log += d);

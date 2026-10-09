@@ -68,7 +68,7 @@ export async function mountV3({ variant = 'A3', navFmt, hubLabel = 'หน้า
       on3D: () => { closeDrawer(drawer); ensure('cleaning'); $('#inside').scrollIntoView({ behavior: RM ? 'auto' : 'smooth' }); },
       onFit: (mm, i) => { closeDrawer(drawer); ensure('shop'); FIT && FIT.setModel(mm, i); },
     }));
-    if (drawer.hidden) openDrawer(drawer);
+    if (!drawer.classList.contains('open')) openDrawer(drawer);
   }
   const M = {
     home: once(() => {

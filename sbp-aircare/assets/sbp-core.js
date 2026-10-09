@@ -192,7 +192,7 @@ export const btuFmt = n => n.toLocaleString('en-US') + ' BTU';
 export const kbtu = n => (n / 1000).toFixed(n % 1000 ? 1 : 0) + 'k';
 
 /* ---------- service area: Bangkok + 4 vicinity provinces; nearby provinces by road distance ---------- */
-export const HQ = { th: 'สำนักงานใหญ่ พระราม 2 ซอย 31', lat: 13.664, lon: 100.44 };   // approximate point
+export const HQ = { th: 'สำนักงานใหญ่ ถนนพระราม 2', lat: 13.664, lon: 100.44 };   // approximate point
 // Rev.09 r5 — company facts for the about / contact blocks. Email from the owner (2 ต.ค. 2569); address, phone and years from the
 // company's public listings (sahaburapa.com / sahaburapagroup.com contact pages via search — the sites themselves were not reachable
 // from the build environment) → owner to confirm. Tax id, LINE OA, opening hours: not shown until the owner supplies them.

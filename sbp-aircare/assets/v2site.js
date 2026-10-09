@@ -55,7 +55,7 @@ export async function mountV2({ variant = 'A2', mood = 'aurora', quality = 'auto
   }
   function openProduct(m, idx = 0) {
     const body = $('#drawerBody'); body.replaceChildren(productDetail(m, idx, { onPick: i => openProduct(m, i), onFit: $('#vFit') ? (mm, i) => { closeDrawer($('#drawer')); openFit().then(F => F && F.setModel(mm, i)); } : null }));
-    if ($('#drawer').hidden) openDrawer($('#drawer'));
+    if (!$('#drawer').classList.contains('open')) openDrawer($('#drawer'));
   }
   const fitBtn = $('#bFit');
   if (fitBtn) { fitBtn.setAttribute('aria-controls', 'vFit'); fitBtn.setAttribute('aria-expanded', 'false'); fitBtn.addEventListener('click', () => { const host = $('#vFit'); if (FIT && !host.hidden) { host.hidden = true; fitBtn.setAttribute('aria-expanded', 'false'); } else openFit(); }); }

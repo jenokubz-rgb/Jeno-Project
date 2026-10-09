@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SBP AirCare · แบบ C Virtual Showroom</title>
 <meta name="description" content="โชว์รูมแอร์ออนไลน์ ทุกรุ่นดูแบบ 3 มิติได้ ราคาเครื่องพร้อมติดตั้ง ล้าง ซ่อม จองคิวออนไลน์ — SBP AirCare โดย บริษัท สหบูรพากรุ๊ป จำกัด">
-<meta name="theme-color" content="#090E17">
+<meta name="theme-color" content="#090E17" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#EEF2F8" media="(prefers-color-scheme: light)">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="th_TH">
 <meta property="og:site_name" content="SBP AirCare">
@@ -374,7 +375,7 @@ html.sx-on .sec-h h2{font-size:clamp(28px,3vw,40px);line-height:1.22}
 </style>
 </head>
 <body>
-<aside class="proto" aria-label="สถานะต้นแบบ">ต้นแบบแบบ C · ราคาสินค้าและค่าบริการจาก Pricebook 2569 ของบริษัท · ฉาก 3 มิติและห้องจำลองเป็นแบบจำลองเพื่ออธิบาย · ฟอร์มยังไม่ส่งข้อมูลจริง · <a href="./">กลับหน้ารวม</a></aside>
+<aside class="proto sx-beta" aria-label="สถานะต้นแบบ"><b>ทดลองใช้ (Beta) · แบบ C</b><span class="sx-bt"> · ราคาจาก Pricebook 2569 · ช่วงทดลองระบบยังไม่ส่งคำขอถึงทีมอัตโนมัติ</span> <button type="button" class="sx-fbb">ให้ความเห็น</button> <button type="button" class="sx-fbb sx-perfb">ทดสอบความลื่น</button> <a href="./">หน้ารวมทุกแบบ</a></aside><!-- r21: same markup site.js writes (no layout shift when it takes over) -->
 <header class="hdr"><div class="wrap">
   <a class="logo" href="#top"><img class="logo-mk" src="assets/logos/sbp.png" alt="" width="41" height="30">SBP AirCare</a>
   <nav class="nav" aria-label="เมนูหลัก"><a href="#learn">ความรู้</a><a href="#journey">แอร์ทำงาน</a><a href="#room">ห้องจำลอง</a><a href="#fit">ลองวางในห้อง</a><a href="#cleanflow">ล้าง·ติดตั้ง</a><a href="#howto">งานช่าง</a><a href="#catalog">สินค้า</a><a href="#prices">ค่าบริการ</a><a href="#quality">วัสดุ</a><a href="#b2b">สัญญารายปี</a><a href="#area">พื้นที่</a></nav>
@@ -632,7 +633,7 @@ let HWX = null, SVX = null, JOB = null, FIT = null, PC = null, BLD = null, cat =
 
 // catalog
 const drawer = $('#drawer');
-function openProduct(m, i = 0) { const b = $('#drawerBody'); b.innerHTML = ''; b.append(productDetail(m, i, { onPick: j => openProduct(m, j), on3D: () => { closeDrawer(drawer); scrollTo({ top: 0, behavior: 'smooth' }); }, onFit: (mm, k) => { closeDrawer(drawer); ensure('shop'); FIT.setModel(mm, k); } })); if (drawer.hidden) openDrawer(drawer); }
+function openProduct(m, i = 0) { const b = $('#drawerBody'); b.innerHTML = ''; b.append(productDetail(m, i, { onPick: j => openProduct(m, j), on3D: () => { closeDrawer(drawer); scrollTo({ top: 0, behavior: 'smooth' }); }, onFit: (mm, k) => { closeDrawer(drawer); ensure('shop'); FIT.setModel(mm, k); } })); if (!drawer.classList.contains('open')) openDrawer(drawer); }
 function tilt(el) {
   if (reduceMotion() || matchMedia('(hover:none)').matches) return el;
   el.addEventListener('pointermove', e => { const r = el.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; el.style.transform = `perspective(800px) rotateX(${-y * 5}deg) rotateY(${x * 6}deg)`; });

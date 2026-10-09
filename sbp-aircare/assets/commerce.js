@@ -119,8 +119,9 @@ export function mountCart({ buttons = '[data-cart-btn]' } = {}) {
   const dr = h('div', { class: 's-cart', hidden: true, role: 'dialog', 'aria-modal': 'true', 'aria-label': 'ใบเสนอราคาเบื้องต้น' });
   const panel = h('div', { class: 's-cart-panel' });
   dr.append(panel); document.body.append(dr);
-  const close = () => { dr.classList.remove('open'); document.body.classList.remove('lock'); setTimeout(() => dr.hidden = true, 250); };
-  const open = () => { render(); dr.hidden = false; requestAnimationFrame(() => dr.classList.add('open')); document.body.classList.add('lock'); };
+  let hideT;   // r21: open() cancels a pending hide — reopening inside the close animation left the basket hidden
+  const close = () => { dr.classList.remove('open'); document.body.classList.remove('lock'); clearTimeout(hideT); hideT = setTimeout(() => dr.hidden = true, 250); };
+  const open = () => { clearTimeout(hideT); render(); dr.hidden = false; requestAnimationFrame(() => dr.classList.add('open')); document.body.classList.add('lock'); };
   dr.addEventListener('click', e => { if (e.target === dr) close(); });
   addEventListener('keydown', e => { if (e.key === 'Escape' && !dr.hidden) close(); });
   let sent = null, docView = false;
