@@ -323,7 +323,8 @@ npm run smoke && npm run smoke:mobile && npm run textscan     # ใช้เว�
 npm run recon                       # แตะข้อมูลราคาเมื่อไร ต้อง "mismatches": 0 (ต้องมี internal/sbp_real.json)
 npm run build:dev                   # dist/art/* ลิงก์ชุดพัฒนา → publish ทับ URL ใน urls.dev.json
 npm run build                       # dist/art/* ลิงก์ชุดที่แชร์ → publish เฉพาะเมื่อเจ้าของสั่ง
-npm run release                     # ★r20 ชุดใช้งานจริง dist/release/SBP-AirCare-r20(.zip) — web/ · backoffice/ (ภายใน) · dev/ · README-TH.md
+npm run release                     # ★r20 ชุดใช้งานจริง A · B · C ต้นฉบับเท่านั้น → dist/release/SBP-AirCare-ABC-r20(.zip) = a/b/c.html + README-TH.md
+npm run release -- --full            #       ชุดเต็ม: + หน้าเลือกแบบ · หลังบ้าน (ภายใน) · styleguide
 npm run tokens                      # ★r20 แก้ token สี/ตัวอักษร → อ่านค่าจากหน้าจริงใหม่ (assets/tokens.js) → เปิด styleguide.html
 npm run heroposters                 # ★r20 แก้ภาพ 3 มิติหน้าแรก → เรนเดอร์ภาพนิ่งมือถือใหม่ (assets/posters/hero-*.webp)
 ```
