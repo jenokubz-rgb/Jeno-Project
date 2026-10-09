@@ -323,6 +323,7 @@ npm run smoke && npm run smoke:mobile && npm run textscan     # ใช้เว�
 npm run recon                       # แตะข้อมูลราคาเมื่อไร ต้อง "mismatches": 0 (ต้องมี internal/sbp_real.json)
 npm run build:dev                   # dist/art/* ลิงก์ชุดพัฒนา → publish ทับ URL ใน urls.dev.json
 npm run build                       # dist/art/* ลิงก์ชุดที่แชร์ → publish เฉพาะเมื่อเจ้าของสั่ง
+npm run release                     # ★r20 ชุดใช้งานจริง dist/release/SBP-AirCare-r20(.zip) — web/ · backoffice/ (ภายใน) · dev/ · README-TH.md
 npm run tokens                      # ★r20 แก้ token สี/ตัวอักษร → อ่านค่าจากหน้าจริงใหม่ (assets/tokens.js) → เปิด styleguide.html
 npm run heroposters                 # ★r20 แก้ภาพ 3 มิติหน้าแรก → เรนเดอร์ภาพนิ่งมือถือใหม่ (assets/posters/hero-*.webp)
 ```
@@ -397,7 +398,7 @@ npm run heroposters                 # ★r20 แก้ภาพ 3 มิติ�
    - ที่มาตอนนี้คือผลค้นหาสาธารณะ เพราะ environment บล็อก `sahaburapa.com` / `sahaburapagroup.com` — เพิ่มใน Network access ถ้าต้องอ่านเว็บบริษัทโดยตรง
 3. **เปิดใช้ระบบจองคิว/ticket (★r10 โค้ดเสร็จแล้ว — เหลือติดตั้ง · ขั้นตอนเต็ม `backoffice/README.md`)**
    - สร้าง Google Sheet ในบัญชีบริษัท → วาง `backoffice/apps-script/Code.gs` + `appsscript.json` → ตั้ง Script properties (`STAFF_TOKEN`, `NOTIFY_EMAIL`, `SLOT_CAPACITY`, `TEAMS`) → Deploy เว็บแอป (ในฐานะฉัน · ทุกคน)
-   - วาง URL `/exec` ใน `assets/ticket.js` `TICKET_ENDPOINT` → `npm run build`
+   - วาง URL `/exec` ใน `assets/ticket.js` `TICKET_ENDPOINT` → `npm run build` · ★r20 หรือวางใน `<meta name="sbp-ticket-endpoint" content="…/exec">` ของไฟล์ `web/*.html` ในชุด release ได้เลยโดยไม่ต้อง build (แถบ Beta เปลี่ยนเป็น "คำขอส่งถึงทีมโดยตรง" เอง)
    - Artifacts เรียก API ภายนอกไม่ได้ → ย้ายหน้าไปโฮสต์ static ของบริษัท (Cloudflare Pages / Netlify / Vercel หรือโฮสต์เดิมของ sahaburapa.com — ไฟล์จาก `dist/offline/` ใช้ได้ทันที)
    - หน้าหลังบ้าน `dist/offline/backoffice.html` ใช้ภายในเท่านั้น
    - เจ้าของต้องให้: ประกาศความเป็นส่วนตัว (PDPA) · จำนวนงานต่อช่วง (`SLOT_CAPACITY`) · รายชื่อทีม · อีเมล/LINE ที่รับแจ้ง
