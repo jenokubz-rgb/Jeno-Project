@@ -159,6 +159,12 @@ bo = build_variant('backoffice')
 open(os.path.join(DIST, 'offline', 'backoffice.html'), 'w', encoding='utf-8').write(bo)
 sizes['backoffice'] = len(bo.encode()) // 1024
 
+# ---- r20: design-system page for Dev visual QA (styleguide.html; tokens read by tools/tokens.mjs → assets/tokens.js) ----
+sg = build_variant('styleguide')
+open(os.path.join(DIST, 'offline', 'styleguide.html'), 'w', encoding='utf-8').write(sg)
+open(os.path.join(DIST, 'art', 'styleguide.html'), 'w', encoding='utf-8').write(strip_doc(sg))
+sizes['styleguide'] = len(sg.encode()) // 1024
+
 # ---- tester (preview.html) with embedded variants ----
 pv = read(os.path.join(ROOT, 'preview.html'))
 pv = re.sub(r'<link rel="stylesheet" href="assets/([\w.-]+\.css)">', lambda m: f'<style>{css_inline(m.group(1), pv)}</style>', pv)

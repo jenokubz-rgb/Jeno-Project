@@ -22,7 +22,13 @@
     "v3": "python3 tools/v3gen.py",
     "posters": "node tools/posters.mjs",
     "test:models": "node tests/models3d.mjs a3.html",
-    "perf3d": "node tests/perf3d.mjs a.html && node tests/perf3d.mjs b.html && node tests/perf3d.mjs c.html"
+    "perf3d": "node tests/perf3d.mjs a.html && node tests/perf3d.mjs b.html && node tests/perf3d.mjs c.html",
+    "verify": "node tests/verify.mjs",
+    "verify:quick": "node tests/verify.mjs --quick",
+    "test:abc": "node tests/abc-flow.mjs a 1366 light && node tests/abc-flow.mjs b 1366 dark && node tests/abc-flow.mjs c 390 dark",
+    "axe": "node tests/axe.mjs a light && node tests/axe.mjs b light && node tests/axe.mjs c dark",
+    "tokens": "node tools/tokens.mjs",
+    "heroposters": "node tools/heroposters.mjs"
   },
   "devDependencies": {
     "playwright": "1.56.0",
