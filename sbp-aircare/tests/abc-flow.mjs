@@ -12,6 +12,9 @@ const errs = []; p.on('pageerror', e => errs.push(e.message)); p.on('console', m
 const out = []; const ok = (name, pass, info = '') => { out.push({ name, pass: !!pass, info }); console.log(`${pass ? 'ok  ' : 'FAIL'} ${name}${info ? ' — ' + info : ''}`); };
 const T = { timeout: 120000 };
 const num = s => +String(s).replace(/[^\d]/g, '');
+// A scrolls smoothly (scroll-behavior:smooth): a pointer click can land while the page is still moving on a slow
+// software-GL machine → press the control through the DOM (what the test checks is the flow behind it)
+const press = (sel, text) => p.evaluate(([sel, text]) => { const el = [...document.querySelectorAll(sel)].find(e => !text || e.textContent.includes(text)); if (!el) throw new Error('missing ' + sel); el.click(); }, [sel, text]);
 
 await p.goto(`${BASE}/${pg}.html`);
 await p.waitForFunction(() => document.documentElement.classList.contains('sx-on'), null, T);
@@ -34,26 +37,26 @@ ok('ประเมินราคา: ไม่แสดงเลขที่�
 
 // 3. quick quote → basket
 const n0 = await p.evaluate(() => +(document.querySelector('[data-cart-btn]')?.dataset.n || 0));
-await p.locator('#quickRoot .jc-add').click();
+await press('#quickRoot .jc-add');
 await p.waitForFunction(() => { const d = document.querySelector('.s-cart'); return d && !d.hidden; }, null, { timeout: 10000 }).catch(() => {});
 const n1 = await p.evaluate(() => +(document.querySelector('[data-cart-btn]')?.dataset.n || 0));
 ok('ใส่ใบเสนอราคา → ตะกร้าเพิ่มและเปิดเอง', n1 > n0 && await p.evaluate(() => !document.querySelector('.s-cart').hidden), `${n0} → ${n1}`);
 
 // 4. basket → estimate document
 await p.locator('#s-cart-zone').fill('จอมทอง'); await p.waitForTimeout(500);
-await p.locator('.s-doc-open').click(); await p.waitForTimeout(400);
+await press('.s-doc-open'); await p.waitForTimeout(400);
 const doc = await p.evaluate(() => { const d = document.querySelector('.s-doc'); if (!d) return null; const b = document.querySelector('.s-cart-b');
   return { title: d.querySelector('h3')?.textContent, not: d.querySelector('.s-doc-not')?.textContent, rows: d.querySelectorAll('tbody tr').length, tot: d.querySelector('.s-doc-sum dd.tot')?.textContent, ref: d.querySelector('.s-doc-id dd:nth-of-type(2)')?.textContent, co: d.querySelector('.s-doc-co b')?.textContent, terms: d.querySelectorAll('.s-doc-terms li').length, ox: b.scrollWidth > b.clientWidth + 1 }; });
 ok('ใบประเมินราคา: หัวเอกสารและป้าย "ไม่ใช่ใบเสนอราคาทางการ"', doc && /ใบประเมินราคาเบื้องต้น/.test(doc.title) && /ไม่ใช่ใบเสนอราคาทางการ/.test(doc.not), doc ? `${doc.title} / ${doc.not}` : 'no doc');
 ok('ใบประเมินราคา: บริษัท + เลขที่ใบประเมินในเครื่อง + เงื่อนไข', doc && /สหบูรพา/.test(doc.co) && /^PE-\d{6}-\d{4}$/.test(doc.ref) && doc.terms >= 3, doc ? `${doc.ref} terms ${doc.terms}` : '');
 ok('ใบประเมินราคา: ไม่เลื่อนแนวนอน', doc && !doc.ox);
-await p.locator('.s-doc-act button', { hasText: 'ขอใบเสนอราคาอย่างเป็นทางการ' }).click(); await p.waitForTimeout(300);
+await press('.s-doc-act button', 'ขอใบเสนอราคาอย่างเป็นทางการ'); await p.waitForTimeout(300);
 ok('ใบประเมินราคา → กลับไปฟอร์มขอใบเสนอราคา (โฟกัสช่องชื่อ)', await p.evaluate(() => document.activeElement?.id === 's-q-name'));
 await p.keyboard.press('Escape'); await p.waitForTimeout(400);
 
 // 5. quick quote → booking (contact view, booking section shown with the job preset)
 await p.evaluate(() => { location.hash = 'home'; }); await p.waitForTimeout(800);
-await p.locator('#quickRoot .jc-go').click(); await p.waitForTimeout(1500);
+await press('#quickRoot .jc-go'); await p.waitForTimeout(1500);
 const bk = await p.evaluate(() => { const s = document.getElementById('booking'), r = document.getElementById('bookRoot');
   return { shown: !!s && !s.closest('[hidden]') && s.getBoundingClientRect().height > 0, svc: r?.querySelector('.bk-chips input:checked')?.value, wall: r?.querySelector('[data-u="wall"]')?.value }; });
 ok('เลือกวันและจองคิว → เปิดส่วนจองคิว', bk.shown);
