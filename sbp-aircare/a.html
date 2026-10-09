@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SBP AirCare · แบบ A Bento</title>
+<meta name="description" content="ล้าง ติดตั้ง ซ่อมแอร์ และซื้อแอร์พร้อมติดตั้ง ราคาจาก Pricebook บริษัท ประเมินราคาเองได้ทันที จองคิวออนไลน์ กรุงเทพฯ และปริมณฑล — SBP AirCare โดย บริษัท สหบูรพากรุ๊ป จำกัด">
+<meta name="theme-color" content="#EEF2F8">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="th_TH">
+<meta property="og:site_name" content="SBP AirCare">
+<meta property="og:title" content="SBP AirCare · แบบ A Bento">
+<meta property="og:description" content="ล้าง ติดตั้ง ซ่อมแอร์ และซื้อแอร์พร้อมติดตั้ง ราคาจาก Pricebook บริษัท ประเมินราคาเองได้ทันที จองคิวออนไลน์ กรุงเทพฯ และปริมณฑล — SBP AirCare โดย บริษัท สหบูรพากรุ๊ป จำกัด">
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/shared.css">
 <link rel="stylesheet" href="assets/business.css">
@@ -386,7 +393,7 @@ html.sx-on .sx-jump{gap:4px;width:fit-content;max-width:100%;margin-top:10px;pad
 html.sx-on .sx-jump a{min-height:42px;padding:0 14px 0 6px;border:0;border-radius:12px;background:transparent}
 html.sx-on .sx-jump a:hover{background:var(--tile-2)}
 html.sx-on .sx-jump a b{border-radius:9px;background:var(--blue-l);color:var(--blue-2);font-weight:700}
-.sec-h .eyebrow[data-zone]::before{content:attr(data-zone);content:attr(data-zone) / "";display:inline-grid;place-items:center;vertical-align:middle;margin-right:8px;width:24px;height:24px;border-radius:8px;background:var(--blue-l);color:var(--blue-2);font:700 13px var(--sans)}
+.sec-h .eyebrow[data-sec-n]::before{content:attr(data-sec-n);content:attr(data-sec-n) / "";display:inline-grid;place-items:center;vertical-align:middle;margin-right:8px;width:24px;height:24px;border-radius:8px;background:var(--blue-l);color:var(--blue-2);font:700 13px var(--sans)}
 html.sx-on .sec-h h2{font-size:clamp(26px,2.8vw,36px)}
 @media (pointer:coarse){html.sx-on .sx-jump a{min-height:44px}.vsw a{display:inline-grid;place-items:center;min-width:44px;min-height:44px}}
 /* r18: between 1081 and 1239 px the six-item menu did not fit beside the logo and tools (clipped, scrolled) — it takes the second header row there too */
@@ -424,7 +431,7 @@ html.sx-on .sec-h h2{font-size:clamp(26px,2.8vw,36px)}
     </div>
 
     <div class="tile t-3d" id="hero3d">
-      <div class="cv" data-v-canvas></div>
+      <div class="cv" data-v-canvas><img class="v-poster" src="assets/posters/hero-a.webp" alt="" aria-hidden="true" decoding="async"></div>
       <div class="labels" data-v-labels></div>
       <div class="fb" data-v-fallback hidden>อุปกรณ์นี้เปิดภาพ 3 มิติไม่ได้ จะแสดงเป็นภาพนิ่งในเวอร์ชันจริง</div>
       <div class="cap"><div><b>แอร์ติดผนัง · ข้างในมีอะไร</b><small>ลากเพื่อหมุน · แตะชิ้นส่วน</small></div></div>
@@ -462,6 +469,12 @@ html.sx-on .sec-h h2{font-size:clamp(26px,2.8vw,36px)}
   </div>
 
   <!-- START: WHAT DO YOU NEED (Rev.09 r5) -->
+  <!-- r20 QUICK QUOTE: the job card priced from the Pricebook, straight to booking or the quote -->
+  <section class="sec" id="quick">
+    <div class="sec-h"><div><p class="eyebrow">ประเมินราคาทันที</p><h2>รู้ราคาก่อนนัดช่าง</h2><p>เลือกงาน ประเภทแอร์ ขนาด และจำนวนเครื่อง ระบบคิดจาก Pricebook ของบริษัททันที จากนั้นเลือกวันที่สะดวกหรือเก็บไว้ในใบเสนอราคา</p></div></div>
+    <div class="qk"><div class="qk-card" id="quickRoot"></div><ul class="qk-why" id="quickWhy"></ul></div>
+  </section>
+
   <section class="sec" id="start">
     <div class="sec-h"><div><p class="eyebrow">เริ่มต้นที่นี่</p><h2>วันนี้ต้องการอะไร</h2><p>เลือกสิ่งที่ตรงกับคุณ ระบบพาไปทีละขั้นจนส่งคำขอ ทำต่อจากเดิมได้เมื่อกลับมา</p></div></div>
     <div id="startRoot"></div>
@@ -718,7 +731,10 @@ import { mountRoomFit } from './assets/roomfit.js';
 import { mountKnowledge } from './assets/knowledge.js';
 import { mountJobGuide } from './assets/jobguide.js';
 import { mountSite } from './assets/site.js';
+import { mountJobCard } from './assets/jobcard.js';
+import { requestBooking } from './assets/contact.js';
 import { thaiPhrases, zoneMarks } from './assets/typeset.js';
+import { mountSeo } from './assets/seo.js';
 await loadData(); await loadMedia();
 enhanceQuoteForm();
 $$('[data-ask]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); askTeam(a.dataset.ask); }));
@@ -726,6 +742,19 @@ const CART = mountCart();
 mountQuotePill(CART.open);
 mountFlow(document.getElementById('flowRoot'), { room: 'studio', product: 'catalog', service: 'cleanflow', area: 'area', quote: 'quote' }, { openCart: CART.open });
 mountMobileMenu();
+
+// r20: quick quote on the home page — the job card (jobcard.js), priced live from the Pricebook; booking or the quote basket in one tap
+const JC = mountJobCard($('#quickRoot'), {
+  onBook: p => requestBooking(p, 'จองคิวจากประเมินราคา'),
+  onQuote: lines => { lines.forEach(l => cart.add(l)); CART.open(); },
+  onShop: () => document.getElementById('catalog').scrollIntoView(),
+});
+[['check', 'ราคาเดียวกับใบเสนอราคา', 'ทุกราคาเป็นราคาก่อน VAT ปัดหลักร้อย บุคคลทั่วไปชำระตามนี้ ต้องการใบกำกับภาษีบวก VAT 7%'],
+ ['info', 'เห็นทุกบรรทัดก่อนจอง', `งานล้างมียอดขั้นต่ำ ${baht(PBK.minBill)} ต่อการเข้างาน แสดงเป็นบรรทัดแยก พร้อมบอกว่าเพิ่มได้อีกกี่เครื่องในยอดนี้`],
+ ['sign', 'ซ่อมแจ้งราคาก่อนลงมือ', 'ประเมินเฉพาะค่าตรวจวินิจฉัย ค่าซ่อมแจ้งเป็นรายรายการให้อนุมัติก่อนทุกครั้ง'],
+ ['clock', 'ทีมโทรยืนยันวันเวลา', 'วันที่เลือกเป็นวันที่สะดวก ทีมยืนยันนัดและราคาสุดท้ายในใบเสนอราคา']]
+  .forEach(([ic, b, t]) => $('#quickWhy').append(h('li', {}, h('span', {}, icon(ic, { size: 16 })), h('b', {}, b), h('small', {}, t))));
+
 
 $('#fujArt').append(productVisual({ type: 'wall', brand: 'fujiva', series: 'FUJIVA Inverter' }, null, { size: 'card' }));   // Rev.09: FUJIVA render / brand photo
 const e30 = estimateContract({ units: PRESETS[1].units, visits: 3 }); $('[data-mini]').textContent = `${baht(e30.annualEx)}/ปี`;
@@ -738,19 +767,11 @@ SERVICES.forEach(s => $('#svc').append(h('article', { class: 'tile' + (s.key ? '
   h('dl', {}, h('dt', {}, 'ราคา'), h('dd', {}, s.from), h('dt', {}, 'เวลา'), h('dd', {}, s.time)),
   s.contact ? h('a', { class: 'go', href: '#quote', onclick: e => { e.preventDefault(); askTeam('ระบบ VRV / VRF'); } }, 'ติดต่อทีมโครงการ') : h('a', { class: 'go', href: s.key ? '#b2b' : '#prices', 'data-pc': s.id }, s.key ? 'ประเมินงบทั้งปี' : 'ดูราคาทั้งหมด'))));
 
-// builder cards
-PRESETS.forEach(p => $('#presets').append(h('button', { type: 'button', 'data-b-preset': p.id, 'aria-pressed': 'false' }, p.th, h('small', {}, p.sub))));
-TYPES.forEach(t => $('#ucards').append(h('div', { class: 'ucard' },
-  h('div', { html: typeArt(t.id) }), h('h3', {}, t.th),
-  h('div', { class: 'stp' }, h('button', { type: 'button', 'data-b-step': `${t.id}:-1`, 'aria-label': `ลด ${t.th}` }, '−'), h('input', { type: 'number', min: '0', id: `va-u-${t.id}`, 'data-b-unit': t.id, 'aria-label': `จำนวน ${t.th}`, inputmode: 'numeric' }), h('button', { type: 'button', 'data-b-step': `${t.id}:1`, 'aria-label': `เพิ่ม ${t.th}` }, '+')),
-  h('div', { class: 'bar' }, h('i', { 'data-b-bar': t.id })))));
-const BLD = mountBuilder($('[data-builder]'));
-// Rev.09 r9: corporate page — why us + quantity ladder, contract flow + sample report, projects (new build / renovation / replacement)
-mountAmc($('#amcRoot')); mountSop($('#sopRoot')); mountProjects($('#projRoot'), { onCatalog: () => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' }) });
-// Rev.09 r10: queue booking → ticket in the company back office (ticket.js / backoffice/)
-mountBooking($('#bookRoot'), { variant: 'A' });
-const PC = mountPriceCenter($('#priceCenter'));
-$$('[data-pc]').forEach(a => a.addEventListener('click', e => { const map = { clean: 'clean', install: 'install', repair: 'repair', move: 'move', project: 'project' }; if (map[a.dataset.pc]) { e.preventDefault(); PC.show(map[a.dataset.pc]); } }));
+// Rev.09 r10: queue booking → ticket in the company back office (ticket.js / backoffice/) — mounted at load: any page opens it (sbp:book)
+mountBooking($('#bookRoot'), { variant: 'A', onSent: id => JC.stamp(id) });
+// r20: the tools of every other page are built the first time that page opens (V below, site.js onView)
+let SVX = null, HWX = null, JOB = null, FIT = null, PC = null, BLD = null, cat = null;
+$$('[data-pc]').forEach(a => a.addEventListener('click', e => { const map = { clean: 'clean', install: 'install', repair: 'repair', move: 'move', project: 'project' }; if (map[a.dataset.pc]) { e.preventDefault(); ensure('service'); PC.show(map[a.dataset.pc]); } }));
 
 // catalog
 const drawer = $('#drawer');
@@ -759,11 +780,12 @@ function openProduct(m, idx = 0) {
   body.append(productDetail(m, idx, {
     onPick: i => openProduct(m, i),
     on3D: () => { closeDrawer(drawer); $('#inside').scrollIntoView({ behavior: 'smooth' }); },
-    onFit: (mm, i) => { closeDrawer(drawer); FIT.setModel(mm, i); },
+    onFit: (mm, i) => { closeDrawer(drawer); ensure('shop'); FIT.setModel(mm, i); },
   }));
   if (drawer.hidden) openDrawer(drawer);
 }
-const cat = mountCatalog($('[data-catalog]'), {
+function shopCatalog() {
+cat = mountCatalog($('[data-catalog]'), {
   pageSize: 12, toast,
   skeleton: () => h('div', { class: 'skel', 'aria-hidden': 'true' }, h('i', { style: 'aspect-ratio:4/3' }), h('i', { style: 'height:14px;width:50%' }), h('i', { style: 'height:18px;width:80%' }), h('i', { style: 'height:34px' })),
   cardTpl: (m, skus, si, act) => {
@@ -790,10 +812,11 @@ const cat = mountCatalog($('[data-catalog]'), {
 // move facets into mobile sheet when narrow
 const facets = $('[data-cat-facets]'), home = facets.parentElement;
 const mq = matchMedia('(max-width:1080px)'); const place = () => (mq.matches ? $('#sheetBody') : home).append(facets); mq.addEventListener('change', place); place();
+}
 wireDrawers();
 
 // 3D: hero + story + inside
-const hero = mountViewer($('#hero3d'), { style: 'studio', autoRotate: true });
+const hero = mountViewer($('#hero3d'), { style: 'studio', autoRotate: true, phoneDefer: true });   // r20 phones: poster still first, 3D after a tap or a calm moment
 const story = mountViewer($('#storyStage'), { style: 'studio', autoRotate: false, labelsAlways: false, ghost: 0.4 });
 if (story) { story.view('exploded'); story.setAirflow(false); scrollExplode($('#story'), story, { steps: '.steps li', onProgress: p => {
   const ids = ['filter', 'coil', 'blower', 'pan', null]; const i = Math.min(4, Math.floor(p * 5)); const id = ids[i];
@@ -801,30 +824,57 @@ if (story) { story.view('exploded'); story.setAirflow(false); scrollExplode($('#
 } }); }
 mountViewer($('#insideBox'), { style: 'studio', autoRotate: false, dirt: 0.7, onCleaned: () => toast('ล้างเสร็จ · ลมกลับมาแรงขึ้น (แบบจำลอง)') });
 
-// btu, zone, process, faq
-mountStudio($('#studioRoot'), { theme: 'light', sceneStart: 'bedroom', onOpen: (m, i) => openProduct(m, i) });
-const FIT = mountRoomFit($('#fitRoot'), { theme: 'light', preset: 'bedroom', onOpenModel: (m, i) => openProduct(m, i) });
-const JOB = mountJobGuide($('#cleanRoot'), { theme: 'light', start: 'C1', type: 'wall' });
-mountKnowledge($('#learnRoot'), { ids: { cleanflow: 'cleanflow', fit: 'fit', studio: 'studio', howto: 'howto', catalog: 'catalog', inside: 'inside', prices: 'prices', quality: 'quality', b2b: 'b2b', area: 'area', quote: 'quote' } });
-mountMaterials($('#qualityRoot'), { theme: 'light' });
-let SVX = null;
-const HWX = mountHowItWorks($('#howRoot'), { theme: 'light', throwStyle: 'remote', onType: t => SVX && SVX.setType(t) });
-SVX = mountServices($('#servicesRoot'), { how: false, onType: t => HWX.setType(t), onPart: p => HWX.focusPart(p) });
-$('#travelTbl').append(travelTable());
-$$('[data-zone]').forEach(z => z.closest('#area') || mountZone(z));
-// 3D Thailand service-area map linked to the address checker
-const zoneRoot = $('#area [data-zone]'), zIn = $('[data-z-input]', zoneRoot);
-const TMAP = await mountThaiMap($('#mapRoot'), { theme: 'light', onPick: th => { zIn.value = th; zIn.dispatchEvent(new Event('input')); } });
-mountZone(zoneRoot, { onResult: z => TMAP.highlight(z) });
 
-FAQ.forEach(f => $('#faqList').append(h('details', {}, h('summary', {}, f.q), h('p', {}, f.a))));
-mountFaq($('#faqList'));
 $$('[data-quote]').forEach(a => a.addEventListener('click', e => {
-  e.preventDefault();
+  e.preventDefault(); ensure('business');
   const est = BLD && BLD.estimate();
   if (est && est.count) cart.add({ kind: 'service', group: 'contract', key: 'K-' + [est.count, est.visits, BLD.state().pkg].join('-'), name: `สัญญาล้างรายปี ${est.count} เครื่อง × ${est.visits} ครั้ง/ปี`, detail: `${BLD.state().pkg} · ${est.tierTh}${est.travel ? ' · รวมค่าเดินทางแล้ว' : ''}`, unitEx: est.annualEx, qty: 1, units: est.count });
   CART.open();
 }));
+
+// r20: each page builds its tools the first time it opens — the first screen pays only for the home page (was: everything at load)
+const once = f => { let done = false, r; return () => (done ? r : (done = true, r = f())); };
+const V = {
+  shop: once(() => {
+    mountStudio($('#studioRoot'), { theme: 'light', sceneStart: 'bedroom', onOpen: (m, i) => openProduct(m, i) });
+    FIT = mountRoomFit($('#fitRoot'), { theme: 'light', preset: 'bedroom', onOpenModel: (m, i) => openProduct(m, i) });
+    shopCatalog();
+  }),
+  service: once(() => {
+    JOB = mountJobGuide($('#cleanRoot'), { theme: 'light', start: 'C1', type: 'wall' });
+    mountMaterials($('#qualityRoot'), { theme: 'light' });
+    PC = mountPriceCenter($('#priceCenter'));
+  }),
+  business: once(() => {
+    // builder cards
+    PRESETS.forEach(p => $('#presets').append(h('button', { type: 'button', 'data-b-preset': p.id, 'aria-pressed': 'false' }, p.th, h('small', {}, p.sub))));
+    TYPES.forEach(t => $('#ucards').append(h('div', { class: 'ucard' },
+      h('div', { html: typeArt(t.id) }), h('h3', {}, t.th),
+      h('div', { class: 'stp' }, h('button', { type: 'button', 'data-b-step': `${t.id}:-1`, 'aria-label': `ลด ${t.th}` }, '−'), h('input', { type: 'number', min: '0', id: `va-u-${t.id}`, 'data-b-unit': t.id, 'aria-label': `จำนวน ${t.th}`, inputmode: 'numeric' }), h('button', { type: 'button', 'data-b-step': `${t.id}:1`, 'aria-label': `เพิ่ม ${t.th}` }, '+')),
+      h('div', { class: 'bar' }, h('i', { 'data-b-bar': t.id })))));
+    BLD = mountBuilder($('[data-builder]'));
+    // Rev.09 r9: corporate page — why us + quantity ladder, contract flow + sample report, projects (new build / renovation / replacement)
+    mountAmc($('#amcRoot')); mountSop($('#sopRoot')); mountProjects($('#projRoot'), { onCatalog: () => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' }) });
+    // Rev.09 r9: corporate page — why us + quantity ladder, contract flow + sample report, projects (new build / renovation / replacement)
+    mountAmc($('#amcRoot')); mountSop($('#sopRoot')); mountProjects($('#projRoot'), { onCatalog: () => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' }) });
+  }),
+  knowledge: once(() => {
+    mountKnowledge($('#learnRoot'), { ids: { cleanflow: 'cleanflow', fit: 'fit', studio: 'studio', howto: 'howto', catalog: 'catalog', inside: 'inside', prices: 'prices', quality: 'quality', b2b: 'b2b', area: 'area', quote: 'quote' } });
+    HWX = mountHowItWorks($('#howRoot'), { theme: 'light', throwStyle: 'remote', onType: t => SVX && SVX.setType(t) });
+    SVX = mountServices($('#servicesRoot'), { how: false, onType: t => HWX.setType(t), onPart: p => HWX.focusPart(p) });
+  }),
+  contact: once(() => {
+    $('#travelTbl').append(travelTable());
+    // 3D Thailand service-area map linked to the address checker (not awaited: the page never waits for the map)
+    const zoneRoot = $('#area [data-zone]'), zIn = $('[data-z-input]', zoneRoot);
+    let TMAP = null;
+    mountZone(zoneRoot, { onResult: z => TMAP && TMAP.highlight(z) });
+    mountThaiMap($('#mapRoot'), { theme: 'light', onPick: th => { zIn.value = th; zIn.dispatchEvent(new Event('input')); } }).then(m => { TMAP = m; });
+    FAQ.forEach(f => $('#faqList').append(h('details', {}, h('summary', {}, f.q), h('p', {}, f.a))));
+    mountFaq($('#faqList'));
+  }),
+};
+const ensure = v => (V[v] ? V[v]() : null);
 
 reveal();
 // Rev.09 r5: views by customer journey (site.js) — every section keeps its id and module
@@ -832,13 +882,14 @@ mountSite({
   variant: 'A', openCart: CART.open,
   // r6 search: open a model's detail · jump to a price item (tab + filter)
   openModel: m => openProduct(m, 0),
-  priceItem: (tab, q) => { PC.show(tab); const x = $('#pc-search'); if (x) { x.value = q; x.dispatchEvent(new Event('input')); } },
-  views: { home: ['hero', 'start', 'flow', 'services'], shop: ['catalog', 'studio', 'fit'], service: ['cleanflow', 'prices', 'quality', 'story', 'inside'], business: ['amc', 'b2b', 'sop', 'projects'], knowledge: ['learn', 'howto'], contact: ['booking', 'about', 'area', 'faq', 'quote'] },
-  hooks: { clean: () => JOB.setJob('clean'), install: () => JOB.setJob('install'), repair: () => SVX && SVX.set('repair') },
+  priceItem: (tab, q) => { ensure('service'); PC.show(tab); const x = $('#pc-search'); if (x) { x.value = q; x.dispatchEvent(new Event('input')); } },
+  views: { home: ['hero', 'quick', 'start', 'flow', 'services'], shop: ['catalog', 'studio', 'fit'], service: ['cleanflow', 'prices', 'quality', 'story', 'inside'], business: ['amc', 'b2b', 'sop', 'projects'], knowledge: ['learn', 'howto'], contact: ['booking', 'about', 'area', 'faq', 'quote'] },
+  hooks: { onView: v => ensure(v), clean: () => { ensure('service'); JOB.setJob('clean'); }, install: () => { ensure('service'); JOB.setJob('install'); }, repair: () => { ensure('knowledge'); SVX.set('repair'); } },
 });
 // r18: Thai headings keep each phrase on one line when it fits · section eyebrows carry the number of their jump link
 thaiPhrases('.sx-vh h1, .sx-lead, .sec-h h2, .sec-h h2 + p, #start .sx-int h3, #start .sx-int-s, .sx-next h2');
 zoneMarks();
+mountSeo({ page: document.title });
 </script>
 </body>
 </html>

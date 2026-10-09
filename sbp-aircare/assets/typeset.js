@@ -26,15 +26,16 @@ export function thaiPhrases(sel, root = document) {
 }
 
 // Section zones: a page heading lists its sections as numbered jump links (site.js); the same number is written on each
-// section's eyebrow (`data-zone`) so the link and the section it opens read as one pair. Editions decide whether to show it.
+// section's eyebrow (`data-sec-n`) so the link and the section it opens read as one pair. Editions decide whether to show it.
+// r20: was `data-zone` — that name already marks the service-area checker, which then mounted on the wrong element.
 export function zoneMarks(root = document) {
   for (const nav of root.querySelectorAll('.sx-jump')) {
     [...nav.querySelectorAll('a[href^="#"]')].forEach((a, i) => {
       const sec = document.getElementById(a.getAttribute('href').slice(1));
       if (!sec) return;
-      sec.dataset.zone = String(i + 1);
+      sec.dataset.secN = String(i + 1);
       const eb = sec.querySelector('.sec-h .eyebrow');
-      if (eb) eb.dataset.zone = String(i + 1);
+      if (eb) eb.dataset.secN = String(i + 1);
     });
   }
 }

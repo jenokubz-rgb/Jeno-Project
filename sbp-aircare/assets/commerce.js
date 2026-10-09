@@ -3,7 +3,7 @@
 // Markup uses the "s-" classes styled in assets/shared.css through each variant's alias tokens.
 import {
   DATA, TYPES, TYPE_BY_ID, BRAND_BY_ID, CLEAN_PKGS, VAT, vatOf, withTax, TAX_MODES, PRICE_NOTE, baht, btuFmt, installOptions, addonsFor,
-  checkZone, TIER_TH, TRAVEL, h, $, $$, stockTh, travelCharge, travelNote, SIZE_BANDS, isVRF, VRF_NOTE,
+  checkZone, TIER_TH, TRAVEL, h, $, $$, stockTh, travelCharge, travelNote, SIZE_BANDS, isVRF, VRF_NOTE, COMPANY, logoSrc,
 } from './sbp-core.js';
 import { typeArt, toast } from './proto-ui.js';
 import { askTeam, handoffBox, copyText, guardForm, submitTicket, consentBox, honeypot, requestBooking } from './contact.js';
@@ -57,6 +57,61 @@ export const cart = {
   },
 };
 
+// r20: printable preliminary estimate (document layout of the basket). Labelled as NOT the official quotation;
+// the reference is local to this browser (never presented as a back-office number — §6.6 #23).
+// window.print() is inert inside a frame (Claude Artifact, the A/B/C tester) → the print button only shows top-level.
+const canPrint = (() => { try { return window.top === window.self && typeof window.print === 'function'; } catch (e) { return false; } })();
+const thDate = d => d.toLocaleDateString('th-TH', { day: 'numeric', month: 'long', year: 'numeric' });
+const docRef = d => 'PE-' + String(d.getFullYear() + 543).slice(-2) + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0') + '-' + String(d.getHours()).padStart(2, '0') + String(d.getMinutes()).padStart(2, '0');
+function quoteDoc({ onBack, onFormal, onCopy }) {
+  const t = cart.totals(), now = new Date(), inv = t.tax === 'invoice';
+  const num = n => n.toLocaleString('th-TH');
+  const rows = cart.items.map((i, k) => h('tr', { class: i.unitEx == null ? 'sv' : '' },
+    h('td', { class: 'n' }, String(k + 1)),
+    h('td', {}, h('b', {}, i.name), i.detail ? h('small', {}, i.detail) : null),
+    h('td', { class: i.unitEx == null ? 'n' : 'n q' }, i.unitEx == null ? '—' : num(i.qty)),
+    h('td', { class: 'n' }, i.unitEx == null ? 'ประเมินหน้างาน' : num(i.unitEx)),
+    h('td', { class: 'n' }, i.unitEx == null ? '—' : num(i.unitEx * i.qty))));
+  if (t.travel) rows.push(h('tr', {}, h('td', { class: 'n' }, String(rows.length + 1)), h('td', {}, h('b', {}, 'ค่าเดินทาง 1 เที่ยว'), h('small', {}, cart.zoneInput)), h('td', { class: 'n q' }, '1'), h('td', { class: 'n' }, num(t.travel)), h('td', { class: 'n' }, num(t.travel))));
+  if (t.minGap) rows.push(h('tr', {}, h('td', { class: 'n' }, String(rows.length + 1)), h('td', {}, h('b', {}, `ปรับยอดขั้นต่ำงานล้าง ${baht(DATA.minBill)}`), h('small', {}, 'ยอดขั้นต่ำต่อการเข้าหน้างาน ใช้กับงานล้างเท่านั้น')), h('td', { class: 'n q' }, '1'), h('td', { class: 'n' }, num(t.minGap)), h('td', { class: 'n' }, num(t.minGap))));
+  const hasInstall = cart.items.some(i => i.group === 'install' || i.group === 'product');
+  const terms = [
+    'ราคาตาม Pricebook 2569 ของบริษัท ปัดเป็นหลักร้อย ก่อน VAT',
+    inv ? 'ผู้ซื้อต้องการใบกำกับภาษี คิด VAT 7% จากยอดก่อน VAT' : 'บุคคลทั่วไป ไม่ต้องการใบกำกับภาษี ชำระตามยอดรวม',
+    t.surveys ? `รายการ "ประเมินหน้างาน" ${t.surveys} รายการ ยังไม่รวมในยอด ทีมแจ้งราคาให้ยืนยันก่อนเริ่มงาน` : null,
+    cart.items.some(i => i.group === 'product') ? 'รายการเครื่องต้องยืนยันสต็อกก่อนสั่ง' : null,
+    hasInstall ? 'รับประกันงานติดตั้ง 3 ปี เมื่อซื้อเครื่องใหม่จากบริษัท · 1 ปี เมื่อลูกค้าจัดหาเครื่องเอง' : null,
+    t.travelShort ? `ระยะนี้รับงานขั้นต่ำ ${cart.zone.minUnits} เครื่องต่อเที่ยว ทีมจะรวมคิวกับงานใกล้เคียงหรือเสนอทางเลือก` : null,
+    'ราคา เงื่อนไข และวันนัด ยืนยันในใบเสนอราคาอย่างเป็นทางการจากทีมขาย',
+  ].filter(Boolean);
+  return h('article', { class: 's-doc', 'aria-labelledby': 's-doc-title' },
+    h('header', { class: 's-doc-h' },
+      h('div', { class: 's-doc-co' },
+        h('img', { src: logoSrc('sbp'), alt: '', width: 55, height: 40 }),
+        h('div', {}, h('b', {}, COMPANY.th), h('small', {}, `${COMPANY.en} · ${COMPANY.brand}`), h('small', {}, COMPANY.addr), h('small', {}, `โทร ${COMPANY.tel} · ${COMPANY.email} · ${COMPANY.web}`))),
+      h('div', { class: 's-doc-id' },
+        h('h3', { id: 's-doc-title' }, 'ใบประเมินราคาเบื้องต้น'),
+        h('p', { class: 's-doc-not' }, 'ไม่ใช่ใบเสนอราคาทางการ'),
+        h('dl', {}, h('dt', {}, 'วันที่'), h('dd', {}, thDate(now)), h('dt', {}, 'เลขที่ใบประเมิน'), h('dd', {}, docRef(now)), h('dt', {}, 'สถานะ'), h('dd', {}, 'ยังไม่ส่งถึงทีม')))),
+    h('dl', { class: 's-doc-to' },
+      h('dt', {}, 'ผู้ซื้อ'), h('dd', {}, inv ? 'นิติบุคคล ต้องการใบกำกับภาษี' : 'บุคคลทั่วไป'),
+      h('dt', {}, 'พื้นที่ปฏิบัติงาน'), h('dd', {}, cart.zone && cart.zone.match ? `${cart.zoneInput}${cart.zone.province ? ' · ' + cart.zone.province : ''}` : (cart.zoneInput || 'ยังไม่ระบุ'))),
+    h('div', { class: 's-doc-tw', tabindex: '0', role: 'region', 'aria-label': 'รายการ' },
+      h('table', { class: 's-doc-t' },
+        h('thead', {}, h('tr', {}, h('th', { scope: 'col', class: 'n' }, 'ลำดับ'), h('th', { scope: 'col' }, 'รายการ'), h('th', { scope: 'col', class: 'n' }, 'จำนวน'), h('th', { scope: 'col', class: 'n' }, 'ราคาต่อหน่วย'), h('th', { scope: 'col', class: 'n' }, 'จำนวนเงิน (บาท)'))),
+        h('tbody', {}, rows))),
+    h('dl', { class: 's-doc-sum' },
+      h('dt', {}, 'รวมก่อน VAT'), h('dd', {}, num(t.totalEx)),
+      inv ? [h('dt', {}, 'VAT 7%'), h('dd', {}, num(t.vat))] : null,
+      h('dt', { class: 'tot' }, inv ? 'รวมทั้งสิ้น (รวม VAT)' : 'รวมทั้งสิ้น'), h('dd', { class: 'tot' }, baht(t.inc))),
+    h('div', { class: 's-doc-terms' }, h('h4', {}, 'เงื่อนไข'), h('ol', {}, terms.map(x => h('li', {}, x)))),
+    h('div', { class: 's-doc-act' },
+      h('button', { type: 'button', class: 's-btn primary', onclick: onFormal }, 'ขอใบเสนอราคาอย่างเป็นทางการ'),
+      canPrint ? h('button', { type: 'button', class: 's-btn', onclick: () => window.print() }, 'พิมพ์ หรือบันทึกเป็น PDF') : null,
+      h('button', { type: 'button', class: 's-btn ghost', onclick: onCopy }, 'คัดลอกสรุปรายการ'),
+      h('button', { type: 'button', class: 's-btn ghost', onclick: onBack }, 'กลับไปแก้รายการ')));
+}
+
 // what a basket is mostly about → ticket service key (ticket.js SERVICES)
 const guessService = () => { const g = new Set(cart.items.map(i => i.group)); return g.has('product') ? 'buy' : g.has('install') ? 'install' : g.has('repair') ? 'repair' : g.has('clean') || g.has('contract') ? 'clean' : 'other'; };
 export function mountCart({ buttons = '[data-cart-btn]' } = {}) {
@@ -68,11 +123,15 @@ export function mountCart({ buttons = '[data-cart-btn]' } = {}) {
   const open = () => { render(); dr.hidden = false; requestAnimationFrame(() => dr.classList.add('open')); document.body.classList.add('lock'); };
   dr.addEventListener('click', e => { if (e.target === dr) close(); });
   addEventListener('keydown', e => { if (e.key === 'Escape' && !dr.hidden) close(); });
-  let sent = null;
+  let sent = null, docView = false;
   const quoteText = () => { const t = cart.totals(); return ['ใบเสนอราคาเบื้องต้น SBP AirCare', ...cart.items.map(i => `• ${i.name}${i.detail ? ' (' + i.detail + ')' : ''} × ${i.qty}${i.unitEx == null ? ' — ประเมินหน้างาน' : ' — ' + baht((i.unitEx * i.qty))}`), `พื้นที่: ${cart.zoneInput || '-'}`, `ยอดก่อน VAT ${baht(t.totalEx)}`, t.tax === 'invoice' ? `ต้องการใบกำกับภาษี · VAT 7% ${baht(t.vat)} · รวมทั้งสิ้น ${baht(t.inc)}` : `บุคคลทั่วไป ไม่ต้องการใบกำกับภาษี · รวมทั้งสิ้น ${baht(t.inc)}`].join('\n'); };
+  const copySum = async () => { toast((await copyText(quoteText())) ? 'คัดลอกสรุปแล้ว วางในอีเมลหรือแชตได้เลย' : 'คัดลอกไม่ได้ในหน้านี้'); };
   function render() {
     const t = cart.totals();
     panel.innerHTML = '';
+    if (!cart.items.length || sent) docView = false;
+    panel.classList.toggle('doc', docView);
+    dr.classList.toggle('s-cart-doc', docView);
     panel.append(h('div', { class: 's-cart-h' }, h('div', {}, h('b', {}, 'ใบเสนอราคาเบื้องต้น'), h('small', {}, `${cart.items.length} รายการ`)), h('button', { type: 'button', class: 's-x', 'aria-label': 'ปิด', onclick: close }, '×')));
     const body = h('div', { class: 's-cart-b' }); panel.append(body);
     if (sent) {
@@ -80,6 +139,11 @@ export function mountCart({ buttons = '[data-cart-btn]' } = {}) {
       body.append(sent.node,
         h('div', { class: 's-hand-act' }, h('button', { type: 'button', class: 's-btn ghost', onclick: () => { sent = null; render(); } }, 'กลับไปแก้รายการ'), h('button', { type: 'button', class: 's-btn ghost', onclick: () => { sent = null; cart.clear(); render(); } }, 'เริ่มใบใหม่')));
       return;
+    }
+    if (docView) {
+      body.append(quoteDoc({ onBack: () => { docView = false; render(); }, onCopy: copySum,
+        onFormal: () => { docView = false; render(); const n = panel.querySelector('#s-q-name'); if (n) { n.scrollIntoView({ block: 'center' }); n.focus({ preventScroll: true }); } } }));
+      body.scrollTop = 0; return;
     }
     if (!cart.items.length) { body.append(h('div', { class: 's-empty' }, h('p', {}, 'ยังไม่มีรายการ'), h('p', { class: 's-note' }, 'เลือกรุ่นแอร์ในหน้าสินค้า หรือกด "เพิ่ม" ในตารางค่าบริการ'), h('button', { type: 'button', class: 's-btn', onclick: () => { close(); ($('#prices') || $('#catalog'))?.scrollIntoView({ behavior: 'smooth' }); } }, 'ไปที่ค่าบริการ'))); return; }
     const list = h('ul', { class: 's-lines' });
@@ -120,6 +184,7 @@ export function mountCart({ buttons = '[data-cart-btn]' } = {}) {
         cart.zone && cart.zone.tier === 'out' ? h('p', { class: 's-note bad', style: 'grid-column:1/-1' }, 'พื้นที่นี้เกินระยะรับงานรายเครื่อง ส่งข้อมูลได้ ทีมจะประเมินเป็นงานโครงการ') : null);
     }
     body.append(h('p', { class: 's-note' }, 'ราคาตาม Pricebook 2569 ของบริษัท ปัดเป็นหลักร้อย ก่อน VAT ยืนยันอีกครั้งในใบเสนอราคาอย่างเป็นทางการ รายการเครื่องต้องยืนยันสต็อกก่อนสั่ง'));
+    body.append(h('button', { type: 'button', class: 's-btn s-doc-open', onclick: () => { docView = true; render(); } }, 'ดูเป็นใบประเมินราคา'));
     // contact
     const f = h('form', { class: 's-form' },
       h('label', { class: 's-field' }, 'ชื่อ / บริษัท', h('input', { id: 's-q-name', required: true, autocomplete: 'name' })),
@@ -143,7 +208,7 @@ export function mountCart({ buttons = '[data-cart-btn]' } = {}) {
     body.append(f);
     // Rev.09 r10: turn this basket into a booking (the booking form attaches the basket lines)
     if (document.getElementById('booking')) body.append(h('button', { type: 'button', class: 's-btn', onclick: () => { close(); requestBooking({ service: guessService() }, 'อื่น ๆ'); } }, 'จองคิวจากรายการนี้'));
-    body.append(h('button', { type: 'button', class: 's-btn ghost', onclick: async () => { toast((await copyText(quoteText())) ? 'คัดลอกสรุปแล้ว วางในอีเมลหรือแชตได้เลย' : 'คัดลอกไม่ได้ในหน้านี้'); } }, 'คัดลอกสรุปรายการ'));
+    body.append(h('button', { type: 'button', class: 's-btn ghost', onclick: copySum }, 'คัดลอกสรุปรายการ'));
   }
   const upd = () => $$(buttons).forEach(b => { const n = cart.count(); b.dataset.n = n; const c = $('[data-cart-n]', b); if (c) c.textContent = n; b.classList.toggle('has', n > 0); b.setAttribute('aria-label', `ใบเสนอราคา ${n} รายการ`); });
   cart.subs.add(upd); upd();

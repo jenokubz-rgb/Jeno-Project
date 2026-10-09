@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SBP AirCare · แบบ C Virtual Showroom</title>
+<meta name="description" content="โชว์รูมแอร์ออนไลน์ ทุกรุ่นดูแบบ 3 มิติได้ ราคาเครื่องพร้อมติดตั้ง ล้าง ซ่อม จองคิวออนไลน์ — SBP AirCare โดย บริษัท สหบูรพากรุ๊ป จำกัด">
+<meta name="theme-color" content="#090E17">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="th_TH">
+<meta property="og:site_name" content="SBP AirCare">
+<meta property="og:title" content="SBP AirCare · แบบ C Virtual Showroom">
+<meta property="og:description" content="โชว์รูมแอร์ออนไลน์ ทุกรุ่นดูแบบ 3 มิติได้ ราคาเครื่องพร้อมติดตั้ง ล้าง ซ่อม จองคิวออนไลน์ — SBP AirCare โดย บริษัท สหบูรพากรุ๊ป จำกัด">
 <link rel="stylesheet" href="assets/fonts.css">
 <link rel="stylesheet" href="assets/shared.css">
 <link rel="stylesheet" href="assets/business.css">
@@ -336,8 +343,8 @@ html.sx-on .sx-jump a b{width:30px;height:30px;border-radius:9px;background:colo
 html.sx-on .sx-jump a:hover{border-color:color-mix(in oklab,var(--cool) 55%,transparent);background:color-mix(in oklab,var(--cool) 6%,transparent)}
 html.sx-on .sx-jump a:hover b{background:var(--cool);color:#04121C}
 /* section heads: the zone number of the jump link that opens it, lit like the tab · headings a step below the page name */
-.sec-h .eyebrow[data-zone]{font-size:13.5px}
-.sec-h .eyebrow[data-zone]::before{content:attr(data-zone);content:attr(data-zone) / "";display:inline-grid;place-items:center;vertical-align:middle;margin-right:10px;width:28px;height:28px;border-radius:9px;font:500 14px var(--display);color:var(--cool);background:color-mix(in oklab,var(--cool) 14%,transparent);box-shadow:inset 0 0 0 1px color-mix(in oklab,var(--cool) 32%,transparent),0 0 20px -6px var(--cool)}
+.sec-h .eyebrow[data-sec-n]{font-size:13.5px}
+.sec-h .eyebrow[data-sec-n]::before{content:attr(data-sec-n);content:attr(data-sec-n) / "";display:inline-grid;place-items:center;vertical-align:middle;margin-right:10px;width:28px;height:28px;border-radius:9px;font:500 14px var(--display);color:var(--cool);background:color-mix(in oklab,var(--cool) 14%,transparent);box-shadow:inset 0 0 0 1px color-mix(in oklab,var(--cool) 32%,transparent),0 0 20px -6px var(--cool)}
 html.sx-on .sec-h h2{font-size:clamp(28px,3vw,40px);line-height:1.22}
 /* legibility floor (Thai below 12px is unreadable on a dark ground) */
 .own-tag{font-size:12px}.demo{font-size:12.5px}.gauge li small{font-size:12.5px}.opt .n{font-size:12.5px}.vsw a{font-size:12.5px}
@@ -374,7 +381,7 @@ html.sx-on .sec-h h2{font-size:clamp(28px,3vw,40px);line-height:1.22}
 </div></header>
 
 <section class="stage" id="top" aria-label="โชว์รูมเสมือน">
-  <div class="cv" data-v-canvas></div>
+  <div class="cv" data-v-canvas><img class="v-poster" src="assets/posters/hero-c.webp" alt="" aria-hidden="true" decoding="async"></div>
   <div class="labels" data-v-labels></div>
   <div class="fb" data-v-fallback hidden>อุปกรณ์นี้เปิดภาพ 3 มิติไม่ได้ เวอร์ชันจริงจะแสดงวิดีโอแทน</div>
   <div class="dock">
@@ -410,6 +417,12 @@ html.sx-on .sec-h h2{font-size:clamp(28px,3vw,40px);line-height:1.22}
 
 <main class="wrap">
   <!-- START: WHAT DO YOU NEED (Rev.09 r5) -->
+  <!-- r20 QUICK QUOTE: the job card priced from the Pricebook, straight to booking or the quote -->
+  <section class="sec" id="quick">
+    <div class="sec-h"><p class="eyebrow">ประเมินราคาทันที</p><h2>รู้ราคาก่อนนัดช่าง</h2><p>เลือกงาน ประเภทแอร์ ขนาด และจำนวนเครื่อง ระบบคิดจาก Pricebook ของบริษัททันที จากนั้นเลือกวันที่สะดวกหรือเก็บไว้ในใบเสนอราคา</p></div>
+    <div class="qk"><div class="qk-card" id="quickRoot"></div><ul class="qk-why" id="quickWhy"></ul></div>
+  </section>
+
   <section class="sec" id="start">
     <div class="sec-h"><p class="eyebrow">เริ่มต้นที่นี่</p><h2>วันนี้ต้องการอะไร</h2><p>เลือกสิ่งที่ตรงกับคุณ ระบบพาไปทีละขั้นจนส่งคำขอ ทำต่อจากเดิมได้เมื่อกลับมา</p></div>
     <div id="startRoot"></div>
@@ -577,7 +590,10 @@ import { mountRoomFit } from './assets/roomfit.js';
 import { mountKnowledge } from './assets/knowledge.js';
 import { mountJobGuide } from './assets/jobguide.js';
 import { mountSite } from './assets/site.js';
+import { mountJobCard } from './assets/jobcard.js';
+import { requestBooking } from './assets/contact.js';
 import { thaiPhrases, zoneMarks } from './assets/typeset.js';
+import { mountSeo } from './assets/seo.js';
 await loadData(); await loadMedia();
 enhanceQuoteForm();
 $$('[data-ask]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); askTeam(a.dataset.ask); }));
@@ -586,47 +602,43 @@ mountQuotePill(CART.open);
 mountFlow(document.getElementById('flowRoot'), { room: 'room', product: 'catalog', service: 'cleanflow', area: 'area', quote: 'quote' }, { openCart: CART.open });
 mountMobileMenu();
 
-const dark = () => getComputedStyle(document.documentElement).colorScheme.includes('dark');
+// r20: quick quote on the home page — the job card (jobcard.js), priced live from the Pricebook; booking or the quote basket in one tap
+const JC = mountJobCard($('#quickRoot'), {
+  onBook: p => requestBooking(p, 'จองคิวจากประเมินราคา'),
+  onQuote: lines => { lines.forEach(l => cart.add(l)); CART.open(); },
+  onShop: () => document.getElementById('catalog').scrollIntoView(),
+});
+[['check', 'ราคาเดียวกับใบเสนอราคา', 'ทุกราคาเป็นราคาก่อน VAT ปัดหลักร้อย บุคคลทั่วไปชำระตามนี้ ต้องการใบกำกับภาษีบวก VAT 7%'],
+ ['info', 'เห็นทุกบรรทัดก่อนจอง', `งานล้างมียอดขั้นต่ำ ${baht(PBK.minBill)} ต่อการเข้างาน แสดงเป็นบรรทัดแยก พร้อมบอกว่าเพิ่มได้อีกกี่เครื่องในยอดนี้`],
+ ['sign', 'ซ่อมแจ้งราคาก่อนลงมือ', 'ประเมินเฉพาะค่าตรวจวินิจฉัย ค่าซ่อมแจ้งเป็นรายรายการให้อนุมัติก่อนทุกครั้ง'],
+ ['clock', 'ทีมโทรยืนยันวันเวลา', 'วันที่เลือกเป็นวันที่สะดวก ทีมยืนยันนัดและราคาสุดท้ายในใบเสนอราคา']]
+  .forEach(([ic, b, t]) => $('#quickWhy').append(h('li', {}, h('span', {}, icon(ic, { size: 16 })), h('b', {}, b), h('small', {}, t))));
+
+
+const DARK = getComputedStyle(document.documentElement).colorScheme.includes('dark');   // r20: read once (every read forced a style pass)
+const dark = () => DARK;
 const lab = a => h('button', { type: 'button', class: 'hs', 'aria-label': a.th }, h('span', {}, a.th));
 
-// hero showroom
-const HV = mountViewer($('#top'), { style: 'showroom', premium: true, targetOffset: innerWidth > 900 ? [-0.04, -0.2] : [0, -0.12], labelTpl: lab, labelsAlways: innerWidth > 640, dirt: 0.6, exposure: dark() ? 1.0 : 1.15, onCleaned: () => toast('ล้างเสร็จ · ลมกลับมาแรงขึ้น (แบบจำลอง)') });
+// hero showroom · r20 phones: poster still first, 3D after a tap on it or a calm moment
+const HV = mountViewer($('#top'), { style: 'showroom', premium: true, targetOffset: innerWidth > 900 ? [-0.04, -0.2] : [0, -0.12], labelTpl: lab, labelsAlways: innerWidth > 640, dirt: 0.6, exposure: dark() ? 1.0 : 1.15, phoneDefer: true, onCleaned: () => toast('ล้างเสร็จ · ลมกลับมาแรงขึ้น (แบบจำลอง)') });
 if (HV && innerWidth > 900) HV.zoom(1.42);   // Rev.09: smaller + higher so the unit clears the headline and the control dock
 
-// how each unit type works (3D section)
-const HWX = mountHowItWorks($('#howRoot'), { theme: dark() ? 'dark' : 'light', start: 'wall', throwStyle: 'glass' });
-
-// virtual room studio (16 rooms)
-mountStudio($('#studioRoot'), { theme: dark() ? 'dark' : 'light', sceneStart: 'living', onOpen: (m, i) => openProduct(m, i) });
-const FIT = mountRoomFit($('#fitRoot'), { theme: dark() ? 'dark' : 'light', preset: 'living', onOpenModel: (m, i) => openProduct(m, i) });
-const JOB = mountJobGuide($('#cleanRoot'), { theme: dark() ? 'dark' : 'light', start: 'C1', type: 'cassette' });
-mountKnowledge($('#learnRoot'), { ids: { cleanflow: 'cleanflow', fit: 'fit', studio: 'room', howto: 'howto', catalog: 'catalog', inside: 'top', prices: 'prices', quality: 'quality', b2b: 'b2b', area: 'area', quote: 'quote' } });
-mountMaterials($('#qualityRoot'), { theme: dark() ? 'dark' : 'light' });
-const TSX = mountTechStory($('#storyRoot'), { theme: dark() ? 'dark' : 'light' });
-const SVX = mountServices($('#servicesRoot'), { how: false, onType: t => HWX.setType(t) });
-$('#travelTbl').append(travelTable());
-
-// builder
-PRESETS.forEach(p => $('#presets').append(h('button', { type: 'button', 'data-b-preset': p.id, 'aria-pressed': 'false' }, p.th, h('small', {}, p.sub))));
-TYPES.forEach(t => $('#urows').append(h('div', { class: 'urow' }, h('div', { html: typeArt(t.id) }), h('div', {}, h('b', {}, t.th), h('div', { class: 'bar' }, h('i', { 'data-b-bar': t.id }))),
-  h('div', { class: 'stp' }, h('button', { type: 'button', 'data-b-step': `${t.id}:-1`, 'aria-label': 'ลด' }, '−'), h('input', { type: 'number', min: '0', id: `vc-u-${t.id}`, 'data-b-unit': t.id, 'aria-label': `จำนวน ${t.th}`, inputmode: 'numeric' }), h('button', { type: 'button', 'data-b-step': `${t.id}:1`, 'aria-label': 'เพิ่ม' }, '+')))));
-const BLD = mountBuilder($('[data-builder]'));
-// Rev.09 r9: corporate page — why us + quantity ladder, contract flow + sample report, projects (new build / renovation / replacement)
-mountAmc($('#amcRoot')); mountSop($('#sopRoot')); mountProjects($('#projRoot'), { onCatalog: () => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' }) });
-// Rev.09 r10: queue booking → ticket in the company back office (ticket.js / backoffice/)
-mountBooking($('#bookRoot'), { variant: 'C' });
-const PC = mountPriceCenter($('#priceCenter'));
+// Rev.09 r10: queue booking → ticket in the company back office (ticket.js / backoffice/) — mounted at load: any page opens it (sbp:book)
+mountBooking($('#bookRoot'), { variant: 'C', onSent: id => JC.stamp(id) });
+// r20: the tools of every other page are built the first time that page opens (V below, site.js onView)
+let HWX = null, SVX = null, JOB = null, FIT = null, PC = null, BLD = null, cat = null;
 
 // catalog
 const drawer = $('#drawer');
-function openProduct(m, i = 0) { const b = $('#drawerBody'); b.innerHTML = ''; b.append(productDetail(m, i, { onPick: j => openProduct(m, j), on3D: () => { closeDrawer(drawer); scrollTo({ top: 0, behavior: 'smooth' }); }, onFit: (mm, k) => { closeDrawer(drawer); FIT.setModel(mm, k); } })); if (drawer.hidden) openDrawer(drawer); }
+function openProduct(m, i = 0) { const b = $('#drawerBody'); b.innerHTML = ''; b.append(productDetail(m, i, { onPick: j => openProduct(m, j), on3D: () => { closeDrawer(drawer); scrollTo({ top: 0, behavior: 'smooth' }); }, onFit: (mm, k) => { closeDrawer(drawer); ensure('shop'); FIT.setModel(mm, k); } })); if (drawer.hidden) openDrawer(drawer); }
 function tilt(el) {
   if (reduceMotion() || matchMedia('(hover:none)').matches) return el;
   el.addEventListener('pointermove', e => { const r = el.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; el.style.transform = `perspective(800px) rotateX(${-y * 5}deg) rotateY(${x * 6}deg)`; });
   el.addEventListener('pointerleave', () => el.style.transform = '');
   return el;
 }
-const cat = mountCatalog($('[data-catalog]'), {
+function shopCatalog() {
+cat = mountCatalog($('[data-catalog]'), {
   pageSize: 12, toast,
   skeleton: () => h('div', { class: 'skel' }, h('i', { style: 'aspect-ratio:4/3' }), h('i', { style: 'height:14px;width:50%' }), h('i', { style: 'height:32px' })),
   cardTpl: (m, skus, si, act) => { const b = BRAND_BY_ID[m.brand], s = skus[si];
@@ -643,23 +655,60 @@ const railAll = h('button', { type: 'button', 'aria-pressed': 'true', onclick: (
 $('#rail').append(railAll, ...TYPES.map(t => { const b = h('button', { type: 'button', 'aria-pressed': 'false' }, h('span', { html: typeArt(t.id) }), t.th); b.addEventListener('click', () => pickRail(t.id, b)); return b; }));
 function pickRail(id, btn) { $$('#rail button').forEach(b => b.setAttribute('aria-pressed', b === btn)); cat.setType(id); }
 const facets = $('[data-cat-facets]'), home = facets.parentElement; const mq = matchMedia('(max-width:1080px)'); const place = () => (mq.matches ? $('#sheetBody') : home).append(facets); mq.addEventListener('change', place); place();
+}
 wireDrawers();
 
 // dot-matrix coverage (083-inspired)
 
 // 3D Thailand service-area map linked to the address checker
-const zoneRoot = $('#area [data-zone]'), zIn = $('[data-z-input]', zoneRoot);
-const TMAP = await mountThaiMap($('#mapRoot'), { theme: '' + (dark() ? 'dark' : 'light') + '', onPick: th => { zIn.value = th; zIn.dispatchEvent(new Event('input')); } });
-mountZone(zoneRoot, { onResult: z => TMAP.highlight(z) });
-
-FAQ.forEach(f => $('#faqList').append(h('details', {}, h('summary', {}, f.q), h('p', {}, f.a))));
-mountFaq($('#faqList'));
+function contactTools() {
+  $('#travelTbl').append(travelTable());
+  // 3D Thailand service-area map linked to the address checker (no longer awaited: the page never waits for the map)
+  const zoneRoot = $('#area [data-zone]'), zIn = $('[data-z-input]', zoneRoot);
+  let TMAP = null;
+  mountZone(zoneRoot, { onResult: z => TMAP && TMAP.highlight(z) });
+  mountThaiMap($('#mapRoot'), { theme: dark() ? 'dark' : 'light', onPick: th => { zIn.value = th; zIn.dispatchEvent(new Event('input')); } }).then(m => { TMAP = m; });
+  FAQ.forEach(f => $('#faqList').append(h('details', {}, h('summary', {}, f.q), h('p', {}, f.a))));
+  mountFaq($('#faqList'));
+}
 $$('[data-quote]').forEach(a => a.addEventListener('click', e => {
-  e.preventDefault();
+  e.preventDefault(); ensure('business');
   const est = BLD && BLD.estimate();
   if (est && est.count) cart.add({ kind: 'service', group: 'contract', key: 'K-' + [est.count, est.visits, BLD.state().pkg].join('-'), name: `สัญญาล้างรายปี ${est.count} เครื่อง × ${est.visits} ครั้ง/ปี`, detail: `${BLD.state().pkg} · ${est.tierTh}${est.travel ? ' · รวมค่าเดินทางแล้ว' : ''}`, unitEx: est.annualEx, qty: 1, units: est.count });
   CART.open();
 }));
+
+// r20: each page builds its tools the first time it opens — the first screen pays only for the home page (was: everything at load)
+const once = f => { let done = false, r; return () => (done ? r : (done = true, r = f())); };
+const V = {
+  shop: once(() => {
+    mountStudio($('#studioRoot'), { theme: dark() ? 'dark' : 'light', sceneStart: 'living', onOpen: (m, i) => openProduct(m, i) });   // virtual room studio
+    FIT = mountRoomFit($('#fitRoot'), { theme: dark() ? 'dark' : 'light', preset: 'living', onOpenModel: (m, i) => openProduct(m, i) });
+    shopCatalog();
+  }),
+  service: once(() => {
+    JOB = mountJobGuide($('#cleanRoot'), { theme: dark() ? 'dark' : 'light', start: 'C1', type: 'cassette' });
+    mountMaterials($('#qualityRoot'), { theme: dark() ? 'dark' : 'light' });
+    mountTechStory($('#storyRoot'), { theme: dark() ? 'dark' : 'light' });
+    SVX = mountServices($('#servicesRoot'), { how: false, onType: t => HWX && HWX.setType(t) });
+    PC = mountPriceCenter($('#priceCenter'));
+  }),
+  business: once(() => {
+    // builder
+    PRESETS.forEach(p => $('#presets').append(h('button', { type: 'button', 'data-b-preset': p.id, 'aria-pressed': 'false' }, p.th, h('small', {}, p.sub))));
+    TYPES.forEach(t => $('#urows').append(h('div', { class: 'urow' }, h('div', { html: typeArt(t.id) }), h('div', {}, h('b', {}, t.th), h('div', { class: 'bar' }, h('i', { 'data-b-bar': t.id }))),
+      h('div', { class: 'stp' }, h('button', { type: 'button', 'data-b-step': `${t.id}:-1`, 'aria-label': 'ลด' }, '−'), h('input', { type: 'number', min: '0', id: `vc-u-${t.id}`, 'data-b-unit': t.id, 'aria-label': `จำนวน ${t.th}`, inputmode: 'numeric' }), h('button', { type: 'button', 'data-b-step': `${t.id}:1`, 'aria-label': 'เพิ่ม' }, '+')))));
+    BLD = mountBuilder($('[data-builder]'));
+    // Rev.09 r9: corporate page — why us + quantity ladder, contract flow + sample report, projects (new build / renovation / replacement)
+    mountAmc($('#amcRoot')); mountSop($('#sopRoot')); mountProjects($('#projRoot'), { onCatalog: () => document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' }) });
+  }),
+  knowledge: once(() => {
+    HWX = mountHowItWorks($('#howRoot'), { theme: dark() ? 'dark' : 'light', start: 'wall', throwStyle: 'glass' });   // how each unit type works
+    mountKnowledge($('#learnRoot'), { ids: { cleanflow: 'cleanflow', fit: 'fit', studio: 'room', howto: 'howto', catalog: 'catalog', inside: 'top', prices: 'prices', quality: 'quality', b2b: 'b2b', area: 'area', quote: 'quote' } });
+  }),
+  contact: once(contactTools),
+};
+const ensure = v => (V[v] ? V[v]() : null);
 
 reveal();
 // Rev.09 r5: views by customer journey (site.js) — every section keeps its id and module
@@ -667,17 +716,19 @@ mountSite({
   variant: 'C', openCart: CART.open,
   // r6 search: open a model's detail · jump to a price item (tab + filter)
   openModel: m => openProduct(m, 0),
-  priceItem: (tab, q) => { PC.show(tab); const x = $('#pc-search'); if (x) { x.value = q; x.dispatchEvent(new Event('input')); } },
-  views: { home: ['top', 'start', 'flow'], shop: ['catalog', 'room', 'fit'], service: ['cleanflow', 'howto', 'prices', 'quality'], business: ['amc', 'b2b', 'sop', 'projects'], knowledge: ['journey', 'learn'], contact: ['booking', 'about', 'area', 'faq', 'quote'] },
+  priceItem: (tab, q) => { ensure('service'); PC.show(tab); const x = $('#pc-search'); if (x) { x.value = q; x.dispatchEvent(new Event('input')); } },
+  views: { home: ['top', 'quick', 'start', 'flow'], shop: ['catalog', 'room', 'fit'], service: ['cleanflow', 'howto', 'prices', 'quality'], business: ['amc', 'b2b', 'sop', 'projects'], knowledge: ['journey', 'learn'], contact: ['booking', 'about', 'area', 'faq', 'quote'] },
   labels: { howto: 'ช่างทำงานในบ้านจำลอง', cleanflow: 'ทีมช่างล้าง · ติดตั้ง' },
   hooks: {
-    clean: () => JOB.setJob('clean'), install: () => JOB.setJob('install'),
-    repair: () => { SVX.set('repair'); const b = $$('#storyRoot [role="tab"]').find(x => /ซ่อม/.test(x.textContent)); if (b && b.getAttribute('aria-selected') !== 'true') b.click(); },
+    onView: v => ensure(v),
+    clean: () => { ensure('service'); JOB.setJob('clean'); }, install: () => { ensure('service'); JOB.setJob('install'); },
+    repair: () => { ensure('service'); SVX.set('repair'); const b = $$('#storyRoot [role="tab"]').find(x => /ซ่อม/.test(x.textContent)); if (b && b.getAttribute('aria-selected') !== 'true') b.click(); },
   },
 });
 // r18: Thai headings keep each phrase on one line when it fits · section eyebrows carry the number of their jump link
 thaiPhrases('.sx-vh h1, .sx-lead, .sec-h h2, .sec-h h2 + p, #start .sx-int h3, #start .sx-int-s, .sx-next h2');
 zoneMarks();
+mountSeo({ page: document.title });
 </script>
 </body>
 </html>

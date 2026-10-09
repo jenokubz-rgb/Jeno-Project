@@ -734,7 +734,9 @@ export function createACViewer(container, opts = {}) {
   setUnit(o.unit);
   // r15: compile both units, solid and see-through (x-ray, and a picked part ghosting the rest), once the visitor pauses — the
   // first press of x-ray, a part or the outdoor unit then shows at once instead of waiting for new shaders
-  whenCalm(() => {
+  // r20: not on phones (touch, ≤ 900 px): eight extra full renders cost a slow phone seconds of main thread for buttons most
+  // visitors never press there — the first press compiles on demand instead
+  if (!matchMedia('(pointer:coarse) and (max-width:900px)').matches) whenCalm(() => {
     const keepU = state.unit, keepX = state.xrayT, keepS = state.selected;
     for (const k in units) {
       state.unit = k; const ids = Object.keys(units[k].parts);

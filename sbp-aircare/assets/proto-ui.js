@@ -6,6 +6,7 @@ import {
   CLEAN_PKGS, SIZE_BANDS, DATA, TRAVEL, stockTh, travelNote, VOLUME_HINT, VOLUME_TIERS, vatOf, incVat,
 } from './sbp-core.js';
 import { createACViewer, createRoomSim, PARTS } from './ac3d.js';
+import { whenCalm } from './gl-pool.js';
 
 export { DEMO, TYPES, TYPE_BY_ID, BRANDS, BRAND_BY_ID, baht, btuFmt, h, $, $$, countUp, reduceMotion, PARTS, stockTh, incVat };
 
@@ -250,21 +251,28 @@ export function mountBtu(root, cfg = {}) {
 // r8: viewers that are not on screen at load (other pages of the site, lower sections) boot when they come near the viewport.
 // All three used to boot at once while the page loaded (several seconds of main-thread work on a phone). Until then the
 // returned object queues calls (the last one per method, in order) and replays them on the real viewer.
+// r20: cfg.phoneDefer — on phones (touch, ≤ 900 px) the hero 3D waits for the first tap on it or for a calm moment after the
+// page has settled (gl-pool.whenCalm: idle, nobody scrolling or tapping, never in the first seconds), so the first screen is
+// readable and scrollable at once; a poster still (<img class="v-poster"> in the canvas box) stands in until the canvas shows.
+const PHONE = () => matchMedia('(pointer:coarse) and (max-width:900px)').matches;
 export function mountViewer(root, cfg = {}) {
   const r = root && root.getBoundingClientRect();
-  if (!root || (r.width && r.top < innerHeight * 1.6)) return mountViewerNow(root, cfg);
-  const q = new Map(); let real = null;
+  const defer = cfg.phoneDefer && PHONE();
+  if (!root || (!defer && r.width && r.top < innerHeight * 1.6)) return mountViewerNow(root, cfg);
+  const q = new Map(); let real = null, started = false;
   const stub = { state: { dirt: cfg.dirt || 0, selected: null, explode: 0, cleaning: 0, xrayT: 0, visible: false } };
   const P = new Proxy(stub, { get(t, k) {
     if (real) { const v = real[k]; return typeof v === 'function' ? v.bind(real) : v; }
     if (k in t) return t[k]; if (typeof k !== 'string' || k === 'then') return undefined;
     return (...a) => { q.delete(k); q.set(k, a); };
   } });
-  const io = new IntersectionObserver(es => {
-    if (!es.some(e => e.isIntersecting)) return; io.disconnect();
+  const boot = () => {
+    if (started) return; started = true; io.disconnect();
     real = mountViewerNow(root, cfg); if (real) q.forEach((a, k) => { if (typeof real[k] === 'function') real[k](...a); });
-  }, { rootMargin: '500px 0px' });
-  io.observe(root);
+  };
+  const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) boot(); }, { rootMargin: '500px 0px' });
+  if (defer) { root.addEventListener('pointerdown', boot, { once: true, passive: true }); whenCalm(boot, 1500); }
+  else io.observe(root);
   return P;
 }
 function mountViewerNow(root, cfg = {}) {

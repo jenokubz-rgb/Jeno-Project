@@ -99,6 +99,8 @@ def build_variant(v):
     html = re.sub(r'src="assets/logos/([\w-]+)\.png"', lambda m: f'src="{logos[m.group(1).lower()]}"', html)
     # r12: poster frames of the v2 stages (assets/posters/*.jpg, rendered by tools/posters.mjs) -> inline data URI
     html = re.sub(r'(src|srcset)="assets/posters/([\w-]+\.jpg)"', lambda m: f'{m.group(1)}="data:image/jpeg;base64,' + base64.b64encode(open(os.path.join(A, 'posters', m.group(2)), 'rb').read()).decode() + '"', html)
+    # r20: hero posters of A/B/C for phones (assets/posters/hero-<v>.webp, rendered by tools/heroposters.mjs) -> inline data URI
+    html = re.sub(r'src="assets/posters/([\w-]+\.webp)"', lambda m: 'src="data:image/webp;base64,' + base64.b64encode(open(os.path.join(A, 'posters', m.group(1)), 'rb').read()).decode() + '"', html)
     # r13: photos of the v3 editions (AI illustrations, assets/photos/*.webp) -> inline data URI
     html = re.sub(r'src="assets/photos/([\w-]+\.webp)"', lambda m: 'src="data:image/webp;base64,' + base64.b64encode(open(os.path.join(A, 'photos', m.group(1)), 'rb').read()).decode() + '"', html)
     # the one module script -> bundled inline module
