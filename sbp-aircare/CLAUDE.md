@@ -1021,6 +1021,14 @@ body: `400 16px/1.7` · self-hosted woff2 แยก subset Thai/Latin (`fonts.cs
   - ภาพตรวจด้วยตา: ติดตั้งขั้น 2/4/5/6 ที่ 1100×760 · 1366×900 · 390×844 · ตรวจซ่อมขั้น 7 · C มือถือหน้าแรก สว่าง/มืด
   - publish ชุดพัฒนาใหม่ทั้ง 14 ลิงก์ (`urls.dev.json`) · ชุดที่แชร์ (`urls.json`) ไม่ได้แตะ
 
+- ✅ **รอบ 20 — A · B · C ระดับ enterprise + ฉบับใช้งานจริง (คำขอเจ้าของ 9 ต.ค. 2569: "พัฒนาเว็บที่เรามีอยู่ปัจจุบัน A B C ให้แบบดีที่สุดแบบระดับ enterprise … สรุปออกมาเพื่อส่งต่อให้ Dev เช็คความสวยงามละเอียดและ workflow" · "ทำเว็บแบบฉบับแก้ไขแล้วส่งมาให้ใช้งานจริง" · "เอาเฉพาะ A B C ต้นฉบับ")**
+  - **ความเร็วมือถือ**: โมดูลของแต่ละหน้า mount เมื่อเปิดหน้าครั้งแรก (`V` + `ensure(view)` ในสคริปต์ของ a/b/c, `hooks.onView`) · ภาพ 3 มิติหน้าแรกบนจอสัมผัส ≤ 900 px บูตเมื่อแตะ/เวลาว่าง (`mountViewer({phoneDefer})`) + ภาพนิ่ง `assets/posters/hero-*.webp` · ac3d ไม่อุ่น shader บนมือถือ · แผนที่ไม่ถูกรอ — main thread 12 วิแรก (390, CPU ×4, dev) A ~8 → 5.5 วิ · B ~7.5 → 4.6 วิ · C 8.2 → 4.5 วิ
+  - **ประเมินราคาทันที** `#quick` ทุกแบบ (jobcard) · **ใบประเมินราคาเบื้องต้นแบบเอกสาร** ในตะกร้า · **JSON-LD + meta/OG** (`seo.js`) · **styleguide.html** + `npm run tokens` · **`npm run verify`** (+ `--quick`, `--only`) · tests/abc-flow · axe · audit
+  - **ฉบับใช้งานจริง**: `npm run release` → `SBP-AirCare-ABC-r20.zip` (a/b/c.html + README-TH.md) · เชื่อมหลังบ้านโดยไม่ build: `<meta name="sbp-ticket-endpoint">` · แถบ Beta บอกสถานะการเชื่อมจริง (`feedback.BETA_NOTE`)
+  - **แก้ที่พบ**: หัวเว็บ A/C + แถบล่างมือถือล้นจอ 6–17 px บนจอสัมผัส (A/B/C switch ซ่อน ≤ 440 px, `minmax(0,fr)`) · A/B mount หน้าองค์กรซ้ำ · หัวเว็บ A โปร่ง 18% → ตัวอักษรเล็ก 3.7:1 ตอนเลื่อนผ่านปุ่มส้ม (ทึบ 94%) · `typeset.zoneMarks` `data-zone` → `data-sec-n` · ป้าย B เป็นภาษาไทย
+  - **ผลตรวจ** (`npm run verify`, commit 461cce3): **27/27 ผ่าน** — pricing 2,454 ราคา 0 ปัญหา · recon 0 mismatches · textscan A/B/C clean · smoke 1366 + 390 (จอสัมผัส) A/B/C 0 error ไม่ล้นจอ · flow A/B/C 17/17 · axe WCAG 2.2 AA A/B/C สว่าง+มืด 1366, C มืด 390, styleguide = 0 · วัดค่า A/B/C 390 DPR 3 + C 1366: ตัวอักษร < 12 px 0 · เป้ากด < 44 px 0 · ตัดคำ 0 · ล้นจอ 0 · booking e2e 21/21 · ชุดใช้งานจริงเปิดจากไฟล์ (file://) 1366/390 0 error · หลังบ้านจำลองผ่าน meta → เลขที่คำขอขึ้นจริง
+  - เอกสารส่งมอบ Dev (Claude Docs): claude.ai/code/artifact/c45dcb8f-8286-4b88-bbd5-93325656f454 · ลิงก์ชุดพัฒนา a/b/c/index/a3/b3/c3/styleguide อัปเดตแล้ว (C2 publish ถูกระบบอนุญาตปฏิเสธ — ยังเป็นรุ่นก่อน) · ชุดที่แชร์ (`urls.json`) ไม่ได้แตะ
+
 ### 7.2 บั๊ก / ปัญหาที่ยังค้าง (เรียงตามความสำคัญ)
 
 | # | ปัญหา | ผลกระทบ | หลักฐาน / จุดที่ต้องดู |
