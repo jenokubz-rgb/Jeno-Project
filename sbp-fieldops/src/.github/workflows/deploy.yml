@@ -1,0 +1,40 @@
+name: Deploy API (Supabase Edge Function)
+
+on:
+  push:
+    branches: [main]
+    paths: ['supabase/**', '.github/workflows/deploy.yml']
+  workflow_dispatch:
+  schedule:
+    # ปลุกระบบทุก 3 วัน กันโปรเจกต์ฟรีของ Supabase หยุดเองเมื่อไม่มีคนใช้ 7 วัน
+    - cron: '17 1 */3 * *'
+
+env:
+  PROJECT_REF: PROJECT_REF_HERE
+
+jobs:
+  deploy:
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Deploy function
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+        run: supabase functions deploy api --project-ref "$PROJECT_REF" --no-verify-jwt --use-api
+      - name: Health check
+        run: |
+          sleep 5
+          curl -fsS -X POST "https://$PROJECT_REF.supabase.co/functions/v1/api" \
+            -H 'content-type: application/json' -d '{"fn":"publicStatus","args":[]}'
+
+  keepalive:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          curl -fsS -X POST "https://$PROJECT_REF.supabase.co/functions/v1/api" \
+            -H 'content-type: application/json' -d '{"fn":"publicStatus","args":[]}'

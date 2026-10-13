@@ -1,0 +1,1984 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>SBP FieldOps</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1B2A4A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* แอปมือถือ: แถบบนสีกรมท่า + การ์ดบนพื้นเทาอมฟ้า + แถบเมนูล่าง · สีแบรนด์ Navy/Teal · Kanit หัวข้อ, Sarabun เนื้อหา */
+:root{--bar:#1B2A4A;--onbar:#fff;--navy:#1B2A4A;--teal:#0F7A7A;--tealink:#0F7A7A;--teal2:#E4F2F2;
+--bg:#F3F5F8;--card:#fff;--card2:#F7F9FB;--field:#fff;--paper:#fff;--ink:#1C2333;--muted:#566174;--line:#E1E5ED;--line2:#C5CCD8;
+--chip:#ECEFF4;--ph:#E7EBF1;--dash:#9AA6B8;--track:#E6EAF0;--progress:#5FD0C8;--danger:#B3261E;--amberfill:#D08A00;
+--red:#B3261E;--redbg:#FDECEA;--redline:#F1B8B3;--amber:#8A5300;--amberbg:#FFF3DC;--amberline:#F0D29C;
+--green:#1E6B37;--greenbg:#E5F4EA;--greenline:#B6DFC3;--blue:#1F4E99;--bluebg:#E8EFFB;--blueline:#BFD0F0;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bar:#16223B;--navy:#DCE5F7;--teal:#0F7F7B;--tealink:#5CCBC6;--teal2:#12302F;
+--bg:#0E141D;--card:#172131;--card2:#1D2839;--field:#111A27;--ink:#E6EBF3;--muted:#A3AEC0;--line:#2A3647;--line2:#3A475B;
+--chip:#253145;--ph:#223044;--dash:#55657C;--track:#263244;
+--red:#F49B93;--redbg:#3A1D1D;--redline:#6B2E2B;--amber:#F2C063;--amberbg:#352812;--amberline:#6B5320;
+--green:#86D7A0;--greenbg:#15301F;--greenline:#2D5B3B;--blue:#A9C2F3;--bluebg:#18264A;--blueline:#2F4677;color-scheme:dark}}
+:root[data-theme="dark"]{--bar:#16223B;--navy:#DCE5F7;--teal:#0F7F7B;--tealink:#5CCBC6;--teal2:#12302F;
+--bg:#0E141D;--card:#172131;--card2:#1D2839;--field:#111A27;--ink:#E6EBF3;--muted:#A3AEC0;--line:#2A3647;--line2:#3A475B;
+--chip:#253145;--ph:#223044;--dash:#55657C;--track:#263244;
+--red:#F49B93;--redbg:#3A1D1D;--redline:#6B2E2B;--amber:#F2C063;--amberbg:#352812;--amberline:#6B5320;
+--green:#86D7A0;--greenbg:#15301F;--greenline:#2D5B3B;--blue:#A9C2F3;--bluebg:#18264A;--blueline:#2F4677;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Sarabun,system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%}
+h1,h2,h3,.kanit{font-family:Kanit,Sarabun,sans-serif;font-weight:500;margin:0;line-height:1.3}
+button{font:inherit;cursor:pointer}
+a{color:var(--tealink)}
+button:focus-visible,a:focus-visible,.chip:focus-visible{outline:2px solid var(--tealink);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bar);color:var(--onbar);display:flex;align-items:center;gap:6px;padding:8px 10px;min-height:54px}
+header.top .title{flex:1;min-width:0;font-family:Kanit,sans-serif;font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+header.top .sub{display:block;font-family:Sarabun,sans-serif;font-size:12px;opacity:.8}
+header.top button{background:transparent;border:0;color:var(--onbar);min-width:44px;min-height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+header.top button:active{background:rgba(255,255,255,.12)}
+main{max-width:880px;margin:0 auto;padding:12px 16px 100px}
+nav.bottom{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:20}
+nav.bottom button{flex:1;border:0;background:none;padding:6px 2px 6px;font-size:12px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px;min-height:58px}
+nav.bottom button.on{color:var(--tealink);font-weight:700}
+nav.bottom svg{width:24px;height:24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin:0 0 10px}
+.card.click{cursor:pointer}
+.card.click:active{background:var(--card2)}
+.card.hl{border-color:var(--tealink);box-shadow:0 0 0 1px var(--tealink) inset}
+.sec{margin:18px 0 8px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.sec h2{font-size:16px;color:var(--navy)}
+.muted{color:var(--muted);font-size:14px}
+.small{font-size:13px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.between{justify-content:space-between}
+.grow{flex:1;min-width:0}
+.b{font-weight:700}
+.nowrap{white-space:nowrap}
+.pre{white-space:pre-wrap}
+.right{text-align:right}
+.badge{display:inline-block;padding:1px 8px;border-radius:99px;font-size:12px;font-weight:700;background:var(--chip);color:var(--muted);white-space:nowrap;vertical-align:middle}
+.badge.red{background:var(--redbg);color:var(--red)}.badge.amber{background:var(--amberbg);color:var(--amber)}
+.badge.green{background:var(--greenbg);color:var(--green)}.badge.blue{background:var(--bluebg);color:var(--blue)}.badge.teal{background:var(--teal2);color:var(--tealink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:8px 14px;border-radius:10px;border:1px solid var(--teal);background:var(--teal);color:#fff;font-weight:700;text-decoration:none;text-align:center}
+.btn.ghost{background:var(--card);color:var(--tealink);border-color:var(--tealink)}
+.btn.navy{background:var(--bar);border-color:var(--bar);color:var(--onbar)}
+.btn.red{background:var(--danger);border-color:var(--danger)}
+.btn.redghost{background:var(--card);color:var(--red);border-color:var(--red)}
+.btn.sm{min-height:36px;padding:4px 10px;font-size:14px}
+.btn.block{width:100%}
+.btn:disabled{opacity:.5;cursor:default}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.btns .btn{flex:1 1 140px}
+label.f{display:block;margin:0 0 10px}
+label.f>span{display:block;font-size:14px;color:var(--muted);margin-bottom:4px}
+label.f>span i{color:var(--red);font-style:normal}
+input,select,textarea{width:100%;font:inherit;font-size:16px;padding:9px 12px;border:1px solid var(--line2);border-radius:10px;background:var(--field);color:var(--ink);min-height:44px}
+textarea{min-height:84px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--tealink);outline-offset:0;border-color:var(--tealink)}
+input[type=checkbox]{width:22px;height:22px;min-height:22px;accent-color:var(--teal);flex:none}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:0 8px}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+@media(max-width:400px){.grid3{grid-template-columns:1fr 1fr}}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.kpi .v{font-family:Kanit,sans-serif;font-size:22px;color:var(--navy);line-height:1.25}
+.kpi .l{font-size:13px;color:var(--muted)}
+.kpi.red{border-color:var(--redline);background:var(--redbg)}.kpi.amber{border-color:var(--amberline);background:var(--amberbg)}.kpi.green{border-color:var(--greenline);background:var(--greenbg)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:2px 0 6px;margin-bottom:6px;-webkit-overflow-scrolling:touch}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:6px 12px;font-size:14px;white-space:nowrap;min-height:38px;color:var(--ink)}
+.chip.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.t{width:100%;border-collapse:collapse;font-size:14px}
+table.t th,table.t td{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+table.t th{color:var(--muted);font-weight:600;font-size:13px}
+table.t .n{text-align:right;white-space:nowrap}
+.photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:6px}
+.ph{aspect-ratio:1/1;border-radius:8px;background:var(--ph) center/cover no-repeat;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;cursor:pointer}
+.ph.add{border:1px dashed var(--dash);background:var(--card);color:var(--tealink);font-weight:700;font-size:14px;text-align:center;padding:4px}
+.check{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line)}
+.check:last-child{border-bottom:0}
+.check .txt{flex:1;min-width:0}
+.check input[type=text]{margin-top:6px;min-height:38px;padding:6px 10px;font-size:15px}
+.alert{padding:10px 12px;border-radius:10px;margin-bottom:8px;font-size:14px;border:1px solid transparent}
+.alert.red{background:var(--redbg);color:var(--red);border-color:var(--redline)}
+.alert.amber{background:var(--amberbg);color:var(--amber);border-color:var(--amberline)}
+.alert.green{background:var(--greenbg);color:var(--green);border-color:var(--greenline)}
+.alert.blue{background:var(--bluebg);color:var(--blue);border-color:var(--blueline)}
+.alert.click{cursor:pointer}
+.empty{padding:18px;text-align:center;color:var(--muted);font-size:14px;background:var(--card);border:1px dashed var(--line);border-radius:12px}
+.loading{padding:40px 0;text-align:center;color:var(--muted)}
+.track{height:8px;background:var(--track);border-radius:99px;overflow:hidden;margin-top:6px}
+.fill{height:100%;background:var(--teal);border-radius:99px}
+.fill.red{background:var(--danger)}.fill.amber{background:var(--amberfill)}
+.money{font-family:Kanit,sans-serif;color:var(--navy)}
+.big{font-size:20px}
+.kv{display:grid;grid-template-columns:max-content 1fr;gap:4px 12px;font-size:15px}
+.kv dt{color:var(--muted)}.kv dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.divider{height:1px;background:var(--line);margin:12px 0}
+#bar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--progress);z-index:60;transition:width .4s ease,opacity .3s}
+#bar.on{width:75%}
+#toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--bar);color:var(--onbar);border:1px solid var(--line2);padding:10px 16px;border-radius:10px;font-size:15px;max-width:92vw;z-index:70;display:none;box-shadow:0 6px 20px rgba(0,0,0,.2)}
+#toast.err{background:var(--danger);color:#fff}
+.modal-bg{position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:50;display:flex;align-items:flex-end;justify-content:center}
+.modal{background:var(--card);width:100%;max-width:580px;max-height:92vh;overflow:auto;border-radius:16px 16px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom))}
+.modal h3{font-size:18px;color:var(--navy);margin-bottom:10px}
+@media(min-width:640px){.modal-bg{align-items:center}.modal{border-radius:16px}}
+.sig{width:100%;height:180px;border:1px dashed var(--dash);border-radius:10px;background:var(--paper);touch-action:none;display:block}
+.login{max-width:420px;margin:0 auto;padding:28px 16px}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.logo{width:44px;height:44px;border-radius:12px;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Kanit;font-weight:600;font-size:18px}
+.lines .ln{border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px;background:var(--card)}
+.lines .ln.warn{border-color:var(--amberline);background:var(--amberbg)}
+.res{border:1px solid var(--line);border-radius:10px;background:var(--card);max-height:340px;overflow:auto;margin:-4px 0 10px}
+.res button{display:block;width:100%;text-align:left;background:var(--card);border:0;border-bottom:1px solid var(--line);padding:9px 12px;min-height:44px;color:var(--ink)}
+.res button:last-child{border-bottom:0}
+.res button:active{background:var(--teal2)}
+.teamcol{border:1px solid var(--line);border-radius:12px;background:var(--card);padding:10px;margin-bottom:10px}
+.doc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;font-size:15px}
+.doc h1{font-size:22px;color:var(--navy)}
+.doc .co{border-bottom:2px solid var(--navy);padding-bottom:10px;margin-bottom:12px}
+.doc table.t td,.doc table.t th{font-size:14px}
+.tot{margin-left:auto;max-width:320px}
+.tot div{display:flex;justify-content:space-between;padding:3px 0}
+.tot .g{font-weight:700;font-size:17px;border-top:2px solid var(--navy);margin-top:4px;padding-top:6px}
+.more{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.more button{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 10px;min-height:84px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--navy);font-weight:600}
+.more svg{width:26px;height:26px;color:var(--tealink)}
+.fab{position:fixed;right:16px;bottom:calc(74px + env(safe-area-inset-bottom));z-index:19;border-radius:99px;box-shadow:0 6px 16px rgba(15,122,122,.35);padding:10px 18px}
+.hide{display:none!important}
+.mob{display:none}
+@media(max-width:560px){
+  table.qlines tr.h{display:none}
+  table.qlines,table.qlines tbody{display:block}
+  table.qlines tr{display:grid;grid-template-columns:22px 1fr auto;gap:0 8px;border-bottom:1px solid var(--line);padding:6px 0}
+  table.qlines td{border:0;padding:1px 0}
+  table.qlines td.d{grid-column:2/4}
+  table.qlines td.q{grid-column:2;text-align:left;color:var(--muted)}
+  table.qlines td.p{display:none}
+  table.qlines td.a{grid-column:3;font-weight:700}
+  table.qlines .mob{display:inline}
+  .doc{padding:14px}.doc .co .right{text-align:left}
+}
+@media print{header.top,nav.bottom,.noprint,.fab{display:none!important}main{padding:0;max-width:none}body{background:var(--card)}.doc{border:0;padding:0}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<div id="app"><div style="max-width:420px;margin:48px auto;padding:0 16px;font-family:sans-serif;color:#566174;line-height:1.6;text-align:center">กำลังเปิดระบบ SBP FieldOps…<br><small>ถ้าค้างหน้านี้นานเกิน 20 วินาที ให้ปิดแล้วเปิดใหม่ หรือเปิดด้วย Chrome / Safari</small></div></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="modal-root"></div>
+<script>window.__SBP_BOOT = /*__SBP_BOOT__*/null;</script>
+<script>
+'use strict';
+/* ค่าตั้งต้นของหน้า (สคริปต์เชื่อมระบบด้านบนเติมให้) — ถ้าเปิดไฟล์นี้ตรงๆ จะได้ null แล้วแสดงหน้าอธิบายแทนการพัง */
+var BOOT = (function () {
+  if (window.__SBP_BOOT) return window.__SBP_BOOT;
+  try { var b = JSON.parse(document.getElementById('sbp-boot').textContent); return b && b.app ? b : null; } catch (e) { return null; }
+})();
+/* กันข้อผิดพลาดที่ไม่ได้ดักไว้ ไม่ให้หน้าค้างหรือขึ้น Uncaught Error — แสดงเป็นข้อความภาษาไทยแทน */
+window.addEventListener('error', function (e) {
+  if (!e || /ResizeObserver/.test(String(e.message))) return;
+  e.preventDefault();
+  try { console.warn('SBP error', e.error || e.message); reportProblem(e.error || e.message); } catch (x) { /* ignore */ }
+});
+window.addEventListener('unhandledrejection', function (e) {
+  e.preventDefault();
+  try { console.warn('SBP rejection', e.reason); reportProblem(e.reason); } catch (x) { /* ignore */ }
+});
+function reportProblem(err) {
+  var m = (err && err.message) || String(err || '');
+  if (typeof toast === 'function') toast('เกิดข้อผิดพลาด: ' + (typeof friendly === 'function' ? friendly(m) : m), true);
+}
+
+/* ===================================================== state & storage */
+const S = { token: null, user: null, b: null, stack: [], cur: null, seq: 0, photo: {}, job: null, qe: null, sel: {} };
+const ST = {
+  get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* ignore */ } },
+  del(k) { try { localStorage.removeItem(k); } catch (e) { /* ignore */ } }
+};
+
+/* ===================================================== constants */
+const JOB_TYPES = ['ล้าง', 'ติดตั้ง', 'ซ่อม', 'สำรวจ', 'สัญญา/PM', 'งานแก้/ประกัน', 'อื่นๆ'];
+const SOURCES = ['โทรเข้า', 'LINE', 'Facebook', 'เว็บไซต์', 'ลูกค้าเก่า', 'ลูกค้าแนะนำ', 'เซลล์หาเอง', 'ช่างพบหน้างาน', 'อื่นๆ'];
+const PAYMENTS = ['เงินสด', 'โอนก่อนเข้างาน', 'มัดจำ 50% ส่วนที่เหลือเมื่อเสร็จงาน', 'เครดิต 30 วัน', 'เครดิต 45 วัน', 'เครดิต 60 วัน', 'ตามสัญญา'];
+const CASE_CLASSES = ['ฝีมือ', 'อะไหล่', 'ผู้ผลิต', 'การใช้งาน', 'บุคคลที่สาม', 'ระบบเดิม', 'ไม่เกี่ยวข้อง', 'ยังไม่ทราบ'];
+const AC_TYPES = ['ติดผนัง', 'สี่ทิศทาง', 'แขวนใต้ฝ้า', 'ตู้ตั้ง', 'ต่อท่อลม/เปลือย', 'VRF/VRV', 'อื่นๆ'];
+const LOST_REASONS = ['ราคาสูงกว่าที่ลูกค้าคาด', 'ลูกค้าเลือกเจ้าอื่น', 'ลูกค้าเลื่อน/ยังไม่ทำ', 'ติดต่อลูกค้าไม่ได้', 'ขอบเขตงานไม่ตรง', 'ไม่ผ่านด่านกำไร', 'อื่นๆ'];
+const RISKS = [['R0', 'R0 ปกติ'], ['R1', 'R1 ต้องระวัง (พื้นที่จำกัด/ขนย้าย)'], ['R2', 'R2 งานสูง/ซับซ้อน'], ['R3', 'R3 อันตราย ต้องอุปกรณ์พิเศษ']];
+const QUESTIONS = [
+  ['type', '1. ประเภทเครื่อง/ยี่ห้อ', 'เช่น ติดผนัง Daikin, สี่ทิศทาง Carrier'],
+  ['qty', '2. จำนวนเครื่องและขนาด BTU', 'เช่น 4 เครื่อง 12,000 BTU'],
+  ['access', '3. ความสูง/การเข้าถึง', 'เช่น ชั้น 2 สูง 3 ม. คอยล์ร้อนบนหลังคา'],
+  ['symptom', '4. อาการ/สิ่งที่ลูกค้าต้องการ', 'เช่น ล้างประจำปี น้ำหยด ไม่เย็น'],
+  ['last', '5. ล้างหรือซ่อมครั้งล่าสุด', 'เช่น 8 เดือนก่อน'],
+  ['timing', '6. วันเวลาที่สะดวก/ข้อจำกัด', 'เช่น เสาร์เช้า เข้าได้หลัง 9 โมง'],
+  ['payer', '7. ผู้ตัดสินใจ/การชำระเงิน', 'เช่น ฝ่ายจัดซื้อ ต้องออก PO เครดิต 30 วัน']
+];
+const MEASURES = [['error_before', 'Error ก่อนทำ'], ['pressure', 'แรงดันน้ำยา (psi)'], ['current', 'กระแสไฟ (A)'],
+  ['temp_in', 'อุณหภูมิลมกลับ (°C)'], ['temp_out', 'อุณหภูมิลมออก (°C)'], ['error_after', 'Error หลังทำ']];
+const LBL = {
+  stage: { NEW: ['ใหม่', 'blue'], QUOTE: ['รอทำใบเสนอราคา', 'amber'], SURVEY: ['รอสำรวจ', 'amber'], QUOTED: ['เสนอราคาแล้ว', 'teal'], WON: ['ได้งาน', 'green'], LOST: ['ไม่ได้งาน', 'red'], HOLD: ['พักไว้', ''] },
+  quote: { DRAFT: ['ร่าง', ''], PENDING: ['รออนุมัติ', 'amber'], APPROVED: ['อนุมัติแล้ว รอส่งลูกค้า', 'blue'], REJECTED: ['ตีกลับให้แก้', 'red'], SENT: ['ส่งลูกค้าแล้ว', 'teal'], ACCEPTED: ['ลูกค้ายืนยันออนไลน์', 'green'], WON: ['ได้งาน', 'green'], LOST: ['ไม่ได้งาน', 'red'], SUPERSEDED: ['มี Rev ใหม่แทน', ''] },
+  job: { WAIT_PLAN: ['รอจัดทีม', 'amber'], PLANNED: ['จัดทีมแล้ว', 'blue'], IN_PROGRESS: ['กำลังทำ', 'teal'], DONE: ['เสร็จแล้ว', 'green'], CANCELLED: ['ยกเลิก', ''] },
+  bill: { WAIT_SEND: ['รอส่งบัญชี', 'red'], SENT: ['ส่งบัญชีแล้ว', 'amber'], BILLED: ['บัญชีเปิดบิลแล้ว', 'blue'], PAID: ['เงินเข้าแล้ว', 'green'], NOBILL: ['ไม่เรียกเก็บ', ''] },
+  gate: { PASS: ['ผ่าน', 'green'], GOOD: ['ดี', 'green'], FAIL: ['ไม่ผ่าน', 'red'], 'N/A': ['ไม่มีทีม-วัน', ''] },
+  lane: { F: ['F งานเร็ว', 'teal'], S: ['S มาตรฐาน', 'blue'], V: ['V ต้องสำรวจ', 'amber'], P: ['P โครงการ', 'red'] },
+  case: { OPEN: ['เปิดอยู่', 'red'], DECIDED: ['ตัดสินแล้ว', 'amber'], CLOSED: ['ปิดแล้ว', 'green'] }
+};
+
+/* ===================================================== icons */
+const IC = {
+  home: '<path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+  jobs: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/>',
+  leads: '<path d="M4 4h16l-6 8v6l-4 2v-8z"/>',
+  quote: '<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/>',
+  cust: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 4 6"/>',
+  plan: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  bill: '<path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/>',
+  chart: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+  more: '<circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/>',
+  me: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+  shield: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>',
+  contract: '<path d="M5 3h14v18H5z"/><path d="M9 7h6M9 11h6M9 15h3"/>',
+  team: '<circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2 20a6 6 0 0 1 12 0M14 20a4.5 4.5 0 0 1 8 0"/>',
+  gear: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1a1.6 1.6 0 0 0-2.7-1.1l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 3.6 14H3a2 2 0 1 1 0-4h.1a1.6 1.6 0 0 0 1.1-2.7l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/>',
+  back: '<path d="M15 18l-6-6 6-6"/>',
+  refresh: '<path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/>',
+  list: '<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>'
+};
+const icon = (k, sz) => `<svg viewBox="0 0 24 24" width="${sz || 24}" height="${sz || 24}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k] || ''}</svg>`;
+
+/* ===================================================== helpers */
+function esc(s) {
+  return String(s === undefined || s === null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+const J = o => esc(JSON.stringify(o));
+function money(n, dec) {
+  const v = Number(n || 0);
+  return v.toLocaleString('en-US', { minimumFractionDigits: dec ? 2 : 0, maximumFractionDigits: dec ? 2 : 2 });
+}
+const MTH = ['ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.'];
+function thd(d, withYear) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(d || ''));
+  if (!m) return '';
+  return Number(m[3]) + ' ' + MTH[Number(m[2]) - 1] + (withYear === false ? '' : ' ' + String(Number(m[1]) + 543).slice(-2));
+}
+function relDay(d) {
+  if (!d) return '';
+  if (S.b && d === S.b.today) return 'วันนี้';
+  if (S.b && d === S.b.tomorrow) return 'พรุ่งนี้';
+  return thd(d);
+}
+function badge(map, k) {
+  const v = LBL[map] && LBL[map][k];
+  if (v) return `<span class="badge ${v[1]}">${esc(v[0])}</span>`;
+  return k ? `<span class="badge">${esc(k)}</span>` : '';
+}
+function userName(id) {
+  if (!S.b) return id || '';
+  const u = S.b.users.find(x => x.user_id === id);
+  return u ? u.name : (id || '-');
+}
+const can = (...roles) => S.user && roles.indexOf(S.user.role) >= 0;
+const isMgmt = () => can('CEO', 'MANAGER');
+const isField = () => can('LEAD', 'TECH');
+function opt(list, val, blank) {
+  return (blank !== undefined ? `<option value="">${esc(blank)}</option>` : '') +
+    list.map(o => { const v = Array.isArray(o) ? o[0] : o, t = Array.isArray(o) ? o[1] : o; return `<option value="${esc(v)}"${String(v) === String(val === undefined ? '' : val) ? ' selected' : ''}>${esc(t)}</option>`; }).join('');
+}
+function field(label, inner, req) { return `<label class="f"><span>${esc(label)}${req ? ' <i>*</i>' : ''}</span>${inner}</label>`; }
+function inp(name, val, o) {
+  o = o || {};
+  return `<input name="${esc(name)}" type="${o.type || 'text'}" value="${esc(val)}"${o.ph ? ` placeholder="${esc(o.ph)}"` : ''}${o.req ? ' required' : ''}${o.im ? ` inputmode="${o.im}"` : ''}${o.step ? ` step="${o.step}"` : o.type === 'number' ? ' step="any"' : ''}${o.min !== undefined ? ` min="${o.min}"` : ''}${o.list ? ` list="${o.list}"` : ''}${o.attr || ''}>`;
+}
+function ta(name, val, ph) { return `<textarea name="${esc(name)}"${ph ? ` placeholder="${esc(ph)}"` : ''}>${esc(val)}</textarea>`; }
+function sel(name, list, val, blank) { return `<select name="${esc(name)}">${opt(list, val, blank)}</select>`; }
+function formData(form) {
+  const o = {};
+  Array.from(form.elements).forEach(el => {
+    if (!el.name || el.disabled) return;
+    if (el.type === 'checkbox') o[el.name] = el.checked ? 'Y' : '';
+    else if (el.type === 'radio') { if (el.checked) o[el.name] = el.value; }
+    else o[el.name] = el.value.trim();
+  });
+  return o;
+}
+function empty(t) { return `<div class="empty">${esc(t)}</div>`; }
+function sec(title, right) { return `<div class="sec"><h2>${esc(title)}</h2>${right || ''}</div>`; }
+function mapUrl(q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q || ''); }
+function lineUrl(t) { return 'https://line.me/R/msg/text/?' + encodeURIComponent(t || ''); }
+function debounce(fn, ms) { let t; return function () { const a = arguments; clearTimeout(t); t = setTimeout(() => fn.apply(null, a), ms); }; }
+
+let busyN = 0;
+function busy(d) {
+  busyN = Math.max(0, busyN + d);
+  const bar = document.getElementById('bar');
+  if (busyN) { bar.style.opacity = 1; bar.classList.add('on'); }
+  else { bar.style.width = '100%'; setTimeout(() => { bar.classList.remove('on'); bar.style.width = ''; bar.style.opacity = 0; }, 250); }
+}
+let toastT;
+function toast(msg, err) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = err ? 'err' : ''; t.style.display = 'block';
+  clearTimeout(toastT); toastT = setTimeout(() => { t.style.display = 'none'; }, err ? 5000 : 2600);
+}
+
+function copyText(text) {
+  return new Promise(resolve => {
+    const fallback = () => {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      let ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      ta.remove(); resolve(ok);
+    };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(() => resolve(true), fallback);
+      else fallback();
+    } catch (e) { fallback(); }
+  });
+}
+
+/* ===================================================== server calls */
+/** ข้อความผิดพลาดจากเครือข่าย ให้เป็นภาษาคน */
+function friendly(msg) {
+  msg = String(msg || '');
+  if (/NetworkError|HTTP 0|Failed to fetch|network|ERR_|Load failed/i.test(msg)) return 'อินเทอร์เน็ตไม่เสถียร เชื่อมต่อระบบไม่ได้ ลองใหม่อีกครั้ง';
+  if (/HTTP 5\d\d/.test(msg)) return 'ระบบขัดข้องชั่วคราว กรุณาลองใหม่อีกครั้ง';
+  return msg.replace(/^(Exception|Error):\s*/, '') || 'เกิดข้อผิดพลาด';
+}
+function gsOnce(fn, args) {
+  return new Promise((resolve, reject) => {
+    busy(1);
+    try {
+      if (typeof google === 'undefined' || !google.script) throw new Error('เปิดหน้านี้จากลิงก์ระบบเท่านั้น');
+      const r = google.script.run
+        .withSuccessHandler(v => { busy(-1); resolve(v); })
+        .withFailureHandler(e => { busy(-1); reject(new Error((e && e.message) || String(e) || 'NetworkError')); });
+      r[fn].apply(r, args);
+    } catch (e) { busy(-1); reject(e); }
+  });
+}
+async function gs(fn) {
+  const args = Array.prototype.slice.call(arguments, 1);
+  const readOnly = fn === 'publicStatus' || fn === 'publicQuote' || (fn === 'api' && /^(home|bootstrap|dashboard|plan\.get)$|\.(list|get|mine|search)$/.test(String(args[1] || '')));
+  for (let i = 0; ; i++) {
+    try { return await gsOnce(fn, args); }
+    catch (e) {
+      const net = /NetworkError|HTTP 0|Failed to fetch|network/i.test(e.message);
+      if (readOnly && net && i < 2) { await new Promise(r => setTimeout(r, 800 * (i + 1))); continue; }
+      throw new Error(friendly(e.message));
+    }
+  }
+}
+async function api(action, payload) {
+  const r = await gs('api', S.token, action, JSON.parse(JSON.stringify(payload || {})));
+  if (!r || !r.ok) {
+    if (r && r.code === 'AUTH') { logout(true); const e = new Error('กรุณาเข้าสู่ระบบอีกครั้ง'); e.auth = true; throw e; }
+    throw new Error((r && r.error) || 'เกิดข้อผิดพลาด');
+  }
+  return r.data;
+}
+async function attempt(fn, okMsg) {
+  try { const v = await fn(); if (okMsg) toast(okMsg); return v; }
+  catch (e) { if (!e.auth) toast(e.message || String(e), true); return undefined; }
+}
+
+/* ===================================================== modal / ask */
+function modal(html) {
+  const root = document.getElementById('modal-root');
+  const bg = document.createElement('div');
+  bg.className = 'modal-bg';
+  bg.innerHTML = `<div class="modal" role="dialog" aria-modal="true">${html}</div>`;
+  root.appendChild(bg);
+  const close = () => bg.remove();
+  bg.addEventListener('click', e => { if (e.target === bg) close(); });
+  return { el: bg.querySelector('.modal'), close };
+}
+/** ask({title, text, fields:[{name,label,type,req,options,value,ph}], ok, danger}) → Promise<values|null> */
+function ask(o) {
+  return new Promise(resolve => {
+    const fields = (o.fields || []).map(f => {
+      const t = f.type || 'text';
+      let el;
+      if (t === 'select') el = sel(f.name, f.options, f.value, f.blank);
+      else if (t === 'textarea') el = ta(f.name, f.value || '', f.ph);
+      else if (t === 'checkbox') return `<label class="row" style="margin-bottom:10px"><input type="checkbox" name="${esc(f.name)}"${f.value ? ' checked' : ''}> <span>${esc(f.label)}</span></label>`;
+      else el = inp(f.name, f.value || '', { type: t, ph: f.ph, im: f.im, step: f.step });
+      return field(f.label, el, f.req);
+    }).join('');
+    const m = modal(`<h3>${esc(o.title || 'ยืนยัน')}</h3>${o.text ? `<p class="muted pre" style="margin-top:0">${esc(o.text)}</p>` : ''}${o.html || ''}
+      <form data-ask>${fields}<div class="btns"><button type="button" class="btn ghost" data-x>ยกเลิก</button>
+      <button type="submit" class="btn ${o.danger ? 'red' : ''}">${esc(o.ok || 'ตกลง')}</button></div></form>`);
+    const form = m.el.querySelector('form');
+    let done = false;
+    const finish = v => { if (done) return; done = true; m.close(); resolve(v); };
+    form.addEventListener('submit', e => {
+      e.preventDefault(); e.stopPropagation();
+      const v = formData(form);
+      const miss = (o.fields || []).filter(f => f.req && !v[f.name]);
+      if (miss.length) { toast('กรุณากรอก: ' + miss.map(f => f.label).join(', '), true); return; }
+      finish(v);
+    });
+    m.el.querySelector('[data-x]').addEventListener('click', () => finish(null));
+    const first = form.querySelector('input,select,textarea');
+    if (first && first.type !== 'date') setTimeout(() => first.focus(), 50);
+  });
+}
+const confirmBox = (title, text, ok, danger) => ask({ title, text, ok, danger }).then(v => !!v);
+function showText(title, text, note, extra) {
+  const m = modal(`<h3>${esc(title)}</h3>${note ? `<p class="muted">${esc(note)}</p>` : ''}
+    <textarea readonly style="min-height:220px;font-size:14px">${esc(text)}</textarea>
+    <div class="btns"><button class="btn" data-cp>คัดลอกข้อความ</button>
+    <a class="btn ghost" target="_blank" rel="noopener" href="${esc(lineUrl(text))}">ส่งทาง LINE</a>
+    ${extra ? `<button class="btn ghost" data-extra>${esc(extra.label)}</button>` : ''}
+    <button class="btn ghost" data-x>ปิด</button></div>`);
+  m.el.querySelector('[data-cp]').addEventListener('click', async () => {
+    const okc = await copyText(text);
+    if (!okc) { const t = m.el.querySelector('textarea'); t.focus(); t.select(); }
+    toast(okc ? 'คัดลอกแล้ว' : 'คัดลอกอัตโนมัติไม่ได้ — เลือกข้อความไว้แล้ว กดค้างเพื่อคัดลอก', false);
+  });
+  if (extra) m.el.querySelector('[data-extra]').addEventListener('click', () => { m.close(); extra.fn(); });
+  m.el.querySelector('[data-x]').addEventListener('click', m.close);
+}
+function showPhoto(src) {
+  const m = modal(`<img src="${esc(src)}" alt="รูปหน้างาน" style="width:100%;border-radius:10px"><div class="btns"><button class="btn ghost" data-x>ปิด</button></div>`);
+  m.el.querySelector('[data-x]').addEventListener('click', m.close);
+}
+
+/* ===================================================== image helpers */
+function resizeImage(file, max, q) {
+  return new Promise((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onerror = () => reject(new Error('อ่านไฟล์ไม่ได้'));
+    fr.onload = () => {
+      const img = new Image();
+      img.onerror = () => reject(new Error('ไฟล์นี้ไม่ใช่รูปภาพ'));
+      img.onload = () => {
+        const r = Math.min(1, max / Math.max(img.width, img.height));
+        const c = document.createElement('canvas');
+        c.width = Math.round(img.width * r); c.height = Math.round(img.height * r);
+        const ctx = c.getContext('2d');
+        ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
+        ctx.drawImage(img, 0, 0, c.width, c.height);
+        resolve(c.toDataURL('image/jpeg', q));
+      };
+      img.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+  });
+}
+async function loadPhotos(root) {
+  const els = Array.from((root || document).querySelectorAll('.ph[data-pid]'));
+  for (const el of els) {
+    const id = el.getAttribute('data-pid');
+    try {
+      if (!S.photo[id]) S.photo[id] = await api('photo.get', { id });
+      el.style.backgroundImage = `url("${S.photo[id]}")`;
+      el.textContent = '';
+    } catch (e) { el.textContent = 'โหลดไม่ได้'; }
+  }
+}
+const photoGrid = (ids, addKind) => `<div class="photos">${(ids || []).map(id => `<div class="ph" data-pid="${esc(id)}" data-act="viewPhoto">กำลังโหลด</div>`).join('')}
+  ${addKind ? `<label class="ph add">+ ถ่าย/เลือกรูป<input type="file" accept="image/*" multiple class="hide" data-upload="${esc(addKind)}"></label>` : ''}</div>`;
+
+/* ===================================================== navigation */
+const NAV = {
+  TECH: [['myjobs', 'งานของฉัน', 'jobs'], ['me', 'ฉัน', 'me']],
+  LEAD: [['myjobs', 'งานของทีม', 'jobs'], ['me', 'ฉัน', 'me']],
+  SALES: [['home', 'หน้าแรก', 'home'], ['leads', 'Lead', 'leads'], ['quotes', 'ใบเสนอราคา', 'quote'], ['customers', 'ลูกค้า', 'cust'], ['more', 'เพิ่มเติม', 'more']],
+  BACKOFFICE: [['home', 'หน้าแรก', 'home'], ['quotes', 'ใบเสนอราคา', 'quote'], ['billing', 'ติดตามบิล', 'bill'], ['customers', 'ลูกค้า', 'cust'], ['more', 'เพิ่มเติม', 'more']],
+  MANAGER: [['home', 'หน้าแรก', 'home'], ['plan', 'จัดทีม', 'plan'], ['billing', 'ติดตามบิล', 'bill'], ['dashboard', 'ภาพรวม', 'chart'], ['more', 'เพิ่มเติม', 'more']],
+  CEO: [['home', 'หน้าแรก', 'home'], ['dashboard', 'ภาพรวม', 'chart'], ['plan', 'จัดทีม', 'plan'], ['billing', 'ติดตามบิล', 'bill'], ['more', 'เพิ่มเติม', 'more']]
+};
+const MORE = [
+  ['leads', 'Lead ทั้งหมด', 'leads', ['CEO', 'MANAGER', 'SALES', 'BACKOFFICE']],
+  ['quotes', 'ใบเสนอราคา', 'quote', ['CEO', 'MANAGER', 'SALES', 'BACKOFFICE']],
+  ['customers', 'ลูกค้า', 'cust', ['CEO', 'MANAGER', 'SALES', 'BACKOFFICE']],
+  ['plan', 'จัดทีมช่าง', 'plan', ['CEO', 'MANAGER']],
+  ['jobsAll', 'งานทั้งหมด', 'list', ['CEO', 'MANAGER', 'BACKOFFICE']],
+  ['billing', 'ติดตามวางบิล', 'bill', ['CEO', 'MANAGER', 'BACKOFFICE']],
+  ['cases', 'เคสประกัน/งานแก้', 'shield', ['CEO', 'MANAGER', 'SALES', 'BACKOFFICE']],
+  ['contracts', 'สัญญาบริการ', 'contract', ['CEO', 'MANAGER', 'SALES', 'BACKOFFICE']],
+  ['dashboard', 'ภาพรวมธุรกิจ', 'chart', ['CEO', 'MANAGER']],
+  ['myjobs', 'โหมดช่าง (งานวันนี้)', 'jobs', ['CEO', 'MANAGER']],
+  ['users', 'ผู้ใช้และบัญชี', 'team', ['CEO', 'MANAGER']],
+  ['settings', 'ตั้งค่าระบบ', 'gear', ['CEO']],
+  ['me', 'บัญชีของฉัน', 'me', ['CEO', 'MANAGER', 'SALES', 'BACKOFFICE', 'LEAD', 'TECH']]
+];
+
+function go(name, p, o) {
+  o = o || {};
+  if (o.root) S.stack = [];
+  else if (S.cur && !o.replace) S.stack.push(S.cur);
+  S.cur = { name, p: p || {} };
+  render();
+}
+function back() { S.cur = S.stack.pop() || { name: homeScreen(), p: {} }; render(); }
+const homeScreen = () => (isField() ? 'myjobs' : 'home');
+
+function shell() {
+  const nav = NAV[S.user.role] || [];
+  const app = document.getElementById('app');
+  app.innerHTML = `<header class="top"><button id="hb" aria-label="ย้อนกลับ">${icon('back')}</button>
+    <div class="title"><span id="ht"></span><span class="sub" id="hs"></span></div>
+    <button data-act="refresh" aria-label="โหลดใหม่">${icon('refresh', 22)}</button></header>
+    <main id="main"></main>
+    <nav class="bottom">${nav.map(n => `<button data-nav="${n[0]}">${icon(n[2])}<span>${esc(n[1])}</span></button>`).join('')}</nav>`;
+  document.getElementById('hb').addEventListener('click', back);
+}
+
+async function render() {
+  const my = ++S.seq;
+  if (!S.user || !S.cur || !document.getElementById('main')) return;
+  const sc = SCREENS[S.cur.name] || SCREENS.home;
+  const p = S.cur.p;
+  const navNames = (NAV[S.user.role] || []).map(n => n[0]);
+  document.getElementById('hb').style.visibility = S.stack.length ? 'visible' : 'hidden';
+  document.getElementById('ht').textContent = typeof sc.title === 'function' ? sc.title(p) : sc.title;
+  document.getElementById('hs').textContent = S.user.name + ' · ' + S.user.role_name + (S.user.team ? ' · ' + S.user.team : '');
+  document.querySelectorAll('nav.bottom button').forEach(b => {
+    const n = b.getAttribute('data-nav');
+    b.classList.toggle('on', n === S.cur.name || (n === 'more' && navNames.indexOf(S.cur.name) < 0 && !S.stack.length));
+  });
+  const main = document.getElementById('main');
+  main.innerHTML = '<div class="loading">กำลังโหลด…</div>';
+  window.scrollTo(0, 0);
+  try {
+    const html = await sc.view(p);
+    if (my !== S.seq) return;
+    main.innerHTML = html;
+    if (sc.mount) sc.mount(p);
+    loadPhotos(main);
+  } catch (e) {
+    if (my !== S.seq || e.auth || !document.getElementById('main')) return;
+    main.innerHTML = `<div class="alert red">${esc(e.message || e)}</div><button class="btn ghost block" data-act="refresh">ลองใหม่</button>`;
+  }
+}
+
+/* ===================================================== cards */
+function leadCard(l) {
+  return `<div class="card click" data-go="lead" data-p="${J({ id: l.lead_id })}">
+    <div class="row between"><div class="b grow">${esc(l.cust_name)}</div>${badge('stage', l.stage)}</div>
+    <div class="muted">${esc(l.job_type || '-')} · ${l.units ? esc(l.units) + ' เครื่อง · ' : ''}${l.est_value ? 'ประมาณ ' + money(l.est_value) + ' บ. · ' : ''}${badge('lane', l.lane)}</div>
+    ${l.site ? `<div class="muted small">${esc(l.site)}</div>` : ''}
+    ${l.next_action || l.next_date ? `<div class="small" style="margin-top:4px">ถัดไป: <b>${esc(relDay(l.next_date))}</b> ${esc(l.next_action)}</div>` : ''}
+    <div class="muted small">${esc(l.lead_id)} · ${esc(userName(l.owner_id))}</div></div>`;
+}
+function quoteCard(q) {
+  const cost = q.contrib_td !== undefined;
+  return `<div class="card click" data-go="quote" data-p="${J({ id: q.quote_id })}">
+    <div class="row between"><div class="b grow">${esc(q.cust_name)}</div>${badge('quote', q.status)}</div>
+    <div class="row between"><span class="muted">${esc(q.quote_id)}${q.rev ? ' Rev.' + q.rev : ''} · ${esc(q.job_type || '-')} · ${esc(q.payment || '')}</span>
+    <span class="money b">${money(q.net)} บ.</span></div>
+    <div class="row small" style="margin-top:4px">Min Bill ${badge('gate', q.gate_minbill)} กำไร/ทีม-วัน ${badge('gate', q.gate_td)}
+    ${q.approval_level === 'CEO' ? '<span class="badge red">CEO อนุมัติ</span>' : ''}
+    ${cost && q.contrib_td !== null ? `<span class="muted">${money(q.contrib_td)} บ./ทีม-วัน</span>` : ''}</div>
+    ${q.approve_note && (q.status === 'REJECTED' || q.status === 'PENDING') ? `<div class="small" style="margin-top:4px">หมายเหตุ: ${esc(q.approve_note)}</div>` : ''}</div>`;
+}
+function jobCard(j, o) {
+  o = o || {};
+  return `<div class="card click" data-go="job" data-p="${J({ id: j.job_id })}">
+    <div class="row between"><div class="b grow">${j.seq ? esc(j.seq) + '. ' : ''}${j.plan_time ? esc(j.plan_time) + ' · ' : ''}${esc(j.cust_name)}</div>${badge('job', j.status)}</div>
+    <div class="muted">${esc(j.job_type)} · ${esc(j.job_id)}${j.team ? ' · ' + esc(j.team) : ''}${j.plan_date && !o.noDate ? ' · ' + esc(relDay(j.plan_date)) : ''}</div>
+    ${j.site ? `<div class="muted small">${esc(j.site)}</div>` : ''}
+    ${j.scope_short ? `<div class="small">${esc(j.scope_short)}</div>` : ''}
+    <div class="row small" style="margin-top:4px">${j.bill_status ? badge('bill', j.bill_status) : ''}${j.amount !== undefined ? `<span class="money">${money(j.amount)} บ.</span>` : ''}
+    ${j.payment ? `<span class="muted">${esc(j.payment)}</span>` : ''}${j.bill_no ? `<span class="muted">บิล ${esc(j.bill_no)}</span>` : ''}</div></div>`;
+}
+function caseCard(c) {
+  return `<div class="card click" data-go="case" data-p="${J({ id: c.case_id, c })}">
+    <div class="row between"><div class="b grow">${esc(c.cust_name)}</div>${badge('case', c.status)}</div>
+    <div class="small">${esc(c.symptom)}</div>
+    <div class="muted small">${esc(c.case_id)} · เปิด ${esc(thd(c.created_at))}${c.job_id ? ' · งานเดิม ' + esc(c.job_id) : ''}${c.decision ? ' · ' + esc(c.class) + ' → ' + esc(c.decision) : ''}</div></div>`;
+}
+function contractCard(c) {
+  return `<div class="card click" data-go="contractEdit" data-p="${J({ id: c.contract_id, c })}">
+    <div class="row between"><div class="b grow">${esc(c.name || c.cust_name)}</div><span class="badge ${c.status === 'ACTIVE' ? 'green' : ''}">${c.status === 'ACTIVE' ? 'ใช้งาน' : 'สิ้นสุด'}</span></div>
+    <div class="muted">${esc(c.cust_name)} · ${esc(c.units)} เครื่อง · ${esc(c.visits)} รอบ/สัญญา · <span class="money">${money(c.value)} บ.</span></div>
+    <div class="small">รอบบริการถัดไป <b>${esc(thd(c.next_visit))}</b> · วางบิลถัดไป <b>${esc(thd(c.next_bill))}</b> (${esc(c.bill_cycle)}) · หมด ${esc(thd(c.end_date))}</div></div>`;
+}
+function alertsBox(list) {
+  if (!list || !list.length) return '<div class="alert green">ไม่มีเรื่องค้างที่ต้องตาม</div>';
+  return list.map(a => {
+    let go = '';
+    if (/^J/.test(a.ref)) go = `data-go="job" data-p="${J({ id: a.ref })}"`;
+    else if (a.ref === 'plan') go = `data-go="plan"`;
+    else if (a.ref === 'approvals') go = `data-go="quotes" data-p="${J({ f: 'PENDING' })}"`;
+    else if (/^K/.test(a.ref)) go = `data-go="contracts"`;
+    return `<div class="alert ${a.level} ${go ? 'click' : ''}" ${go}>${esc(a.text)}</div>`;
+  }).join('');
+}
+
+/* ===================================================== customer picker */
+function custPicker(c, req) {
+  c = c || {};
+  return `<div data-cp><input type="hidden" name="cust_id" value="${esc(c.cust_id || '')}">
+    ${field('ลูกค้า', `<input name="cust_name" value="${esc(c.cust_name || '')}" data-cpq autocomplete="off" placeholder="พิมพ์ชื่อเพื่อค้นหา หรือพิมพ์ชื่อลูกค้าใหม่"${req ? ' required' : ''}>`, req)}
+    <div class="res hide" data-cpr></div>
+    <div class="small muted" data-cpi style="margin:-6px 0 10px">${c.cust_id ? 'ลูกค้าในระบบ: ' + esc(c.cust_id) : ''}</div></div>`;
+}
+const cpSearch = debounce(async (input) => {
+  const box = input.closest('[data-cp]');
+  const res = box.querySelector('[data-cpr]');
+  const q = input.value.trim();
+  if (q.length < 2) { res.classList.add('hide'); return; }
+  try {
+    const list = await api('customers.list', { q });
+    res.innerHTML = list.length ? list.slice(0, 12).map(c => `<button type="button" data-act="cpPick" data-c="${J(c)}"><b>${esc(c.name)}</b> <span class="badge">${esc(c.type)}</span><br><span class="muted small">${esc(c.address || '')} ${esc(c.phone || '')}</span></button>`).join('')
+      : '<div class="muted small" style="padding:10px">ไม่พบ — ระบบจะสร้างลูกค้าใหม่ชื่อนี้ให้อัตโนมัติ</div>';
+    res.classList.remove('hide');
+  } catch (e) { /* ignore */ }
+}, 350);
+
+/* ===================================================== SCREENS */
+const SCREENS = {};
+
+/* ---------- home (office roles) */
+SCREENS.home = {
+  title: 'หน้าแรก',
+  async view() {
+    if (isField()) { setTimeout(() => go('myjobs', {}, { root: true }), 0); return ''; }
+    const d = await api('home');
+    let h = '';
+    if (S.user.role === 'SALES') {
+      const m = d.month || {};
+      const tgt = S.user.target || 0;
+      const pct = tgt ? Math.round(m.revenue / tgt * 100) : 0;
+      h += `<div class="kpis"><div class="kpi"><div class="l">งานเสร็จเดือนนี้ (ก่อน VAT)</div><div class="v">${money(m.revenue)}</div>
+        ${tgt ? `<div class="l">เป้า ${money(tgt)} · ${pct}%</div><div class="track"><div class="fill" style="width:${Math.min(100, pct)}%"></div></div>` : ''}</div>
+        <div class="kpi"><div class="l">ปิดได้เดือนนี้</div><div class="v">${money(m.won_value)}</div><div class="l">${esc(m.won)} ใบ</div></div>
+        <div class="kpi"><div class="l">ใบเสนอราคาเปิดอยู่</div><div class="v">${money(m.open_value)}</div><div class="l">${esc(m.open)} ใบ</div></div>
+        <div class="kpi"><div class="l">Lead ที่ยังเปิด</div><div class="v">${esc(d.openLeads)}</div></div></div>`;
+      h += sec('ต้องติดตามวันนี้ (' + d.followups.length + ')') + (d.followups.length ? d.followups.map(leadCard).join('') : empty('ไม่มี Lead ที่ถึงกำหนดติดตาม'));
+      h += sec('ลูกค้ายืนยันออนไลน์แล้ว — กดได้งาน (' + d.accepted.length + ')') + (d.accepted.length ? d.accepted.map(quoteCard).join('') : empty('ยังไม่มี'));
+      h += sec('ใบเสนอราคาอนุมัติแล้ว รอส่งลูกค้า (' + d.quotesToSend.length + ')') + (d.quotesToSend.length ? d.quotesToSend.map(quoteCard).join('') : empty('ไม่มีใบค้างส่ง'));
+      h += `<button class="btn fab" data-go="leadEdit">+ Lead ใหม่</button>`;
+      return h;
+    }
+    if (isMgmt()) {
+      h += sec('เรื่องที่ต้องตาม') + alertsBox(d.alerts);
+      h += sec('รออนุมัติใบเสนอราคา (' + d.approvals.length + ')') + (d.approvals.length ? d.approvals.map(quoteCard).join('') : empty('ไม่มีใบรออนุมัติ'));
+      h += sec('งานรอจัดทีม (' + d.waitPlan.length + ')', `<button class="btn sm" data-go="plan">เปิดหน้าจัดทีม</button>`);
+      h += `<div class="alert ${d.tomorrowReleased ? 'green' : d.tomorrowCount ? 'amber' : 'blue'}">พรุ่งนี้มี ${esc(d.tomorrowCount)} งาน · ${d.tomorrowReleased ? 'ปล่อยแผนให้ทีมแล้ว' : d.tomorrowCount ? 'ยังไม่ปล่อยแผนให้ทีม' : 'ยังไม่มีงานลงแผน'}</div>`;
+      h += d.waitPlan.slice(0, 6).map(j => jobCard(j)).join('');
+      if (d.cases.length) h += sec('เคสประกัน/งานแก้ที่ยังไม่ปิด (' + d.cases.length + ')') + d.cases.map(caseCard).join('');
+    }
+    h += sec('Lead รอทำใบเสนอราคา (' + d.leadsWaitingQuote.length + ')') + (d.leadsWaitingQuote.length ? d.leadsWaitingQuote.map(leadCard).join('') : empty('ไม่มี Lead ค้าง'));
+    if (d.rejected.length) h += sec('ใบที่ถูกตีกลับให้แก้ (' + d.rejected.length + ')') + d.rejected.map(quoteCard).join('');
+    h += sec('อนุมัติแล้ว รอส่งลูกค้า (' + d.quotesToSend.length + ')') + (d.quotesToSend.length ? d.quotesToSend.map(quoteCard).join('') : empty('ไม่มีใบค้างส่ง'));
+    h += sec('งานเสร็จแล้ว รอส่งบัญชีวางบิล (' + d.waitSend.length + ')', `<button class="btn sm" data-go="billing">ติดตามบิล</button>`);
+    h += d.waitSend.length ? `<div class="alert red">มีงานเสร็จที่ยังไม่ส่งบัญชี ${d.waitSend.length} งาน ยอด ${money(d.waitSend.reduce((s, j) => s + (j.amount || 0), 0))} บาท — ส่งให้ครบก่อนสิ้นวัน</div>` : empty('ไม่มีงานค้างส่งบัญชี');
+    if (d.contractsToBill.length) h += sec('สัญญาถึงรอบวางบิล (' + d.contractsToBill.length + ')') + d.contractsToBill.map(contractCard).join('');
+    if (can('BACKOFFICE', 'MANAGER', 'CEO')) h += `<button class="btn fab" data-go="quoteEdit">+ ใบเสนอราคา</button>`;
+    return h;
+  }
+};
+
+/* ---------- my jobs (field) */
+SCREENS.myjobs = {
+  title: () => (isField() ? 'งานของ' + (S.user.team || 'ฉัน') : 'งานวันนี้/พรุ่งนี้ (ทุกทีม)'),
+  async view() {
+    const list = await api('jobs.mine');
+    const t = S.b.today, tm = S.b.tomorrow;
+    const prog = list.filter(j => j.status === 'IN_PROGRESS' && j.plan_date !== t);
+    const today = list.filter(j => j.plan_date === t);
+    const tom = list.filter(j => j.plan_date === tm && j.status !== 'IN_PROGRESS');
+    let h = `<div class="card"><div class="kanit big">สวัสดี ${esc(S.user.name)}</div><div class="muted">${esc(thd(t))} · วันนี้ ${today.length} งาน · พรุ่งนี้ ${tom.length} งาน</div></div>`;
+    if (prog.length) h += sec('ค้างทำต่อ') + prog.map(j => jobCard(j)).join('');
+    h += sec('วันนี้ ' + thd(t)) + (today.length ? today.map(j => jobCard(j, { noDate: 1 })).join('') : empty('วันนี้ไม่มีงานในแผน — ติดต่อผู้จัดการ'));
+    h += sec('พรุ่งนี้ ' + thd(tm)) + (tom.length ? tom.map(j => jobCard(j, { noDate: 1 })).join('') : empty('ผู้จัดการยังไม่ปล่อยแผนพรุ่งนี้ (ปกติปล่อยก่อน 17:00)'));
+    return h;
+  }
+};
+
+/* ---------- job detail */
+SCREENS.job = {
+  title: p => 'งาน ' + p.id,
+  async view(p) {
+    const j = await api('jobs.get', { job_id: p.id });
+    S.job = j;
+    const fieldMode = can('LEAD', 'TECH', 'MANAGER', 'CEO') && ['PLANNED', 'IN_PROGRESS', 'WAIT_PLAN'].indexOf(j.status) >= 0 && (isField() || p.field);
+    let h = `<div class="card"><div class="row between"><div class="kanit big grow">${esc(j.cust_name)}</div>${badge('job', j.status)}</div>
+      <div class="muted">${esc(j.job_type)} · ${esc(j.job_id)}${j.quote_id ? ' · ใบเสนอราคา ' + esc(j.quote_id) : ''}</div>
+      <div class="divider"></div><dl class="kv">
+      <dt>นัด</dt><dd>${j.plan_date ? esc(relDay(j.plan_date)) + ' ' + esc(j.plan_time || '') + ' · ' + esc(j.team) + (j.seq ? ' ลำดับ ' + esc(j.seq) : '') : 'ยังไม่จัดทีม'}</dd>
+      <dt>สถานที่</dt><dd>${esc(j.site || '-')}${j.site ? ` · <a target="_blank" rel="noopener" href="${esc(mapUrl(j.site))}">แผนที่</a>` : ''}</dd>
+      <dt>ผู้ติดต่อ</dt><dd>${esc(j.contact || '-')} ${j.phone ? `· <a target="_blank" href="tel:${esc(String(j.phone).replace(/[^\d+]/g, ''))}">${esc(j.phone)}</a>` : ''}</dd>
+      ${j.amount !== undefined ? `<dt>ยอดงาน</dt><dd><span class="money">${money(j.amount)}</span> บ. (ก่อน VAT) · ${esc(j.payment)}</dd>` : ''}
+      </dl><div class="divider"></div><div class="b small">ขอบเขตงาน</div><div class="pre small">${esc(j.scope || '-')}</div>
+      ${j.tech_note ? `<div class="b small" style="margin-top:8px">หมายเหตุ</div><div class="pre small">${esc(j.tech_note)}</div>` : ''}</div>`;
+    if (fieldMode) h += jobFieldForm(j);
+    else h += jobReadOnly(j);
+    if (!isField()) h += jobOfficePanel(j);
+    return h;
+  },
+  mount() { sigInit(); }
+};
+
+function jobFieldForm(j) {
+  const started = j.status === 'IN_PROGRESS';
+  let h = '';
+  if (!started) h += `<button class="btn block" data-act="jobStart">เริ่มงาน (ถึงหน้างานแล้ว)</button>`;
+  h += sec('1. รูปก่อนทำงาน (' + j.photos_before.length + ')') + photoGrid(j.photos_before, 'before');
+  h += sec('2. เช็กลิสต์ ' + j.job_type) + `<div class="card">${j.checklist.map((c, i) => `<div class="check"><input type="checkbox" data-ci="${i}"${c.d ? ' checked' : ''} aria-label="${esc(c.t)}">
+    <div class="txt"><div>${esc(c.t)}</div><input type="text" data-cn="${i}" value="${esc(c.n || '')}" placeholder="หมายเหตุ (ถ้าทำไม่ได้ให้บอกเหตุผล)"></div></div>`).join('')}</div>`;
+  h += sec('3. ค่าที่วัดได้') + `<div class="card grid2">${MEASURES.map(m => field(m[1], `<input data-m="${m[0]}" value="${esc(j.measures[m[0]] || '')}" inputmode="${/error/.test(m[0]) ? 'text' : 'decimal'}">`)).join('')}</div>`;
+  h += sec('4. วัสดุที่ใช้จริง', `<button class="btn sm ghost" data-act="matAdd">+ เพิ่ม</button>`) + `<div class="card" id="mats">${(j.materials.length ? j.materials : [{ name: '', qty: '', unit: '' }]).map(matRow).join('')}</div>`;
+  h += sec('5. ทะเบียนเครื่องที่หน้างาน (' + j.assets.length + ')', `<button class="btn sm ghost" data-act="assetAdd">+ เพิ่มเครื่อง</button>`);
+  h += j.assets.length ? `<div class="card">${j.assets.map(a => `<div class="small" style="padding:4px 0;border-bottom:1px solid var(--line)"><b>${esc(a.location || '-')}</b> · ${esc(a.brand)} ${esc(a.model)} ${a.btu ? esc(a.btu) + ' BTU' : ''} ${a.serial ? '· S/N ' + esc(a.serial) : ''}</div>`).join('')}</div>` : empty('ยังไม่มีเครื่องในทะเบียน — ถ่าย Nameplate แล้วเพิ่มเครื่อง เพื่อใช้ดูประวัติและประกัน');
+  h += sec('6. สิ่งที่พบเพิ่ม/เสนองานต่อ') + `<div class="card">${field('อาการหรือจุดที่ควรซ่อม/เปลี่ยน (ระบบจะส่งเป็น Lead ให้เซลล์อัตโนมัติ)', `<textarea id="extra" placeholder="เช่น เครื่องห้องประชุม คาปาซิเตอร์บวม แนะนำเปลี่ยน">${esc(j.extra_found || '')}</textarea>`)}
+    ${field('บันทึกช่าง', `<textarea id="tnote">${esc(j.tech_note || '')}</textarea>`)}<button class="btn ghost block" data-act="jobSave">บันทึกความคืบหน้า</button></div>`;
+  h += sec('7. รูปหลังทำงาน (' + j.photos_after.length + ')') + photoGrid(j.photos_after, 'after');
+  h += sec('8. ลายเซ็นลูกค้า') + `<div class="card">${j.signature ? `<div class="row"><div class="ph" style="width:160px;aspect-ratio:2/1" data-pid="${esc(j.signature)}" data-act="viewPhoto"></div><div class="muted">เซ็นแล้วโดย ${esc(j.signer)}<br><button class="btn sm ghost" data-act="sigRedo" style="margin-top:6px">เซ็นใหม่</button></div></div><div id="sigwrap" class="hide">` : '<div id="sigwrap">'}
+    ${field('ชื่อผู้รับงาน', '<input id="signer" autocomplete="off">')}
+    <canvas class="sig" id="sig" aria-label="ช่องเซ็นชื่อ"></canvas>
+    <div class="btns"><button class="btn ghost sm" data-act="sigClear">ล้าง</button><button class="btn sm" data-act="sigSave">บันทึกลายเซ็น</button></div></div></div>`;
+  h += sec('9. ปิดงาน') + `<div class="card">${field('นัดบริการรอบถัดไป (ถ้ามี)', '<input type="date" id="nextsvc">')}
+    <div class="muted small" style="margin-bottom:10px">ปิดงานได้เมื่อ: มีรูปหลังทำงาน · มีลายเซ็นหรือเหตุผลที่ไม่มี · เช็กลิสต์ติ๊กหรือมีหมายเหตุครบทุกข้อ<br>ปิดแล้วงานจะเข้าคิว “รอส่งบัญชี” ให้เซลล์หลังบ้านส่งฝ่ายบัญชีวางบิลทันที</div>
+    <button class="btn navy block" data-act="jobClose">ปิดงานและส่งเข้าคิววางบิล</button></div>`;
+  return h;
+}
+const matRow = m => `<div class="grid3" data-mat><input data-k="name" value="${esc(m.name)}" placeholder="วัสดุ"><input data-k="qty" value="${esc(m.qty)}" inputmode="decimal" placeholder="จำนวน"><input data-k="unit" value="${esc(m.unit)}" placeholder="หน่วย"></div>`;
+
+function jobReadOnly(j) {
+  let h = '';
+  const done = (j.checklist || []).filter(c => c.d).length;
+  h += sec('ผลงาน') + `<div class="card"><dl class="kv"><dt>เริ่ม/เสร็จ</dt><dd>${esc(String(j.started_at || '-').replace('T', ' ').slice(0, 16))} → ${esc(String(j.finished_at || '-').replace('T', ' ').slice(0, 16))}</dd>
+    <dt>เช็กลิสต์</dt><dd>${done}/${(j.checklist || []).length} ข้อ</dd><dt>ผู้รับงาน</dt><dd>${esc(j.signer || '-')}</dd>
+    ${j.extra_found ? `<dt>พบเพิ่ม</dt><dd>${esc(j.extra_found)}</dd>` : ''}</dl>
+    ${(j.checklist || []).filter(c => c.n).map(c => `<div class="small">• ${esc(c.t)}: ${esc(c.n)}</div>`).join('')}
+    ${Object.keys(j.measures || {}).length ? `<div class="small" style="margin-top:6px">${MEASURES.filter(m => j.measures[m[0]]).map(m => esc(m[1]) + ' ' + esc(j.measures[m[0]])).join(' · ')}</div>` : ''}
+    ${(j.materials || []).length ? `<div class="small" style="margin-top:6px">วัสดุ: ${j.materials.map(m => esc(m.name) + ' ' + esc(m.qty) + ' ' + esc(m.unit)).join(', ')}</div>` : ''}</div>`;
+  h += sec('รูปก่อนทำงาน') + (j.photos_before.length ? photoGrid(j.photos_before) : empty('ไม่มีรูป'));
+  h += sec('รูปหลังทำงาน') + (j.photos_after.length ? photoGrid(j.photos_after) : empty('ไม่มีรูป'));
+  if (j.signature) h += sec('ลายเซ็น') + `<div class="ph" style="width:200px;aspect-ratio:2/1" data-pid="${esc(j.signature)}" data-act="viewPhoto"></div>`;
+  if (can('MANAGER', 'CEO') && ['PLANNED', 'IN_PROGRESS', 'WAIT_PLAN'].indexOf(j.status) >= 0) h += `<button class="btn ghost block" style="margin-top:12px" data-go="job" data-p="${J({ id: j.job_id, field: 1 })}">เปิดโหมดช่าง (กรอกแทนทีม)</button>`;
+  return h;
+}
+
+function jobOfficePanel(j) {
+  let h = sec('ส่วนสำนักงาน') + `<div class="card"><dl class="kv"><dt>สถานะบิล</dt><dd>${j.bill_status ? badge('bill', j.bill_status) : '<span class="muted">ยังไม่ปิดงาน</span>'}</dd>
+    ${j.bill_no ? `<dt>เลขบิล</dt><dd>${esc(j.bill_no)} · ${esc(thd(j.bill_date))}</dd><dt>ครบกำหนด</dt><dd>${esc(thd(j.due_date))}</dd>` : ''}
+    ${j.paid_date ? `<dt>เงินเข้า</dt><dd>${esc(thd(j.paid_date))}</dd>` : ''}
+    <dt>เซลล์เจ้าของ</dt><dd>${esc(userName(j.owner_id))}</dd>
+    ${j.est_cost !== undefined ? `<dt>ต้นทุนประมาณ</dt><dd>${money(j.est_cost)} บ.</dd><dt>ต้นทุนจริง</dt><dd>${j.actual_cost === '' ? '<span class="muted">ยังไม่บันทึก</span>' : money(j.actual_cost) + ' บ.'}</dd>` : ''}
+    </dl><div class="btns">`;
+  if (can('BACKOFFICE', 'MANAGER', 'CEO') && j.bill_status === 'WAIT_SEND') h += `<button class="btn" data-go="billing">ไปส่งบัญชี</button>`;
+  if (isMgmt()) {
+    h += `<button class="btn ghost" data-act="jobCost">บันทึกต้นทุนจริง</button>`;
+    if (j.status !== 'DONE' && j.status !== 'CANCELLED') h += `<button class="btn ghost" data-go="plan" data-p="${J({ date: j.plan_date || S.b.tomorrow })}">จัดทีม/เลื่อนนัด</button><button class="btn redghost" data-act="jobCancel">ยกเลิกงาน</button>`;
+  }
+  if (can('SALES', 'BACKOFFICE', 'MANAGER', 'CEO') && j.status === 'DONE') h += `<button class="btn ghost" data-act="caseFromJob">เปิดเคสประกัน/งานแก้</button>`;
+  return h + '</div></div>';
+}
+
+/* signature pad */
+let SIG = null;
+function sigInit() {
+  const c = document.getElementById('sig');
+  if (!c) { SIG = null; return; }
+  const dpr = window.devicePixelRatio || 1;
+  const r = c.getBoundingClientRect();
+  c.width = Math.max(1, Math.round(r.width * dpr)); c.height = Math.max(1, Math.round(r.height * dpr));
+  const ctx = c.getContext('2d');
+  ctx.scale(dpr, dpr); ctx.lineWidth = 2.4; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = '#111';
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, r.width, r.height);
+  SIG = { c, ctx, dirty: false, down: false };
+  if (c.dataset.init) return;
+  c.dataset.init = '1';
+  const pos = e => { const b = c.getBoundingClientRect(); return [e.clientX - b.left, e.clientY - b.top]; };
+  c.addEventListener('pointerdown', e => { e.preventDefault(); try { c.setPointerCapture(e.pointerId); } catch (x) { /* ignore */ } SIG.down = true; const p = pos(e); SIG.ctx.beginPath(); SIG.ctx.moveTo(p[0], p[1]); });
+  c.addEventListener('pointermove', e => { if (!SIG.down) return; e.preventDefault(); const p = pos(e); SIG.ctx.lineTo(p[0], p[1]); SIG.ctx.stroke(); SIG.dirty = true; });
+  const up = () => { SIG.down = false; };
+  c.addEventListener('pointerup', up); c.addEventListener('pointercancel', up); c.addEventListener('pointerleave', up);
+}
+
+function collectJob() {
+  const checklist = S.job.checklist.map((c, i) => ({
+    t: c.t, d: !!(document.querySelector(`[data-ci="${i}"]`) || {}).checked,
+    n: ((document.querySelector(`[data-cn="${i}"]`) || {}).value || '').trim()
+  }));
+  const measures = {};
+  document.querySelectorAll('[data-m]').forEach(el => { if (el.value.trim()) measures[el.getAttribute('data-m')] = el.value.trim(); });
+  const materials = Array.from(document.querySelectorAll('[data-mat]')).map(r => ({
+    name: r.querySelector('[data-k=name]').value.trim(), qty: r.querySelector('[data-k=qty]').value.trim(), unit: r.querySelector('[data-k=unit]').value.trim()
+  })).filter(m => m.name);
+  const ex = document.getElementById('extra'), tn = document.getElementById('tnote');
+  return { job_id: S.job.job_id, checklist, measures, materials, extra_found: ex ? ex.value : undefined, tech_note: tn ? tn.value : undefined };
+}
+
+/* ---------- leads */
+SCREENS.leads = {
+  title: 'Lead',
+  async view(p) {
+    const f = p.f || 'open';
+    const q = { q: p.q || '' };
+    if (f === 'open') q.open = 1; else if (f !== 'all') q.stage = f;
+    const list = await api('leads.list', q);
+    const chips = [['open', 'เปิดอยู่'], ['NEW', 'ใหม่'], ['QUOTE', 'รอใบเสนอราคา'], ['SURVEY', 'รอสำรวจ'], ['QUOTED', 'เสนอแล้ว'], ['HOLD', 'พัก'], ['WON', 'ได้งาน'], ['LOST', 'ไม่ได้'], ['all', 'ทั้งหมด']];
+    return `<div class="chips">${chips.map(c => `<button class="chip ${f === c[0] ? 'on' : ''}" data-go="leads" data-p="${J({ f: c[0], q: p.q })}" data-replace="1">${c[1]}</button>`).join('')}</div>
+      <form data-form="search" data-screen="leads" data-p="${J({ f })}"><input name="q" value="${esc(p.q || '')}" placeholder="ค้นหาชื่อลูกค้า สถานที่ เลข Lead" enterkeyhint="search"></form><div style="height:10px"></div>
+      ${list.length ? list.map(leadCard).join('') : empty('ไม่มี Lead ในกลุ่มนี้')}
+      <button class="btn fab" data-go="leadEdit">+ Lead ใหม่</button>`;
+  }
+};
+
+SCREENS.leadEdit = {
+  title: p => (p.id ? 'แก้ไข Lead' : 'Lead ใหม่'),
+  async view(p) {
+    let l = { answers: {}, job_type: 'ล้าง', source: '', next_date: S.b.today, cust_type: 'B2B' };
+    if (p.id) l = await api('leads.get', { lead_id: p.id });
+    if (p.cust) Object.assign(l, { cust_id: p.cust.cust_id, cust_name: p.cust.name, site: p.cust.address, contact: p.cust.contact, phone: p.cust.phone, cust_type: p.cust.type });
+    const a = l.answers || {};
+    return `<form data-form="lead" data-id="${esc(p.id || '')}">
+      <div class="card">${custPicker(l, true)}
+      <div class="grid2">${field('ประเภทลูกค้า', sel('cust_type', [['B2B', 'นิติบุคคล/องค์กร (B2B)'], ['B2C', 'บ้าน/บุคคล (B2C)']], l.cust_type || 'B2B'))}
+      ${field('แหล่งที่มา', sel('source', SOURCES, l.source, '— เลือก —'))}</div>
+      ${field('สถานที่ทำงาน', inp('site', l.site, { ph: 'ที่อยู่/ชื่ออาคาร/ชั้น' }))}
+      <div class="grid2">${field('ผู้ติดต่อ', inp('contact', l.contact))}${field('เบอร์โทร', inp('phone', l.phone, { type: 'tel', im: 'tel' }))}</div>
+      <div class="grid2">${field('ประเภทงาน', sel('job_type', JOB_TYPES, l.job_type), true)}${field('เขต/โซน', inp('zone', l.zone, { ph: 'เช่น พระราม 2, บางนา' }))}</div>
+      <div class="grid2">${field('จำนวนเครื่อง', inp('units', l.units || '', { type: 'number', im: 'numeric', min: 0 }))}${field('มูลค่าประมาณ (บาท)', inp('est_value', l.est_value || '', { type: 'number', im: 'numeric', min: 0 }))}</div></div>
+      ${sec('8 คำถามก่อนส่งทำใบเสนอราคา')}<div class="card">
+      ${QUESTIONS.map(q => field(q[1], `<input name="a_${q[0]}" value="${esc(a[q[0]] || '')}" placeholder="${esc(q[2])}">`, ['type', 'qty', 'access', 'symptom'].indexOf(q[0]) >= 0)).join('')}
+      ${field('8. ความเสี่ยงหน้างาน', sel('a_risk', RISKS, a.risk || 'R0'))}
+      <label class="row" style="margin-bottom:6px"><input type="checkbox" name="a_unknown"${a.unknown === 'Y' ? ' checked' : ''}> <span>ยังมีข้อมูลที่ไม่รู้ ต้องสำรวจหน้างานก่อนเสนอราคา</span></label>
+      <div class="muted small">ข้อ 1–4 ต้องครบจึงส่งทำใบเสนอราคาได้ ถ้าไม่ครบให้เลือก “ต้องสำรวจ”</div></div>
+      ${sec('นัดติดตาม')}<div class="card"><div class="grid2">${field('ทำอะไรต่อ', inp('next_action', l.next_action, { ph: 'เช่น โทรยืนยันจำนวนเครื่อง' }))}${field('วันที่', inp('next_date', l.next_date, { type: 'date' }))}</div>
+      ${field('บันทึกเพิ่มเติม', ta('note', l.note))}</div>
+      <button class="btn block" type="submit">บันทึก Lead</button></form>`;
+  }
+};
+
+SCREENS.lead = {
+  title: p => 'Lead ' + p.id,
+  async view(p) {
+    const l = await api('leads.get', { lead_id: p.id });
+    const a = l.answers || {};
+    let h = `<div class="card"><div class="row between"><div class="kanit big grow">${esc(l.cust_name)}</div>${badge('stage', l.stage)}</div>
+      <div class="muted">${esc(l.lead_id)} · ${esc(l.job_type)} · ${badge('lane', l.lane)} · เซลล์ ${esc(userName(l.owner_id))}</div><div class="divider"></div>
+      <dl class="kv"><dt>สถานที่</dt><dd>${esc(l.site || '-')}</dd><dt>ผู้ติดต่อ</dt><dd>${esc(l.contact || '-')} ${l.phone ? `· <a target="_blank" href="tel:${esc(String(l.phone).replace(/[^\d+]/g, ''))}">${esc(l.phone)}</a>` : ''}</dd>
+      <dt>จำนวน/มูลค่า</dt><dd>${esc(l.units || '-')} เครื่อง · ${l.est_value ? money(l.est_value) + ' บ.' : '-'}</dd><dt>แหล่งที่มา</dt><dd>${esc(l.source || '-')}</dd>
+      <dt>ถัดไป</dt><dd>${esc(relDay(l.next_date))} ${esc(l.next_action || '')}</dd>${l.lost_reason ? `<dt>เหตุผลไม่ได้งาน</dt><dd>${esc(l.lost_reason)}</dd>` : ''}</dl>
+      <div class="divider"></div>${QUESTIONS.map(q => `<div class="small"><span class="muted">${esc(q[1])}:</span> ${a[q[0]] ? esc(a[q[0]]) : '<span class="badge red">ยังไม่มี</span>'}</div>`).join('')}
+      <div class="small"><span class="muted">8. ความเสี่ยง:</span> ${esc(a.risk || 'R0')}${a.unknown === 'Y' ? ' · <span class="badge amber">ต้องสำรวจ</span>' : ''}</div>
+      ${l.note ? `<div class="divider"></div><div class="pre small">${esc(l.note)}</div>` : ''}</div>`;
+    h += sec('รูปหน้างานจากลูกค้า (' + (l.photos || []).length + ')') + photoGrid(l.photos, 'lead');
+    h += '<div class="btns">';
+    if (['WON', 'LOST'].indexOf(l.stage) < 0) {
+      h += `<button class="btn ghost" data-go="leadEdit" data-p="${J({ id: l.lead_id })}">แก้ไข/เติมข้อมูล</button>`;
+      if (!l.quote_id) h += `<button class="btn" data-act="leadStage" data-s="QUOTE">ส่งทำใบเสนอราคา</button><button class="btn ghost" data-act="leadStage" data-s="SURVEY">ต้องสำรวจก่อน</button>`;
+      h += `<button class="btn ghost" data-act="leadStage" data-s="HOLD">พักไว้</button><button class="btn redghost" data-act="leadStage" data-s="LOST">ไม่ได้งาน</button>`;
+    }
+    h += '</div>';
+    if (l.quote) h += sec('ใบเสนอราคา') + quoteCard(l.quote);
+    else if (can('BACKOFFICE', 'MANAGER', 'CEO') && ['WON', 'LOST'].indexOf(l.stage) < 0) h += `<button class="btn navy block" style="margin-top:10px" data-go="quoteEdit" data-p="${J({ lead: l.lead_id })}">ทำใบเสนอราคาจาก Lead นี้</button>`;
+    if (isMgmt() && l.stage === 'SURVEY') h += `<button class="btn ghost block" style="margin-top:10px" data-act="surveyJob">เปิดงานสำรวจให้ทีมช่าง</button>`;
+    if (l.job_id) h += `<button class="btn ghost block" style="margin-top:10px" data-go="job" data-p="${J({ id: l.job_id })}">ดูงาน ${esc(l.job_id)}</button>`;
+    S.lead = l;
+    return h;
+  }
+};
+
+/* ---------- customers */
+SCREENS.customers = {
+  title: 'ลูกค้า',
+  async view(p) {
+    const list = await api('customers.list', { q: p.q || '' });
+    return `<form data-form="search" data-screen="customers" data-p="{}"><input name="q" value="${esc(p.q || '')}" placeholder="ค้นหาชื่อ ที่อยู่ เบอร์โทร" enterkeyhint="search"></form><div style="height:10px"></div>
+      ${list.length ? list.map(c => `<div class="card click" data-go="customer" data-p="${J({ id: c.cust_id })}"><div class="row between"><b class="grow">${esc(c.name)}</b><span class="badge">${esc(c.type)}</span></div>
+      <div class="muted small">${esc(c.address || '-')} ${c.phone ? '· ' + esc(c.phone) : ''} ${c.credit_days ? '· เครดิต ' + esc(c.credit_days) + ' วัน' : ''} · ${esc(userName(c.owner_id))}</div></div>`).join('') : empty('ไม่พบลูกค้า')}
+      ${list.length >= 60 ? '<div class="muted small">แสดง 60 รายการแรก — พิมพ์ค้นหาเพื่อหาเจาะจง</div>' : ''}
+      <button class="btn fab" data-go="customerEdit">+ ลูกค้าใหม่</button>`;
+  }
+};
+SCREENS.customer = {
+  title: 'ลูกค้า',
+  async view(p) {
+    const d = await api('customers.get', { cust_id: p.id });
+    const c = d.customer;
+    S.cust = c;
+    let h = `<div class="card"><div class="row between"><div class="kanit big grow">${esc(c.name)}</div><span class="badge">${esc(c.type)}</span></div>
+      <div class="muted">${esc(c.cust_id)} · เซลล์ ${esc(userName(c.owner_id))}</div><div class="divider"></div>
+      <dl class="kv"><dt>ที่อยู่</dt><dd>${esc(c.address || '-')}</dd><dt>ผู้ติดต่อ</dt><dd>${esc(c.contact || '-')} ${c.phone ? `· <a target="_blank" href="tel:${esc(String(c.phone).replace(/[^\d+]/g, ''))}">${esc(c.phone)}</a>` : ''}</dd>
+      <dt>LINE</dt><dd>${esc(c.line_id || '-')}</dd><dt>เลขภาษี</dt><dd>${esc(c.tax_id || '-')} ${c.branch ? '(' + esc(c.branch) + ')' : ''}</dd>
+      <dt>เครดิต</dt><dd>${c.credit_days ? esc(c.credit_days) + ' วัน' : 'เงินสด'}</dd>${c.notes ? `<dt>หมายเหตุ</dt><dd>${esc(c.notes)}</dd>` : ''}</dl>
+      <div class="btns"><button class="btn ghost" data-go="customerEdit" data-p="${J({ id: c.cust_id })}">แก้ไข</button>
+      <button class="btn" data-go="leadEdit" data-p="${J({ cust: c })}">+ Lead</button>
+      <button class="btn ghost" data-go="contractEdit" data-p="${J({ cust: c })}">+ สัญญา</button></div></div>`;
+    h += sec('งาน (' + d.jobs.length + ')') + (d.jobs.length ? d.jobs.slice(0, 15).map(j => jobCard(j)).join('') : empty('ยังไม่มีงาน'));
+    h += sec('ใบเสนอราคา (' + d.quotes.length + ')') + (d.quotes.length ? d.quotes.slice(0, 10).map(quoteCard).join('') : empty('ยังไม่มี'));
+    h += sec('ทะเบียนเครื่อง (' + d.assets.length + ')') + (d.assets.length ? `<div class="card tablewrap"><table class="t"><tr><th>ตำแหน่ง</th><th>ยี่ห้อ/รุ่น</th><th>BTU</th><th>บริการล่าสุด</th><th>ประกันถึง</th></tr>
+      ${d.assets.map(a => `<tr><td>${esc(a.location)}</td><td>${esc(a.brand)} ${esc(a.model)}</td><td>${esc(a.btu)}</td><td>${esc(thd(a.last_service))}</td><td>${esc(thd(a.warranty_until))}</td></tr>`).join('')}</table></div>` : empty('ยังไม่มีเครื่องในทะเบียน'));
+    if (d.contracts.length) h += sec('สัญญา') + d.contracts.map(contractCard).join('');
+    if (d.cases.length) h += sec('เคสประกัน/งานแก้') + d.cases.map(caseCard).join('');
+    return h;
+  }
+};
+SCREENS.customerEdit = {
+  title: p => (p.id ? 'แก้ไขลูกค้า' : 'ลูกค้าใหม่'),
+  async view(p) {
+    let c = { type: 'B2B', credit_days: 0 };
+    if (p.id) c = (await api('customers.get', { cust_id: p.id })).customer;
+    return `<form data-form="customer" data-id="${esc(p.id || '')}"><div class="card">
+      ${field('ชื่อลูกค้า/บริษัท', inp('name', c.name, { req: 1 }), true)}
+      <div class="grid2">${field('ประเภท', sel('type', [['B2B', 'นิติบุคคล/องค์กร (B2B)'], ['B2C', 'บ้าน/บุคคล (B2C)']], c.type))}${field('เครดิต (วัน) 0 = เงินสด', inp('credit_days', c.credit_days, { type: 'number', im: 'numeric', min: 0 }))}</div>
+      ${field('ที่อยู่', ta('address', c.address))}
+      <div class="grid2">${field('ผู้ติดต่อ', inp('contact', c.contact))}${field('เบอร์โทร', inp('phone', c.phone, { type: 'tel', im: 'tel' }))}</div>
+      <div class="grid2">${field('LINE ID', inp('line_id', c.line_id))}${field('เขต/โซน', inp('zone', c.zone))}</div>
+      <div class="grid2">${field('เลขผู้เสียภาษี', inp('tax_id', c.tax_id, { im: 'numeric' }))}${field('สาขา', inp('branch', c.branch, { ph: 'สำนักงานใหญ่' }))}</div>
+      ${field('หมายเหตุ', ta('notes', c.notes))}</div><button class="btn block" type="submit">บันทึกลูกค้า</button></form>`;
+  }
+};
+
+/* ---------- quotes */
+SCREENS.quotes = {
+  title: 'ใบเสนอราคา',
+  async view(p) {
+    const f = p.f || (can('SALES') ? 'APPROVED,SENT,ACCEPTED' : isMgmt() ? 'PENDING' : 'DRAFT,REJECTED');
+    const list = await api('quotes.list', { status: f === 'all' ? '' : f, q: p.q || '' });
+    const chips = [['DRAFT,REJECTED', 'ร่าง/ตีกลับ'], ['PENDING', 'รออนุมัติ'], ['APPROVED', 'พร้อมส่ง'], ['SENT,ACCEPTED', 'ส่งแล้ว'], ['APPROVED,SENT,ACCEPTED', 'รอปิดการขาย'], ['WON', 'ได้งาน'], ['LOST', 'ไม่ได้'], ['all', 'ทั้งหมด']];
+    return `<div class="chips">${chips.map(c => `<button class="chip ${f === c[0] ? 'on' : ''}" data-go="quotes" data-p="${J({ f: c[0], q: p.q })}" data-replace="1">${c[1]}</button>`).join('')}</div>
+      <form data-form="search" data-screen="quotes" data-p="${J({ f })}"><input name="q" value="${esc(p.q || '')}" placeholder="ค้นหาเลขที่ หรือชื่อลูกค้า" enterkeyhint="search"></form><div style="height:10px"></div>
+      ${list.length ? list.map(quoteCard).join('') : empty('ไม่มีใบเสนอราคาในกลุ่มนี้')}
+      ${can('BACKOFFICE', 'MANAGER', 'CEO') ? '<button class="btn fab" data-go="quoteEdit">+ ใบเสนอราคา</button>' : ''}`;
+  }
+};
+
+function quoteDoc(v, showAck) {
+  return `<div class="doc"><div class="co row between"><div><div class="kanit" style="font-size:18px;color:var(--navy)">${esc(v.company.name)}</div>
+    <div class="small muted">${esc(v.company.address)}${v.company.phone ? ' · โทร ' + esc(v.company.phone) : ''}${v.company.tax_id ? ' · เลขผู้เสียภาษี ' + esc(v.company.tax_id) : ''}</div></div>
+    <div class="right"><h1>ใบเสนอราคา</h1><div class="small">เลขที่ ${esc(v.quote_id)}${v.rev ? ' Rev.' + esc(v.rev) : ''}<br>วันที่ ${esc(thd(v.date))}${v.valid_until ? '<br>ยืนราคาถึง ' + esc(thd(v.valid_until)) : ''}</div></div></div>
+    <dl class="kv" style="margin-bottom:12px"><dt>ลูกค้า</dt><dd class="b">${esc(v.cust_name)}</dd><dt>สถานที่</dt><dd>${esc(v.site || '-')}</dd>
+    <dt>ผู้ติดต่อ</dt><dd>${esc(v.contact || '-')} ${esc(v.phone || '')}</dd><dt>การชำระเงิน</dt><dd>${esc(v.payment || '-')}</dd></dl>
+    <table class="t qlines"><tr class="h"><th>#</th><th>รายการ</th><th class="n">จำนวน</th><th class="n">ราคา/หน่วย</th><th class="n">จำนวนเงิน</th></tr>
+    ${v.lines.map((l, i) => `<tr><td class="i">${i + 1}</td><td class="d">${esc(l.description)}</td><td class="n q">${esc(l.qty)} ${esc(l.unit)}<span class="mob"> × ${money(l.price, 1)}</span></td><td class="n p">${money(l.price, 1)}</td><td class="n a">${money(l.amount, 1)}</td></tr>`).join('')}</table>
+    <div class="tot" style="margin-top:10px"><div><span>รวมเป็นเงิน</span><span>${money(v.subtotal, 1)}</span></div>
+    ${v.discount ? `<div><span>ส่วนลด</span><span>-${money(v.discount, 1)}</span></div><div><span>หลังหักส่วนลด</span><span>${money(v.net, 1)}</span></div>` : ''}
+    <div><span>ภาษีมูลค่าเพิ่ม ${Math.round(v.vat_rate * 100)}%</span><span>${money(v.vat, 1)}</span></div><div class="g"><span>รวมทั้งสิ้น</span><span>${money(v.total, 1)} บาท</span></div></div>
+    ${v.scope_note ? `<div class="b small" style="margin-top:12px">ขอบเขตและเงื่อนไข</div><div class="pre small">${esc(v.scope_note)}</div>` : ''}
+    ${v.exclusions ? `<div class="b small" style="margin-top:8px">รายการที่ไม่รวม</div><div class="pre small">${esc(v.exclusions)}</div>` : ''}
+    <div class="small muted" style="margin-top:10px">ราคาอ้างอิงขอบเขตงานตามรายการข้างต้น หากสภาพหน้างานต่างจากข้อมูลที่ได้รับ (เช่น ระยะท่อ ความสูง การเข้าถึง) บริษัทจะแจ้งและยืนยันค่าใช้จ่ายส่วนเพิ่มก่อนดำเนินงานทุกครั้ง</div>
+    ${showAck && v.customer_ack ? `<div class="alert green" style="margin-top:12px">ลูกค้ายืนยันแล้ว: ${esc(v.customer_ack)} · ${esc(String(v.customer_ack_at || '').replace('T', ' ').slice(0, 16))}</div>` : ''}</div>`;
+}
+
+SCREENS.quote = {
+  title: p => 'ใบเสนอราคา ' + p.id,
+  async view(p) {
+    const q = await api('quotes.get', { quote_id: p.id });
+    S.quote = q;
+    let h = `<div class="card"><div class="row between"><div class="grow"><div class="kanit big">${esc(q.cust_name)}</div><div class="muted">${esc(q.quote_id)}${q.rev ? ' Rev.' + q.rev : ''} · ${esc(q.job_type || '-')} · ${q.cust_type === 'B2C' ? 'B2C' : 'B2B'} · ราคา${{ std: 'มาตรฐาน', special: 'พิเศษ', project: 'โครงการ' }[q.price_level] || ''}</div></div>${badge('quote', q.status)}</div>
+      <div class="divider"></div><div class="row between"><span>ยอดก่อน VAT</span><span class="money big">${money(q.net)} บ.</span></div>
+      <div class="row small" style="margin-top:6px">Min Bill ${badge('gate', q.gate_minbill)} · กำไร/ทีม-วัน ${badge('gate', q.gate_td)} · ผู้อนุมัติ ${q.approval_level === 'CEO' ? '<span class="badge red">CEO</span>' : '<span class="badge">ผู้จัดการ</span>'} · ทีม-วัน ${esc(q.team_days)}</div>
+      ${q.approve_note ? `<div class="alert ${q.status === 'REJECTED' ? 'red' : 'blue'}" style="margin-top:8px">${esc(q.approve_note)}</div>` : ''}
+      ${q.lost_reason ? `<div class="alert red" style="margin-top:8px">ไม่ได้งาน: ${esc(q.lost_reason)}</div>` : ''}</div>`;
+    if (q.est_cost !== undefined) {
+      const td = q.contrib_td;
+      const fx = Number(S.b.settings.fixed_per_td || 0), tg = Number(S.b.settings.target_per_td || 0);
+      const cls = td === null ? 'blue' : td >= tg ? 'green' : td >= fx ? 'amber' : 'red';
+      h += sec('ตัวเลขภายใน (เห็นเฉพาะผู้จัดการ/CEO)') + `<div class="kpis"><div class="kpi"><div class="l">ต้นทุนประมาณ</div><div class="v">${money(q.est_cost)}</div></div>
+        <div class="kpi"><div class="l">กำไรส่วนเกิน (หักคอม+สำรองประกัน)</div><div class="v">${money(q.contrib)}</div><div class="l">${q.net ? Math.round(q.contrib / q.net * 100) : 0}% ของยอด</div></div>
+        <div class="kpi ${cls}"><div class="l">ต่อทีม-วัน (ต้นทุนเต็ม ${money(fx)} · เป้า ${money(tg)})</div><div class="v">${td === null ? '-' : money(td)}</div></div></div>
+        <div class="muted small" style="margin-top:6px">ต่ำกว่าต้นทุนเต็มต่อทีม-วัน = ทำแล้วขาดทุนเมื่อคิดค่าใช้จ่ายคงที่ ควรปรับขอบเขต/ราคา หรือรวมงานในพื้นที่เดียวกัน</div>`;
+    }
+    h += sec('รายการ') + quoteDoc(q.view, true);
+    if (q.est_cost !== undefined && q.lines.some(l => l.cost !== undefined)) {
+      h += `<details class="card" style="margin-top:10px"><summary class="b">ต้นทุนรายบรรทัด</summary><div class="tablewrap"><table class="t"><tr><th>รายการ</th><th class="n">ขาย</th><th class="n">ต้นทุน</th><th class="n">ทีม-วัน</th></tr>
+        ${q.lines.map(l => `<tr><td>${esc(l.description)}</td><td class="n">${money(l.amount)}</td><td class="n">${money(l.cost)}</td><td class="n">${esc(l.team_day)}</td></tr>`).join('')}</table></div></details>`;
+    }
+    h += '<div class="btns noprint">';
+    const st = q.status, office = can('BACKOFFICE', 'MANAGER', 'CEO');
+    if ((st === 'DRAFT' || st === 'REJECTED') && office) h += `<button class="btn ghost" data-go="quoteEdit" data-p="${J({ id: q.quote_id })}">แก้ไข</button><button class="btn" data-act="qSubmit">ส่งขออนุมัติ</button>`;
+    if (st === 'PENDING' && isMgmt()) {
+      if (q.approval_level === 'CEO' && !can('CEO')) h += `<div class="alert amber" style="flex-basis:100%">ใบนี้ต้องให้ CEO อนุมัติ (ยอดสูง/ต่ำกว่าราคาโครงการ/ไม่ผ่านด่านกำไร)</div><button class="btn redghost" data-act="qReject">ตีกลับให้แก้</button>`;
+      else h += `<button class="btn" data-act="qApprove">อนุมัติ</button><button class="btn redghost" data-act="qReject">ตีกลับให้แก้</button>`;
+    }
+    if (['APPROVED', 'SENT', 'ACCEPTED'].indexOf(st) >= 0) {
+      h += `<button class="btn" data-act="qLink">ส่งลิงก์ให้ลูกค้า</button>`;
+      if (st === 'APPROVED') h += `<button class="btn ghost" data-act="qSent">บันทึกว่าส่งแล้ว</button>`;
+      h += `<button class="btn navy" data-act="qWon">ลูกค้าตกลง → เปิดงาน</button><button class="btn redghost" data-act="qLost">ไม่ได้งาน</button>`;
+      if (office) h += `<button class="btn ghost" data-act="qRevise">ทำ Revision ใหม่</button>`;
+    }
+    if (st === 'REJECTED' && office) h += `<button class="btn ghost" data-act="qRevise">ทำ Revision ใหม่</button>`;
+    if (!BOOT.demo) h += `<button class="btn ghost" data-go="quotePrint" data-p="${J({ id: q.quote_id })}">พิมพ์/บันทึก PDF</button>`;
+    if (q.job_id) h += `<button class="btn ghost" data-go="job" data-p="${J({ id: q.job_id })}">ดูงาน ${esc(q.job_id)}</button>`;
+    if (q.lead_id) h += `<button class="btn ghost" data-go="lead" data-p="${J({ id: q.lead_id })}">ดู Lead</button>`;
+    return h + '</div>';
+  }
+};
+SCREENS.quotePrint = {
+  title: 'พิมพ์ใบเสนอราคา',
+  async view(p) {
+    const q = await api('quotes.get', { quote_id: p.id });
+    return `<div class="btns noprint" style="margin:0 0 10px"><button class="btn" data-act="print">พิมพ์ / บันทึก PDF</button></div>${quoteDoc(q.view, true)}
+      <div class="grid2" style="margin-top:40px"><div class="right" style="text-align:center">.................................<br>ผู้เสนอราคา</div><div style="text-align:center">.................................<br>ผู้อนุมัติสั่งงาน / วันที่</div></div>`;
+  }
+};
+
+/* ---------- quote builder */
+const LV = { std: 'price_std', special: 'price_special', project: 'price_project' };
+SCREENS.quoteEdit = {
+  title: p => (p.id ? 'แก้ไขใบเสนอราคา' : 'ทำใบเสนอราคา'),
+  async view(p) {
+    const qe = { quote_id: '', lead_id: '', cust_id: '', cust_name: '', cust_type: 'B2B', site: '', contact: '', phone: '', job_type: 'ล้าง', payment: 'เงินสด', price_level: 'std', discount: 0, scope_note: '', exclusions: '', lines: [] };
+    if (p.id) {
+      const q = await api('quotes.get', { quote_id: p.id });
+      Object.assign(qe, { quote_id: q.quote_id, lead_id: q.lead_id, cust_id: q.cust_id, cust_name: q.cust_name, cust_type: q.cust_type, site: q.site, contact: q.contact, phone: q.phone, job_type: q.job_type, payment: q.payment, price_level: q.price_level || 'std', discount: q.discount, scope_note: q.scope_note, exclusions: q.exclusions });
+      qe.lines = q.lines.map(l => ({ item_id: l.item_id, description: l.description, qty: l.qty, unit: l.unit, price: l.price, team_day: l.qty ? l.team_day / l.qty : 0, cost: l.cost !== undefined && l.qty ? l.cost / l.qty : undefined, manual: true }));
+      const ids = qe.lines.filter(l => l.item_id).map(l => l.item_id);
+      if (ids.length) {
+        const cat = await api('catalog.search', { ids });
+        qe.lines.forEach(l => { const c = cat.find(x => x.item_id === l.item_id); if (c) { l.cat = c; l.manual = Math.abs(c[LV[qe.price_level]] - l.price) > 0.001; } });
+      }
+    } else if (p.lead) {
+      const l = await api('leads.get', { lead_id: p.lead });
+      const a = l.answers || {};
+      Object.assign(qe, { lead_id: l.lead_id, cust_id: l.cust_id, cust_name: l.cust_name, cust_type: l.cust_type || 'B2B', site: l.site, contact: l.contact, phone: l.phone, job_type: l.job_type || 'ล้าง' });
+      qe.leadInfo = QUESTIONS.map(q => a[q[0]] ? q[1].replace(/^\d\. /, '') + ': ' + a[q[0]] : '').filter(String).join(' · ');
+    }
+    S.qe = qe;
+    return qeHtml();
+  },
+  mount() { qeTotals(); }
+};
+function qeLinePrice(l, lv) { return l.cat ? Number(l.cat[LV[lv]] || 0) : Number(l.price || 0); }
+function qeHtml() {
+  const q = S.qe;
+  return `<form data-form="qe">
+    ${q.leadInfo ? `<div class="alert blue">ข้อมูลจาก Lead: ${esc(q.leadInfo)}</div>` : ''}
+    <div class="card">${custPicker(q, true)}
+    <div class="grid2">${field('ประเภทลูกค้า', sel('cust_type', [['B2B', 'B2B นิติบุคคล'], ['B2C', 'B2C บ้าน/บุคคล']], q.cust_type))}${field('ประเภทงาน', sel('job_type', JOB_TYPES, q.job_type))}</div>
+    ${field('สถานที่ทำงาน', inp('site', q.site))}
+    <div class="grid2">${field('ผู้ติดต่อ', inp('contact', q.contact))}${field('เบอร์โทร', inp('phone', q.phone, { type: 'tel' }))}</div>
+    <div class="grid2">${field('การชำระเงิน', `<input name="payment" value="${esc(q.payment)}" list="paylist"><datalist id="paylist">${PAYMENTS.map(x => `<option value="${esc(x)}">`).join('')}</datalist>`)}
+    ${field('ระดับราคา', sel('price_level', [['std', 'มาตรฐาน'], ['special', 'พิเศษ (ลูกค้าประจำ/จำนวนมาก)'], ['project', 'โครงการ (ราคาพื้น)']], q.price_level))}</div></div>
+    ${sec('รายการ (' + q.lines.length + ')')}<div class="lines" id="qelines">${q.lines.map(qeLineHtml).join('') || empty('ยังไม่มีรายการ — ค้นหาจากราคามาตรฐานด้านล่าง')}</div>
+    <div class="card"><div class="b" style="margin-bottom:6px">เพิ่มรายการจากราคามาตรฐาน</div>
+    <div class="grid2">${field('หมวด', `<select id="qecat">${opt(['ล้าง', 'ติดตั้ง', 'ซ่อม', 'วัสดุ/งานเพิ่ม', 'เครื่องปรับอากาศ'], '', 'ทุกหมวด')}</select>`)}${field('ค้นหา', '<input id="qeq" placeholder="เช่น ติดผนัง C2, 4 ทิศ, ท่อ, Daikin 18000" autocomplete="off">')}</div>
+    <div class="res hide" id="qeres"></div><button type="button" class="btn ghost sm" data-act="qeCustom">+ รายการพิมพ์เอง</button></div>
+    <div class="card"><div class="grid2">${field('ส่วนลด (บาท ก่อน VAT)', inp('discount', q.discount || '', { type: 'number', im: 'decimal', min: 0 }))}<div id="qetot"></div></div></div>
+    <div class="card">${field('ขอบเขตงาน/เงื่อนไข (ลูกค้าเห็น)', ta('scope_note', q.scope_note, 'เช่น ล้างคอยล์เย็น คอยล์ร้อน ถาดน้ำทิ้ง ทดสอบหลังล้าง · เข้างานวันเสาร์ได้'))}
+    ${field('รายการที่ไม่รวม (ลูกค้าเห็น)', ta('exclusions', q.exclusions, 'เช่น ไม่รวมซ่อม อะไหล่ เติมสารทำความเย็น งานสูงเกิน 3 ม. ระบบไฟต้นทาง'))}</div>
+    <button class="btn block" type="submit">บันทึกร่างและตรวจด่าน</button></form>`;
+}
+function qeLineHtml(l, i) {
+  const lv = S.qe.price_level;
+  const floor = l.cat ? Number(l.cat.price_project || 0) : 0;
+  const warn = l.cat && floor > 0 && Number(l.price) < floor - 0.001;
+  return `<div class="ln ${warn ? 'warn' : ''}" data-li="${i}">
+    <div class="row between"><div class="grow">${l.item_id ? `<div class="b small">${esc(l.description)}</div><div class="muted small">${esc(l.item_id)}${l.cat ? ' · มาตรฐาน ' + money(l.cat.price_std) + ' / พิเศษ ' + money(l.cat.price_special) + ' / โครงการ ' + money(l.cat.price_project) + (l.cat.warranty ? ' · ประกัน ' + esc(l.cat.warranty) : '') : ''}</div>`
+      : `<input data-lf="description" value="${esc(l.description)}" placeholder="รายละเอียดรายการ">`}</div>
+    <button type="button" class="btn sm redghost" data-act="qeDel" data-i="${i}" aria-label="ลบรายการ">ลบ</button></div>
+    <div class="grid3" style="margin-top:6px">${field('จำนวน', `<input data-lf="qty" value="${esc(l.qty)}" type="number" inputmode="decimal" min="0" step="any">`)}
+    ${field('หน่วย', `<input data-lf="unit" value="${esc(l.unit)}">`)}${field('ราคา/หน่วย', `<input data-lf="price" value="${esc(l.price)}" type="number" inputmode="decimal" min="0" step="any">`)}</div>
+    ${!l.item_id ? `<div class="grid2">${field('ทีม-วันต่อหน่วย (เช่น 0.5 = ครึ่งวัน)', `<input data-lf="team_day" value="${esc(l.team_day || '')}" type="number" inputmode="decimal" min="0" step="any">`)}
+      ${isMgmt() ? field('ต้นทุนต่อหน่วย (ถ้าไม่ใส่ ระบบประมาณ 60%)', `<input data-lf="cost" value="${esc(l.cost === undefined ? '' : l.cost)}" type="number" inputmode="decimal" min="0" step="any">`) : '<div class="muted small">ต้นทุนรายการพิมพ์เอง ระบบประมาณ 60% ของราคา ผู้จัดการตรวจตอนอนุมัติ</div>'}</div>` : ''}
+    <div class="row between small"><span>${warn ? '<span class="badge red">ต่ำกว่าราคาโครงการ → ต้อง CEO อนุมัติ</span>' : l.manual && l.cat && Math.abs(Number(l.price) - qeLinePrice(l, lv)) > 0.001 ? '<span class="badge amber">ราคาแก้เอง</span>' : ''}</span>
+    <span class="b">${money(Number(l.qty || 0) * Number(l.price || 0), 1)} บ.</span></div></div>`;
+}
+function qeTotals() {
+  const q = S.qe; if (!q) return;
+  const sub = q.lines.reduce((s, l) => s + Number(l.qty || 0) * Number(l.price || 0), 0);
+  const disc = Number(q.discount || 0), net = sub - disc;
+  const vr = Number(S.b.settings.vat_rate || 0.07);
+  const st = S.b.settings;
+  const min = q.job_type === 'ซ่อม' ? Number(st.min_bill_repair || 0) : q.cust_type === 'B2C' ? Number(st.min_bill_b2c || 0) : Number(st.min_bill_b2b || 0);
+  const td = q.lines.reduce((s, l) => s + Number(l.qty || 0) * Number(l.cat ? l.cat.team_day : l.team_day || 0), 0);
+  const el = document.getElementById('qetot');
+  if (el) el.innerHTML = `<div class="tot" style="max-width:none"><div><span>รวม</span><span>${money(sub, 1)}</span></div><div><span>หลังส่วนลด</span><span class="b">${money(net, 1)}</span></div>
+    <div><span>VAT</span><span>${money(net * vr, 1)}</span></div><div class="g"><span>รวมทั้งสิ้น</span><span>${money(net * (1 + vr), 1)}</span></div>
+    <div class="small"><span>Minimum Bill ${money(min)}</span>${net >= min ? '<span class="badge green">ผ่าน</span>' : '<span class="badge red">ต่ำกว่า</span>'}</div>
+    <div class="small"><span>ใช้ทีม-วันประมาณ</span><span>${td.toFixed(2)}</span></div></div>`;
+}
+function qeSync() {
+  const f = document.querySelector('form[data-form="qe"]'); if (!f) return;
+  const v = formData(f);
+  ['cust_id', 'cust_name', 'cust_type', 'site', 'contact', 'phone', 'job_type', 'payment', 'scope_note', 'exclusions'].forEach(k => { if (v[k] !== undefined) S.qe[k] = v[k]; });
+  S.qe.discount = Number(v.discount || 0);
+  document.querySelectorAll('[data-li]').forEach(row => {
+    const l = S.qe.lines[Number(row.getAttribute('data-li'))]; if (!l) return;
+    row.querySelectorAll('[data-lf]').forEach(inp => {
+      const k = inp.getAttribute('data-lf');
+      if (k === 'description' || k === 'unit') l[k] = inp.value;
+      else if (k === 'cost') l.cost = inp.value === '' ? undefined : Number(inp.value);
+      else {
+        const n = Number(inp.value || 0);
+        if (k === 'price' && l.cat && Math.abs(n - Number(l.price)) > 0.001) l.manual = true;
+        l[k] = n;
+      }
+    });
+  });
+}
+function qeRedrawLines() {
+  const box = document.getElementById('qelines');
+  box.innerHTML = S.qe.lines.map(qeLineHtml).join('') || empty('ยังไม่มีรายการ');
+  box.previousElementSibling.querySelector('h2').textContent = 'รายการ (' + S.qe.lines.length + ')';
+  qeTotals();
+}
+const qeSearch = debounce(async () => {
+  const q = (document.getElementById('qeq') || {}).value || '';
+  const cat = (document.getElementById('qecat') || {}).value || '';
+  const res = document.getElementById('qeres'); if (!res) return;
+  if (q.trim().length < 2 && !cat) { res.classList.add('hide'); return; }
+  try {
+    const list = await api('catalog.search', { q, category: cat });
+    S.qeRes = list;
+    const lv = S.qe.price_level;
+    res.innerHTML = list.length ? list.map((c, i) => `<button type="button" data-act="qeAdd" data-i="${i}"><div class="small b">${esc(c.name)}</div>
+      <div class="muted small">${esc(c.item_id)} · ${esc(c.category)} · <b>${money(c[LV[lv]])}</b> บ./${esc(c.unit)}${c.warranty ? ' · ประกัน ' + esc(c.warranty) : ''}</div></button>`).join('')
+      : '<div class="muted small" style="padding:10px">ไม่พบ — ลองคำอื่น หรือเพิ่มรายการพิมพ์เอง</div>';
+    res.classList.remove('hide');
+  } catch (e) { toast(e.message, true); }
+}, 350);
+
+/* ---------- plan board */
+SCREENS.plan = {
+  title: 'จัดทีมช่าง',
+  async view(p) {
+    const date = p.date || S.b.tomorrow;
+    const d = await api('plan.get', { date });
+    S.plan = d;
+    let h = `<div class="card"><div class="row"><label class="f grow" style="margin:0"><span>วันที่</span><input type="date" id="plandate" value="${esc(date)}"></label>
+      <button class="btn ${d.released ? 'ghost' : 'navy'}" data-act="planRelease" style="align-self:flex-end">${d.released ? 'ปล่อยแล้ว (ส่งซ้ำ)' : 'ปล่อยแผนให้ทีม'}</button></div>
+      <div class="muted small" style="margin-top:6px">${esc(thd(date))} · ${d.jobs.length} งาน · ทีมเห็นงานพรุ่งนี้ในแอปหลังกด “ปล่อยแผน” · 1 ทีม-วัน = งานเต็มวันของ 1 ทีม</div></div>`;
+    d.teams.forEach(t => {
+      const jobs = d.jobs.filter(j => j.team === t);
+      const load = d.load[t] || 0;
+      const pct = Math.round(load * 100);
+      h += `<div class="teamcol"><div class="row between"><b class="kanit">${esc(t)}</b><span class="small ${load > 1.05 ? 'b' : 'muted'}" style="${load > 1.05 ? 'color:var(--red)' : ''}">${load.toFixed(2)} ทีม-วัน (${pct}%)</span></div>
+        <div class="track"><div class="fill ${load > 1.05 ? 'red' : load < 0.7 ? 'amber' : ''}" style="width:${Math.min(100, pct)}%"></div></div><div style="height:8px"></div>
+        ${jobs.length ? jobs.map(j => `${jobCard(j, { noDate: 1 })}<div class="row" style="margin:-6px 0 10px"><button class="btn sm ghost" data-act="planEdit" data-id="${esc(j.job_id)}">แก้ทีม/เวลา</button><button class="btn sm redghost" data-act="planRemove" data-id="${esc(j.job_id)}">ถอดออกจากวันนี้</button></div>`).join('') : empty('ยังไม่มีงาน')}
+        ${load < 0.7 ? '<div class="muted small">ทีมยังว่าง — ดึงงานรอจัด หรือให้เซลล์หางานในโซนเดียวกัน</div>' : ''}</div>`;
+    });
+    h += sec('งานรอจัดทีม (' + d.waiting.length + ')') + (d.waiting.length ? d.waiting.map(j => `${jobCard(j)}<form class="row" data-form="assign" data-id="${esc(j.job_id)}" style="margin:-6px 0 14px">
+      <select name="team" style="flex:1 1 110px">${opt(d.teams, d.teams[0])}</select><input name="time" type="time" value="09:00" style="flex:1 1 100px">
+      <input name="seq" type="number" min="1" value="${(d.jobs.length || 0) + 1}" style="flex:0 0 70px" aria-label="ลำดับ"><button class="btn sm" type="submit">ลง ${esc(thd(date, false))}</button></form>`).join('') : empty('ไม่มีงานค้างจัด'));
+    h += `<button class="btn ghost block" data-act="manualJob" style="margin-top:8px">+ เปิดงานที่ไม่มีใบเสนอราคา (งานประกัน/สัญญา/สำรวจ)</button>`;
+    return h;
+  }
+};
+
+/* ---------- billing tracker */
+SCREENS.billing = {
+  title: 'ติดตามวางบิล',
+  async view(p) {
+    const tab = p.tab || 'WAIT_SEND';
+    const list = await api('billing.list', { status: tab });
+    S.sel = {};
+    const tabs = [['WAIT_SEND', 'รอส่งบัญชี'], ['SENT', 'ส่งบัญชีแล้ว'], ['BILLED', 'เปิดบิลแล้ว'], ['PAID', 'เงินเข้าแล้ว'], ['NOBILL', 'ไม่เรียกเก็บ']];
+    const total = list.reduce((s, j) => s + (j.amount || 0), 0);
+    let h = `<div class="alert blue small">ทีมไม่เก็บเงินเอง — หน้านี้มีไว้กันงานหลุด: งานเสร็จ → ส่งบัญชี → บัญชีเปิดบิล (ใส่เลขบิล) → เงินเข้า</div>
+      <div class="chips">${tabs.map(t => `<button class="chip ${tab === t[0] ? 'on' : ''}" data-go="billing" data-p="${J({ tab: t[0] })}" data-replace="1">${t[1]}</button>`).join('')}</div>
+      <div class="card row between"><span>${list.length} งาน</span><span class="money big">${money(total)} บ.</span></div>`;
+    if (!list.length) return h + empty('ไม่มีงานในขั้นนี้');
+    if (tab === 'WAIT_SEND') h += `<div class="row" style="margin-bottom:8px"><label class="row"><input type="checkbox" id="selall"> <span>เลือกทั้งหมด</span></label><button class="btn grow" data-act="billSend" id="billsend" disabled>ส่งให้บัญชี (0)</button></div>`;
+    h += list.map(j => {
+      let extra = '';
+      if (tab === 'WAIT_SEND') extra = `<span class="badge ${j.age > 3 ? 'red' : j.age > 1 ? 'amber' : ''}">เสร็จมา ${esc(j.age)} วัน</span>`;
+      if (tab === 'SENT') extra = `<span class="badge ${j.age > 3 ? 'amber' : ''}">ส่งมา ${esc(j.age)} วัน</span>`;
+      if (tab === 'BILLED') extra = j.overdue ? `<span class="badge red">เกินกำหนด ${esc(j.overdue)} วัน</span>` : `<span class="badge">ครบกำหนด ${esc(thd(j.due_date))}</span>`;
+      const btns = [];
+      if (tab === 'SENT' || tab === 'WAIT_SEND') btns.push(`<button class="btn sm ${tab === 'SENT' ? '' : 'ghost'}" data-act="billBilled" data-id="${esc(j.job_id)}">ใส่เลขบิลจากบัญชี</button>`);
+      if (tab === 'BILLED') btns.push(`<button class="btn sm" data-act="billPaid" data-id="${esc(j.job_id)}">เงินเข้าแล้ว</button>`);
+      if ((tab === 'WAIT_SEND' || tab === 'SENT') && isMgmt()) btns.push(`<button class="btn sm redghost" data-act="billNo" data-id="${esc(j.job_id)}">ไม่เรียกเก็บ</button>`);
+      return `<div class="row" style="align-items:flex-start;gap:10px">${tab === 'WAIT_SEND' ? `<input type="checkbox" data-sel="${esc(j.job_id)}" data-amt="${esc(j.amount)}" style="margin-top:14px" aria-label="เลือก ${esc(j.job_id)}">` : ''}
+        <div class="grow">${jobCard(j)}<div class="row" style="margin:-6px 0 12px">${extra}${btns.join('')}</div></div></div>`;
+    }).join('');
+    return h;
+  },
+  mount() {
+    const all = document.getElementById('selall');
+    const upd = () => {
+      const ch = Array.from(document.querySelectorAll('[data-sel]')).filter(c => c.checked);
+      const b = document.getElementById('billsend');
+      if (b) { b.disabled = !ch.length; b.textContent = `ส่งให้บัญชี (${ch.length}) · ${money(ch.reduce((s, c) => s + Number(c.getAttribute('data-amt') || 0), 0))} บ.`; }
+    };
+    if (all) all.addEventListener('change', () => { document.querySelectorAll('[data-sel]').forEach(c => { c.checked = all.checked; }); upd(); });
+    document.querySelectorAll('[data-sel]').forEach(c => c.addEventListener('change', upd));
+  }
+};
+
+/* ---------- all jobs */
+SCREENS.jobsAll = {
+  title: 'งานทั้งหมด',
+  async view(p) {
+    const f = p.f || 'WAIT_PLAN,PLANNED,IN_PROGRESS';
+    const list = await api('jobs.list', { status: f === 'all' ? '' : f, q: p.q || '' });
+    const chips = [['WAIT_PLAN,PLANNED,IN_PROGRESS', 'ยังไม่เสร็จ'], ['WAIT_PLAN', 'รอจัดทีม'], ['PLANNED', 'จัดแล้ว'], ['IN_PROGRESS', 'กำลังทำ'], ['DONE', 'เสร็จ'], ['CANCELLED', 'ยกเลิก'], ['all', 'ทั้งหมด']];
+    return `<div class="chips">${chips.map(c => `<button class="chip ${f === c[0] ? 'on' : ''}" data-go="jobsAll" data-p="${J({ f: c[0], q: p.q })}" data-replace="1">${c[1]}</button>`).join('')}</div>
+      <form data-form="search" data-screen="jobsAll" data-p="${J({ f })}"><input name="q" value="${esc(p.q || '')}" placeholder="ค้นหาเลขงาน ลูกค้า สถานที่" enterkeyhint="search"></form><div style="height:10px"></div>
+      ${list.length ? list.map(j => jobCard(j)).join('') : empty('ไม่มีงาน')}`;
+  }
+};
+
+/* ---------- cases */
+SCREENS.cases = {
+  title: 'เคสประกัน/งานแก้',
+  async view(p) {
+    const open = p.all ? 0 : 1;
+    const list = await api('cases.list', { open });
+    return `<div class="chips"><button class="chip ${open ? 'on' : ''}" data-go="cases" data-replace="1">ยังไม่ปิด</button><button class="chip ${open ? '' : 'on'}" data-go="cases" data-p="${J({ all: 1 })}" data-replace="1">ทั้งหมด</button></div>
+      <div class="alert blue small">ลูกค้าแจ้งปัญหาหลังงาน → เปิดเคสจากหน้างานเดิม (ปุ่ม “เปิดเคสประกัน” ในงานที่เสร็จแล้ว) → ผู้จัดการตัดสิน: รับประกัน / คิดเงิน / ปฏิเสธ พร้อมสาเหตุ</div>
+      ${list.length ? list.map(caseCard).join('') : empty('ไม่มีเคส')}
+      <button class="btn fab" data-act="caseNew">+ เปิดเคส</button>`;
+  }
+};
+SCREENS.case = {
+  title: p => 'เคส ' + p.id,
+  async view(p) {
+    const list = await api('cases.list', {});
+    const c = list.find(x => x.case_id === p.id) || p.c;
+    if (!c) throw new Error('ไม่พบเคส');
+    S.case = c;
+    let h = `<div class="card"><div class="row between"><div class="kanit big grow">${esc(c.cust_name)}</div>${badge('case', c.status)}</div>
+      <div class="muted">${esc(c.case_id)} · เปิด ${esc(thd(c.created_at))}</div><div class="divider"></div>
+      <dl class="kv"><dt>อาการ</dt><dd>${esc(c.symptom)}</dd><dt>งานเดิม</dt><dd>${c.job_id ? `<a href="#" data-go="job" data-p="${J({ id: c.job_id })}">${esc(c.job_id)}</a>` : '-'}</dd>
+      <dt>สาเหตุ</dt><dd>${esc(c.class || '-')}</dd><dt>คำตัดสิน</dt><dd>${esc(c.decision || '-')}</dd><dt>รายละเอียด</dt><dd>${esc(c.root_cause || '-')}</dd>
+      <dt>งานแก้</dt><dd>${c.fix_job_id ? `<a href="#" data-go="job" data-p="${J({ id: c.fix_job_id })}">${esc(c.fix_job_id)}</a>` : '-'}</dd>${c.status === 'CLOSED' ? `<dt>ต้นทุนแก้</dt><dd>${money(c.cost)} บ.</dd>` : ''}</dl></div>`;
+    if (isMgmt() && c.status === 'OPEN') h += `<form data-form="caseDecide" class="card"><div class="b" style="margin-bottom:8px">ผู้จัดการตัดสิน</div>
+      ${field('สาเหตุหลัก', sel('class', CASE_CLASSES, '', '— เลือก —'), true)}${field('คำตัดสิน', sel('decision', ['รับประกัน', 'คิดเงิน', 'ปฏิเสธ'], '', '— เลือก —'), true)}
+      ${field('รายละเอียดสาเหตุ/หลักฐาน', ta('root_cause', ''))}
+      <label class="row" style="margin-bottom:10px"><input type="checkbox" name="create_job" checked> <span>เปิดงานแก้ให้ทีมช่าง (รอจัดทีม)</span></label>
+      ${field('ยอดเรียกเก็บ (กรณีคิดเงิน, ก่อน VAT)', inp('amount', '', { type: 'number', im: 'decimal', min: 0 }))}
+      <button class="btn block" type="submit">บันทึกคำตัดสิน</button></form>`;
+    if (isMgmt() && c.status === 'DECIDED') h += `<form data-form="caseClose" class="card"><div class="b" style="margin-bottom:8px">ปิดเคส</div>
+      ${field('ต้นทุนการแก้ไขจริง (บาท)', inp('cost', '', { type: 'number', im: 'decimal', min: 0 }))}${field('สรุปสาเหตุ/บทเรียน', ta('root_cause', c.root_cause))}
+      <button class="btn block" type="submit">ปิดเคส</button></form>`;
+    return h;
+  }
+};
+
+/* ---------- contracts */
+SCREENS.contracts = {
+  title: 'สัญญาบริการ',
+  async view() {
+    const list = await api('contracts.list');
+    const act = list.filter(c => c.status === 'ACTIVE');
+    let h = `<div class="kpis"><div class="kpi"><div class="l">สัญญาที่ใช้งาน</div><div class="v">${act.length}</div></div>
+      <div class="kpi"><div class="l">มูลค่ารวม</div><div class="v">${money(act.reduce((s, c) => s + c.value, 0))}</div></div>
+      <div class="kpi"><div class="l">เครื่องในสัญญา</div><div class="v">${money(act.reduce((s, c) => s + c.units, 0))}</div></div></div>`;
+    if (isMgmt()) h += `<button class="btn navy block" style="margin-top:10px" data-act="genVisits">สร้างงานรอบบริการที่ถึงกำหนดใน 14 วัน</button>`;
+    h += sec('รายการสัญญา') + (list.length ? list.map(contractCard).join('') : empty('ยังไม่มีสัญญา — เป้าหมายคือสัญญาล้างรายปีเต็มทั้งปี'));
+    return h + '<button class="btn fab" data-go="contractEdit">+ สัญญา</button>';
+  }
+};
+SCREENS.contractEdit = {
+  title: p => (p.id ? 'สัญญา ' + p.id : 'สัญญาใหม่'),
+  async view(p) {
+    let c = p.c || { visits: 2, interval_months: 6, bill_cycle: 'ต่อรอบ', start_date: S.b.today, status: 'ACTIVE' };
+    if (p.cust) { c.cust_id = p.cust.cust_id; c.cust_name = p.cust.name; }
+    let h = `<form data-form="contract" data-id="${esc(p.id || '')}"><div class="card">
+      ${p.id ? `<input type="hidden" name="cust_id" value="${esc(c.cust_id)}"><div class="b" style="margin-bottom:8px">${esc(c.cust_name)}</div>` : custPicker(c, true)}
+      ${field('ชื่อสัญญา', inp('name', c.name, { ph: 'เช่น สัญญาล้างแอร์รายปี 2570' }))}
+      <div class="grid2">${field('เริ่ม', inp('start_date', c.start_date, { type: 'date', req: 1 }), true)}${field('สิ้นสุด', inp('end_date', c.end_date, { type: 'date', req: 1 }), true)}</div>
+      <div class="grid3">${field('มูลค่า (ก่อน VAT)', inp('value', c.value, { type: 'number', im: 'decimal', min: 0 }))}${field('จำนวนเครื่อง', inp('units', c.units, { type: 'number', im: 'numeric', min: 0 }))}${field('รอบ/สัญญา', inp('visits', c.visits, { type: 'number', im: 'numeric', min: 1 }))}</div>
+      <div class="grid3">${field('ทุกกี่เดือน', inp('interval_months', c.interval_months, { type: 'number', im: 'numeric', min: 1 }))}${field('รอบบริการถัดไป', inp('next_visit', c.next_visit, { type: 'date' }))}${field('วางบิล', sel('bill_cycle', ['ต่อรอบ', 'รายเดือน', 'รายปี'], c.bill_cycle))}</div>
+      <div class="grid2">${field('วางบิลครั้งถัดไป', inp('next_bill', c.next_bill, { type: 'date' }))}${field('สถานะ', sel('status', [['ACTIVE', 'ใช้งาน'], ['ENDED', 'สิ้นสุด']], c.status))}</div>
+      ${field('ขอบเขต', ta('scope', c.scope, 'เช่น ล้าง C1 ปีละ 2 รอบ ทุกเครื่องในทะเบียน'))}${field('หมายเหตุ', ta('notes', c.notes))}</div>
+      <button class="btn block" type="submit">บันทึกสัญญา</button></form>`;
+    if (p.id && can('BACKOFFICE', 'MANAGER', 'CEO')) h += `<button class="btn ghost block" style="margin-top:10px" data-act="contractBilled" data-id="${esc(p.id)}">บัญชีวางบิลรอบนี้แล้ว → เลื่อนรอบวางบิลถัดไป</button>`;
+    return h;
+  }
+};
+
+/* ---------- dashboard */
+SCREENS.dashboard = {
+  title: 'ภาพรวมธุรกิจ',
+  async view(p) {
+    const month = p.month || S.b.today.slice(0, 7);
+    const d = await api('dashboard', { month });
+    const pct = d.target ? Math.round(d.revenue / d.target * 100) : 0;
+    const tdCls = d.contrib_td === null ? '' : d.contrib_td >= d.target_per_td ? 'green' : d.contrib_td >= d.fixed_per_td ? 'amber' : 'red';
+    const capPct = d.capacity ? Math.round(d.team_days_done / d.capacity * 100) : 0;
+    let h = `<div class="card"><label class="f" style="margin:0"><span>เดือน</span><input type="month" id="dashmonth" value="${esc(month)}"></label></div>
+      <div class="kpis">
+      <div class="kpi"><div class="l">รายได้งานเสร็จ (ก่อน VAT)</div><div class="v">${money(d.revenue)}</div><div class="l">เป้า ${money(d.target)} · ${pct}%</div><div class="track"><div class="fill" style="width:${Math.min(100, pct)}%"></div></div></div>
+      <div class="kpi ${tdCls}"><div class="l">กำไรส่วนเกิน/ทีม-วัน</div><div class="v">${d.contrib_td === null ? '-' : money(d.contrib_td)}</div><div class="l">ต้นทุนเต็ม ${money(d.fixed_per_td)} · เป้า ${money(d.target_per_td)}</div></div>
+      <div class="kpi"><div class="l">ทีม-วันที่ใช้ / กำลังทั้งเดือน</div><div class="v">${Number(d.team_days_done).toFixed(1)} / ${esc(d.capacity)}</div><div class="l">ลงแผนแล้ว ${Number(d.team_days_planned).toFixed(1)} · ใช้ไป ${capPct}%</div></div>
+      <div class="kpi"><div class="l">Pipeline (Lead+ใบเปิด)</div><div class="v">${money(d.pipeline)}</div><div class="l">${d.pipeline_x === null ? '' : d.pipeline_x + ' เท่าของเป้า (ควร ≥ 3)'}</div></div>
+      <div class="kpi ${d.wait_send ? 'red' : 'green'}"><div class="l">งานเสร็จรอส่งบัญชี</div><div class="v">${esc(d.wait_send)} งาน</div><div class="l">${money(d.wait_send_amount)} บ. · ค้างนานสุด ${esc(d.oldest_wait_days)} วัน</div></div>
+      <div class="kpi ${d.overdue ? 'amber' : ''}"><div class="l">บิลเกินกำหนดชำระ</div><div class="v">${esc(d.overdue)} งาน</div><div class="l">${money(d.overdue_amount)} บ.</div></div>
+      <div class="kpi ${d.rework_pct > 5 ? 'red' : ''}"><div class="l">งานแก้/ประกัน ต่องานเสร็จ</div><div class="v">${esc(d.rework_pct)}%</div><div class="l">${esc(d.jobs_done)} งานเสร็จเดือนนี้ · เป้า ≤ 3%</div></div>
+      <div class="kpi"><div class="l">สัญญาบริการที่ใช้งาน</div><div class="v">${esc(d.contracts)}</div><div class="l">มูลค่า ${money(d.contracts_value)} บ.</div></div></div>`;
+    h += sec('กำไรตามประเภทงาน (งานเสร็จเดือนนี้)') + (d.by_type.length ? `<div class="card tablewrap"><table class="t"><tr><th>ประเภท</th><th class="n">งาน</th><th class="n">รายได้</th><th class="n">ทีม-วัน</th><th class="n">กำไรส่วนเกิน</th><th class="n">ต่อทีม-วัน</th></tr>
+      ${d.by_type.map(t => `<tr><td>${esc(t.type)}</td><td class="n">${t.jobs}</td><td class="n">${money(t.revenue)}</td><td class="n">${Number(t.team_days).toFixed(2)}</td><td class="n">${money(t.contrib)}</td>
+      <td class="n">${t.contrib_td === null ? '-' : `<span class="badge ${t.contrib_td >= d.target_per_td ? 'green' : t.contrib_td >= d.fixed_per_td ? 'amber' : 'red'}">${money(t.contrib_td)}</span>`}</td></tr>`).join('')}</table></div>` : empty('ยังไม่มีงานเสร็จในเดือนนี้'));
+    h += sec('เซลล์') + (d.sales.length ? `<div class="card tablewrap"><table class="t"><tr><th>ชื่อ</th><th class="n">เป้า</th><th class="n">งานเสร็จ</th><th class="n">%</th><th class="n">ปิดได้</th><th class="n">ใบเปิดอยู่</th></tr>
+      ${d.sales.map(s => `<tr><td>${esc(s.name)}</td><td class="n">${money(s.target)}</td><td class="n">${money(s.revenue)}</td><td class="n">${s.target ? Math.round(s.revenue / s.target * 100) + '%' : '-'}</td><td class="n">${money(s.won_value)} (${s.won})</td><td class="n">${money(s.open_value)} (${s.open})</td></tr>`).join('')}</table></div>` : empty('ไม่มีเซลล์'));
+    h += sec('เรื่องที่ต้องตาม') + alertsBox(d.alerts);
+    h += `<div class="muted small" style="margin-top:10px">ต้นทุนงานใช้ “ต้นทุนจริง” ถ้าบันทึกแล้ว ไม่งั้นใช้ต้นทุนประมาณจากใบเสนอราคา · กำไรส่วนเกิน = รายได้ − ต้นทุนงาน − คอมมิชชัน − สำรองประกัน (ยังไม่หักค่าใช้จ่ายคงที่)</div>`;
+    return h;
+  }
+};
+
+/* ---------- users & settings */
+SCREENS.users = {
+  title: 'ผู้ใช้และบัญชี',
+  async view() {
+    const list = await api('users.list');
+    const ceo = can('CEO');
+    const editable = u => ceo || ['CEO', 'MANAGER'].indexOf(u.role) < 0;
+    const sms = S.b && S.b.sms;
+    return `<div class="alert blue small">ทุกคนเข้าระบบด้วย <b>เบอร์มือถือ + PIN 6 หลัก</b> · คนใหม่หรือลืม PIN ให้กด <b>ออกรหัสเข้าใช้</b> แล้วส่งรหัสให้เจ้าตัวทางแชตส่วนตัว (ใช้ครั้งเดียว แล้วเจ้าตัวตั้ง PIN เอง)<br>มือถือหาย/ลาออก กด <b>ตัดการเข้าระบบ</b> ได้ทันที${ceo ? '' : ' · บัญชีผู้บริหารแก้ได้เฉพาะ CEO'}</div>
+      ${list.map(u => `<div class="card"><div class="row between"><div class="grow"><b>${esc(u.name)}</b> <span class="badge ${u.active === 'N' ? 'red' : 'teal'}">${esc(u.role_name)}</span>${u.team ? ' <span class="badge">' + esc(u.team) + '</span>' : ''}${u.active === 'N' ? ' <span class="badge red">ปิดใช้งาน</span>' : ''}</div></div>
+      <div class="muted small">${u.phone ? esc(u.phone) + (u.has_pin ? '' : ' <span class="badge amber">ยังไม่ได้ตั้ง PIN</span>') : '<span class="badge amber">ยังไม่มีเบอร์ — เข้าระบบไม่ได้</span>'} ${u.target ? '· เป้า ' + money(u.target) : ''} · ${u.last_login ? 'เข้าระบบล่าสุด ' + esc(String(u.last_login).replace('T', ' ').slice(0, 16)) : 'ยังไม่เคยเข้าระบบ'}</div>
+      ${editable(u) ? `<div class="btns"><button class="btn sm ghost" data-act="userEdit" data-u="${J(u)}">แก้ไข</button>${u.active !== 'N' && u.phone ? `<button class="btn sm ghost" data-act="userCode" data-id="${esc(u.user_id)}">ออกรหัสเข้าใช้</button><button class="btn sm redghost" data-act="userRevoke" data-id="${esc(u.user_id)}" data-name="${esc(u.name)}">ตัดการเข้าระบบ</button>` : ''}</div>` : ''}</div>`).join('')}
+      <button class="btn fab" data-act="userEdit">+ ผู้ใช้</button>`;
+  }
+};
+const SETTING_FIELDS = [
+  ['web_url', 'ลิงก์หน้าเว็บระบบ (ว่างไว้ได้ ระบบใช้ลิงก์ที่เปิดอยู่)'], ['company_name', 'ชื่อบริษัทบนใบเสนอราคา'], ['company_address', 'ที่อยู่บนใบเสนอราคา'], ['company_phone', 'เบอร์โทรบนใบเสนอราคา'], ['company_tax_id', 'เลขผู้เสียภาษี'],
+  ['team_names', 'ชื่อทีมช่าง (คั่นด้วย ,)'], ['teams', 'จำนวนทีม', 1], ['workdays', 'วันทำงานต่อเดือน', 1], ['monthly_target', 'เป้ารายได้ต่อเดือน (ก่อน VAT)', 1],
+  ['fixed_per_td', 'ต้นทุนเต็มต่อทีม-วัน', 1], ['target_per_td', 'เป้ากำไรส่วนเกินต่อทีม-วัน', 1], ['comm_rate', 'อัตราคอมมิชชันประมาณ (ใส่เป็นทศนิยม เช่น 0.05 = 5%)', 1], ['warranty_rate', 'สำรองประกัน (ใส่เป็นทศนิยม เช่น 0.02 = 2%)', 1],
+  ['min_bill_b2c', 'Minimum Bill B2C', 1], ['min_bill_b2b', 'Minimum Bill B2B', 1], ['min_bill_repair', 'Minimum Bill งานซ่อม', 1], ['ceo_threshold', 'ยอดที่ต้อง CEO อนุมัติ (ก่อน VAT)', 1],
+  ['vat_rate', 'VAT (0.07)', 1], ['quote_valid_days', 'อายุใบเสนอราคา (วัน)', 1], ['wait_send_alert_days', 'เตือนรอส่งบัญชีเกิน (วัน)', 1], ['overdue_hold_days', 'เกินกำหนดชำระกี่วันให้เตือนแดง', 1]
+];
+SCREENS.settings = {
+  title: 'ตั้งค่าระบบ',
+  async view() {
+    const s = S.b.settings;
+    return `<form data-form="settings"><div class="card">${SETTING_FIELDS.map(f => field(f[1], inp(f[0], s[f[0]], f[2] ? { type: 'number', step: 'any', im: 'decimal' } : {}))).join('')}</div>
+      <div class="alert amber small">เปลี่ยนจำนวนทีม/ชื่อทีมแล้ว ให้แก้ทีมของช่างในหน้า “ผู้ใช้และบัญชี” ให้ตรงด้วย</div><button class="btn block" type="submit">บันทึกการตั้งค่า</button></form>`;
+  }
+};
+
+/* ---------- more & me */
+SCREENS.more = {
+  title: 'เพิ่มเติม',
+  async view() {
+    return `<div class="more">${MORE.filter(m => m[3].indexOf(S.user.role) >= 0).map(m => `<button data-go="${m[0]}">${icon(m[2])}<span>${esc(m[1])}</span></button>`).join('')}</div>`;
+  }
+};
+SCREENS.me = {
+  title: 'บัญชีของฉัน',
+  async view() {
+    return `<div class="card"><div class="kanit big">${esc(S.user.name)}</div><div class="muted">${esc(S.user.role_name)}${S.user.team ? ' · ' + esc(S.user.team) : ''} · ${esc(S.user.user_id)}</div></div>
+      ${['CEO', 'MANAGER'].indexOf(S.user.role) >= 0 ? `${sec('รหัสกู้คืน (ใช้วันที่ SMS ไม่เข้า)')}<div class="card">
+        <div class="small ${S.user.has_recovery ? 'muted' : ''}">${S.user.has_recovery ? 'มีรหัสกู้คืนแล้ว · สร้างใหม่ได้ (รหัสเดิมจะใช้ไม่ได้)' : '<span class="badge amber">ยังไม่มีรหัสกู้คืน</span> ถ้า SMS ล่ม คุณจะเข้าระบบไม่ได้ — สร้างแล้วจดเก็บในที่ปลอดภัย'}</div>
+        <button class="btn ghost block" style="margin-top:8px" data-act="makeRecovery">${S.user.has_recovery ? 'สร้างรหัสกู้คืนใหม่' : 'สร้างรหัสกู้คืน'}</button></div>` : ''}
+      ${sec('เปลี่ยน PIN')}<form data-form="pin" class="card">${field('PIN เดิม', '<input name="old_pin" type="password" inputmode="numeric" autocomplete="current-password" maxlength="6" required>', true)}
+        ${field('PIN ใหม่ 6 หลัก', '<input name="new_pin" type="password" inputmode="numeric" autocomplete="new-password" maxlength="6" required>', true)}
+        ${field('ยืนยัน PIN ใหม่', '<input name="new_pin2" type="password" inputmode="numeric" autocomplete="new-password" maxlength="6" required>', true)}
+        <button class="btn block" type="submit">เปลี่ยน PIN</button></form>
+      ${sec('ความปลอดภัย')}<div class="card"><div class="muted small">เข้าระบบด้วยเบอร์ ${esc(S.user.phone_masked || '')} + PIN · อยู่ในระบบได้ 30 วันต่อเครื่อง</div>
+        <button class="btn ghost block" style="margin-top:8px" data-act="logoutAll">ออกจากระบบทุกเครื่อง (เช่น มือถือหาย)</button></div>
+      <button class="btn redghost block" style="margin-top:16px" data-act="logout">ออกจากระบบ</button>
+      <div class="muted small" style="margin-top:16px;text-align:center">${esc(BOOT.app.name)} v${esc(BOOT.app.version)} · ฐานข้อมูลของบริษัท</div>`;
+  }
+};
+
+/* ===================================================== actions (click) */
+const ACT = {
+  refresh() { if (S.cur) render(); },
+  print() { window.print(); },
+  logout() { logout(false); },
+  viewPhoto(el) { const id = el.getAttribute('data-pid'); if (S.photo[id]) showPhoto(S.photo[id]); },
+  cpPick(el) {
+    const c = JSON.parse(el.getAttribute('data-c'));
+    const box = el.closest('[data-cp]'), form = el.closest('form');
+    box.querySelector('[name=cust_id]').value = c.cust_id;
+    box.querySelector('[data-cpq]').value = c.name;
+    box.querySelector('[data-cpi]').textContent = 'ลูกค้าในระบบ: ' + c.cust_id;
+    box.querySelector('[data-cpr]').classList.add('hide');
+    const set = (n, v) => { const x = form.querySelector(`[name="${n}"]`); if (x && v && !x.value) x.value = v; };
+    set('site', c.address); set('contact', c.contact); set('phone', c.phone);
+    const t = form.querySelector('[name=cust_type]'); if (t && c.type) t.value = c.type;
+    if (S.qe && form.getAttribute('data-form') === 'qe') { qeSync(); qeTotals(); }
+  },
+
+  /* field job */
+  async jobStart() { if (await attempt(() => api('jobs.start', { job_id: S.job.job_id }), 'เริ่มงานแล้ว') !== undefined) render(); },
+  async jobSave() { await attempt(() => api('jobs.save', collectJob()), 'บันทึกแล้ว'); },
+  matAdd() { document.getElementById('mats').insertAdjacentHTML('beforeend', matRow({ name: '', qty: '', unit: '' })); },
+  async assetAdd() {
+    const v = await ask({ title: 'เพิ่มเครื่องในทะเบียน', text: 'ดูข้อมูลจากป้าย Nameplate ห้ามเดารุ่น/BTU — ถ้าไม่ชัดให้เว้นว่างและถ่ายรูปไว้', ok: 'บันทึก', fields: [
+      { name: 'location', label: 'ตำแหน่ง/ห้อง', req: 1, ph: 'เช่น ห้องประชุมชั้น 2' }, { name: 'ac_type', label: 'ชนิด', type: 'select', options: AC_TYPES, value: 'ติดผนัง' },
+      { name: 'brand', label: 'ยี่ห้อ' }, { name: 'model', label: 'รุ่น (ตามป้าย)' }, { name: 'btu', label: 'BTU (ตามป้าย)', im: 'numeric' }, { name: 'serial', label: 'Serial No.' },
+      { name: 'installed_at', label: 'วันที่ติดตั้ง (ถ้าทราบ)', type: 'date' }, { name: 'warranty_until', label: 'ประกันถึง (ถ้าทราบ)', type: 'date' }] });
+    if (!v) return;
+    v.job_id = S.job.job_id;
+    await api('jobs.save', collectJob()).catch(() => {});
+    if (await attempt(() => api('assets.save', v), 'เพิ่มเครื่องแล้ว') !== undefined) render();
+  },
+  sigClear() { if (SIG) { SIG.ctx.fillStyle = '#fff'; SIG.ctx.fillRect(0, 0, SIG.c.width, SIG.c.height); SIG.dirty = false; } },
+  sigRedo() { document.getElementById('sigwrap').classList.remove('hide'); sigInit(); },
+  async sigSave() {
+    if (!SIG || !SIG.dirty) { toast('ให้ลูกค้าเซ็นในกรอบก่อน', true); return; }
+    const signer = (document.getElementById('signer').value || '').trim();
+    if (!signer) { toast('กรุณาใส่ชื่อผู้รับงาน', true); return; }
+    const data = SIG.c.toDataURL('image/png');
+    await api('jobs.save', collectJob()).catch(() => {});
+    if (await attempt(() => api('jobs.photo', { job_id: S.job.job_id, kind: 'signature', data, signer }), 'บันทึกลายเซ็นแล้ว') !== undefined) render();
+  },
+  async jobClose() {
+    const j = S.job;
+    try {
+      await api('jobs.save', collectJob());
+      if (SIG && SIG.dirty) {
+        const signer = (document.getElementById('signer').value || '').trim();
+        if (!signer) { toast('มีลายเซ็นแต่ยังไม่ใส่ชื่อผู้รับงาน', true); return; }
+        await api('jobs.photo', { job_id: j.job_id, kind: 'signature', data: SIG.c.toDataURL('image/png'), signer });
+        j.signature = 'x';
+      }
+      let reason = '';
+      if (!j.signature) {
+        const v = await ask({ title: 'ไม่มีลายเซ็นลูกค้า', text: 'ปิดงานได้แต่ต้องระบุเหตุผล (บัญชีอาจขอหลักฐานเพิ่มตอนวางบิล)', ok: 'ปิดงาน', fields: [{ name: 'r', label: 'เหตุผล', req: 1, ph: 'เช่น ลูกค้าไม่อยู่ ฝากรปภ.รับงาน' }] });
+        if (!v) return;
+        reason = v.r;
+      } else if (!(await confirmBox('ปิดงาน ' + j.job_id + '?', 'หลังปิดงานจะแก้ไขผลงานไม่ได้ และงานจะเข้าคิว “รอส่งบัญชี”', 'ปิดงาน'))) return;
+      const nx = document.getElementById('nextsvc');
+      await api('jobs.close', { job_id: j.job_id, no_sign_reason: reason, next_service: nx ? nx.value : '' });
+      toast('ปิดงานแล้ว — เข้าคิวรอส่งบัญชี');
+      render();
+    } catch (e) { toast(e.message, true); }
+  },
+  async jobCost() {
+    const v = await ask({ title: 'ต้นทุนจริงของงาน', text: 'รวมวัสดุ อะไหล่ ค่าแรงเพิ่ม ค่าเดินทางพิเศษ (ไม่รวมค่าใช้จ่ายคงที่ของทีม)', fields: [{ name: 'c', label: 'ต้นทุนจริง (บาท)', type: 'number', req: 1, value: S.job.actual_cost === '' ? S.job.est_cost : S.job.actual_cost }] });
+    if (v && await attempt(() => api('jobs.cost', { job_id: S.job.job_id, actual_cost: Number(v.c) }), 'บันทึกแล้ว') !== undefined) render();
+  },
+  async jobCancel() {
+    const v = await ask({ title: 'ยกเลิกงาน ' + S.job.job_id, danger: 1, ok: 'ยกเลิกงาน', fields: [{ name: 'r', label: 'เหตุผล', req: 1 }] });
+    if (v && await attempt(() => api('jobs.cancel', { job_id: S.job.job_id, reason: v.r }), 'ยกเลิกแล้ว') !== undefined) render();
+  },
+  async caseFromJob() {
+    const v = await ask({ title: 'เปิดเคสประกัน/งานแก้', text: 'งานเดิม ' + S.job.job_id + ' · ' + S.job.cust_name, ok: 'เปิดเคส', fields: [{ name: 'symptom', label: 'อาการที่ลูกค้าแจ้ง', type: 'textarea', req: 1 }] });
+    if (!v) return;
+    const c = await attempt(() => api('cases.open', { job_id: S.job.job_id, symptom: v.symptom }), 'เปิดเคสแล้ว');
+    if (c) go('case', { id: c.case_id, c });
+  },
+  async caseNew() {
+    const v = await ask({ title: 'เปิดเคสประกัน/งานแก้', text: 'ใส่เลขงานเดิม (แนะนำ) หรือรหัสลูกค้า', ok: 'เปิดเคส', fields: [{ name: 'job_id', label: 'เลขงานเดิม เช่น J2610-0012' }, { name: 'cust_id', label: 'หรือรหัสลูกค้า' }, { name: 'symptom', label: 'อาการ', type: 'textarea', req: 1 }] });
+    if (!v) return;
+    const c = await attempt(() => api('cases.open', v), 'เปิดเคสแล้ว');
+    if (c) go('case', { id: c.case_id, c });
+  },
+
+  /* leads */
+  async leadStage(el) {
+    const s = el.getAttribute('data-s');
+    let reason = '';
+    if (s === 'LOST') {
+      const v = await ask({ title: 'ไม่ได้งาน', ok: 'บันทึก', danger: 1, fields: [{ name: 'r', label: 'เหตุผล', type: 'select', options: LOST_REASONS, req: 1, blank: '— เลือก —' }, { name: 'd', label: 'รายละเอียด' }] });
+      if (!v) return; reason = v.r + (v.d ? ' — ' + v.d : '');
+    }
+    if (await attempt(() => api('leads.stage', { lead_id: S.lead.lead_id, stage: s, reason }), 'อัปเดตแล้ว') !== undefined) render();
+  },
+  async surveyJob() {
+    const l = S.lead, a = l.answers || {};
+    const v = await ask({ title: 'เปิดงานสำรวจ', text: l.cust_name + '\n' + (l.site || ''), ok: 'เปิดงาน', fields: [{ name: 'amount', label: 'ค่าสำรวจที่เก็บลูกค้า (0 = ไม่เก็บ)', type: 'number', value: '0' }, { name: 'scope', label: 'สิ่งที่ต้องสำรวจ', type: 'textarea', value: QUESTIONS.map(q => a[q[0]] ? q[1] + ': ' + a[q[0]] : '').filter(String).join('\n') }] });
+    if (!v) return;
+    const r = await attempt(() => api('jobs.create', { cust_id: l.cust_id, cust_name: l.cust_name, site: l.site, contact: l.contact, phone: l.phone, job_type: 'สำรวจ', scope: v.scope, amount: Number(v.amount || 0), payment: Number(v.amount || 0) ? 'เงินสด' : 'ไม่เก็บเงิน (สำรวจ)', team_days: 0.25, reason: 'สำรวจจาก Lead ' + l.lead_id, lead_id: l.lead_id }), 'เปิดงานสำรวจแล้ว — ไปจัดทีมได้');
+    if (r) render();
+  },
+
+  /* quote builder */
+  qeAdd(el) {
+    qeSync();
+    const c = S.qeRes[Number(el.getAttribute('data-i'))];
+    const ex = S.qe.lines.find(l => l.item_id === c.item_id);
+    if (ex) ex.qty = Number(ex.qty || 0) + 1;
+    else S.qe.lines.push({ item_id: c.item_id, description: c.name, qty: 1, unit: c.unit, price: Number(c[LV[S.qe.price_level]] || 0), team_day: c.team_day, cat: c, manual: false });
+    qeRedrawLines();
+    toast('เพิ่มแล้ว: ' + c.name.slice(0, 40));
+  },
+  qeCustom() { qeSync(); S.qe.lines.push({ item_id: '', description: '', qty: 1, unit: 'งาน', price: 0, team_day: 0 }); qeRedrawLines(); },
+  qeDel(el) { qeSync(); S.qe.lines.splice(Number(el.getAttribute('data-i')), 1); qeRedrawLines(); },
+
+  /* quote actions */
+  async qSubmit() {
+    const q = S.quote;
+    let reason = '';
+    if (q.gate_minbill === 'FAIL') {
+      const v = await ask({ title: 'ต่ำกว่า Minimum Bill', text: 'ยอด ' + money(q.net) + ' บาท ต่ำกว่าขั้นต่ำ — ระบุเหตุผลเพื่อขออนุมัติ (หรือกลับไปเพิ่มรายการ/รวมงาน)', ok: 'ส่งขออนุมัติ', fields: [{ name: 'r', label: 'เหตุผล', req: 1, ph: 'เช่น ลูกค้าสัญญาปีหน้า รวมงานในโซนเดียวกัน' }] });
+      if (!v) return; reason = v.r;
+    } else if (!(await confirmBox('ส่งขออนุมัติ?', 'ผู้อนุมัติ: ' + (q.approval_level === 'CEO' ? 'CEO' : 'ผู้จัดการ'), 'ส่ง'))) return;
+    if (await attempt(() => api('quotes.submit', { quote_id: q.quote_id, reason }), 'ส่งขออนุมัติแล้ว') !== undefined) render();
+  },
+  async qApprove() {
+    const q = S.quote;
+    const warn = q.gate_td === 'FAIL' ? 'คำเตือน: กำไรต่อทีม-วันต่ำกว่าต้นทุนเต็ม งานนี้มีโอกาสขาดทุน' : q.gate_minbill === 'FAIL' ? 'คำเตือน: ต่ำกว่า Minimum Bill' : '';
+    const v = await ask({ title: 'อนุมัติ ' + q.quote_id, text: (warn ? warn + '\n' : '') + 'ยอดก่อน VAT ' + money(q.net) + ' บาท', ok: 'อนุมัติ', fields: [{ name: 'n', label: 'หมายเหตุ (ถ้ามี)' }] });
+    if (v && await attempt(() => api('quotes.approve', { quote_id: q.quote_id, note: v.n }), 'อนุมัติแล้ว — เซลล์ส่งลิงก์ให้ลูกค้าได้') !== undefined) render();
+  },
+  async qReject() {
+    const v = await ask({ title: 'ตีกลับให้แก้', danger: 1, ok: 'ตีกลับ', fields: [{ name: 'n', label: 'สิ่งที่ต้องแก้', type: 'textarea', req: 1 }] });
+    if (v && await attempt(() => api('quotes.reject', { quote_id: S.quote.quote_id, note: v.n }), 'ตีกลับแล้ว') !== undefined) render();
+  },
+  async qLink() {
+    const q = S.quote;
+    if (!q.link) { toast('ยังไม่มีลิงก์ลูกค้า — ใบเสนอราคาต้องได้รับอนุมัติก่อน', true); return; }
+    const text = `เรียน ${q.contact ? 'คุณ' + q.contact + ' ' : ''}${q.cust_name}\n${S.b.settings.company_name || ''} ขอส่งใบเสนอราคาเลขที่ ${q.quote_id}${q.rev ? ' Rev.' + q.rev : ''}\nยอดรวมทั้งสิ้น ${money(q.total, 1)} บาท (รวม VAT)\nดูรายละเอียดและกดยืนยันได้ที่ลิงก์นี้:\n${q.link + (/openExternalBrowser/.test(q.link) ? '' : '&openExternalBrowser=1')}\nใบเสนอราคามีผลถึง ${thd(q.valid_until)} หากมีข้อสงสัยติดต่อกลับได้เลยครับ`;
+    const tok = (/quote=([a-f0-9]+)/.exec(q.link) || [])[1];
+    showText('ข้อความส่งลูกค้า', text, 'คัดลอกไปวางใน LINE/อีเมล แล้วกด “บันทึกว่าส่งแล้ว”',
+      BOOT.demo && tok ? { label: 'ดูหน้าที่ลูกค้าเห็น (ทดลอง)', fn: () => { BOOT.mode = 'quote'; BOOT.quoteToken = tok; try { location.hash = 'quote-' + tok; } catch (e) { /* ignore */ } publicQuotePage(); } } : null);
+  },
+  async qSent() { if (await attempt(() => api('quotes.sent', { quote_id: S.quote.quote_id }), 'บันทึกแล้ว — ระบบนัดติดตามใน 2 วัน') !== undefined) render(); },
+  async qWon() {
+    const q = S.quote;
+    const needPo = q.cust_type !== 'B2C' && q.status !== 'ACCEPTED';
+    const v = await ask({ title: 'ลูกค้าตกลง → เปิดงาน', text: 'ระบบจะเปิด JobID ให้ผู้จัดการจัดทีม', ok: 'เปิดงาน', fields: needPo ? [{ name: 'po', label: 'เลข PO หรือหลักฐานการยืนยัน (งาน B2B)', req: 1, ph: 'เช่น PO-6610-0012 / อีเมลยืนยันวันที่…' }] : [{ name: 'po', label: 'หลักฐาน/หมายเหตุ (ถ้ามี)' }] });
+    if (!v) return;
+    const r = await attempt(() => api('quotes.won', { quote_id: q.quote_id, po: v.po }), 'เปิดงานแล้ว');
+    if (r) go('job', { id: r.job_id }, { replace: true });
+  },
+  async qLost() {
+    const v = await ask({ title: 'ไม่ได้งาน', danger: 1, ok: 'บันทึก', fields: [{ name: 'r', label: 'เหตุผล', type: 'select', options: LOST_REASONS, req: 1, blank: '— เลือก —' }, { name: 'd', label: 'รายละเอียด/ราคาคู่แข่ง (ถ้าทราบ)' }] });
+    if (v && await attempt(() => api('quotes.lost', { quote_id: S.quote.quote_id, reason: v.r + (v.d ? ' — ' + v.d : '') }), 'บันทึกแล้ว') !== undefined) render();
+  },
+  async qRevise() {
+    if (!(await confirmBox('ทำ Revision ใหม่?', 'ใบเดิมจะถูกปิด (มี Rev ใหม่แทน) และต้องขออนุมัติใหม่', 'ทำ Revision'))) return;
+    const r = await attempt(() => api('quotes.revise', { quote_id: S.quote.quote_id }), 'สร้าง Revision แล้ว');
+    if (r) go('quoteEdit', { id: r.quote_id }, { replace: true });
+  },
+
+  /* plan */
+  async planRelease() {
+    const r = await attempt(() => api('plan.release', { date: S.plan.date }));
+    if (r) { showText('ส่งแผนเข้ากลุ่ม LINE ทีมช่าง', r.text, 'ปล่อยแผน ' + r.count + ' งานแล้ว ทีมเห็นในแอปทันที'); render(); }
+  },
+  async planEdit(el) {
+    const j = S.plan.jobs.find(x => x.job_id === el.getAttribute('data-id'));
+    const v = await ask({ title: 'แก้ทีม/เวลา ' + j.job_id, ok: 'บันทึก', fields: [{ name: 'team', label: 'ทีม', type: 'select', options: S.plan.teams, value: j.team }, { name: 'date', label: 'วันที่', type: 'date', value: j.plan_date }, { name: 'time', label: 'เวลา', type: 'time', value: j.plan_time }, { name: 'seq', label: 'ลำดับ', type: 'number', value: j.seq }] });
+    if (v && await attempt(() => api('plan.assign', Object.assign({ job_id: j.job_id }, v)), 'บันทึกแล้ว — อย่าลืมปล่อยแผนใหม่') !== undefined) render();
+  },
+  async planRemove(el) {
+    if (await attempt(() => api('plan.assign', { job_id: el.getAttribute('data-id'), team: '', date: '' }), 'ถอดออกแล้ว — กลับไปรอจัดทีม') !== undefined) render();
+  },
+  async manualJob() {
+    const v = await ask({ title: 'เปิดงานที่ไม่มีใบเสนอราคา', text: 'ใช้กับงานประกัน งานตามสัญญา งานสำรวจ — งานขายปกติต้องผ่านใบเสนอราคาเสมอ', ok: 'เปิดงาน', fields: [
+      { name: 'cust_id', label: 'รหัสลูกค้า (ถ้ามี)' }, { name: 'cust_name', label: 'ชื่อลูกค้า (ถ้าไม่มีรหัส)' }, { name: 'site', label: 'สถานที่' },
+      { name: 'job_type', label: 'ประเภทงาน', type: 'select', options: JOB_TYPES, value: 'งานแก้/ประกัน' }, { name: 'scope', label: 'ขอบเขตงาน', type: 'textarea' },
+      { name: 'amount', label: 'ยอดเรียกเก็บ ก่อน VAT (0 = ไม่เก็บ)', type: 'number', value: '0' }, { name: 'team_days', label: 'ทีม-วันประมาณ', type: 'number', value: '0.5', step: 'any' },
+      { name: 'reason', label: 'เหตุผลที่ไม่มีใบเสนอราคา', req: 1 }] });
+    if (!v) return;
+    v.amount = Number(v.amount || 0); v.team_days = Number(v.team_days || 0.5);
+    if (await attempt(() => api('jobs.create', v), 'เปิดงานแล้ว') !== undefined) render();
+  },
+
+  /* billing */
+  async billSend() {
+    const ids = Array.from(document.querySelectorAll('[data-sel]')).filter(c => c.checked).map(c => c.getAttribute('data-sel'));
+    if (!ids.length) return;
+    if (!(await confirmBox('ส่ง ' + ids.length + ' งานให้ฝ่ายบัญชี?', 'ระบบจะเปลี่ยนสถานะเป็น “ส่งบัญชีแล้ว” และสร้างข้อความสรุปให้คัดลอกส่งบัญชี', 'ส่ง'))) return;
+    const r = await attempt(() => api('billing.sent', { job_ids: ids }));
+    if (r) { showText('ส่งให้ฝ่ายบัญชี', r.text, r.count + ' งาน · ' + money(r.total) + ' บาท (ก่อน VAT)'); render(); }
+  },
+  async billBilled(el) {
+    const v = await ask({ title: 'บันทึกเลขบิลจากฝ่ายบัญชี', text: 'ทีมไม่ได้ออกบิลเอง — ใส่เลขที่บัญชีออกให้ เพื่อติดตามวันครบกำหนด', ok: 'บันทึก', fields: [{ name: 'bill_no', label: 'เลขที่ใบแจ้งหนี้/ใบกำกับ', req: 1 }, { name: 'bill_date', label: 'วันที่บิล', type: 'date', value: S.b.today }, { name: 'due_date', label: 'ครบกำหนดชำระ (เว้นว่าง = คำนวณจากเครดิต)', type: 'date' }] });
+    if (v && await attempt(() => api('billing.billed', Object.assign({ job_id: el.getAttribute('data-id') }, v)), 'บันทึกแล้ว') !== undefined) render();
+  },
+  async billPaid(el) {
+    const v = await ask({ title: 'บัญชียืนยันเงินเข้าแล้ว', ok: 'บันทึก', fields: [{ name: 'paid_date', label: 'วันที่เงินเข้า', type: 'date', value: S.b.today, req: 1 }] });
+    if (v && await attempt(() => api('billing.paid', Object.assign({ job_id: el.getAttribute('data-id') }, v)), 'บันทึกแล้ว') !== undefined) render();
+  },
+  async billNo(el) {
+    const v = await ask({ title: 'ไม่เรียกเก็บเงินงานนี้', text: 'ใช้เฉพาะงานประกัน/งานแก้/ของแถมที่อนุมัติแล้ว — ระบบบันทึกชื่อผู้อนุมัติ', danger: 1, ok: 'ยืนยัน', fields: [{ name: 'r', label: 'เหตุผล', req: 1 }] });
+    if (v && await attempt(() => api('billing.nobill', { job_id: el.getAttribute('data-id'), reason: v.r }), 'บันทึกแล้ว') !== undefined) render();
+  },
+
+  /* contracts */
+  async genVisits() {
+    const r = await attempt(() => api('contracts.generate'));
+    if (r) { toast('สร้างงานจากสัญญา ' + r.created + ' งาน' + (r.created ? ' — ไปจัดทีมได้' : '')); render(); }
+  },
+  async contractBilled(el) {
+    const v = await ask({ title: 'วางบิลรอบนี้แล้ว', ok: 'บันทึก', fields: [{ name: 'bill_no', label: 'เลขบิลจากบัญชี', req: 1 }] });
+    if (v && await attempt(() => api('contracts.billed', { contract_id: el.getAttribute('data-id'), bill_no: v.bill_no }), 'เลื่อนรอบวางบิลถัดไปแล้ว') !== undefined) back();
+  },
+
+  /* users */
+  async userEdit(el) {
+    const u = el.getAttribute('data-u') ? JSON.parse(el.getAttribute('data-u')) : { role: 'TECH', active: 'Y' };
+    const v = await ask({ title: u.user_id ? 'แก้ไขผู้ใช้' : 'เพิ่มผู้ใช้', ok: 'บันทึก', fields: [
+      { name: 'name', label: 'ชื่อ', req: 1, value: u.name }, { name: 'role', label: 'บทบาท', type: 'select', options: Object.keys(S.b.roles).map(k => [k, S.b.roles[k]]), value: u.role },
+      { name: 'team', label: 'ทีม (ช่าง/หัวหน้าทีมต้องมี)', type: 'select', options: S.b.teams, value: u.team, blank: '— ไม่มี —' }, { name: 'phone', label: 'เบอร์โทร', value: u.phone },
+      { name: 'target', label: 'เป้ายอดขาย/เดือน (เซลล์)', type: 'number', value: u.target || '' }, { name: 'active', label: 'สถานะ', type: 'select', options: [['Y', 'ใช้งาน'], ['N', 'ปิดใช้งาน (ลาออก)']], value: u.active || 'Y' }] });
+    if (!v) return;
+    if (u.user_id) v.user_id = u.user_id;
+    const r = await attempt(() => api('users.save', v), 'บันทึกแล้ว');
+    if (r) render();
+  },
+  async userCode(el) {
+    const r = await attempt(() => api('users.tempCode', { user_id: el.getAttribute('data-id') }));
+    if (r) showText('รหัสเข้าใช้ชั่วคราว', 'เข้าระบบ SBP FieldOps\nเบอร์: ' + r.phone + '\nรหัสเข้าใช้ครั้งแรก: ' + r.code + '\n(ใช้ได้ครั้งเดียว ภายใน ' + r.hours + ' ชั่วโมง แล้วระบบจะให้ตั้ง PIN ของตัวเอง)' + (S.b.settings.web_url ? '\nเปิดระบบ: ' + S.b.settings.web_url + '?openExternalBrowser=1' : ''), 'ส่งให้ ' + r.name + ' แบบส่วนตัวเท่านั้น ห้ามส่งในกลุ่ม');
+  },
+  async userRevoke(el) {
+    if (!(await confirmBox('ตัดการเข้าระบบ?', el.getAttribute('data-name') + ' จะถูกออกจากระบบทุกเครื่องทันที (ขอรหัสเข้าใหม่ได้ตามปกติ)', 'ตัดการเข้าระบบ'))) return;
+    const r = await attempt(() => api('users.revoke', { user_id: el.getAttribute('data-id') }), 'ตัดการเข้าระบบแล้ว');
+    if (r && r.self) logout(false); else if (r) render();
+  },
+  async makeRecovery() {
+    if (S.user.has_recovery && !(await confirmBox('สร้างรหัสกู้คืนใหม่?', 'รหัสเดิมจะใช้ไม่ได้ทันที', 'สร้างใหม่'))) return;
+    const r = await attempt(() => api('me.recovery', {}));
+    if (r) {
+      S.user.has_recovery = true; ST.set('sbp_user', JSON.stringify(S.user));
+      showText('รหัสกู้คืนของคุณ', 'เบอร์: ' + (S.user.phone_masked || '') + '\nรหัสกู้คืน: ' + r.code + '\n\nใช้เข้าระบบวันที่ SMS ไม่เข้า (ใช้ได้ครั้งเดียว แล้วสร้างใหม่)', 'จดเก็บไว้ในที่ปลอดภัย ระบบจะไม่แสดงรหัสนี้อีก ห้ามส่งให้ใคร');
+      render();
+    }
+  },
+  async logoutAll() {
+    if (!(await confirmBox('ออกจากระบบทุกเครื่อง?', 'เครื่องอื่นทุกเครื่องจะต้องเข้าระบบใหม่ เครื่องนี้ยังใช้ต่อได้', 'ยืนยัน'))) return;
+    const r = await attempt(() => api('me.logoutAll', {}), 'ออกจากระบบเครื่องอื่นแล้ว');
+    if (r && r.token) { S.token = r.token; ST.set('sbp_token', r.token); }
+  }
+};
+
+/* ===================================================== forms (submit) */
+const FORMS = {
+  async pin(f) {
+    const v = formData(f);
+    if (!/^\d{6}$/.test(v.new_pin || '')) { toast('PIN ใหม่ต้องเป็นตัวเลข 6 หลัก', true); return; }
+    if (v.new_pin !== v.new_pin2) { toast('PIN ใหม่ไม่ตรงกัน', true); return; }
+    const r = await attempt(() => api('me.pin', { old_pin: v.old_pin, new_pin: v.new_pin }), 'เปลี่ยน PIN แล้ว (เครื่องอื่นต้องเข้าระบบใหม่)');
+    if (r && r.token) { S.token = r.token; ST.set('sbp_token', r.token); f.reset(); }
+  },
+  search(f) { const v = formData(f); const p = JSON.parse(f.getAttribute('data-p') || '{}'); p.q = v.q; go(f.getAttribute('data-screen'), p, { replace: true }); },
+  async lead(f) {
+    const v = formData(f);
+    const answers = {};
+    QUESTIONS.forEach(q => { answers[q[0]] = v['a_' + q[0]]; });
+    answers.risk = v.a_risk; answers.unknown = v.a_unknown;
+    const p = { lead_id: f.getAttribute('data-id') || undefined, cust_id: v.cust_id, cust_name: v.cust_name, cust_type: v.cust_type, site: v.site, zone: v.zone, contact: v.contact, phone: v.phone,
+      source: v.source, job_type: v.job_type, units: Number(v.units || 0), est_value: Number(v.est_value || 0), answers, next_action: v.next_action, next_date: v.next_date, note: v.note };
+    const r = await attempt(() => api('leads.save', p), 'บันทึก Lead แล้ว');
+    if (r) go('lead', { id: r.lead_id }, { replace: true });
+  },
+  async customer(f) {
+    const v = formData(f);
+    if (f.getAttribute('data-id')) v.cust_id = f.getAttribute('data-id');
+    v.credit_days = Number(v.credit_days || 0);
+    const r = await attempt(() => api('customers.save', v), 'บันทึกลูกค้าแล้ว');
+    if (r) go('customer', { id: r.cust_id }, { replace: true });
+  },
+  async qe() {
+    qeSync();
+    const q = S.qe;
+    if (!q.lines.length) { toast('ยังไม่มีรายการ', true); return; }
+    const bad = q.lines.find(l => !l.item_id && (!l.description || !Number(l.price)));
+    if (bad) { toast('รายการพิมพ์เองต้องมีรายละเอียดและราคา', true); return; }
+    const p = { quote_id: q.quote_id || undefined, lead_id: q.lead_id, cust_id: q.cust_id, cust_name: q.cust_name, cust_type: q.cust_type, site: q.site, contact: q.contact, phone: q.phone,
+      job_type: q.job_type, payment: q.payment, price_level: q.price_level, discount: q.discount, scope_note: q.scope_note, exclusions: q.exclusions,
+      lines: q.lines.map(l => ({ item_id: l.item_id, description: l.description, qty: Number(l.qty || 0), unit: l.unit, price: Number(l.price || 0), team_day: Number(l.team_day || 0), cost: l.cost })) };
+    const r = await attempt(() => api('quotes.save', p), 'บันทึกแล้ว — ตรวจด่านแล้วกดส่งขออนุมัติ');
+    if (r) go('quote', { id: r.quote_id }, { replace: true });
+  },
+  async assign(f) {
+    const v = formData(f);
+    if (await attempt(() => api('plan.assign', { job_id: f.getAttribute('data-id'), team: v.team, date: S.plan.date, time: v.time, seq: Number(v.seq || 1) }), 'จัดทีมแล้ว') !== undefined) render();
+  },
+  async caseDecide(f) {
+    const v = formData(f);
+    if (!v.class || !v.decision) { toast('เลือกสาเหตุและคำตัดสิน', true); return; }
+    v.case_id = S.case.case_id; v.amount = Number(v.amount || 0);
+    const r = await attempt(() => api('cases.decide', v), 'บันทึกคำตัดสินแล้ว' + (v.create_job ? ' — เปิดงานแก้รอจัดทีม' : ''));
+    if (r) go('case', { id: r.case.case_id, c: r.case }, { replace: true });
+  },
+  async caseClose(f) {
+    const v = formData(f);
+    const r = await attempt(() => api('cases.close', { case_id: S.case.case_id, cost: Number(v.cost || 0), root_cause: v.root_cause }), 'ปิดเคสแล้ว');
+    if (r) go('case', { id: r.case_id, c: r }, { replace: true });
+  },
+  async contract(f) {
+    const v = formData(f);
+    if (!v.cust_id) { toast('เลือกลูกค้าจากรายการค้นหา (สัญญาต้องผูกกับลูกค้าในระบบ)', true); return; }
+    if (f.getAttribute('data-id')) v.contract_id = f.getAttribute('data-id');
+    ['value', 'units', 'visits', 'interval_months'].forEach(k => { v[k] = Number(v[k] || 0); });
+    const r = await attempt(() => api('contracts.save', v), 'บันทึกสัญญาแล้ว');
+    if (r) go('contracts', {}, { replace: true });
+  },
+  async settings(f) {
+    const v = formData(f);
+    SETTING_FIELDS.forEach(s => { if (s[2]) v[s[0]] = Number(v[s[0]] || 0); });
+    const r = await attempt(() => api('settings.save', v), 'บันทึกการตั้งค่าแล้ว');
+    if (r) { S.b = await api('bootstrap'); render(); }
+  }
+};
+
+/* ===================================================== global events */
+document.addEventListener('click', e => {
+  const nav = e.target.closest('[data-nav]');
+  if (nav) { go(nav.getAttribute('data-nav'), {}, { root: true }); return; }
+  const g = e.target.closest('[data-go]');
+  if (g) {
+    e.preventDefault();
+    const p = g.getAttribute('data-p') ? JSON.parse(g.getAttribute('data-p')) : {};
+    go(g.getAttribute('data-go'), p, { replace: g.hasAttribute('data-replace') });
+    return;
+  }
+  const a = e.target.closest('[data-act]');
+  if (a && ACT[a.getAttribute('data-act')]) { e.preventDefault(); ACT[a.getAttribute('data-act')](a); }
+});
+/* ฟอร์มทำงานได้แม้หน้าเว็บถูกฝังแบบห้ามส่งฟอร์ม (sandbox ไม่มี allow-forms): ดักปุ่มบันทึกแล้วส่งเหตุการณ์ submit เอง */
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('button[type=submit], input[type=submit]');
+  if (!b || !b.form) return;
+  e.preventDefault();
+  const f = b.form;
+  if (f.checkValidity && !f.checkValidity()) { if (f.reportValidity) f.reportValidity(); return; }
+  f.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+}, true);
+document.addEventListener('submit', e => {
+  const f = e.target;
+  if (f.hasAttribute('data-ask')) return;
+  e.preventDefault();
+  const n = f.getAttribute('data-form');
+  if (FORMS[n]) FORMS[n](f);
+});
+document.addEventListener('input', e => {
+  const t = e.target;
+  if (t.hasAttribute && t.hasAttribute('data-cpq')) {
+    const box = t.closest('[data-cp]');
+    box.querySelector('[name=cust_id]').value = '';
+    box.querySelector('[data-cpi]').textContent = t.value.trim() ? 'ลูกค้าใหม่ (ระบบจะสร้างให้) — หรือเลือกจากรายการด้านบน' : '';
+    cpSearch(t);
+  }
+  if (t.id === 'qeq') qeSearch();
+  if (S.qe && t.closest && t.closest('form[data-form="qe"]') && t.id !== 'qeq') {
+    qeSync();
+    if (t.hasAttribute('data-lf')) {
+      const row = t.closest('[data-li]');
+      const l = S.qe.lines[Number(row.getAttribute('data-li'))];
+      const amt = row.querySelector('.row.between.small .b');
+      if (amt && l) amt.textContent = money(Number(l.qty || 0) * Number(l.price || 0), 1) + ' บ.';
+    }
+    qeTotals();
+  }
+});
+document.addEventListener('change', async e => {
+  const t = e.target;
+  if (t.id === 'plandate') { go('plan', { date: t.value }, { replace: true }); return; }
+  if (t.id === 'dashmonth') { go('dashboard', { month: t.value }, { replace: true }); return; }
+  if (t.id === 'qecat') { qeSearch(); return; }
+  if (S.qe && t.name === 'price_level' && t.closest('form[data-form="qe"]')) {
+    qeSync();
+    S.qe.price_level = t.value;
+    const manual = S.qe.lines.filter(l => l.cat && l.manual);
+    let resetManual = false;
+    if (manual.length) resetManual = await confirmBox('ปรับราคาที่แก้เองด้วย?', manual.length + ' บรรทัดมีราคาที่แก้เอง — ปรับเป็นราคาตามระดับใหม่หรือไม่', 'ปรับทั้งหมด');
+    S.qe.lines.forEach(l => { if (l.cat && (!l.manual || resetManual)) { l.price = qeLinePrice(l, t.value); l.manual = false; } });
+    qeRedrawLines();
+    return;
+  }
+  if (S.qe && (t.name === 'cust_type' || t.name === 'job_type') && t.closest('form[data-form="qe"]')) { qeSync(); qeTotals(); return; }
+  if (t.hasAttribute && t.hasAttribute('data-upload')) {
+    const kind = t.getAttribute('data-upload');
+    const files = Array.from(t.files || []);
+    t.value = '';
+    for (let i = 0; i < files.length; i++) {
+      try {
+        toast('กำลังอัปโหลดรูป ' + (i + 1) + '/' + files.length);
+        const data = await resizeImage(files[i], BOOT.demo ? 900 : 1280, BOOT.demo ? 0.6 : 0.72);
+        if (kind === 'lead') await api('leads.photo', { lead_id: S.lead.lead_id, data });
+        else {
+          if (i === 0) await api('jobs.save', collectJob()).catch(() => {});
+          await api('jobs.photo', { job_id: S.job.job_id, kind, data });
+        }
+      } catch (err) { toast(err.message, true); return; }
+    }
+    toast('อัปโหลดแล้ว ' + files.length + ' รูป');
+    render();
+  }
+});
+
+/* ===================================================== login / boot */
+function logout(expired) {
+  S.token = null; ST.del('sbp_token');
+  if (expired) toast('กรุณาเข้าสู่ระบบอีกครั้ง');
+  showLogin();
+}
+const loginShell = inner => `<div class="login"><div class="brand"><div class="logo">SBP</div><div><h1 style="font-size:22px;color:var(--navy)">SBP FieldOps</h1><div class="muted">ระบบงานบริการแอร์ · สหบูรพากรุ๊ป</div></div></div>${inner}</div>`;
+function afterLogin(r) {
+  S.token = r.data.token; S.user = r.data.user;
+  ST.set('sbp_token', S.token); ST.set('sbp_user', JSON.stringify(S.user));
+  if ((r.data.first || r.data.recovery_used) && ['CEO', 'MANAGER'].indexOf(S.user.role) >= 0) S.afterLogin = 'me';
+  start();
+}
+async function showLogin(step, ctx) {
+  const app = document.getElementById('app');
+  ctx = ctx || {};
+  if (!S.status || step === undefined) {
+    app.innerHTML = loginShell('<div class="card"><div class="loading">กำลังเชื่อมต่อระบบ…</div></div>');
+    try { const r = await gs('publicStatus'); if (!r.ok) throw new Error(r.error); S.status = r.data; }
+    catch (e) {
+      app.innerHTML = loginShell(`<div class="alert red">เชื่อมต่อระบบไม่ได้: ${esc(e.message)}</div><button class="btn block" id="retry">ลองใหม่</button>`);
+      document.getElementById('retry').addEventListener('click', () => showLogin());
+      return;
+    }
+    step = S.status.initialized ? 'phone' : 'setup';
+  }
+  const phone0 = ctx.phone || ST.get('sbp_phone') || '';
+  const telInput = `<input name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="16" placeholder="08x-xxx-xxxx" value="${esc(phone0)}" required>`;
+  const bind = (id, fn) => { const el = document.getElementById(id); if (el) el.addEventListener('click', e => { e.preventDefault(); fn(); }); };
+  const onSubmit = fn => document.getElementById('lf').addEventListener('submit', async e => {
+    e.preventDefault(); e.stopPropagation();
+    const btn = e.target.querySelector('button[type=submit]'); if (btn) btn.disabled = true;
+    try { await fn(formData(e.target)); } catch (err) { toast(err.message, true); } finally { if (btn) btn.disabled = false; }
+  }, true);
+
+  if (step === 'setup') {
+    app.innerHTML = loginShell(`<div class="alert amber"><b>ตั้งค่าระบบครั้งแรก</b><br>ใส่รหัสตั้งค่าครั้งแรก 8 หลัก (เจ้าของระบบดูได้จากเมนู SBP FieldOps ในไฟล์ฐานข้อมูล) และเบอร์มือถือของ CEO — ใช้ได้ครั้งเดียว จากนั้นตั้ง PIN ของคุณ</div>
+      <form id="lf" class="card">${field('รหัสตั้งค่าครั้งแรก', '<input name="code" inputmode="numeric" autocomplete="off" maxlength="12" required>', true)}
+      ${field('เบอร์มือถือ CEO (ใช้เข้าระบบ)', telInput, true)}
+      <button class="btn block" type="submit">ตั้งค่าและเข้าสู่ระบบ</button></form>`);
+    onSubmit(async v => {
+      const r = await gs('setupInit', v.code, v.phone);
+      if (!r.ok) { toast(r.error, true); return; }
+      ST.set('sbp_phone', v.phone); afterLogin(r);
+    });
+    return;
+  }
+  if (step === 'phone') {
+    const sms = S.status.sms;
+    app.innerHTML = loginShell(`<form id="lf" class="card">${field('เบอร์มือถือ', telInput)}
+      ${field('PIN 6 หลัก', '<input name="pin" type="password" inputmode="numeric" autocomplete="current-password" pattern="\\d{6}" maxlength="6" required style="letter-spacing:4px">')}
+      <button class="btn block" type="submit">เข้าสู่ระบบ</button>
+      <button class="btn ghost block" style="margin-top:8px" id="havecode" type="button">ครั้งแรก / ลืม PIN — ใช้รหัสจากผู้จัดการ</button>
+      ${sms ? '<button class="btn ghost block" style="margin-top:8px" id="smscode" type="button">ลืม PIN — ขอรหัสทาง SMS</button>' : ''}</form>
+      <div class="muted small" style="text-align:center;margin-top:12px">ยังไม่มีบัญชี หรือเปลี่ยนเบอร์ ให้แจ้งผู้จัดการ<br><a href="#" id="rcv">CEO / ผู้จัดการ: เข้าระบบด้วยรหัสกู้คืน</a></div>`);
+    const phoneOf = () => String(formData(document.getElementById('lf')).phone || '').trim();
+    onSubmit(async v => {
+      const ph = String(v.phone || '').trim();
+      ST.set('sbp_phone', ph);
+      const r = await gs('pinLogin', ph, v.pin);
+      if (!r.ok) { toast(r.error, true); if (r.code === 'NOPIN') showLogin('code', { phone: ph }); return; }
+      afterLogin(r);
+    });
+    bind('havecode', () => { const ph = phoneOf(); if (ph.replace(/\D/g, '').length < 9) { toast('กรอกเบอร์มือถือก่อน', true); return; } ST.set('sbp_phone', ph); showLogin('code', { phone: ph }); });
+    bind('smscode', async () => {
+      const ph = phoneOf(); if (ph.replace(/\D/g, '').length < 9) { toast('กรอกเบอร์มือถือก่อน', true); return; }
+      const r = await gs('otpRequest', ph).catch(e => ({ ok: false, error: e.message }));
+      if (!r.ok) { toast(r.error, true); return; }
+      toast('ส่งรหัสไปที่ ' + r.data.masked + ' แล้ว');
+      showLogin('code', { phone: ph, ref: r.data.ref, masked: r.data.masked });
+    });
+    bind('rcv', () => showLogin('recovery', { phone: phoneOf() }));
+    return;
+  }
+  if (step === 'code') {
+    app.innerHTML = loginShell(`<form id="lf" class="card"><div class="muted small" style="margin-bottom:8px">${ctx.ref ? `ส่งรหัสทาง SMS ไปที่ <b>${esc(ctx.masked)}</b> แล้ว · Ref <b>${esc(ctx.ref)}</b> (ใช้ได้ 5 นาที)` : `เบอร์ <b>${esc(ctx.phone)}</b> · ใส่รหัสเข้าใช้ 6 หลักที่ได้จากผู้จัดการ`}</div>
+      ${field('รหัส 6 หลัก', '<input name="code" inputmode="numeric" autocomplete="one-time-code" pattern="\\d{6}" maxlength="6" required style="font-size:24px;letter-spacing:6px;text-align:center">')}
+      <button class="btn block" type="submit">เข้าสู่ระบบ</button>
+      <div class="row between" style="margin-top:10px"><a href="#" id="chg">กลับ</a>${S.status.sms && ctx.ref ? '<a href="#" id="again">ขอรหัสใหม่</a>' : ''}</div></form>`);
+    const ci = app.querySelector('input[name=code]'); if (ci) ci.focus();
+    onSubmit(async v => {
+      const r = await gs('otpVerify', ctx.phone, v.code);
+      if (!r.ok) { toast(r.error, true); return; }
+      afterLogin(r);
+    });
+    bind('chg', () => showLogin('phone', { phone: ctx.phone }));
+    bind('again', async () => {
+      const r = await gs('otpRequest', ctx.phone).catch(e => ({ ok: false, error: e.message }));
+      if (!r.ok) { toast(r.error, true); return; }
+      toast('ส่งรหัสใหม่แล้ว');
+      showLogin('code', { phone: ctx.phone, ref: r.data.ref, masked: r.data.masked });
+    });
+    return;
+  }
+  if (step === 'recovery') {
+    app.innerHTML = loginShell(`<div class="alert amber small">สำหรับ CEO / ผู้จัดการ เมื่อ SMS ใช้ไม่ได้ — รหัสกู้คืนใช้ได้ครั้งเดียว เข้าระบบแล้วให้สร้างรหัสใหม่</div>
+      <form id="lf" class="card">${field('เบอร์มือถือ', telInput)}${field('รหัสกู้คืน 10 หลัก', '<input name="code" inputmode="numeric" autocomplete="off" maxlength="12" required>')}
+      <button class="btn block" type="submit">เข้าสู่ระบบ</button><div style="margin-top:10px"><a href="#" id="back">กลับ</a></div></form>`);
+    onSubmit(async v => {
+      const r = await gs('recoveryLogin', v.phone, v.code);
+      if (!r.ok) { toast(r.error, true); return; }
+      ST.set('sbp_phone', v.phone); afterLogin(r);
+    });
+    bind('back', () => showLogin('phone', { phone: ctx.phone }));
+  }
+}
+function setPinScreen() {
+  const app = document.getElementById('app');
+  app.innerHTML = loginShell(`<div class="alert amber">ตั้ง <b>PIN 6 หลัก</b> ของคุณเอง ใช้คู่กับเบอร์มือถือทุกครั้งที่เข้าระบบ — ห้ามใช้เลขซ้ำ เลขเรียง หรือเลขจากเบอร์โทร และห้ามบอกใคร</div>
+    <form id="lf" class="card">${field('PIN ใหม่ 6 หลัก', '<input name="new_pin" type="password" inputmode="numeric" autocomplete="new-password" pattern="\\d{6}" maxlength="6" required style="letter-spacing:4px">')}
+    ${field('ยืนยัน PIN อีกครั้ง', '<input name="new_pin2" type="password" inputmode="numeric" autocomplete="new-password" maxlength="6" required style="letter-spacing:4px">')}
+    <button class="btn block" type="submit">บันทึก PIN และเข้าใช้งาน</button></form>`);
+  document.getElementById('lf').addEventListener('submit', async e => {
+    e.preventDefault(); e.stopPropagation();
+    const v = formData(e.target);
+    if (!/^\d{6}$/.test(v.new_pin || '')) { toast('PIN ต้องเป็นตัวเลข 6 หลัก', true); return; }
+    if (v.new_pin !== v.new_pin2) { toast('PIN สองช่องไม่ตรงกัน', true); return; }
+    const r = await attempt(() => api('me.pin', { new_pin: v.new_pin }), 'ตั้ง PIN แล้ว');
+    if (r && r.token) {
+      S.token = r.token; S.user = r.user; ST.set('sbp_token', r.token); ST.set('sbp_user', JSON.stringify(r.user));
+      start();
+    }
+  }, true);
+}
+async function start() {
+  if (S.user && S.user.must_change) { try { S.b = await api('bootstrap'); S.user = S.b.user; } catch (e) { if (e.auth) return; } if (S.user.must_change) { setPinScreen(); return; } }
+  try {
+    S.b = await api('bootstrap');
+    S.user = S.b.user;
+    ST.set('sbp_user', JSON.stringify(S.user));
+    if (S.user.must_change) { setPinScreen(); return; }
+    shell();
+    S.stack = []; S.cur = null;
+    go(homeScreen(), {}, { root: true });
+    if (S.afterLogin === 'me') {
+      S.afterLogin = '';
+      if (!S.user.has_recovery) { go('me', {}); toast('สร้างรหัสกู้คืนไว้ใช้วันที่ SMS ไม่เข้า'); }
+    }
+  } catch (e) {
+    if (e.auth || !S.token) return;
+    document.getElementById('app').innerHTML = `<div class="login"><div class="brand"><div class="logo">SBP</div><h1 style="font-size:20px;color:var(--navy)">SBP FieldOps</h1></div>
+      <div class="alert red">${esc(e.message)}</div><button class="btn block" id="retry">ลองใหม่</button>
+      <button class="btn ghost block" style="margin-top:8px" id="relogin">เข้าสู่ระบบด้วยเบอร์อื่น</button></div>`;
+    document.getElementById('retry').addEventListener('click', start);
+    document.getElementById('relogin').addEventListener('click', () => logout(false));
+  }
+}
+
+/* ---------- public quote page (ลูกค้าเปิดจากลิงก์) */
+async function publicQuotePage() {
+  const app = document.getElementById('app');
+  app.innerHTML = '<main><div class="loading">กำลังโหลดใบเสนอราคา…</div></main>';
+  let r;
+  try { r = await gs('publicQuote', BOOT.quoteToken); } catch (e) { r = { ok: false, error: e.message }; }
+  if (!r.ok) { app.innerHTML = `<main><div class="alert red">${esc(r.error)}</div></main>`; return; }
+  const draw = v => {
+    app.innerHTML = `<main>${quoteDoc(v, true)}<div class="noprint" style="margin-top:12px">
+      ${v.can_ack ? `<form id="ackf" class="card"><div class="b" style="margin-bottom:6px">ยืนยันสั่งงานตามใบเสนอราคานี้</div>
+        ${field('ชื่อผู้ยืนยัน/ตำแหน่ง', '<input name="name" required maxlength="80" placeholder="เช่น สมชาย ใจดี ฝ่ายอาคาร">', true)}
+        ${field('หมายเหตุ เช่น วันที่สะดวก เลข PO (ถ้ามี)', '<textarea name="note" maxlength="200"></textarea>')}
+        <button class="btn block" type="submit">ยืนยันสั่งงาน</button><div class="muted small" style="margin-top:6px">การยืนยันนี้แจ้งให้เจ้าหน้าที่ติดต่อนัดหมาย ค่าใช้จ่ายส่วนเพิ่ม (ถ้ามี) จะแจ้งให้ยืนยันก่อนดำเนินงานทุกครั้ง</div></form>`
+        : v.status === 'ACCEPTED' || v.customer_ack ? '<div class="alert green">ได้รับการยืนยันแล้ว ขอบคุณครับ เจ้าหน้าที่จะติดต่อนัดหมายวันเข้างาน</div>'
+        : '<div class="alert amber">ใบเสนอราคานี้ไม่อยู่ในสถานะให้ยืนยันออนไลน์ (อาจหมดอายุหรือมีฉบับใหม่) กรุณาติดต่อเจ้าหน้าที่</div>'}
+      ${BOOT.demo ? '<button class="btn ghost block" style="margin-top:8px" id="demoback">กลับเข้าระบบ (โหมดทดลอง)</button>' : '<button class="btn ghost block" style="margin-top:8px" id="printq">พิมพ์ / บันทึก PDF</button>'}</div></main>`;
+    const pq = document.getElementById('printq');
+    if (pq) pq.addEventListener('click', () => window.print());
+    const bk = document.getElementById('demoback');
+    if (bk) bk.addEventListener('click', () => { BOOT.mode = 'app'; BOOT.quoteToken = ''; try { history.replaceState(null, '', location.pathname + location.search); } catch (e) { /* ignore */ } if (S.token) start(); else showLogin(); });
+    const f = document.getElementById('ackf');
+    if (f) f.addEventListener('submit', async e => {
+      e.preventDefault(); e.stopPropagation();
+      const v2 = formData(f);
+      if (!v2.name) { toast('กรุณาระบุชื่อผู้ยืนยัน', true); return; }
+      try {
+        const rr = await gs('publicAck', BOOT.quoteToken, v2.name, v2.note);
+        if (!rr.ok) { toast(rr.error, true); return; }
+        draw(rr.data); toast('ยืนยันเรียบร้อย ขอบคุณครับ');
+      } catch (err) { toast(err.message, true); }
+    }, true);
+  };
+  draw(r.data);
+}
+
+function standaloneHelp() {
+  document.getElementById('app').innerHTML = loginShell('<div class="alert red">เปิดหน้านี้จากลิงก์ระบบเท่านั้น</div>');
+}
+
+(function init() {
+  if (!BOOT || typeof google === 'undefined' || !google.script) { standaloneHelp(); return; }
+  if (BOOT.mode === 'quote') { publicQuotePage(); return; }
+  S.token = ST.get('sbp_token');
+  try { S.user = JSON.parse(ST.get('sbp_user') || 'null'); } catch (e) { S.user = null; }
+  if (S.token && S.user) start();
+  else showLogin();
+})();
+</script>
+</body>
+</html>

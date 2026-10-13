@@ -1,0 +1,11 @@
+{
+ "version": "20261013-2119",
+ "files": {
+  "sbp-server": "sbp-server-20261013-2119.js",
+  "sbp-ui": "sbp-ui-20261013-2119.html"
+ },
+ "sha256": {
+  "sbp-server": "42e0705744e68e9d553e8923ab615d24bcc5a3bd9597573e7ac81b74b73c10fb",
+  "sbp-ui": "7af541f4784c9c785a8fb1df9a26f4a0b90fe6e0c7dca718912e2a6b81c92818"
+ }
+}

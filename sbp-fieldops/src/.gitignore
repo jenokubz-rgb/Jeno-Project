@@ -1,0 +1,5 @@
+.setup-code.txt
+node_modules/
+.local/
+deno.lock
+dist/

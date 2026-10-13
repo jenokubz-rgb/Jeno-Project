@@ -1,0 +1,6 @@
+# Supabase CLI — ใช้ตอน GitHub Actions deploy ฟังก์ชัน
+project_id = "sbp-fieldops"
+
+[functions.api]
+# ระบบตรวจสิทธิ์เอง (บัตรผ่านจาก OTP) จึงไม่ใช้ JWT ของ Supabase
+verify_jwt = false

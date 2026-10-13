@@ -1,0 +1,21 @@
+{
+  "name": "sbp-cloud",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "deno": "^2.9.6",
+    "embedded-postgres": "^18.4.0-beta.17",
+    "postgres": "^3.4.9"
+  },
+  "type": "module",
+  "devDependencies": {
+    "playwright": "^1.56.0"
+  }
+}
